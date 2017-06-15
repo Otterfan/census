@@ -1,9 +1,12 @@
-<h1>Editing Text</h1>
+<h1>Edit</h1>
 
 <div class="edit-form">
   <%= render 'form', text: @text %>
 </div>
 
+<div class="topic-author">
+  <%= @text.topic_author.full_name %>
+</div>
 <div class="original">
   <%= markdown(@text.original) %>
 </div>

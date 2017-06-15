@@ -83,7 +83,7 @@ class TextsController < ApplicationController
   def update
     respond_to do |format|
       if @text.update(text_params)
-        format.html {redirect_to @text, notice: 'Text was successfully updated.'}
+        format.html {redirect_to action: :index, notice: 'Text was successfully updated.'}
         format.json {render :show, status: :ok, location: @text}
       else
         format.html {render :edit}
@@ -110,6 +110,11 @@ class TextsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def text_params
-    params.require(:text).permit(:title, :greek_title, :date, :publisher, :location, :note, :original, :census_id, text_citation_attributes: [:id, :role_id, :name, :destroy])
+    params.require(:text).permit(:title, :greek_title, :date, :publisher, :location, :note, :original, :census_id,
+                                 :parent_title, :parent_issue,
+                                 text_citations_attributes: [:id, :role, :name, :_destroy],
+                                 standard_numbers_attributes: [:id, :value, :_destroy],
+                                 components_attributes: [:id, :title, :pages, :_destroy]
+    )
   end
 end

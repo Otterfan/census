@@ -16,6 +16,10 @@ main {
   margin: auto;
 }
 
+h2 {
+  font-weight: 600;
+}
+
 .edit-form {
   float: left;
   min-width: 60%;
@@ -26,27 +30,51 @@ main {
     float: left;
   }
 
-  .field {
+  .input {
     margin-bottom: 1em;
   }
 
   input[type=text], textarea {
-    width: 35em;
+    width: 20em;
     font-family: $main-font-stack;
     font-size: 18px;
     font-weight: 300;
   }
 
-  button {
-    font-family: $main-font-stack;
-    font-size:16px;
-    padding: .5em 1em;
-    border-radius:6px;
+  .remove-button {
+
   }
 
   textarea {
     height: 10em;
   }
+
+  .nested-fields, .isbn-fields, .component-fields {
+    margin-bottom: 1em;
+    padding: 1em;
+    margin-right: 1em;
+  }
+
+  .nested-fields {
+    background: #f1eeee;
+  }
+
+  .isbn-fields {
+    background: #f1eef1;
+  }
+  .component-fields {
+    background: #e3e5f1;
+  }
+
+  #components, #citations, #isbns {
+    margin-bottom: 1em
+  }
+}
+
+.topic-author {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 1em;
 }
 
 .original {

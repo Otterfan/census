@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170615053342) do
+ActiveRecord::Schema.define(version: 20170615160801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,18 +64,12 @@ ActiveRecord::Schema.define(version: 20170615053342) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "standard_identifier_types", force: :cascade do |t|
-    t.text "name"
+  create_table "standard_numbers", force: :cascade do |t|
+    t.string "value"
+    t.bigint "text_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "standard_identifiers", force: :cascade do |t|
-    t.bigint "standard_identifier_type_id"
-    t.text "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["standard_identifier_type_id"], name: "index_standard_identifiers_on_standard_identifier_type_id"
+    t.index ["text_id"], name: "index_standard_numbers_on_text_id"
   end
 
   create_table "statuses", force: :cascade do |t|
@@ -89,10 +83,9 @@ ActiveRecord::Schema.define(version: 20170615053342) do
   create_table "text_citations", force: :cascade do |t|
     t.bigint "text_id"
     t.text "name"
-    t.bigint "role_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["role_id"], name: "index_text_citations_on_role_id"
+    t.string "role"
     t.index ["text_id"], name: "index_text_citations_on_text_id"
   end
 
@@ -112,6 +105,8 @@ ActiveRecord::Schema.define(version: 20170615053342) do
     t.bigint "topic_author_id"
     t.text "pages"
     t.bigint "status_id"
+    t.string "parent_title"
+    t.string "parent_issue"
     t.index ["language_id"], name: "index_texts_on_language_id"
     t.index ["status_id"], name: "index_texts_on_status_id"
     t.index ["topic_author_id"], name: "index_texts_on_topic_author_id"
@@ -121,8 +116,7 @@ ActiveRecord::Schema.define(version: 20170615053342) do
   add_foreign_key "component_citations", "people"
   add_foreign_key "component_citations", "roles"
   add_foreign_key "components", "texts"
-  add_foreign_key "standard_identifiers", "standard_identifier_types"
-  add_foreign_key "text_citations", "roles"
+  add_foreign_key "standard_numbers", "texts"
   add_foreign_key "text_citations", "texts"
   add_foreign_key "texts", "languages"
   add_foreign_key "texts", "people", column: "topic_author_id"

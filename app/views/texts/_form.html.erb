@@ -1,84 +1,46 @@
-<%= form_with(model: text, local: true) do |form| %>
-    <% if text.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(text.errors.count, "error") %> prohibited this text from being saved:</h2>
+<%= simple_form_for @text do |f| %>
+    <%= f.input :title, as: :string %>
+    <%= f.input :date, as: :string %>
+    <%= f.input :publisher, as: :string %>
+    <%= f.input :location, as: :string %>
+    <%= f.input :pages, as: :string %>
 
-          <ul>
-            <% text.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-    <% end %>
+    <h2>From</h2>
+    <%= f.input :parent_title, label: 'Title' %>
+    <%= f.input :parent_issue, label: 'Issue' %>
 
-    <div class="field">
-      <%= form.label :title %>
-      <%= form.text_field :title, id: :text_title %>
-    </div>
-
-    <div class="field">
-      <%= form.label :greek_title %>
-      <%= form.text_field :greek_title, id: :text_greek_title %>
-    </div>
-
-    <div class="field">
-      <%= form.label :pages %>
-      <%= form.text_field :pages, id: :text_publisher %>
-    </div>
-
-    <div class="field">
-      <%= form.label :publisher %>
-      <%= form.text_field :publisher, id: :text_publisher %>
-    </div>
-
-    <div class="field">
-      <%= form.label :date %>
-      <%= form.text_field :date, id: :text_date %>
-    </div>
-
-    <div class="field">
-      <%= form.label :location %>
-      <%= form.text_field :location, id: :text_location %>
-    </div>
-
-    <div class="field">
-      <%= form.label :language_id %>
-      <%= form.text_field :language_id, id: :text_language %>
-    </div>
-
-    <div class="field">
-      <%= form.label :citations %>
-      <div class="citations" style="float: left; width: 20em">
-        <button id="add-citation">Add</button>
+    <h2>Citations</h2>
+    <div id='citations'>
+      <%= f.simple_fields_for :text_citations do |citation| %>
+          <%= render 'text_citation_fields', :f => citation %>
+      <% end %>
+      <div class='links'>
+        <%= link_to_add_association 'add citation', f, :text_citations %>
       </div>
     </div>
 
-    <div class="field" style="clear: both">
-      <%= form.label :note %>
-      <%= form.text_area :note, id: :text_note %>
+    <h2>ISBNs</h2>
+    <div id='isbns'>
+      <%= f.simple_fields_for :standard_numbers do |number| %>
+          <%= render 'standard_number_fields', :f => number %>
+      <% end %>
+      <div class='links'>
+        <%= link_to_add_association 'add ISBN', f, :standard_numbers %>
+      </div>
     </div>
 
-    <div class="actions">
-      <%= form.button :type => :submit %>
+    <h2>Components</h2>
+    <div id='components'>
+      <%= f.simple_fields_for :components do |component| %>
+          <%= render 'component_fields', :f => component %>
+      <% end %>
+      <div class='links'>
+        <%= link_to_add_association 'add component', f, :components %>
+      </div>
     </div>
 
+    <%= f.input :note %>
+
+
+    <%= f.button :submit %>
 <% end %>
-
-<script id="new-citation-template" type="text/x-handlebars-template">
-  <div class="field">
-    <%= text_field_tag "text_citations[]" %> <a href="#" onclick="removeChoice($(this))" class="remove-choice"> X </a>
-  </div>
-</script>
-
-<script>
-    var source = $("#new-citation-template").html();
-    var template = Handlebars.compile(source);
-    $("#add-citation").click(function () {
-        $('.citations').append(template());
-        return false;
-    });
-
-    function removeChoice(element) {
-        element.parent().remove();
-    }
-</script>
