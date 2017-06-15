@@ -1,0 +1,9 @@
+<h1>Editing Text</h1>
+
+<div class="edit-form">
+  <%= render 'form', text: @text %>
+</div>
+
+<div class="original">
+  <%= markdown(@text.original) %>
+</div>

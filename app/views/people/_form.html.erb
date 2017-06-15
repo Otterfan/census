@@ -1,0 +1,57 @@
+<%= form_with(model: person, local: true) do |form| %>
+  <% if person.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(person.errors.count, "error") %> prohibited this person from being saved:</h2>
+
+      <ul>
+      <% person.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :full_name %>
+    <%= form.text_area :full_name, id: :person_full_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :greek_full_name %>
+    <%= form.text_area :greek_full_name, id: :person_greek_full_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fist_name %>
+    <%= form.text_area :fist_name, id: :person_fist_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :last_name %>
+    <%= form.text_area :last_name, id: :person_last_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :birth %>
+    <%= form.text_area :birth, id: :person_birth %>
+  </div>
+
+  <div class="field">
+    <%= form.label :death %>
+    <%= form.text_area :death, id: :person_death %>
+  </div>
+
+  <div class="field">
+    <%= form.label :greek_first_name %>
+    <%= form.text_area :greek_first_name, id: :person_greek_first_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :greek_last_name %>
+    <%= form.text_area :greek_last_name, id: :person_greek_last_name %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

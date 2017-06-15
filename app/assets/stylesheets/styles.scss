@@ -1,0 +1,58 @@
+$main-font-stack: "Source Sans Pro", "Helvetica Neue", Helvetica, sans-serif;
+$alt-font-stack: "Noto Serif", serif;
+
+* {
+  m: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $main-font-stack;
+  font-size: 18px;
+}
+
+main {
+  max-width: 90%;
+  margin: auto;
+}
+
+.edit-form {
+  float: left;
+  min-width: 60%;
+
+  label {
+    display: block;
+    width: 6em;
+    float: left;
+  }
+
+  .field {
+    margin-bottom: 1em;
+  }
+
+  input[type=text], textarea {
+    width: 35em;
+    font-family: $main-font-stack;
+    font-size: 18px;
+    font-weight: 300;
+  }
+
+  button {
+    font-family: $main-font-stack;
+    font-size:16px;
+    padding: .5em 1em;
+    border-radius:6px;
+  }
+
+  textarea {
+    height: 10em;
+  }
+}
+
+.original {
+  font-family: $alt-font-stack;
+  float: left;
+  width: 40%;
+  background: #efefd5;
+  padding: 1em;
+}

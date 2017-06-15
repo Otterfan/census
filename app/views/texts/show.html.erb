@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @text.title %>
+</p>
+
+<p>
+  <strong>Greek title:</strong>
+  <%= @text.greek_title %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @text.date %>
+</p>
+
+<p>
+  <strong>Publisher:</strong>
+  <%= @text.publisher %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @text.location %>
+</p>
+
+<p>
+  <strong>Language:</strong>
+  <%= @text.language %>
+</p>
+
+<p>
+  <strong>Note:</strong>
+  <%= @text.note %>
+</p>
+
+<p>
+  <strong>Original:</strong>
+  <%= @text.original %>
+</p>
+
+<p>
+  <strong>Census:</strong>
+  <%= @text.census_id %>
+</p>
+
+<%= link_to 'Edit', edit_text_path(@text) %> |
+<%= link_to 'Back', texts_path %>

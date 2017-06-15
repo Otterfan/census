@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Texts</h1>
+
+<% @authors.each do |author| %>
+    <h2><%= author[:author] %></h2>
+    <ul>
+      <% author[:texts].each do |text| %>
+          <li class="<%= text.status.code %>">
+            <span class="census-id"><%= text.census_id %></span>
+            <%= link_to text.title, edit_text_path(text) %>
+            <span class="status"><%= text.status.name %></span>
+          </li>
+      <% end %>
+    </ul>
+<% end %>
+
+<div class="prev-records">
+  <% unless @prev.nil? %>
+      <a href="?offset=<%= @prev %>&limit=<%= @limit %>">Previous <%= @limit %> records</a>
+  <% end %>
+</div>
+
+<div class="next-records">
+  <% unless @next.nil? %>
+      <a href="?offset=<%= @next %>&limit=<%= @limit %>">Next <%= @limit %> records</a>
+  <% end %>
+</div>
+
+<%= link_to 'New Text', new_text_path %>
