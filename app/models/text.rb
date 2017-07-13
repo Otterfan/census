@@ -8,5 +8,13 @@ class Text < ApplicationRecord
 
   accepts_nested_attributes_for :text_citations, :standard_numbers, :components, reject_if: :all_blank, allow_destroy: true
 
-  default_scope { order("id ASC") }
+  default_scope {order("id ASC")}
+
+  def next
+    Text.where(["census_id > ?", census_id]).order(census_id: :asc).first
+  end
+
+  def previous
+    Text.where(["census_id < ?", census_id]).order(census_id: :desc).first
+  end
 end

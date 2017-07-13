@@ -83,7 +83,7 @@ class TextsController < ApplicationController
   def update
     respond_to do |format|
       if @text.update(text_params)
-        format.html {redirect_to action: :index, notice: 'Text was successfully updated.'}
+        format.html {redirect_to @text, notice: 'Text was successfully updated.'}
         format.json {render :show, status: :ok, location: @text}
       else
         format.html {render :edit}
