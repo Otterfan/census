@@ -1,8 +1,5 @@
 require 'json'
-
-json_file = File.join(File.dirname(__FILE__), "../a-c.json")
-contents = File.read(json_file)
-entries = JSON.parse(contents)
+require 'pathname'
 
 def build_people_hash(entries)
   people = {}
@@ -89,11 +86,19 @@ def build_users
   user = User.create! :email => 'benjamin.florin@bc.edu', :password => 'tictactoe', :password_confirmation => 'tictactoe'
 end
 
-puts TextCitation.reflections.keys
-
-build_languages
-build_roles
-statuses = build_statuses
-people = build_people_hash(entries)
-build_texts(entries, people, statuses)
-build_users
+seed_file = File.join(File.dirname(__FILE__), "../data/seed.rb")
+if File.exist? File.expand_path seed_file
+  require seed_file
+  build_users
+else
+  seed_file.to_str
+  json_file = File.join(File.dirname(__FILE__), "../data/a-c.json")
+  contents = File.read(json_file)
+  entries = JSON.parse(contents)
+  build_languages
+  build_roles
+  statuses = build_statuses
+  people = build_people_hash(entries)
+  build_texts(entries, people, statuses)
+  build_users
+end
