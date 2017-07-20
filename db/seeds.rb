@@ -85,6 +85,10 @@ def build_texts(entries, people, statuses)
   end
 end
 
+def build_users
+  user = User.create! :email => 'benjamin.florin@bc.edu', :password => 'tictactoe', :password_confirmation => 'tictactoe'
+end
+
 puts TextCitation.reflections.keys
 
 build_languages
@@ -92,3 +96,4 @@ build_roles
 statuses = build_statuses
 people = build_people_hash(entries)
 build_texts(entries, people, statuses)
+build_users
