@@ -8,6 +8,8 @@ class Text < ApplicationRecord
 
   accepts_nested_attributes_for :text_citations, :standard_numbers, :components, reject_if: :all_blank, allow_destroy: true
 
+  paginates_per 60
+
   default_scope {order("id ASC")}
 
   def next

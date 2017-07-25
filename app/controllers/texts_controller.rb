@@ -6,6 +6,7 @@ class TextsController < ApplicationController
   # GET /texts
   # GET /texts.json
   def index
+=begin
     @limit = params[:limit]
     offset = params[:offset].to_i
 
@@ -46,8 +47,10 @@ class TextsController < ApplicationController
       end
       author_group[:texts].push(text)
     end
-
     @authors.push(author_group)
+=end
+
+    @texts = Text.order(:census_id).page(params[:page])
   end
 
   # GET /texts/1
@@ -112,7 +115,7 @@ class TextsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def text_params
-    params.require(:text).permit(:title, :greek_title, :date, :publisher, :location, :note, :original, :census_id,
+    params.require(:text).permit(:title, :source, :date, :publisher, :location, :note, :original, :census_id,
                                  :parent_title, :parent_issue,
                                  text_citations_attributes: [:id, :role, :name, :_destroy],
                                  standard_numbers_attributes: [:id, :value, :_destroy],
