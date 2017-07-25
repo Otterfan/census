@@ -54,30 +54,45 @@ def build_texts(entries, people, statuses)
   entries.each do |entry|
     title = entry['title']
     topic_author = people[entry['topic_author']['full_name']]
+
+    note = entry.key?('notes') ? entry['notes'].join("\n\n") : ''
+
     text = Text.create!(
         title: title,
         census_id: entry['id'],
         topic_author: topic_author,
         date: entry['date'],
         publisher: entry['publisher'],
+        journal_title: entry['journal_title'],
+        parent_issue: entry['journal_issue'],
         location: entry['place_of_publication'],
         original: entry['full_text'],
         pages: entry['pages'],
+        genre: entry['genre'],
+        note: note,
+        source: entry['original_source'],
         status: statuses[:needs_review]
     )
 
     responsibility = entry['responsibility']
     TextCitation.create(text: text, name: responsibility)
 
-    ordinal = 1
+    contributors = entry['contributors']
+    contributors.each do |contributor|
+      TextCitation.create(text: text, name: contributor['name'], role: contributor['role'])
+    end
+
+    if entry.key? 'isbns'
+      entry['isbns'].each {|isbn| StandardNumber.create(text: text, value: isbn)}
+    end
+
     entry['components'].each do |part|
       Component.create(
           text: text,
           title: part['title'],
           pages: part['pages'],
-          ordinal: ordinal
+          ordinal: part['position']
       )
-      ordinal += 1
     end
   end
 end
@@ -86,7 +101,7 @@ def build_users
   user = User.create! :email => 'benjamin.florin@bc.edu', :password => 'tictactoe', :password_confirmation => 'tictactoe'
 end
 
-seed_file = File.join(File.dirname(__FILE__), "../data/seed.rb")
+seed_file = File.join(File.dirname(__FILE__), "../datapp/seed.rb")
 if File.exist? File.expand_path seed_file
   require seed_file
   build_users

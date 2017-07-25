@@ -1,9 +1,13 @@
 <%= simple_form_for @text do |f| %>
     <%= f.input :title, as: :string %>
     <%= f.input :date, as: :string %>
+    <%= f.input :series, as: :string %>
     <%= f.input :publisher, as: :string %>
+    <%= f.input :journal_title, as: :string %>
     <%= f.input :location, as: :string %>
     <%= f.input :pages, as: :string %>
+    <%= f.input :genre, as: :string %>
+
 
     <h2>From</h2>
     <%= f.input :parent_title, label: 'Title' %>

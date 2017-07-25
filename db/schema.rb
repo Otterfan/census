@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170714182149) do
+ActiveRecord::Schema.define(version: 20170725155152) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(version: 20170714182149) do
 
   create_table "texts", force: :cascade do |t|
     t.text "title"
-    t.text "greek_title"
+    t.text "source"
     t.text "date"
     t.date "sort_date"
     t.text "publisher"
@@ -107,6 +107,9 @@ ActiveRecord::Schema.define(version: 20170714182149) do
     t.bigint "status_id"
     t.string "parent_title"
     t.string "parent_issue"
+    t.string "genre"
+    t.string "journal_title"
+    t.string "series"
     t.index ["language_id"], name: "index_texts_on_language_id"
     t.index ["status_id"], name: "index_texts_on_status_id"
     t.index ["topic_author_id"], name: "index_texts_on_topic_author_id"
