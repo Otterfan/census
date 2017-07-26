@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170726161045) do
+ActiveRecord::Schema.define(version: 20170726204857) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,13 +103,14 @@ ActiveRecord::Schema.define(version: 20170726161045) do
     t.datetime "updated_at", null: false
     t.text "census_id"
     t.bigint "topic_author_id"
-    t.text "pages"
+    t.text "page_span"
     t.bigint "status_id"
     t.string "parent_title"
     t.string "parent_issue"
     t.string "genre"
     t.string "journal_title"
     t.string "series"
+    t.string "page_count"
     t.index ["language_id"], name: "index_texts_on_language_id"
     t.index ["status_id"], name: "index_texts_on_status_id"
     t.index ["topic_author_id"], name: "index_texts_on_topic_author_id"
