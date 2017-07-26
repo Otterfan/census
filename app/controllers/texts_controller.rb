@@ -6,50 +6,6 @@ class TextsController < ApplicationController
   # GET /texts
   # GET /texts.json
   def index
-=begin
-    @limit = params[:limit]
-    offset = params[:offset].to_i
-
-    @limit ||= 50
-    offset ||= 0
-    @limit = @limit.to_i
-    @next = @limit + offset
-
-    num_texts = Text.count
-    remaining_texts = num_texts - @next
-
-    if remaining_texts < 0
-      @next = nil
-    end
-
-    if offset > (@limit - 1)
-      @prev = offset - @limit
-    elsif offset > 0
-      @prev = 0
-    else
-      @prev = nil
-    end
-
-    texts = Text.limit(@limit).offset(offset)
-    @authors = []
-    author_group = {
-        :author => texts[0].topic_author.full_name,
-        :texts => []
-    }
-
-    texts.each do |text|
-      unless text.topic_author.full_name == author_group[:author]
-        @authors.push(author_group)
-        author_group = {
-            :author => text.topic_author.full_name,
-            :texts => []
-        }
-      end
-      author_group[:texts].push(text)
-    end
-    @authors.push(author_group)
-=end
-
     @texts = Text.order(:census_id).page(params[:page])
   end
 

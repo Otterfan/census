@@ -1,34 +1,21 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Texts</h1>
 
 <%= paginate @texts %>
 
-<ul>
-  <%
+<% texts_by_author(@texts).each do |author| %>
+    <h3><%= author[:author] %></h3>
+    <ul>
+      <% author[:texts].each do |text| %>
+          <li class="<%= text.status.code %>">
+            <span class="census-id"><%= text.census_id %></span>
+            <%= link_to text.title, edit_text_path(text) %>
+            <span class="status"><%= text.status.name %></span>
+          </li>
+      <% end %>
+    </ul>
+<% end %>
 
-    author = false
-
-    @texts.each do |text|
-
-      unless text.topic_author.full_name == author
-        author = text.topic_author.full_name
-  %>
-          </ul>
-          <ul>
-            <h3><%= author %></h3>
-      <%
-        end
-
-      %>
-      <li class="<%= text.status.code %>">
-        <span class="census-id"><%= text.census_id %></span>
-        <%= link_to text.title, edit_text_path(text) %>
-        <span class="status"><%= text.status.name %></span>
-      </li>
-  <% end %>
-  </ul>
-  <%= paginate @texts %>
+<%= paginate @texts %>
 
 
-  <%= link_to 'New Text', new_text_path %>
+<%= link_to 'New Text', new_text_path %>
