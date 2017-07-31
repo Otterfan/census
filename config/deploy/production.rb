@@ -59,3 +59,4 @@
 #     auth_methods: %w(publickey password)
 #     # password: "please use keys"
 #   }
+set :default_env, { 'DEVISE_SECRET_KEY' => ENV['DEVISE_SECRET_KEY'] }
