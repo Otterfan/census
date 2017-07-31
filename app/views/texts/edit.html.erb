@@ -9,9 +9,10 @@
   <%= render 'form', text: @text %>
 </div>
 
-<div class="topic-author">
-  <%= @text.topic_author.full_name %>
-</div>
+
 <div class="original">
+  <div class="topic-author">
+    <%= @text.topic_author.full_name %>
+  </div>
   <%= markdown(@text.original) %>
 </div>
