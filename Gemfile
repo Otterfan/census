@@ -69,4 +69,4 @@ gem 'jquery-rails'
 gem 'devise'
 gem 'seed_dump'
 gem 'kaminari'
-gem 'bootstrap-sass', '~> 3.3.6'g
+gem 'bootstrap-sass', '~> 3.3.6'
