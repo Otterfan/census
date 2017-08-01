@@ -105,7 +105,11 @@ h2 {
   width: 420px;
   background: #efefd5;
   padding: 1em;
-  left: 58%
+  left: 58%;
+
+  .census-id {
+    font-weight: bold;
+  }
 }
 
 span.status {
