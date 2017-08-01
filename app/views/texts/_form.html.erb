@@ -39,9 +39,9 @@
       <%= f.simple_fields_for :components do |component| %>
           <%= render 'component_fields', :f => component %>
       <% end %>
-      <div class='links'>
-        <%= link_to_add_association 'add component', f, :components %>
-      </div>
+    </div>
+    <div class='links'>
+      <%= link_to_add_association 'add component', f, :components, :class=> 'row', :data => {'association-insertion-node' => '#components', 'association-insertion-method' => 'append'}  %>
     </div>
 
     <%= f.input :note %>

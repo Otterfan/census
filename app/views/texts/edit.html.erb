@@ -1,12 +1,15 @@
-<div class="edit-form ">
-  <%= render 'form', text: @text %>
-</div>
-
-
-<div class="original">
-  <div class="topic-author">
-    <%= @text.topic_author.full_name %>
+<div class="row">
+  <div class="edit-form col-sm-6">
+    <%= render 'form', text: @text %>
   </div>
-  <div class="census-id"><%= @text.census_id %></div>
-  <%= markdown(@text.original) %>
+
+  <div class="col-sm-6">
+    <div class="original">
+      <div class="topic-author">
+        <%= @text.topic_author.full_name %>
+      </div>
+      <div class="census-id"><%= @text.census_id %></div>
+      <%= markdown(@text.original) %>
+    </div>
+  </div>
 </div>

@@ -1,21 +1,22 @@
-<h1>Texts</h1>
-
 <%= paginate @texts %>
+<div class="row">
+  <div class="col-md-12">
+    <% texts_by_author(@texts).each do |author| %>
+        <h3><%= author[:author] %></h3>
+        <ul class="list-group">
+          <% author[:texts].each do |text| %>
+              <li class="<%= text.status.code %> list-group-item">
+                <span class="census-id"><%= text.census_id %></span>
+                <%= link_to text.title, edit_text_path(text) %>
+                <span class="<%= text.status.name %> badge"><%= text.status.name %></span>
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
 
-<% texts_by_author(@texts).each do |author| %>
-    <h3><%= author[:author] %></h3>
-    <ul>
-      <% author[:texts].each do |text| %>
-          <li class="<%= text.status.code %>">
-            <span class="census-id"><%= text.census_id %></span>
-            <%= link_to text.title, edit_text_path(text) %>
-            <span class="status"><%= text.status.name %></span>
-          </li>
-      <% end %>
-    </ul>
-<% end %>
-
-<%= paginate @texts %>
+    <%= paginate @texts %>
+  </div>
+</div>
 
 
 <%= link_to 'New Text', new_text_path %>

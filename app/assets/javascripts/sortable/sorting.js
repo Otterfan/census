@@ -31,7 +31,8 @@ BCSorter = (function () {
         var el, options;
 
         options = {
-            handle: '.handle'
+            handle: '.handle',
+            filter: '.non-sorting'
         };
 
         el = document.getElementById(components_field_id);
