@@ -1,11 +1,4 @@
-<h1>Edit</h1>
-
-<div class="next-prev-links">
-  <%= link_to("< previous", [:edit, @text.next], {:class => "previous"}) if @text.next %>
-  <%= link_to("next >", [:edit, @text.next], {:class => "next"}) if @text.next %>
-</div>
-
-<div class="edit-form">
+<div class="edit-form ">
   <%= render 'form', text: @text %>
 </div>
 

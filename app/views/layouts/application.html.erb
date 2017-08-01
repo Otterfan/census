@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Census</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
   <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400i,700|Source+Sans+Pro:300,400,400i,600,700&amp;subset=greek,greek-ext,latin-ext" rel="stylesheet">
@@ -10,22 +10,22 @@
 </head>
 
 <body>
+<% if notice %>
+    <p class="alert alert-success"><%= notice %></p>
+<% end %>
+<% if alert %>
+    <p class="alert alert-danger"><%= alert %></p>
+<% end %>
+<% if user_signed_in? %>
+    <li>
+      <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+    </li>
+<% else %>
+    <li>
+      <%= link_to('Login', new_user_session_path) %>
+    </li>
+<% end %>
 <main class="container">
-  <% if notice %>
-      <p class="alert alert-success"><%= notice %></p>
-  <% end %>
-  <% if alert %>
-      <p class="alert alert-danger"><%= alert %></p>
-  <% end %>
-  <% if user_signed_in? %>
-      <li>
-        <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
-      </li>
-  <% else %>
-      <li>
-        <%= link_to('Login', new_user_session_path)  %>
-      </li>
-  <% end %>
   <%= yield %>
 </main>
 </body>

@@ -75,7 +75,7 @@ class TextsController < ApplicationController
                                  :parent_title, :parent_issue,
                                  text_citations_attributes: [:id, :role, :name, :_destroy],
                                  standard_numbers_attributes: [:id, :value, :_destroy],
-                                 components_attributes: [:id, :title, :pages, :_destroy]
+                                 components_attributes: [:id, :title, :pages, :ordinal, :_destroy]
     )
   end
 end

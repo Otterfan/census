@@ -1,5 +1,9 @@
-<div class='component-fields nested-fields'>
-  <%= link_to_remove_association "x", f, {:class => 'remove-link'} %>
+<div class='component-fields nested-fields row'>
+  <div class="handle col-md-2"></div>
+  <div class="col-md-10">
   <%= f.input :title, as: :string %>
   <%= f.input :pages, as: :string %>
+  <%= f.hidden_field :ordinal, as: :string, class: 'ordinal-num' %>
+  </div>
+  <%= link_to_remove_association "x", f, {:class => 'remove-link'} %>
 </div>
