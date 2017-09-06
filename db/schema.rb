@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170726204857) do
+ActiveRecord::Schema.define(version: 20170906194943) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,6 +111,7 @@ ActiveRecord::Schema.define(version: 20170726204857) do
     t.string "journal_title"
     t.string "series"
     t.string "page_count"
+    t.string "text_type"
     t.index ["language_id"], name: "index_texts_on_language_id"
     t.index ["status_id"], name: "index_texts_on_status_id"
     t.index ["topic_author_id"], name: "index_texts_on_topic_author_id"

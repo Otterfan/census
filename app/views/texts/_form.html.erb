@@ -1,5 +1,6 @@
 <%= simple_form_for @text do |f| %>
     <%= f.input :title, as: :string %>
+    <%= f.input :text_type, :collection => ['study_part', 'study_book','translation_book','translation_part'] %>
     <%= f.input :date, as: :string %>
     <%= f.input :series, as: :string %>
     <%= f.input :publisher, as: :string %>
@@ -46,6 +47,7 @@
 
     <%= f.input :note %>
 
+    <%= f.input :source %>
 
     <%= f.button :submit %>
 <% end %>
