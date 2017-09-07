@@ -21,6 +21,10 @@ class TextsController < ApplicationController
 
   # GET /texts/1/edit
   def edit
+    @topic_authors = []
+    Person.where(topic_flag: true).each do |person|
+      @topic_authors.push([person.full_name, person.id])
+    end
   end
 
   # POST /texts

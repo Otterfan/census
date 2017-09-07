@@ -1,4 +1,5 @@
 <%= simple_form_for @text do |f| %>
+    <%= f.association :topic_author, :collection => @topic_authors %>
     <%= f.input :title, as: :string %>
     <%= f.association :section %>
     <%= f.input :text_type, :collection => [['(a) translation book', 'translation_book'], ['(b) translation part', 'translation_part'], ['(c) study book', 'study_book'], ['(d) study part', 'study_part']] %>
