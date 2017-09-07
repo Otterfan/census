@@ -52,5 +52,15 @@
 
     <%= f.association :intermediary_language %>
 
+    <h2>Other languages in text</h2>
+    <div id='other_text_languages'>
+      <%= f.simple_fields_for :other_text_languages do |language| %>
+          <%= render 'other_text_language_fields', :f => language %>
+      <% end %>
+    </div>
+    <div class='links'>
+      <%= link_to_add_association 'add language', f, :other_text_languages, :class => 'row', :data => {'association-insertion-node' => '#other_text_languages', 'association-insertion-method' => 'append'} %>
+    </div>
+
     <%= f.button :submit %>
 <% end %>

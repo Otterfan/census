@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170907181649) do
+ActiveRecord::Schema.define(version: 20170907190734) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,7 +42,14 @@ ActiveRecord::Schema.define(version: 20170907181649) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "ordinal"
-    t.index ["ordinal"], name: "index_languages_on_ordinal", unique: true
+    t.index ["ordinal"], name: "index_languages_on_ordinal"
+  end
+
+  create_table "other_text_languages", id: false, force: :cascade do |t|
+    t.bigint "language_id", null: false
+    t.bigint "text_id", null: false
+    t.index ["language_id", "text_id"], name: "index_other_text_languages_on_language_id_and_text_id"
+    t.index ["text_id", "language_id"], name: "index_other_text_languages_on_text_id_and_language_id"
   end
 
   create_table "people", force: :cascade do |t|

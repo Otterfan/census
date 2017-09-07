@@ -1,0 +1,4 @@
+<div class='language-fields nested-fields'>
+  <%= f.association :language, collection: Language.order(:name), prompt: 'Choose a language' %>
+  <%= link_to_remove_association "x", f, {:class => 'remove-link'} %>
+</div>
