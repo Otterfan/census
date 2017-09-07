@@ -1,6 +1,7 @@
 <%= simple_form_for @text do |f| %>
     <%= f.input :title, as: :string %>
-    <%= f.input :text_type, :collection => ['study_part', 'study_book','translation_book','translation_part'] %>
+    <%= f.association :section %>
+    <%= f.input :text_type, :collection => [['(a) translation book', 'translation_book'], ['(b) translation part', 'translation_part'], ['(c) study book', 'study_book'], ['(d) study part', 'study_part']] %>
     <%= f.input :date, as: :string %>
     <%= f.input :series, as: :string %>
     <%= f.input :publisher, as: :string %>
@@ -42,12 +43,14 @@
       <% end %>
     </div>
     <div class='links'>
-      <%= link_to_add_association 'add component', f, :components, :class=> 'row', :data => {'association-insertion-node' => '#components', 'association-insertion-method' => 'append'}  %>
+      <%= link_to_add_association 'add component', f, :components, :class => 'row', :data => {'association-insertion-node' => '#components', 'association-insertion-method' => 'append'} %>
     </div>
 
     <%= f.input :note %>
 
     <%= f.input :source %>
+
+    <%= f.association :intermediary_language %>
 
     <%= f.button :submit %>
 <% end %>

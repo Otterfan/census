@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170906194943) do
+ActiveRecord::Schema.define(version: 20170907181649) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,12 @@ ActiveRecord::Schema.define(version: 20170906194943) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "sections", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "standard_numbers", force: :cascade do |t|
     t.string "value"
     t.bigint "text_id"
@@ -112,7 +118,13 @@ ActiveRecord::Schema.define(version: 20170906194943) do
     t.string "series"
     t.string "page_count"
     t.string "text_type"
+    t.string "format"
+    t.bigint "intermediary_language_id"
+    t.boolean "is_bilingual"
+    t.bigint "section_id"
+    t.index ["intermediary_language_id"], name: "index_texts_on_intermediary_language_id"
     t.index ["language_id"], name: "index_texts_on_language_id"
+    t.index ["section_id"], name: "index_texts_on_section_id"
     t.index ["status_id"], name: "index_texts_on_status_id"
     t.index ["topic_author_id"], name: "index_texts_on_topic_author_id"
   end
@@ -142,6 +154,8 @@ ActiveRecord::Schema.define(version: 20170906194943) do
   add_foreign_key "standard_numbers", "texts"
   add_foreign_key "text_citations", "texts"
   add_foreign_key "texts", "languages"
+  add_foreign_key "texts", "languages", column: "intermediary_language_id"
   add_foreign_key "texts", "people", column: "topic_author_id"
+  add_foreign_key "texts", "sections"
   add_foreign_key "texts", "statuses"
 end
