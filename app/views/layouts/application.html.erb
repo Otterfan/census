@@ -20,7 +20,8 @@
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="/texts">Texts <span class="sr-only">(current)</span></a></li>
+        <li class="<%= 'active' if in_current_path? 'text' %>"><a href="/texts">Texts <span class="sr-only">(current)</span></a></li>
+        <li class="<%= 'active' if in_current_path? 'author' %>"><a href="/authors">Authors <span class="sr-only">(current)</span></a></li>
       </ul>
       <p class="navbar-text navbar-right">
         <% if user_signed_in? %>

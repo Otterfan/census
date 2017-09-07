@@ -6,6 +6,6 @@ Rails.application.routes.draw do
     resources :components
   end
   resources :standard_identifiers
-  resources :people
+  resources :people, :path => 'authors'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

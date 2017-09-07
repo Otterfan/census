@@ -4,7 +4,7 @@ class PeopleController < ApplicationController
   # GET /people
   # GET /people.json
   def index
-    @people = Person.all
+    @people = Person.where(topic_flag: true).order(:full_name).page(params[:page])
   end
 
   # GET /people/1
