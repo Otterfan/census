@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170907210135) do
+ActiveRecord::Schema.define(version: 20170907233009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20170907210135) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "topic_flag"
+    t.string "domicile"
     t.index ["topic_flag"], name: "index_people_on_topic_flag"
   end
 
@@ -131,8 +132,15 @@ ActiveRecord::Schema.define(version: 20170907210135) do
     t.bigint "intermediary_language_id"
     t.boolean "is_bilingual"
     t.bigint "section_id"
+    t.string "original_greek_title"
+    t.string "original_greek_place_of_publication"
+    t.string "original_greek_publisher"
+    t.string "original_greek_date"
+    t.string "original_greek_isbn"
+    t.string "original_greek_edition"
     t.index ["intermediary_language_id"], name: "index_texts_on_intermediary_language_id"
     t.index ["language_id"], name: "index_texts_on_language_id"
+    t.index ["original_greek_title"], name: "index_texts_on_original_greek_title"
     t.index ["section_id"], name: "index_texts_on_section_id"
     t.index ["status_id"], name: "index_texts_on_status_id"
     t.index ["topic_author_id"], name: "index_texts_on_topic_author_id"
