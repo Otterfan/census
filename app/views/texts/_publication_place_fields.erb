@@ -1,0 +1,4 @@
+<div class='publication-place-fields nested-fields'>
+  <%= f.association :place, collection: Place.order(:name), prompt: 'Choose a place' %>
+  <%= link_to_remove_association "x", f, {:class => 'remove-link'} %>
+</div>

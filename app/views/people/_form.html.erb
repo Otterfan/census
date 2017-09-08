@@ -1,16 +1,23 @@
-<%= simple_form_for @person do |f| %>
-    <%= f.input :full_name, as: :string %>
-    <%= f.input :last_name, as: :string %>
-    <%= f.input :first_name, as: :string %>
+<div class="row">
+  <div class="col-md-6">
+    <%= simple_form_for @person do |f| %>
+        <%= f.input :full_name, as: :string %>
+        <%= f.input :last_name, as: :string %>
+        <%= f.input :first_name, as: :string %>
 
-    <%= f.input :greek_full_name, as: :string %>
-    <%= f.input :greek_last_name, as: :string %>
-    <%= f.input :greek_first_name, as: :string %>
+        <%= f.input :greek_full_name, as: :string %>
+        <%= f.input :greek_last_name, as: :string %>
+        <%= f.input :greek_first_name, as: :string %>
 
-    <%= f.input :birth, as: :string %>
-    <%= f.input :death, as: :string %>
+        <%= f.input :birth, as: :string %>
+        <%= f.input :death, as: :string %>
 
-    <%= f.input :domicile, as: :string %>
+        <%= f.input :domicile, as: :string %>
 
-    <%= f.button :submit %>
-<% end %>
+        <%= f.button :submit %>
+    <% end %>
+  </div>
+  <div class="col-md-6">
+    <h2>Appears in...</h2>
+  </div>
+</div>

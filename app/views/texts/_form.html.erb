@@ -17,6 +17,16 @@
     <%= f.input :url, as: :string %>
     <%= f.input :sponsoring_organization, as: :string %>
 
+    <h2>Places of publication</h2>
+    <div id='publication_places'>
+      <%= f.simple_fields_for :publication_places do |place| %>
+          <%= render 'publication_place_fields', :f => place %>
+      <% end %>
+    </div>
+    <div class='links'>
+      <%= link_to_add_association 'add place', f, :publication_places, :class => 'row', :data => {'association-insertion-node' => '#publication_places', 'association-insertion-method' => 'append'} %>
+    </div>
+
     <h2>From</h2>
     <%= f.input :parent_title, label: 'Title' %>
     <%= f.input :parent_issue, label: 'Issue' %>

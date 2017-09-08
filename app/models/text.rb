@@ -11,9 +11,12 @@ class Text < ApplicationRecord
   has_many :other_text_languages, inverse_of: :text
   has_many :languages, :through => :other_text_languages, :class_name => 'Language'
 
+  has_many :publication_places, inverse_of: :text
+  has_many :places, :through => :publication_places, :class_name => 'Place'
+
   accepts_nested_attributes_for :text_citations, :standard_numbers, :components , reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :other_text_languages, reject_if: :all_blank, :allow_destroy => true
-
+  accepts_nested_attributes_for :publication_places, reject_if: :all_blank, :allow_destroy => true
 
   paginates_per 60
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170908190046) do
+ActiveRecord::Schema.define(version: 20170908213333) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20170908190046) do
     t.index ["ordinal"], name: "index_languages_on_ordinal"
   end
 
-  create_table "other_text_languages", id: false, force: :cascade do |t|
+  create_table "other_text_languages", force: :cascade do |t|
     t.bigint "language_id", null: false
     t.bigint "text_id", null: false
     t.index ["language_id", "text_id"], name: "index_other_text_languages_on_language_id_and_text_id"
@@ -77,6 +77,24 @@ ActiveRecord::Schema.define(version: 20170908190046) do
     t.boolean "topic_flag"
     t.string "domicile"
     t.index ["topic_flag"], name: "index_people_on_topic_flag"
+  end
+
+  create_table "places", force: :cascade do |t|
+    t.string "name"
+    t.bigint "country_id"
+    t.string "latitude"
+    t.string "longitude"
+    t.string "subdivision"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["country_id"], name: "index_places_on_country_id"
+  end
+
+  create_table "publication_places", force: :cascade do |t|
+    t.bigint "place_id", null: false
+    t.bigint "text_id", null: false
+    t.index ["place_id", "text_id"], name: "index_publication_places_on_place_id_and_text_id"
+    t.index ["text_id", "place_id"], name: "index_publication_places_on_text_id_and_place_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -188,6 +206,7 @@ ActiveRecord::Schema.define(version: 20170908190046) do
   add_foreign_key "component_citations", "people"
   add_foreign_key "component_citations", "roles"
   add_foreign_key "components", "texts"
+  add_foreign_key "places", "countries"
   add_foreign_key "standard_numbers", "texts"
   add_foreign_key "text_citations", "texts"
   add_foreign_key "texts", "countries"
