@@ -77,6 +77,11 @@ class TextsController < ApplicationController
   def text_params
     params.require(:text).permit(:title, :source, :date, :publisher, :place_of_publication, :note, :original, :census_id,
                                  :parent_title, :parent_issue,
+                                 :original_greek_title, :original_greek_publisher, :original_greek_date,
+                                 :original_greek_isbn, :original_greek_edition,
+                                 :is_bilingual, :is_illustrated, :format, :text_type, :page_count,
+                                 :series, :journal_title, :genre, :page_span,
+                                 :intermediary_language_id, :section_id, :status_id, :topic_author_id,
                                  text_citations_attributes: [:id, :role, :name, :_destroy],
                                  standard_numbers_attributes: [:id, :value, :_destroy],
                                  components_attributes: [:id, :title, :pages, :ordinal, :_destroy]

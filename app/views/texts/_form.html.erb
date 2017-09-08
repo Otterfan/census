@@ -11,6 +11,7 @@
     <%= f.input :page_count, as: :string %>
     <%= f.input :page_span, as: :string %>
     <%= f.input :genre, as: :string %>
+    <%= f.input :is_illustrated, :collection  => [['Yes', true], ['No', false]], label: 'Illustrated?' %>
 
 
     <h2>From</h2>
@@ -62,7 +63,7 @@
 
     <%= f.association :intermediary_language %>
 
-    <%= f.input :is_bilingual, label: 'Text is bilingual?' %>
+    <%= f.input :is_bilingual, :collection => [['Yes', true], ['No', false]], label: 'Text is bilingual?' %>
 
     <div id='other_text_languages'>
       <%= f.simple_fields_for :other_text_languages do |language| %>
