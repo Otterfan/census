@@ -1,0 +1,10 @@
+// Place all the styles related to the Places controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+span.glyphicon.glyphicon-trash {
+  position: absolute;
+  right: 6px;   /* must be equal to parent's right padding */
+  top: 14px;
+  font-size: 16px;
+  color: gray;
+}

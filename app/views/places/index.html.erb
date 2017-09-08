@@ -1,0 +1,19 @@
+<%= paginate @places %>
+<div class="row">
+  <div class="col-md-12">
+    <ul class="list-group">
+      <% @places.each do |place| %>
+          <li class="list-group-item">
+            <%= link_to place.name, edit_place_path(place) %>
+            <%= link_to place, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            <% end %>
+          </li>
+      <% end %>
+    </ul>
+
+    <%= paginate @places %>
+  </div>
+</div>
+
+<%= link_to 'New Place', new_place_path %>
