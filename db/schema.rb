@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170907233009) do
+ActiveRecord::Schema.define(version: 20170908161658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,17 @@ ActiveRecord::Schema.define(version: 20170907233009) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["text_id"], name: "index_components_on_text_id"
+  end
+
+  create_table "countries", force: :cascade do |t|
+    t.string "name"
+    t.string "al3_code"
+    t.string "num_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["al3_code"], name: "index_countries_on_al3_code"
+    t.index ["name"], name: "index_countries_on_name"
+    t.index ["num_code"], name: "index_countries_on_num_code"
   end
 
   create_table "languages", force: :cascade do |t|
@@ -111,7 +122,7 @@ ActiveRecord::Schema.define(version: 20170907233009) do
     t.text "date"
     t.date "sort_date"
     t.text "publisher"
-    t.text "location"
+    t.text "place_of_publication"
     t.bigint "language_id"
     t.text "note"
     t.text "original"
@@ -138,6 +149,8 @@ ActiveRecord::Schema.define(version: 20170907233009) do
     t.string "original_greek_date"
     t.string "original_greek_isbn"
     t.string "original_greek_edition"
+    t.bigint "country_id"
+    t.index ["country_id"], name: "index_texts_on_country_id"
     t.index ["intermediary_language_id"], name: "index_texts_on_intermediary_language_id"
     t.index ["language_id"], name: "index_texts_on_language_id"
     t.index ["original_greek_title"], name: "index_texts_on_original_greek_title"
@@ -170,6 +183,7 @@ ActiveRecord::Schema.define(version: 20170907233009) do
   add_foreign_key "components", "texts"
   add_foreign_key "standard_numbers", "texts"
   add_foreign_key "text_citations", "texts"
+  add_foreign_key "texts", "countries"
   add_foreign_key "texts", "languages"
   add_foreign_key "texts", "languages", column: "intermediary_language_id"
   add_foreign_key "texts", "people", column: "topic_author_id"
