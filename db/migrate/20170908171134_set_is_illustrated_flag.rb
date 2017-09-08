@@ -1,7 +1,6 @@
 class SetIsIllustratedFlag < ActiveRecord::Migration[5.1]
   def change
     Text.where("original like ?", "%llustra%").each do |text|
-      puts text.title
       text.is_illustrated = true
       text.save!
     end

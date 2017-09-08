@@ -13,6 +13,9 @@
     <%= f.input :genre, as: :string %>
     <%= f.input :is_illustrated, :collection  => [['Yes', true], ['No', false]], label: 'Illustrated?' %>
 
+    <%= f.input :contents %>
+    <%= f.input :url, as: :string %>
+    <%= f.input :sponsoring_organization, as: :string %>
 
     <h2>From</h2>
     <%= f.input :parent_title, label: 'Title' %>

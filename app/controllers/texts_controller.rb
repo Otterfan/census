@@ -81,6 +81,7 @@ class TextsController < ApplicationController
                                  :original_greek_isbn, :original_greek_edition,
                                  :is_bilingual, :is_illustrated, :format, :text_type, :page_count,
                                  :series, :journal_title, :genre, :page_span,
+                                 :url, :contents, :sponsoring_organization,
                                  :intermediary_language_id, :section_id, :status_id, :topic_author_id,
                                  text_citations_attributes: [:id, :role, :name, :_destroy],
                                  standard_numbers_attributes: [:id, :value, :_destroy],
