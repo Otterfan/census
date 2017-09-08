@@ -77,5 +77,9 @@
       <%= link_to_add_association 'add language', f, :other_text_languages, :class => 'row', :data => {'association-insertion-node' => '#other_text_languages', 'association-insertion-method' => 'append'} %>
     </div>
 
+    <h2>Special</h2>
+    <%= f.input :special_location_of_item %>
+    <%= f.input :special_source_of_info %>
+
     <%= f.button :submit %>
 <% end %>
