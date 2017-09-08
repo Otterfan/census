@@ -19,8 +19,10 @@
   <div class="col-md-4">
     <h2>Appears in...</h2>
     <ul>
-      <% @texts.each do |text| %>
-          <li><%= link_to text.title, edit_text_path(text) %></li>
+      <% if @texts %>
+          <% @texts.each do |text| %>
+              <li><%= link_to text.title, edit_text_path(text) %></li>
+          <% end %>
       <% end %>
     </ul>
   </div>
