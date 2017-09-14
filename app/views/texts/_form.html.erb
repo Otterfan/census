@@ -1,82 +1,195 @@
+<label for="show-handles">Show handles</label>
+<input type="checkbox" id="show-handles" checked>
 <%= simple_form_for @text do |f| %>
-    <%= f.association :topic_author, :collection => @topic_authors %>
-    <%= f.input :title, as: :string %>
-    <%= f.association :section %>
-    <%= f.input :text_type, :collection => [['(a) translation book', 'translation_book'], ['(b) translation part', 'translation_part'], ['(c) study book', 'study_book'], ['(d) study part', 'study_part']] %>
-    <%= f.input :date, as: :string %>
-    <%= f.input :series, as: :string %>
-    <%= f.input :publisher, as: :string %>
-    <%= f.input :journal_title, as: :string %>
-    <%= f.input :place_of_publication, as: :string %>
-    <%= f.input :page_count, as: :string %>
-    <%= f.input :page_span, as: :string %>
-    <%= f.input :genre, as: :string %>
-    <%= f.input :is_illustrated, :collection  => [['Yes', true], ['No', false]], label: 'Illustrated?' %>
-
-    <%= f.input :contents %>
-    <%= f.input :url, as: :string %>
-    <%= f.input :sponsoring_organization, as: :string %>
-
-    <h2>Places of publication</h2>
-    <div id='publication_places'>
-      <%= f.simple_fields_for :publication_places do |place| %>
-          <%= render 'publication_place_fields', :f => place %>
-      <% end %>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.association :topic_author, :collection => @topic_authors %>
     </div>
-    <div class='links'>
-      <%= link_to_add_association 'add place', f, :publication_places, :class => 'row', :data => {'association-insertion-node' => '#publication_places', 'association-insertion-method' => 'append'} %>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.input :title, as: :string %>
     </div>
-
-    <h2>From</h2>
-    <%= f.input :parent_title, label: 'Title' %>
-    <%= f.input :parent_issue, label: 'Issue' %>
-
-    <h2>Citations</h2>
-    <div id='citations'>
-      <%= f.simple_fields_for :text_citations do |citation| %>
-          <%= render 'text_citation_fields', :f => citation %>
-      <% end %>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.association :section %>
+    </div>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.input :text_type, :collection => [['(a) translation book', 'translation_book'], ['(b) translation part', 'translation_part'], ['(c) study book', 'study_book'], ['(d) study part', 'study_part']] %>
+    </div>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.input :date, as: :string %>
+    </div>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.input :series, as: :string %>
+    </div>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.input :publisher, as: :string %>
+    </div>
+    <div>
+      <%= f.input :journal_title, as: :string %>
+    </div>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.input :place_of_publication, as: :string %>
+    </div>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.input :page_count, as: :string %>
+    </div>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.input :page_span, as: :string %>
+    </div>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.input :genre, as: :string %>
+    </div>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.input :is_illustrated, :collection => [['Yes', true], ['No', false]], label: 'Illustrated?' %>
+    </div>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.input :contents %>
+    </div>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.input :url, as: :string %>
+    </div>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.input :sponsoring_organization, as: :string %>
+    </div>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <h2>Places of publication</h2>
+    </div>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <div id='publication_places'>
+        <%= f.simple_fields_for :publication_places do |place| %>
+            <%= render 'publication_place_fields', :f => place %>
+        <% end %>
+      </div>
       <div class='links'>
-        <%= link_to_add_association 'add citation', f, :text_citations %>
+        <%= link_to_add_association 'add place', f, :publication_places, :class => 'row', :data => {'association-insertion-node' => '#publication_places', 'association-insertion-method' => 'append'} %>
       </div>
     </div>
 
-    <h2>ISBNs</h2>
-    <div id='isbns'>
-      <%= f.simple_fields_for :standard_numbers do |number| %>
-          <%= render 'standard_number_fields', :f => number %>
-      <% end %>
-      <div class='links'>
-        <%= link_to_add_association 'add ISBN', f, :standard_numbers %>
+
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <h2>From</h2>
+    </div>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.input :parent_title, label: 'Title' %>
+    </div>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.input :parent_issue, label: 'Issue' %>
+    </div>
+
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <h2>Citations</h2>
+    </div>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <div id='citations'>
+        <%= f.simple_fields_for :text_citations do |citation| %>
+            <%= render 'text_citation_fields', :f => citation %>
+        <% end %>
+        <div class='links'>
+          <%= link_to_add_association 'add citation', f, :text_citations %>
+        </div>
       </div>
     </div>
 
-    <h2>Components</h2>
-    <div id='components'>
-      <%= f.simple_fields_for :components do |component| %>
-          <%= render 'component_fields', :f => component %>
-      <% end %>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <h2>ISBNs</h2>
     </div>
-    <div class='links'>
-      <%= link_to_add_association 'add component', f, :components, :class => 'row', :data => {'association-insertion-node' => '#components', 'association-insertion-method' => 'append'} %>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <div id='isbns'>
+        <%= f.simple_fields_for :standard_numbers do |number| %>
+            <%= render 'standard_number_fields', :f => number %>
+        <% end %>
+        <div class='links'>
+          <%= link_to_add_association 'add ISBN', f, :standard_numbers %>
+        </div>
+      </div>
     </div>
 
-    <%= f.input :note %>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <h2>Components</h2>
+    </div>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <div id='components'>
+        <%= f.simple_fields_for :components do |component| %>
+            <%= render 'component_fields', :f => component %>
+        <% end %>
+      </div>
+      <div class='links'>
+        <%= link_to_add_association 'add component', f, :components, :class => 'row', :data => {'association-insertion-node' => '#components', 'association-insertion-method' => 'append'} %>
+      </div>
+    </div>
 
-    <h2>Original Greek text</h2>
-    <%= f.input :source %>
-    <%= f.input :original_greek_title %>
-    <%= f.input :original_greek_place_of_publication %>
-    <%= f.input :original_greek_publisher %>
-    <%= f.input :original_greek_date %>
-    <%= f.input :original_greek_isbn %>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.input :note %>
+    </div>
 
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <h2>Original Greek text</h2>
+    </div>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.input :source %>
+    </div>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.input :original_greek_title %>
+    </div>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.input :original_greek_place_of_publication %>
+    </div>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.input :original_greek_publisher %>
+    </div>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.input :original_greek_date %>
+    </div>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.input :original_greek_isbn %>
+    </div>
 
-    <h2>Other languages in text</h2>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <h2>Other languages in text</h2>
+    </div>
 
-    <%= f.association :intermediary_language %>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.association :intermediary_language %>
+    </div>
 
-    <%= f.input :is_bilingual, :collection => [['Yes', true], ['No', false]], label: 'Text is bilingual?' %>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.input :is_bilingual, :collection => [['Yes', true], ['No', false]], label: 'Text is bilingual?' %>
+    </div>
 
     <div id='other_text_languages'>
       <%= f.simple_fields_for :other_text_languages do |language| %>
@@ -87,9 +200,24 @@
       <%= link_to_add_association 'add language', f, :other_text_languages, :class => 'row', :data => {'association-insertion-node' => '#other_text_languages', 'association-insertion-method' => 'append'} %>
     </div>
 
-    <h2>Special</h2>
-    <%= f.input :special_location_of_item %>
-    <%= f.input :special_source_of_info %>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <h2>Special</h2>
+    </div>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.input :special_location_of_item %>
+    </div>
+    <div>
+      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
+      <%= f.input :special_source_of_info %>
+    </div>
 
     <%= f.button :submit %>
+
+    <script>
+        $('#show-handles').change(function(){
+            $('.handle').toggle();
+        });
+    </script>
 <% end %>

@@ -7,7 +7,6 @@ function ready() {
     BCSorter.addSort();
     BCSorter.sortBeforeSubmit();
 
-    var el = document.getElementById('edit_text_1');
-    var sortable = Sortable.create(el);
-    console.log('dion')
+    var el = document.getElementsByTagName('form');
+    var sortable = Sortable.create(el[0]);
 }
