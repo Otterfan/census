@@ -25,6 +25,11 @@ class TextsController < ApplicationController
     Person.where(topic_flag: true).each do |person|
       @topic_authors.push([person.full_name, person.id])
     end
+
+    @journals = []
+    Journal.limit(1000).each do |journal|
+      @journals.push([journal.title, journal.id])
+    end
   end
 
   # POST /texts
@@ -76,7 +81,8 @@ class TextsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def text_params
     params.require(:text).permit(:title, :source, :date, :publisher, :place_of_publication, :note, :original, :census_id,
-                                 :parent_title, :parent_issue,
+                                 :parent_title, :issue_number,
+                                 :issue_volume, :issue_season_month,
                                  :original_greek_title, :original_greek_publisher, :original_greek_date,
                                  :original_greek_isbn, :original_greek_edition, :original_greek_place_of_publication,
                                  :is_bilingual, :is_illustrated, :format, :text_type, :page_count,
@@ -84,7 +90,7 @@ class TextsController < ApplicationController
                                  :url, :contents, :sponsoring_organization,
                                  :special_location_of_item, :special_source_of_info,
                                  :intermediary_language_id, :section_id, :status_id, :topic_author_id,
-                                 :publication_places_id,
+                                 :publication_places_id, :journal_id,
                                  publication_places_attributes: [:id, :place_id, :_destroy],
                                  text_citations_attributes: [:id, :role, :name, :_destroy],
                                  standard_numbers_attributes: [:id, :value, :_destroy],

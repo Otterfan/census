@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170908213333) do
+ActiveRecord::Schema.define(version: 20171003214703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,17 @@ ActiveRecord::Schema.define(version: 20170908213333) do
     t.index ["al3_code"], name: "index_countries_on_al3_code"
     t.index ["name"], name: "index_countries_on_name"
     t.index ["num_code"], name: "index_countries_on_num_code"
+  end
+
+  create_table "journals", force: :cascade do |t|
+    t.text "title"
+    t.string "issn"
+    t.text "description"
+    t.bigint "place_id"
+    t.text "sort_title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["place_id"], name: "index_journals_on_place_id"
   end
 
   create_table "languages", force: :cascade do |t|
@@ -152,7 +163,7 @@ ActiveRecord::Schema.define(version: 20170908213333) do
     t.text "page_span"
     t.bigint "status_id"
     t.string "parent_title"
-    t.string "parent_issue"
+    t.string "issue_number"
     t.string "genre"
     t.string "journal_title"
     t.string "series"
@@ -175,8 +186,12 @@ ActiveRecord::Schema.define(version: 20170908213333) do
     t.text "sponsoring_organization"
     t.text "special_location_of_item"
     t.text "special_source_of_info"
+    t.bigint "journal_id"
+    t.string "issue_volume"
+    t.string "issue_season_month"
     t.index ["country_id"], name: "index_texts_on_country_id"
     t.index ["intermediary_language_id"], name: "index_texts_on_intermediary_language_id"
+    t.index ["journal_id"], name: "index_texts_on_journal_id"
     t.index ["language_id"], name: "index_texts_on_language_id"
     t.index ["original_greek_title"], name: "index_texts_on_original_greek_title"
     t.index ["section_id"], name: "index_texts_on_section_id"
@@ -210,6 +225,7 @@ ActiveRecord::Schema.define(version: 20170908213333) do
   add_foreign_key "standard_numbers", "texts"
   add_foreign_key "text_citations", "texts"
   add_foreign_key "texts", "countries"
+  add_foreign_key "texts", "journals"
   add_foreign_key "texts", "languages"
   add_foreign_key "texts", "languages", column: "intermediary_language_id"
   add_foreign_key "texts", "people", column: "topic_author_id"

@@ -1,3 +1,4 @@
+=begin
 require 'json'
 require 'pathname'
 
@@ -118,3 +119,5 @@ else
   build_texts(entries, people, statuses)
   build_users
 end
+=end
+

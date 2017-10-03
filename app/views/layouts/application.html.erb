@@ -23,6 +23,7 @@
         <li class="<%= 'active' if in_current_path? 'text' %>"><a href="/texts">Texts <span class="sr-only">(current)</span></a></li>
         <li class="<%= 'active' if in_current_path? 'author' %>"><a href="/authors">Authors <span class="sr-only">(current)</span></a></li>
         <li class="<%= 'active' if in_current_path? 'place' %>"><a href="/places">Places <span class="sr-only">(current)</span></a></li>
+        <li class="<%= 'active' if in_current_path? 'place' %>"><a href="/journals">Journals<span class="sr-only">(current)</span></a></li>
       </ul>
       <p class="navbar-text navbar-right">
         <% if user_signed_in? %>

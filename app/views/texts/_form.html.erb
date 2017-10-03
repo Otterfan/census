@@ -80,6 +80,24 @@
       </div>
     </div>
 
+    <fieldset class="journal-fields">
+      <legend>
+        Journal
+      </legend>
+      <div>
+        <%= f.association :journal, :collection => Journal.order('sort_title asc') %>
+      </div>
+      <div>
+        <%= f.input :issue_volume, label: 'Volume' %>
+      </div>
+      <div>
+        <%= f.input :issue_number, label: 'Issue' %>
+      </div>
+      <div>
+        <%= f.input :issue_season_month, label: 'Season/Month' %>
+      </div>
+    </fieldset>
+
 
     <div>
       <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
@@ -88,10 +106,6 @@
     <div>
       <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
       <%= f.input :parent_title, label: 'Title' %>
-    </div>
-    <div>
-      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
-      <%= f.input :parent_issue, label: 'Issue' %>
     </div>
 
     <div>
