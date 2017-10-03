@@ -25,7 +25,7 @@ class JournalsController < ApplicationController
   # POST /journals.json
   def create
     @journal = Journal.new(journal_params)
-    @journal.sort_title = journal_params[:title].sub(/^The */, '').sub(/^An */, '').sub(/^A */, '')
+    @journal.sort_title = journal_params[:title].sub(/^The +/, '').sub(/^An +/, '').sub(/^A +/, '')
 
     respond_to do |format|
       if @journal.save
@@ -42,7 +42,7 @@ class JournalsController < ApplicationController
   # PATCH/PUT /journals/1.json
   def update
     respond_to do |format|
-      @journal.sort_title = journal_params[:title].sub(/^The */, '').sub(/^An */, '').sub(/^A */, '')
+      @journal.sort_title = journal_params[:title].sub(/^The +/, '').sub(/^An +/, '').sub(/^A +/, '')
       @journal.save
       if @journal.update(journal_params)
         format.html { redirect_to @journal, notice: 'Journal was successfully updated.' }
