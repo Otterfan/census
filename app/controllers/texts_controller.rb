@@ -90,7 +90,7 @@ class TextsController < ApplicationController
                                  :url, :contents, :sponsoring_organization,
                                  :special_location_of_item, :special_source_of_info,
                                  :intermediary_language_id, :section_id, :status_id, :topic_author_id,
-                                 :publication_places_id, :journal_id,
+                                 :publication_places_id, :journal_id, :volume_id,
                                  publication_places_attributes: [:id, :place_id, :_destroy],
                                  text_citations_attributes: [:id, :role, :name, :_destroy],
                                  standard_numbers_attributes: [:id, :value, :_destroy],

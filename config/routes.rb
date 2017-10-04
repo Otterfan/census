@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :volumes
   resources :journals
   resources :places
   devise_for :users

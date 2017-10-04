@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171003214703) do
+ActiveRecord::Schema.define(version: 20171004161614) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -189,6 +189,7 @@ ActiveRecord::Schema.define(version: 20171003214703) do
     t.bigint "journal_id"
     t.string "issue_volume"
     t.string "issue_season_month"
+    t.bigint "volume_id"
     t.index ["country_id"], name: "index_texts_on_country_id"
     t.index ["intermediary_language_id"], name: "index_texts_on_intermediary_language_id"
     t.index ["journal_id"], name: "index_texts_on_journal_id"
@@ -197,6 +198,7 @@ ActiveRecord::Schema.define(version: 20171003214703) do
     t.index ["section_id"], name: "index_texts_on_section_id"
     t.index ["status_id"], name: "index_texts_on_status_id"
     t.index ["topic_author_id"], name: "index_texts_on_topic_author_id"
+    t.index ["volume_id"], name: "index_texts_on_volume_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -217,6 +219,15 @@ ActiveRecord::Schema.define(version: 20171003214703) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "volumes", force: :cascade do |t|
+    t.text "title"
+    t.text "author"
+    t.string "date"
+    t.text "sort_title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "component_citations", "components"
   add_foreign_key "component_citations", "people"
   add_foreign_key "component_citations", "roles"
@@ -231,4 +242,5 @@ ActiveRecord::Schema.define(version: 20171003214703) do
   add_foreign_key "texts", "people", column: "topic_author_id"
   add_foreign_key "texts", "sections"
   add_foreign_key "texts", "statuses"
+  add_foreign_key "texts", "volumes"
 end

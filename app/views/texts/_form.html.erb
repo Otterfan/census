@@ -96,14 +96,14 @@
     </fieldset>
 
 
-    <div>
-      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
-      <h2>From</h2>
-    </div>
-    <div>
-      <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
-      <%= f.input :parent_title, label: 'Title' %>
-    </div>
+    <fieldset class="volume-fields">
+      <legend>
+        Volume
+      </legend>
+      <div>
+        <%= f.association :volume, :collection => Volume.order('sort_title asc') %>
+      </div>
+    </fieldset>
 
     <div>
       <div class="handle"><i class="glyphicon glyphicon-move"></i></div>
