@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171004161614) do
+ActiveRecord::Schema.define(version: 20171004174637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -226,6 +226,10 @@ ActiveRecord::Schema.define(version: 20171004161614) do
     t.text "sort_title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "editor"
+    t.string "conference_title"
+    t.string "conference_place"
+    t.string "conference_date"
   end
 
   add_foreign_key "component_citations", "components"

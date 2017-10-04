@@ -22,6 +22,8 @@ class Text < ApplicationRecord
 
   paginates_per 60
 
+  default_scope {order("id ASC")}
+
   def next
     Text.where(["census_id > ?", census_id]).order(census_id: :asc).first
   end
