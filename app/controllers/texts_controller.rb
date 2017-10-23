@@ -30,6 +30,11 @@ class TextsController < ApplicationController
     Journal.limit(1000).each do |journal|
       @journals.push([journal.title, journal.id])
     end
+
+    @comment = Comment.new
+    @comment.text = @text
+
+    @user = current_user
   end
 
   # POST /texts

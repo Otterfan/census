@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171023204752) do
+ActiveRecord::Schema.define(version: 20171023215420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: :cascade do |t|
+    t.text "value"
+    t.bigint "user_id"
+    t.bigint "text_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["text_id"], name: "index_comments_on_text_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
 
   create_table "component_citations", force: :cascade do |t|
     t.bigint "component_id"
@@ -243,6 +253,8 @@ ActiveRecord::Schema.define(version: 20171023204752) do
     t.string "conference_date"
   end
 
+  add_foreign_key "comments", "texts"
+  add_foreign_key "comments", "users"
   add_foreign_key "component_citations", "components"
   add_foreign_key "component_citations", "people"
   add_foreign_key "component_citations", "roles"

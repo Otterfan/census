@@ -9,6 +9,8 @@ class Text < ApplicationRecord
   has_many :text_citations, inverse_of: :text, :dependent => :delete_all
   has_many :standard_numbers, inverse_of: :text, :dependent => :delete_all
   has_many :components, inverse_of: :text, :dependent => :delete_all
+  has_many :comments, inverse_of: :text, :dependent => :delete_all
+
 
   has_many :other_text_languages, inverse_of: :text, :dependent => :delete_all
   has_many :languages, :through => :other_text_languages, :class_name => 'Language'
