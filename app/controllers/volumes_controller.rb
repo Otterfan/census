@@ -29,7 +29,7 @@ class VolumesController < ApplicationController
 
     respond_to do |format|
       if @volume.save
-        format.html { redirect_to @volume, notice: 'Volume was successfully created.' }
+        format.html { redirect_to edit_volume_path(@volume), notice: 'Volume was successfully created.' }
         format.json { render :show, status: :created, location: @volume }
       else
         format.html { render :new }
@@ -46,7 +46,7 @@ class VolumesController < ApplicationController
       @volume.save
 
       if @volume.update(volume_params)
-        format.html { redirect_to @volume, notice: 'Volume was successfully updated.' }
+        format.html { redirect_to edit_volume_path(@volume), notice: 'Volume was successfully updated.' }
         format.json { render :show, status: :ok, location: @volume }
       else
         format.html { render :edit }
