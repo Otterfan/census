@@ -3,4 +3,6 @@ class Person < ApplicationRecord
 
   paginates_per 60
 
+  has_paper_trail
+
 end

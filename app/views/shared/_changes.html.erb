@@ -1,0 +1,12 @@
+<h3>Changes</h3>
+<ul>
+  <% versions.each do |version| %>
+      <li class="change"><span class="date"><%= version.created_at %> — <%= version.whodunnit %></span><br>
+        <% changes(version).each do |change| %>
+            <span class="field"><%= change[:field] %></span>
+            <span class="from"><%= change[:from] %></span> >
+            <span class="to"><%= change[:to] %></span><br>
+        <% end %>
+      </li>
+  <% end %>
+</ul>

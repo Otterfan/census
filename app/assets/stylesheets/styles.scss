@@ -173,3 +173,19 @@ fieldset legend {
   position: absolute;
   top: 0;
 }
+
+.change {
+  margin-bottom: 1em;
+
+  .date {
+    color: #999;
+  }
+
+  .field {
+    font-weight: bold;
+  }
+
+  .from {
+    text-decoration: line-through;
+  }
+}

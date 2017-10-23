@@ -24,6 +24,8 @@ class Text < ApplicationRecord
 
   default_scope {order("id ASC")}
 
+  has_paper_trail
+
   def next
     Text.where(["census_id > ?", census_id]).order(census_id: :asc).first
   end

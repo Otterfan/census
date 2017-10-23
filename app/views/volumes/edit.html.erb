@@ -1,6 +1,9 @@
 <h1>Editing Volume</h1>
 
-<%= render 'form', volume: @volume %>
+<div class="col-md-7">
+  <%= render 'form', volume: @volume %>
+</div>
 
-<%= link_to 'Show', @volume %> |
-<%= link_to 'Back', volumes_path %>
+<div class="col-md-5">
+  <%= render partial: 'shared/changes', locals: {versions: @volume.versions} %>
+</div>

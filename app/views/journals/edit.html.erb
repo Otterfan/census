@@ -1,6 +1,8 @@
 <h1>Editing Journal</h1>
 
+<div class="col-md-7">
 <%= render 'form', journal: @journal %>
-
-<%= link_to 'Show', @journal %> |
-<%= link_to 'Back', journals_path %>
+</div>
+<div class="col-md-5">
+  <%= render partial: 'shared/changes', locals: {versions: @journal.versions} %>
+</div>

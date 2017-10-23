@@ -19,4 +19,23 @@ module ApplicationHelper
 
     markdown.render(text).html_safe
   end
+
+
+  def changes(version)
+    changes = []
+    version.changeset.each do |key, val|
+      from_set = val[0] != '' && ! val[0].nil?
+      to_set = val[1] != '' && ! val[1].nil?
+
+      if key != 'updated_at' && (from_set || to_set)
+        change = {
+            field: key,
+            from: val[0],
+            to: val[1],
+        }
+        changes.push(change)
+      end
+    end
+    changes
+  end
 end
