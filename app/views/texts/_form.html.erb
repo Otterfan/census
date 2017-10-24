@@ -185,7 +185,12 @@
       <%= f.input :special_source_of_info %>
     </div>
 
+    <div>
+      <%= f.association :status %>
+    </div>
+
     <%= f.button :submit %>
+
 
     <script>
         $('#show-handles').change(function(){
