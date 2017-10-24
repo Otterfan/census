@@ -1,7 +1,6 @@
 BCPinner = (function () {
     return {
         pin: function pin_original() {
-            console.log('pinned');
             $('.original').affix({
                 offset: {
                     top: 50,
