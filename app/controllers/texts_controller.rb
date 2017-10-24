@@ -12,10 +12,14 @@ class TextsController < ApplicationController
   # GET /texts/1
   # GET /texts/1.json
   def show
+    respond_to do |format|
+      format.json {render json: @text.comments}
+    end
   end
 
   # GET /texts/new
   def new
+
     @text = Text.new
   end
 

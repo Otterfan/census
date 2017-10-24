@@ -26,9 +26,13 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new(comment_params)
 
+    @email = @comment.user.email
+
+    response = {comment: @comment, email: @email}
+
     respond_to do |format|
       if @comment.save
-        format.json { render :show, status: :created, location: @comment }
+        format.json { render json: response, status: :created, location: @comment }
       else
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end

@@ -16,11 +16,14 @@
         <%= f.text_area :value, placeholder: 'Squirrel', autofocus: true, class: 'title-field' %>
         <%= hidden_field_tag 'comment[user_id]', @user.id %>
         <%= hidden_field_tag 'comment[text_id]', @text.id %>
-        <%= f.submit '', class: 'btn home-add without-entry' %>
+        <input type="hidden"
+               value="<%= form_authenticity_token() %>"
+               name="authenticity_token" id="comment_auth_token"/>
+        <%= f.submit 'Add comment', class: 'btn home-add without-entry' %>
     <% end %>
-    <ul>
+    <ul class="list-group text-comments">
       <% @text.comments.reverse.each do |comment| %>
-          <li class="comment">
+          <li class="list-group-item comment">
             <div class="the-text"><%= comment.value %></div>
             <div class="comment-metadata">
               <span class="the-user"><%= comment.user.email %></span>

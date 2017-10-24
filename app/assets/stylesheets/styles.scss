@@ -196,3 +196,21 @@ fieldset legend {
   box-shadow: 5px 5px 10px 0px rgba(136,136,136,0.78);
   z-index: 2
 }
+
+.text-comments {
+  .comment-metadata {
+    color: #999
+  }
+
+  .the-title {
+  }
+}
+.new_comment {
+  .title-field {
+    width: 75%;
+  }
+
+  .btn {
+    margin-bottom: 25px
+  }
+}
