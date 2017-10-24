@@ -6,7 +6,7 @@ class TextsController < ApplicationController
   # GET /texts
   # GET /texts.json
   def index
-    @texts = Text.order(:census_id).page(params[:page])
+    @texts = Text.order(:id).page(params[:page])
   end
 
   # GET /texts/1

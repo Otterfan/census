@@ -24,8 +24,6 @@ class Text < ApplicationRecord
 
   paginates_per 60
 
-  default_scope {order("id ASC")}
-
   has_paper_trail
 
   def next
