@@ -191,9 +191,9 @@ fieldset legend {
 }
 
 .affix {
-  -webkit-box-shadow: 5px 5px 10px 0 rgba(136,136,136,0.78);
-  -moz-box-shadow: 5px 5px 10px 0 rgba(136,136,136,0.78);
-  box-shadow: 5px 5px 10px 0px rgba(136,136,136,0.78);
+  -webkit-box-shadow: 5px 5px 10px 0 rgba(136, 136, 136, 0.78);
+  -moz-box-shadow: 5px 5px 10px 0 rgba(136, 136, 136, 0.78);
+  box-shadow: 5px 5px 10px 0px rgba(136, 136, 136, 0.78);
   z-index: 2
 }
 
@@ -205,6 +205,7 @@ fieldset legend {
   .the-title {
   }
 }
+
 .new_comment {
   .title-field {
     width: 75%;
@@ -227,4 +228,15 @@ a:hover {
 
 a:visited {
   color: #337ab7;
+}
+
+.original #collapse-original-button {
+  position: relative;
+  left: 101%;
+  top: -25px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #656963;
+  float: left;
+  width: 0;
 }

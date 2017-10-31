@@ -9,9 +9,14 @@ function ready() {
     var sortable = Sortable.create(el[0]);
 
     var comment_form = $('#new-comment-form');
-    comment_form.submit(function(event){
+    comment_form.submit(function (event) {
         event.preventDefault();
         BCComments.add();
         return false;
+    });
+
+    $('#collapse-original-button').click(function () {
+        console.log('happened');
+        $('#collapse-original-button span').toggleClass('glyphicon-collapse-down glyphicon-collapse-up');
     });
 }
