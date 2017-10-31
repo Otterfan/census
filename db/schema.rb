@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171024182406) do
+ActiveRecord::Schema.define(version: 20171031192310) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -201,6 +201,8 @@ ActiveRecord::Schema.define(version: 20171024182406) do
     t.string "issue_volume"
     t.string "issue_season_month"
     t.bigint "volume_id"
+    t.string "issue_editor"
+    t.string "issue_title"
     t.index ["country_id"], name: "index_texts_on_country_id"
     t.index ["intermediary_language_id"], name: "index_texts_on_intermediary_language_id"
     t.index ["journal_id"], name: "index_texts_on_journal_id"
