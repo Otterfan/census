@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171107154510) do
+ActiveRecord::Schema.define(version: 20171107164057) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 20171107154510) do
   create_table "journals", force: :cascade do |t|
     t.text "title"
     t.string "issn"
-    t.text "description"
+    t.text "indexed_range"
     t.bigint "place_id"
     t.text "sort_title"
     t.datetime "created_at", null: false
