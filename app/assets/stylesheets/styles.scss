@@ -106,6 +106,17 @@ h2 {
   }
 }
 
+.edit_text {
+  .census-id {
+    font-size: 14px;
+    margin-bottom: 15px;
+
+    .census-id-label {
+      font-weight: bold;
+    }
+  }
+}
+
 .topic-author {
   font-size: 20px;
   font-weight: 600;

@@ -1,4 +1,7 @@
+
+
 <%= simple_form_for @text do |f| %>
+    <div class="census-id"><span class="census-id-label">Census ID</span> <%= @text.census_id %></div>
     <div>
       <%= f.association :topic_author, :collection => @topic_authors %>
     </div>
