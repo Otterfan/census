@@ -14,6 +14,9 @@
 
         <%= f.input :domicile, as: :string %>
 
+        <%= f.input :viaf %>
+        <%= f.input :loc, label: 'Library of Congress' %>
+        <%= f.input :greek_authority, label: 'Greek authority name' %>
         <%= f.input :alternate_name, as: :string %>
 
         <%= f.button :submit %>

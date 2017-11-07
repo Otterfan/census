@@ -28,11 +28,11 @@ class PeopleController < ApplicationController
 
     respond_to do |format|
       if @person.save
-        format.html { redirect_to @person, notice: 'Person was successfully created.' }
-        format.json { render :show, status: :created, location: @person }
+        format.html {redirect_to @person, notice: 'Person was successfully created.'}
+        format.json {render :show, status: :created, location: @person}
       else
-        format.html { render :new }
-        format.json { render json: @person.errors, status: :unprocessable_entity }
+        format.html {render :new}
+        format.json {render json: @person.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -42,11 +42,11 @@ class PeopleController < ApplicationController
   def update
     respond_to do |format|
       if @person.update(person_params)
-        format.html { redirect_to  edit_person_path(@person), notice: 'Person was successfully updated.' }
-        format.json { render :show, status: :ok, location: @person }
+        format.html {redirect_to edit_person_path(@person), notice: 'Person was successfully updated.'}
+        format.json {render :show, status: :ok, location: @person}
       else
-        format.html { render :edit }
-        format.json { render json: @person.errors, status: :unprocessable_entity }
+        format.html {render :edit}
+        format.json {render json: @person.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -56,19 +56,20 @@ class PeopleController < ApplicationController
   def destroy
     @person.destroy
     respond_to do |format|
-      format.html { redirect_to edit_person_path(@person), notice: 'Person was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html {redirect_to edit_person_path(@person), notice: 'Person was successfully destroyed.'}
+      format.json {head :no_content}
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_person
-      @person = Person.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_person
+    @person = Person.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def person_params
-      params.require(:person).permit(:full_name, :greek_full_name, :first_name, :last_name, :birth, :death, :greek_first_name, :greek_last_name, :alternate_name)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def person_params
+    params.require(:person).permit(:full_name, :greek_full_name, :first_name, :last_name, :birth, :death,
+                                   :greek_first_name, :greek_last_name, :alternate_name, :viaf, :loc, :greek_authority)
+  end
 end

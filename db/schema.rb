@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171107190644) do
+ActiveRecord::Schema.define(version: 20171107211325) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,6 +99,9 @@ ActiveRecord::Schema.define(version: 20171107190644) do
     t.boolean "topic_flag"
     t.string "domicile"
     t.string "alternate_name"
+    t.string "viaf"
+    t.string "loc"
+    t.string "greek_authority"
     t.index ["topic_flag"], name: "index_people_on_topic_flag"
   end
 
