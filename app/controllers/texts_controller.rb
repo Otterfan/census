@@ -98,7 +98,7 @@ class TextsController < ApplicationController
                                  :issue_volume, :issue_season_month,
                                  :original_greek_title, :original_greek_publisher, :original_greek_date,
                                  :original_greek_isbn, :original_greek_edition, :original_greek_place_of_publication,
-                                 :is_bilingual, :is_illustrated, :format, :text_type, :page_count,
+                                 :is_bilingual, :illustrations_noted, :format, :text_type, :page_count,
                                  :series, :journal_title, :genre, :page_span,
                                  :url, :contents, :sponsoring_organization,
                                  :issue_title, :issue_editor, :abstract,

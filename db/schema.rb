@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171107153413) do
+ActiveRecord::Schema.define(version: 20171107154510) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -192,7 +192,7 @@ ActiveRecord::Schema.define(version: 20171107153413) do
     t.string "original_greek_isbn"
     t.string "original_greek_edition"
     t.bigint "country_id"
-    t.boolean "is_illustrated"
+    t.boolean "illustrations_noted"
     t.text "url"
     t.text "contents"
     t.text "sponsoring_organization"
