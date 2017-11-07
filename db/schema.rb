@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171107164057) do
+ActiveRecord::Schema.define(version: 20171107164947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -194,7 +194,6 @@ ActiveRecord::Schema.define(version: 20171107164057) do
     t.bigint "country_id"
     t.boolean "illustrations_noted"
     t.text "url"
-    t.text "contents"
     t.text "sponsoring_organization"
     t.text "special_location_of_item"
     t.text "special_source_of_info"

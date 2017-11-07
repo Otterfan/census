@@ -100,7 +100,7 @@ class TextsController < ApplicationController
                                  :original_greek_isbn, :original_greek_edition, :original_greek_place_of_publication,
                                  :is_bilingual, :illustrations_noted, :format, :text_type, :page_count,
                                  :series, :journal_title, :genre, :page_span,
-                                 :url, :contents, :sponsoring_organization,
+                                 :url, :sponsoring_organization,
                                  :issue_title, :issue_editor, :abstract,
                                  :special_location_of_item, :special_source_of_info,
                                  :intermediary_language_id, :section_id, :status_id, :topic_author_id,
