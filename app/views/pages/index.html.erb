@@ -21,7 +21,7 @@
           <%= link_to text.title, edit_text_path(text) %>
           <div class="change-medatada">
             <% if text.versions.last %>
-                <span class="date"><%= text.versions.last.changeset['updated_at'][0].to_formatted_s(:short) %></span>
+                <span class="date"><%= text.versions.last.created_at.to_formatted_s(:short) %></span>
                 <span class="who"><%= text.versions.last.whodunnit %></span>
             <% end %>
           </div>
