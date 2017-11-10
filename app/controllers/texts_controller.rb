@@ -102,6 +102,8 @@ class TextsController < ApplicationController
                                  :series, :journal_title, :genre, :page_span,
                                  :url, :sponsoring_organization, :seen_in_person,
                                  :issue_title, :issue_editor, :abstract,
+                                 :authors_name_from_source, :editorial_annotation,
+                                 :physical_description, :original_greek_collection,
                                  :special_location_of_item, :special_source_of_info,
                                  :intermediary_language_id, :section_id, :status_id, :topic_author_id,
                                  :publication_places_id, :journal_id, :volume_id,
