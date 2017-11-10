@@ -2,48 +2,45 @@
 
 <%= simple_form_for @text do |f| %>
     <div class="census-id"><span class="census-id-label">Census ID</span> <%= @text.census_id %></div>
-    <div>
-      <%= f.association :topic_author, :collection => @topic_authors %>
-    </div>
-    <div>
-      <%= f.input :title, as: :string %>
-    </div>
+
     <div>
       <%= f.association :section %>
     </div>
+
     <div>
       <%= f.input :text_type, :collection => [['(a) translation book', 'translation_book'], ['(b) translation part', 'translation_part'], ['(c) study book', 'study_book'], ['(d) study part', 'study_part']] %>
     </div>
+
     <div>
-      <%= f.input :date, as: :string %>
+      <%= f.association :topic_author, :collection => @topic_authors %>
     </div>
+
+    <!-- Author’s name as it appears in this source -->
+
+    <div>
+      <%= f.input :title, as: :string %>
+    </div>
+
+    <div>
+      <h2>Citations</h2>
+    </div>
+    <div>
+      <div id='citations'>
+        <%= f.simple_fields_for :text_citations do |citation| %>
+            <%= render 'text_citation_fields', :f => citation %>
+        <% end %>
+        <div class='links'>
+          <%= link_to_add_association 'add citation', f, :text_citations %>
+        </div>
+      </div>
+    </div>
+
     <div>
       <%= f.input :series, as: :string %>
     </div>
-    <div>
-      <%= f.input :publisher, as: :string %>
-    </div>
-    <div>
-      <%= f.input :place_of_publication, as: :string %>
-    </div>
-    <div>
-      <%= f.input :page_count, as: :string %>
-    </div>
-    <div>
-      <%= f.input :page_span, as: :string %>
-    </div>
-    <div>
-      <%= f.input :genre, as: :string %>
-    </div>
-    <div>
-      <%= f.input :illustrations_noted, :collection => [['Yes', true], ['No', false]], label: 'Illustrations noted?' %>
-    </div>
-    <div>
-      <%= f.input :url, as: :string %>
-    </div>
-    <div>
-      <%= f.input :sponsoring_organization, as: :string %>
-    </div>
+
+    <!-- Sponsoring organization -->
+
     <div>
       <h2>Places of publication</h2>
     </div>
@@ -56,6 +53,38 @@
       <div class='links'>
         <%= link_to_add_association 'add place', f, :publication_places, :class => 'row', :data => {'association-insertion-node' => '#publication_places', 'association-insertion-method' => 'append'} %>
       </div>
+    </div>
+
+    <div>
+      <%= f.input :publisher, as: :string %>
+    </div>
+
+    <div>
+      <%= f.input :date, as: :string %>
+    </div>
+
+    <div>
+      <%= f.input :page_count, as: :string %>
+    </div>
+
+    <div>
+      <%= f.input :page_span, as: :string %>
+    </div>
+
+    <div>
+      <%= f.input :is_bilingual, :collection => [['Yes', true], ['No', false]], label: 'Text is bilingual?' %>
+    </div>
+
+    <div>
+      <%= f.input :genre, as: :string %>
+    </div>
+
+    <div>
+      <%= f.input :illustrations_noted, :collection => [['Yes', true], ['No', false]], label: 'Illustrations noted?' %>
+    </div>
+
+    <div>
+      <%= f.input :url, as: :string %>
     </div>
 
     <fieldset class="journal-fields">
@@ -82,6 +111,10 @@
       </div>
     </fieldset>
 
+    <div>
+      <%= f.input :sponsoring_organization, as: :string %>
+    </div>
+
 
     <fieldset class="volume-fields">
       <legend>
@@ -91,20 +124,6 @@
         <%= f.association :volume, :collection => Volume.order('sort_title asc') %>
       </div>
     </fieldset>
-
-    <div>
-      <h2>Citations</h2>
-    </div>
-    <div>
-      <div id='citations'>
-        <%= f.simple_fields_for :text_citations do |citation| %>
-            <%= render 'text_citation_fields', :f => citation %>
-        <% end %>
-        <div class='links'>
-          <%= link_to_add_association 'add citation', f, :text_citations %>
-        </div>
-      </div>
-    </div>
 
     <div>
       <h2>ISBNs</h2>
@@ -138,8 +157,12 @@
       <%= f.input :abstract %>
     </div>
 
+    <!-- Editorial annotation -->
+
+    <!-- Physical description -->
+
     <div>
-      <%= f.input :note %>
+      <%= f.input :note, label: 'Other notes' %>
     </div>
 
     <div>
@@ -151,6 +174,9 @@
     <div>
       <%= f.input :original_greek_title, label: 'Originial Greek title' %>
     </div>
+
+    <!-- Original Greek collection -->
+
     <div>
       <%= f.input :original_greek_place_of_publication, label: 'Originial Greek place of publication' %>
     </div>
@@ -172,9 +198,6 @@
       <%= f.association :intermediary_language %>
     </div>
 
-    <div>
-      <%= f.input :is_bilingual, :collection => [['Yes', true], ['No', false]], label: 'Text is bilingual?' %>
-    </div>
 
     <div id='other_text_languages'>
       <%= f.simple_fields_for :other_text_languages do |language| %>
@@ -203,7 +226,6 @@
     </div>
 
     <%= f.button :submit %>
-
 
     <script>
         $('#show-handles').change(function(){
