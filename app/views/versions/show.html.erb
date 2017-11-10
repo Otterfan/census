@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Item type:</strong>
+  <%= @version.item_type %>
+</p>
+
+<p>
+  <strong>Item:</strong>
+  <%= link_to("#{@version.item_type} #{@version.item_id}", @changed_url) %>
+</p>
+
+<h3>Changes</h3>
+<% @changes.each_with_index do |(key, value), index| %>
+    <p>
+      <strong><%= key %></strong>
+    <div class="change-from">
+      <span class="change-label">From</span>
+      <span class="change-value"><%= value[0] %></span>
+    </div>
+    <div class="change-to">
+      <span class="change-label">To</span>
+      <span class="change-value"><%= value[1] %></span>
+    </div>
+    </p>
+<% end %>
+
+<p>
+  <strong>Event:</strong>
+  <%= @version.event %>
+</p>
+
+<p>
+  <strong>Created at:</strong>
+  <%= @version.created_at %>
+</p>
+
+<p>
+  <strong>Object changes:</strong>
+  <%= @version.object_changes %>
+</p>
+
+<%= link_to 'Back', versions_path %>

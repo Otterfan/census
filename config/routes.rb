@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :versions, :path => '/changes', :only => [:index, :show]
   resources :comments
   resources :volumes
   resources :journals
