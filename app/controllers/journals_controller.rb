@@ -1,5 +1,6 @@
 class JournalsController < ApplicationController
   before_action :set_journal, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /journals
   # GET /journals.json

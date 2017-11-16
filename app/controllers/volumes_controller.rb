@@ -1,5 +1,6 @@
 class VolumesController < ApplicationController
   before_action :set_volume, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /volumes
   # GET /volumes.json
