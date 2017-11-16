@@ -108,7 +108,7 @@ class TextsController < ApplicationController
                                  :intermediary_language_id, :section_id, :status_id, :topic_author_id,
                                  :publication_places_id, :journal_id, :volume_id,
                                  publication_places_attributes: [:id, :place_id, :_destroy],
-                                 text_citations_attributes: [:id, :role, :name, :_destroy],
+                                 text_citations_attributes: [:id, :role, :name, :from_language, :to_language, :_destroy],
                                  standard_numbers_attributes: [:id, :value, :_destroy],
                                  components_attributes: [:id, :title, :pages, :ordinal, :material_type, :text_type,
                                                          :genre, :_destroy]
