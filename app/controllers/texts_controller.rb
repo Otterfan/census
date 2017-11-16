@@ -110,7 +110,8 @@ class TextsController < ApplicationController
                                  publication_places_attributes: [:id, :place_id, :_destroy],
                                  text_citations_attributes: [:id, :role, :name, :_destroy],
                                  standard_numbers_attributes: [:id, :value, :_destroy],
-                                 components_attributes: [:id, :title, :pages, :ordinal, :_destroy]
+                                 components_attributes: [:id, :title, :pages, :ordinal, :material_type, :text_type,
+                                                         :genre, :_destroy]
     )
   end
 end
