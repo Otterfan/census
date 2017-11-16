@@ -19,6 +19,7 @@ class PeopleController < ApplicationController
 
   # GET /people/1/edit
   def edit
+    @texts = @person.texts
   end
 
   # POST /people

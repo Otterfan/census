@@ -20,6 +20,7 @@ class VolumesController < ApplicationController
 
   # GET /volumes/1/edit
   def edit
+    @texts = @volume.texts
   end
 
   # POST /volumes

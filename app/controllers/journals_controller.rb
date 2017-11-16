@@ -20,6 +20,7 @@ class JournalsController < ApplicationController
 
   # GET /journals/1/edit
   def edit
+    @texts = @journal.texts
   end
 
   # POST /journals
