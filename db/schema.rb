@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171116210151) do
+ActiveRecord::Schema.define(version: 20171116215054) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 20171116210151) do
     t.text "sort_title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "publishing_authority"
+    t.string "sponsoring_organization"
     t.index ["place_id"], name: "index_journals_on_place_id"
   end
 
