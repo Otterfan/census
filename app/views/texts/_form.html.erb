@@ -10,6 +10,10 @@
     </div>
 
     <div>
+      <%= f.input :material_type, as: :string %>
+    </div>
+
+    <div>
       <%= f.association :topic_author, :collection => @topic_authors %>
     </div>
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171116215054) do
+ActiveRecord::Schema.define(version: 20171129193316) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,13 +27,11 @@ ActiveRecord::Schema.define(version: 20171116215054) do
 
   create_table "component_citations", force: :cascade do |t|
     t.bigint "component_id"
-    t.bigint "person_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "role_id"
+    t.string "name"
+    t.string "role"
     t.index ["component_id"], name: "index_component_citations_on_component_id"
-    t.index ["person_id"], name: "index_component_citations_on_person_id"
-    t.index ["role_id"], name: "index_component_citations_on_role_id"
   end
 
   create_table "components", force: :cascade do |t|
@@ -43,7 +41,6 @@ ActiveRecord::Schema.define(version: 20171116215054) do
     t.bigint "text_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "material_type"
     t.string "genre"
     t.string "text_type"
     t.index ["text_id"], name: "index_components_on_text_id"
@@ -220,6 +217,7 @@ ActiveRecord::Schema.define(version: 20171116215054) do
     t.text "editorial_annotation"
     t.text "physical_description"
     t.string "original_greek_collection"
+    t.string "material_type"
     t.index ["country_id"], name: "index_texts_on_country_id"
     t.index ["intermediary_language_id"], name: "index_texts_on_intermediary_language_id"
     t.index ["journal_id"], name: "index_texts_on_journal_id"
@@ -276,8 +274,6 @@ ActiveRecord::Schema.define(version: 20171116215054) do
   add_foreign_key "comments", "texts"
   add_foreign_key "comments", "users"
   add_foreign_key "component_citations", "components"
-  add_foreign_key "component_citations", "people"
-  add_foreign_key "component_citations", "roles"
   add_foreign_key "components", "texts"
   add_foreign_key "places", "countries"
   add_foreign_key "standard_numbers", "texts"

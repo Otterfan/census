@@ -108,7 +108,7 @@ class TextsController < ApplicationController
                                  :issue_volume, :issue_season_month,
                                  :original_greek_title, :original_greek_publisher, :original_greek_date,
                                  :original_greek_isbn, :original_greek_edition, :original_greek_place_of_publication,
-                                 :is_bilingual, :illustrations_noted, :format, :text_type, :page_count,
+                                 :is_bilingual, :illustrations_noted, :format, :text_type, :material_type, :page_count,
                                  :series, :journal_title, :genre, :page_span,
                                  :url, :sponsoring_organization, :seen_in_person,
                                  :issue_title, :issue_editor, :abstract,
@@ -120,7 +120,7 @@ class TextsController < ApplicationController
                                  publication_places_attributes: [:id, :place_id, :_destroy],
                                  text_citations_attributes: [:id, :role, :name, :from_language_id, :to_language_id, :_destroy],
                                  standard_numbers_attributes: [:id, :value, :_destroy],
-                                 components_attributes: [:id, :title, :pages, :ordinal, :material_type, :text_type,
+                                 components_attributes: [:id, :title, :pages, :ordinal, :text_type,
                                                          :genre, :_destroy]
     )
   end
