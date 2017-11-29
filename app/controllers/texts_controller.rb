@@ -46,6 +46,11 @@ class TextsController < ApplicationController
   def create
     @text = Text.new(text_params)
 
+    @comment = Comment.new
+    @comment.text = @text
+
+    @user = current_user
+
     respond_to do |format|
       if @text.save
         format.html {redirect_to @text, notice: 'Text was successfully created.'}
@@ -61,6 +66,11 @@ class TextsController < ApplicationController
   # PATCH/PUT /texts/1.json
   def update
     respond_to do |format|
+      @comment = Comment.new
+      @comment.text = @text
+
+      @user = current_user
+
       if @text.update(text_params)
         format.html {redirect_to edit_text_path(@text), notice: 'Text was successfully updated.'}
         format.json {render :show, status: :ok, location: @text}
