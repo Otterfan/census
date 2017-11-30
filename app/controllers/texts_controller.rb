@@ -12,14 +12,11 @@ class TextsController < ApplicationController
   # GET /texts/1
   # GET /texts/1.json
   def show
-    respond_to do |format|
-      format.json {render json: @text.comments}
-    end
+    redirect_to edit_text_path(@text)
   end
 
   # GET /texts/new
   def new
-
     @text = Text.new
   end
 
@@ -75,7 +72,8 @@ class TextsController < ApplicationController
         format.html {redirect_to edit_text_path(@text), notice: 'Text was successfully updated.'}
         format.json {render :show, status: :ok, location: @text}
       else
-        format.html {render :edit}
+        puts 'ARGH!!!'
+        format.html {redirect_to edit_text_path(@text), notice: @text.errors}
         format.json {render json: @text.errors, status: :unprocessable_entity}
       end
     end
