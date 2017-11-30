@@ -4,8 +4,14 @@
   <%= f.label :role %>
   <%= f.select(:role, [['author', 'author'], ['translator', 'translator'], ['editor', 'editor'], ['illustrator', 'illustrator']],
                {}, :onChange => 'showForTranslator(this)') %>
-  <div class="translator-only" style="display: <%= f.object.role === 'translator' ? 'block' : 'none' %>">
-    <%= f.association :from_language %>
-    <%= f.association :to_language %>
+  <div class="translator-only" style="margin-top: 1em;display: <%= f.object.role === 'translator' ? 'block' : 'none' %>">
+    <div class="form-group">
+      <%= f.label :from %>
+      <%= f.select :from_language_id, Language.all.collect {|l| [l.name, l.id]}, :include_blank => true %>
+    </div>
+    <div class="form-group" ?>
+      <%= f.label :to %>
+      <%= f.select :to_language_id, Language.all.collect {|l| [l.name, l.id]}, :include_blank => true %>
+    </div>
   </div>
 </div>
