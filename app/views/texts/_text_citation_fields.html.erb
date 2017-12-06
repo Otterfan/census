@@ -13,5 +13,6 @@
       <%= f.label :to %>
       <%= f.select :to_language_id, Language.all.collect {|l| [l.name, l.id]}, :include_blank => true %>
     </div>
+    <%= f.input :source_edition, as: :string %>
   </div>
 </div>

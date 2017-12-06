@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171206171017) do
+ActiveRecord::Schema.define(version: 20171206182841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -170,6 +170,7 @@ ActiveRecord::Schema.define(version: 20171206171017) do
     t.string "role"
     t.bigint "from_language_id"
     t.bigint "to_language_id"
+    t.text "source_edition"
     t.index ["from_language_id"], name: "index_text_citations_on_from_language_id"
     t.index ["text_id"], name: "index_text_citations_on_text_id"
     t.index ["to_language_id"], name: "index_text_citations_on_to_language_id"
