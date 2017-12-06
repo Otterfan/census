@@ -9,7 +9,7 @@ class Text < ApplicationRecord
   has_many :standard_numbers, inverse_of: :text, :dependent => :delete_all
   has_many :components, inverse_of: :text, :dependent => :delete_all
   has_many :comments, inverse_of: :text, :dependent => :delete_all
-
+  has_many :cross_references, inverse_of: :text, :dependent => :delete_all
 
   has_many :other_text_languages, inverse_of: :text, :dependent => :delete_all
   has_many :languages, :through => :other_text_languages, :class_name => 'Language'
@@ -20,6 +20,7 @@ class Text < ApplicationRecord
   accepts_nested_attributes_for :text_citations, :standard_numbers, :components , reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :other_text_languages, reject_if: :all_blank, :allow_destroy => true
   accepts_nested_attributes_for :publication_places, reject_if: :all_blank, :allow_destroy => true
+  accepts_nested_attributes_for :cross_references, reject_if: :all_blank, :allow_destroy => true
 
   paginates_per 60
 

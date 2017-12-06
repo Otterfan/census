@@ -221,6 +221,22 @@
     <div>
       <%= f.input :special_source_of_info %>
     </div>
+
+    <div>
+      <h2>Cross References</h2>
+    </div>
+    <div>
+      <div id='cross_references'>
+        <%= f.simple_fields_for :cross_references do |cross_reference| %>
+            <%= render 'cross_reference_fields', :f => cross_reference %>
+        <% end %>
+      </div>
+      <div class='links'>
+        <%= link_to_add_association 'add cross reference', f, :cross_references, :class => 'row', :data => {'association-insertion-node' => '#cross_references', 'association-insertion-method' => 'append'} %>
+      </div>
+    </div>
+
+
     <div>
       <%= f.input :seen_in_person %>
     </div>

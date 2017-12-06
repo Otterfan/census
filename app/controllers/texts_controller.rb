@@ -120,7 +120,9 @@ class TextsController < ApplicationController
                                  standard_numbers_attributes: [:id, :value, :_destroy],
                                  components_attributes: [:id, :title, :pages, :ordinal, :text_type,
                                                          :genre, :_destroy],
-                                 other_text_languages_attributes: [:id, :language_id, :destroy]
+                                 other_text_languages_attributes: [:id, :language_id, :destroy],
+                                 cross_references_attributes: [:id, :census_id, :destroy]
+
     )
   end
 end
