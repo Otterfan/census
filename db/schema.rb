@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171206165937) do
+ActiveRecord::Schema.define(version: 20171206171017) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -199,7 +199,6 @@ ActiveRecord::Schema.define(version: 20171206165937) do
     t.string "page_count"
     t.string "text_type"
     t.string "format"
-    t.bigint "intermediary_language_id"
     t.boolean "is_bilingual"
     t.bigint "section_id"
     t.string "original_greek_title"
@@ -227,7 +226,6 @@ ActiveRecord::Schema.define(version: 20171206165937) do
     t.string "original_greek_collection"
     t.string "material_type"
     t.index ["country_id"], name: "index_texts_on_country_id"
-    t.index ["intermediary_language_id"], name: "index_texts_on_intermediary_language_id"
     t.index ["journal_id"], name: "index_texts_on_journal_id"
     t.index ["language_id"], name: "index_texts_on_language_id"
     t.index ["original_greek_title"], name: "index_texts_on_original_greek_title"
@@ -292,7 +290,6 @@ ActiveRecord::Schema.define(version: 20171206165937) do
   add_foreign_key "texts", "countries"
   add_foreign_key "texts", "journals"
   add_foreign_key "texts", "languages"
-  add_foreign_key "texts", "languages", column: "intermediary_language_id"
   add_foreign_key "texts", "people", column: "topic_author_id"
   add_foreign_key "texts", "sections"
   add_foreign_key "texts", "statuses"

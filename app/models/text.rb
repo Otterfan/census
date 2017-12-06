@@ -1,6 +1,5 @@
 class Text < ApplicationRecord
   belongs_to :language, optional: true
-  belongs_to :intermediary_language, class_name: 'Language', optional: true
   belongs_to :topic_author, class_name: 'Person', optional: true
   belongs_to :status
   belongs_to :volume, optional: true

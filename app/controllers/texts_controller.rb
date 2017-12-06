@@ -113,7 +113,7 @@ class TextsController < ApplicationController
                                  :authors_name_from_source, :editorial_annotation,
                                  :physical_description, :original_greek_collection,
                                  :special_location_of_item, :special_source_of_info,
-                                 :intermediary_language_id, :section_id, :status_id, :topic_author_id,
+                                 :section_id, :status_id, :topic_author_id,
                                  :publication_places_id, :journal_id, :volume_id,
                                  publication_places_attributes: [:id, :place_id, :_destroy],
                                  text_citations_attributes: [:id, :role, :name, :from_language_id, :to_language_id, :_destroy],

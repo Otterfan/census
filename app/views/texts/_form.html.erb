@@ -203,11 +203,6 @@
       <h2>Other languages in text</h2>
     </div>
 
-    <div>
-      <%= f.association :intermediary_language %>
-    </div>
-
-
     <div id='other_text_languages'>
       <%= f.simple_fields_for :other_text_languages do |language| %>
           <%= render 'other_text_language_fields', :f => language %>
