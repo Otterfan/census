@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171129193316) do
+ActiveRecord::Schema.define(version: 20171206165937) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20171129193316) do
     t.datetime "updated_at", null: false
     t.string "genre"
     t.string "text_type"
+    t.string "material_type", limit: 255
     t.index ["text_id"], name: "index_components_on_text_id"
   end
 
@@ -55,6 +56,14 @@ ActiveRecord::Schema.define(version: 20171129193316) do
     t.index ["al3_code"], name: "index_countries_on_al3_code"
     t.index ["name"], name: "index_countries_on_name"
     t.index ["num_code"], name: "index_countries_on_num_code"
+  end
+
+  create_table "cross_references", force: :cascade do |t|
+    t.string "census_id"
+    t.bigint "text_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["text_id"], name: "index_cross_references_on_text_id"
   end
 
   create_table "journals", force: :cascade do |t|
@@ -197,7 +206,6 @@ ActiveRecord::Schema.define(version: 20171129193316) do
     t.string "original_greek_place_of_publication"
     t.string "original_greek_publisher"
     t.string "original_greek_date"
-    t.string "original_greek_isbn"
     t.string "original_greek_edition"
     t.bigint "country_id"
     t.boolean "illustrations_noted"
@@ -275,6 +283,7 @@ ActiveRecord::Schema.define(version: 20171129193316) do
   add_foreign_key "comments", "users"
   add_foreign_key "component_citations", "components"
   add_foreign_key "components", "texts"
+  add_foreign_key "cross_references", "texts"
   add_foreign_key "places", "countries"
   add_foreign_key "standard_numbers", "texts"
   add_foreign_key "text_citations", "languages", column: "from_language_id"
