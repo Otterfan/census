@@ -1,0 +1,18 @@
+<div class='nested-fields citaiton-fields'>
+  <%= link_to_remove_association "x", f, {:class => 'remove-link'} %>
+  <%= f.input :name, as: :string %>
+  <%= f.label :role %>
+  <%= f.select(:role, [['author', 'author'], ['translator', 'translator'], ['editor', 'editor'], ['illustrator', 'illustrator']],
+               {}, :onChange => 'showForTranslator(this)') %>
+  <div class="translator-only" style="margin-top: 1em;display: <%= f.object.role === 'translator' ? 'block' : 'none' %>">
+    <div class="form-group">
+      <%= f.label :from %>
+      <%= f.select :from_language_id, Language.all.collect {|l| [l.name, l.id]}, :include_blank => true %>
+    </div>
+    <div class="form-group" ?>
+      <%= f.label :to %>
+      <%= f.select :to_language_id, Language.all.collect {|l| [l.name, l.id]}, :include_blank => true %>
+    </div>
+    <%= f.input :source_edition, as: :string %>
+  </div>
+</div>
