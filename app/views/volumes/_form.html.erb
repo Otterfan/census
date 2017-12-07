@@ -5,6 +5,19 @@
       <%= f.input :title, as: :string %>
       <%= f.input :author, as: :string %>
       <%= f.input :date %>
+      <div>
+        <h2>Citations</h2>
+      </div>
+      <div>
+        <div id='citations'>
+          <%= f.simple_fields_for :volume_citations do |citation| %>
+              <%= render 'volume_citation_fields', :f => citation %>
+          <% end %>
+          <div class='links'>
+            <%= link_to_add_association 'add citation', f, :volume_citations %>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="form-actions">

@@ -31,11 +31,11 @@ class VolumesController < ApplicationController
 
     respond_to do |format|
       if @volume.save
-        format.html { redirect_to edit_volume_path(@volume), notice: 'Volume was successfully created.' }
-        format.json { render :show, status: :created, location: @volume }
+        format.html {redirect_to edit_volume_path(@volume), notice: 'Volume was successfully created.'}
+        format.json {render :show, status: :created, location: @volume}
       else
-        format.html { render :new }
-        format.json { render json: @volume.errors, status: :unprocessable_entity }
+        format.html {render :new}
+        format.json {render json: @volume.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -48,11 +48,11 @@ class VolumesController < ApplicationController
       @volume.save
 
       if @volume.update(volume_params)
-        format.html { redirect_to edit_volume_path(@volume), notice: 'Volume was successfully updated.' }
-        format.json { render :show, status: :ok, location: @volume }
+        format.html {redirect_to edit_volume_path(@volume), notice: 'Volume was successfully updated.'}
+        format.json {render :show, status: :ok, location: @volume}
       else
-        format.html { render :edit }
-        format.json { render json: @volume.errors, status: :unprocessable_entity }
+        format.html {render :edit}
+        format.json {render json: @volume.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -62,19 +62,23 @@ class VolumesController < ApplicationController
   def destroy
     @volume.destroy
     respond_to do |format|
-      format.html { redirect_to volumes_url, notice: 'Volume was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html {redirect_to volumes_url, notice: 'Volume was successfully destroyed.'}
+      format.json {head :no_content}
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_volume
-      @volume = Volume.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_volume
+    @volume = Volume.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def volume_params
-      params.require(:volume).permit(:title, :author, :location_id, :date)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def volume_params
+    params.require(:volume).permit(
+        :title, :author, :location_id, :date,
+        # @TODO fix the from_language_id_id problem
+        volume_citations_attributes: [:id, :role, :last_name, :first_name, :from_language_id_id, :to_language_id_id, :source_edition, :_destroy],
+    )
+  end
 end

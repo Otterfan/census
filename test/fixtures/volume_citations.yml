@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  volume: one
+  last_name: MyString
+  first_name: MyString
+  role: MyString
+  from_language_id: one
+  to_language_id: one
+  source_edition: MyText
+
+two:
+  volume: two
+  last_name: MyString
+  first_name: MyString
+  role: MyString
+  from_language_id: two
+  to_language_id: two
+  source_edition: MyText

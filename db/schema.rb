@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171207180413) do
+ActiveRecord::Schema.define(version: 20171207220009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -268,6 +268,21 @@ ActiveRecord::Schema.define(version: 20171207180413) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  create_table "volume_citations", force: :cascade do |t|
+    t.bigint "volume_id"
+    t.string "last_name"
+    t.string "first_name"
+    t.string "role"
+    t.bigint "from_language_id_id"
+    t.bigint "to_language_id_id"
+    t.text "source_edition"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["from_language_id_id"], name: "index_volume_citations_on_from_language_id_id"
+    t.index ["to_language_id_id"], name: "index_volume_citations_on_to_language_id_id"
+    t.index ["volume_id"], name: "index_volume_citations_on_volume_id"
+  end
+
   create_table "volumes", force: :cascade do |t|
     t.text "title"
     t.text "author"
@@ -298,4 +313,7 @@ ActiveRecord::Schema.define(version: 20171207180413) do
   add_foreign_key "texts", "sections"
   add_foreign_key "texts", "statuses"
   add_foreign_key "texts", "volumes"
+  add_foreign_key "volume_citations", "languages", column: "from_language_id_id"
+  add_foreign_key "volume_citations", "languages", column: "to_language_id_id"
+  add_foreign_key "volume_citations", "volumes"
 end
