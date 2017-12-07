@@ -1,5 +1,7 @@
 BCComments = (function () {
     function show_result(data) {
+        $('#comment_value').val('');
+        console.log('here');
         var text = '<div class="the-text">' + data.comment.value + '</div>' +
             '<div class="comment-metadata">' +
             '<span class="the-user">' + data.email + '</span>' +
