@@ -132,7 +132,7 @@
     </fieldset>
 
     <div>
-      <h2>ISBNs</h2>
+      <h2>Standardized numbers</h2>
     </div>
     <div>
       <div id='isbns'>
@@ -143,6 +143,9 @@
           <%= link_to_add_association 'add ISBN', f, :standard_numbers %>
         </div>
       </div>
+    </div>
+    <div>
+      <%= f.input :dai, label: 'DAI' %>
     </div>
 
     <div>
