@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171206190230) do
+ActiveRecord::Schema.define(version: 20171207180413) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -227,11 +227,13 @@ ActiveRecord::Schema.define(version: 20171206190230) do
     t.string "original_greek_collection"
     t.string "material_type"
     t.string "dai"
+    t.integer "sort_id"
     t.index ["country_id"], name: "index_texts_on_country_id"
     t.index ["journal_id"], name: "index_texts_on_journal_id"
     t.index ["language_id"], name: "index_texts_on_language_id"
     t.index ["original_greek_title"], name: "index_texts_on_original_greek_title"
     t.index ["section_id"], name: "index_texts_on_section_id"
+    t.index ["sort_id"], name: "index_texts_on_sort_id"
     t.index ["status_id"], name: "index_texts_on_status_id"
     t.index ["topic_author_id"], name: "index_texts_on_topic_author_id"
     t.index ["volume_id"], name: "index_texts_on_volume_id"

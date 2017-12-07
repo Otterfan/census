@@ -27,10 +27,10 @@ class Text < ApplicationRecord
   has_paper_trail
 
   def next
-    Text.where(["census_id > ?", census_id]).order(census_id: :asc).first
+    Text.where(["sort_id > ?", sort_id]).order(sort_id: :asc).first
   end
 
   def previous
-    Text.where(["census_id < ?", census_id]).order(census_id: :desc).first
+    Text.where(["sort_id < ?", sort_id]).order(sort_id: :desc).first
   end
 end
