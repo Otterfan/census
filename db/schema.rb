@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171207220009) do
+ActiveRecord::Schema.define(version: 20171208210729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -306,13 +306,12 @@ ActiveRecord::Schema.define(version: 20171207220009) do
   add_foreign_key "text_citations", "languages", column: "from_language_id"
   add_foreign_key "text_citations", "languages", column: "to_language_id"
   add_foreign_key "text_citations", "texts"
-  add_foreign_key "texts", "countries"
-  add_foreign_key "texts", "journals"
-  add_foreign_key "texts", "languages"
+  add_foreign_key "texts", "countries", on_delete: :nullify
+  add_foreign_key "texts", "journals", on_delete: :nullify
+  add_foreign_key "texts", "languages", on_delete: :nullify
   add_foreign_key "texts", "people", column: "topic_author_id"
-  add_foreign_key "texts", "sections"
-  add_foreign_key "texts", "statuses"
-  add_foreign_key "texts", "volumes"
+  add_foreign_key "texts", "statuses", on_delete: :nullify
+  add_foreign_key "texts", "volumes", on_delete: :nullify
   add_foreign_key "volume_citations", "languages", column: "from_language_id_id"
   add_foreign_key "volume_citations", "languages", column: "to_language_id_id"
   add_foreign_key "volume_citations", "volumes"
