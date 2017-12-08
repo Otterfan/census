@@ -20,6 +20,20 @@ h2 {
   font-weight: 600;
 }
 
+.prev-next-row-top, .prev-next-row-bottom {
+  font-weight: bold;
+  margin-bottom: 1em;
+
+  .next-record-col {
+    text-align: right;
+  }
+
+}
+
+.prev-next-row-bottom {
+  margin-top: 1em;
+}
+
 .edit-form, .edit_volume {
 
   label {

@@ -1,3 +1,11 @@
+<div class="row prev-next-row-top">
+  <div class="col-sm-6">
+    <%= link_to  "<< #{@text.previous.census_id}", @text.previous %>
+  </div>
+  <div class="col-sm-6 next-record-col">
+    <%= link_to "#{@text.next.census_id} >>", @text.next %>
+  </div>
+</div>
 <div class="row">
   <div class="edit-form col-sm-6">
     <%= render 'form', text: @text %>
@@ -40,5 +48,13 @@
       </ul>
     </div>
     <%= render partial: 'shared/changes', locals: {versions: @text.versions} %>
+  </div>
+</div>
+<div class="row prev-next-row-bottom">
+  <div class="col-sm-6">
+    <%= link_to  "<< #{@text.previous.census_id}", @text.previous %>
+  </div>
+  <div class="col-sm-6 next-record-col">
+    <%= link_to "#{@text.next.census_id} >>", @text.next %>
   </div>
 </div>
