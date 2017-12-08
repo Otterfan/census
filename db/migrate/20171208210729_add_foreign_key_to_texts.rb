@@ -7,7 +7,7 @@ class AddForeignKeyToTexts < ActiveRecord::Migration[5.1]
     add_foreign_key :texts, :statuses, on_delete: :nullify
 
     remove_foreign_key :texts, :sections
-    add_foreign_key :texts, :volumes, on_delete: :nullify
+    add_foreign_key :texts, :sections, on_delete: :nullify
 
     remove_foreign_key :texts, :countries
     add_foreign_key :texts, :countries, on_delete: :nullify
