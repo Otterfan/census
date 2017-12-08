@@ -14,16 +14,14 @@
   </ul>
 </div>
 <div class="col-md-6">
-  <h2>Recently edited texts</h2>
+  <h2>Recent edits</h2>
   <ul class="list-group">
-    <% @changed_texts.each do |text| %>
+    <% @changed_texts.each do |change| %>
         <li class="change list-group-item">
-          <%= link_to text.title, edit_text_path(text) %>
+          <%= link_to change.item.title, edit_text_path(change.item) %>
           <div class="change-medatada">
-            <% if text.versions.last %>
-                <span class="date"><%= text.versions.last.created_at.to_formatted_s(:short) %></span>
-                <span class="who"><%= text.versions.last.whodunnit %></span>
-            <% end %>
+            <span class="date"><%= change.created_at.to_formatted_s(:short) %></span>
+            <span class="who"><%= change.whodunnit %></span>
           </div>
         </li>
     <% end %>
