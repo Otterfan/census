@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171208210729) do
+ActiveRecord::Schema.define(version: 20171218191737) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20171208210729) do
     t.string "genre"
     t.string "text_type"
     t.string "material_type", limit: 255
+    t.text "note"
     t.index ["text_id"], name: "index_components_on_text_id"
   end
 

@@ -118,7 +118,7 @@ class TextsController < ApplicationController
                                  publication_places_attributes: [:id, :place_id, :_destroy],
                                  text_citations_attributes: [:id, :role, :name, :from_language_id, :to_language_id, :source_edition, :_destroy],
                                  standard_numbers_attributes: [:id, :value, :_destroy],
-                                 components_attributes: [:id, :title, :pages, :ordinal, :text_type,
+                                 components_attributes: [:id, :title, :pages, :note, :ordinal, :text_type,
                                                          :genre, :_destroy],
                                  other_text_languages_attributes: [:id, :language_id, :destroy],
                                  cross_references_attributes: [:id, :census_id, :destroy]
