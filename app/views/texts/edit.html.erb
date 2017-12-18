@@ -1,10 +1,14 @@
 <div class="row prev-next-row-top">
   <div class="col-sm-6">
-    <%= link_to  "<< #{@text.previous.census_id}", @text.previous %>
+    <% if @text.previous %>
+        <%= link_to "<< #{@text.previous.census_id}", @text.previous %>
+    <% end %>
   </div>
   <div class="col-sm-6 next-record-col">
-    <%= link_to "#{@text.next.census_id} >>", @text.next %>
-  </div>
+    <% if @text.next %>
+        <%= link_to "#{@text.next.census_id} >>", @text.next %>
+    <% end %>
+  g</div>
 </div>
 <div class="row">
   <div class="edit-form col-sm-6">
@@ -52,9 +56,13 @@
 </div>
 <div class="row prev-next-row-bottom">
   <div class="col-sm-6">
-    <%= link_to  "<< #{@text.previous.census_id}", @text.previous %>
+    <% if @text.previous %>
+        <%= link_to "<< #{@text.previous.census_id}", @text.previous %>
+    <% end %>
   </div>
   <div class="col-sm-6 next-record-col">
-    <%= link_to "#{@text.next.census_id} >>", @text.next %>
+    <% if @text.next %>
+        <%= link_to "#{@text.next.census_id} >>", @text.next %>
+    <% end %>
   </div>
 </div>
