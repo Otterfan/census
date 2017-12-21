@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171221203441) do
+ActiveRecord::Schema.define(version: 20171221214119) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -134,6 +134,7 @@ ActiveRecord::Schema.define(version: 20171221203441) do
   create_table "publication_places", force: :cascade do |t|
     t.bigint "place_id", null: false
     t.bigint "text_id", null: false
+    t.boolean "primary"
     t.index ["place_id", "text_id"], name: "index_publication_places_on_place_id_and_text_id"
     t.index ["text_id", "place_id"], name: "index_publication_places_on_text_id_and_place_id"
   end

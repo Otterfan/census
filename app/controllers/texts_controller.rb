@@ -114,7 +114,7 @@ class TextsController < ApplicationController
                                  :special_location_of_item, :special_source_of_info,
                                  :section_id, :status_id, :topic_author_id,
                                  :publication_places_id, :journal_id, :volume_id,
-                                 publication_places_attributes: [:id, :place_id, :_destroy],
+                                 publication_places_attributes: [:id, :place_id, :primary, :_destroy],
                                  text_citations_attributes: [:id, :role, :name, :from_language_id, :to_language_id, :source_edition, :_destroy],
                                  standard_numbers_attributes: [:id, :value, :_destroy],
                                  components_attributes: [:id, :title, :pages, :note, :ordinal, :text_type,
