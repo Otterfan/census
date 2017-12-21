@@ -21,6 +21,7 @@ class Text < ApplicationRecord
   accepts_nested_attributes_for :other_text_languages, reject_if: :all_blank, :allow_destroy => true
   accepts_nested_attributes_for :publication_places, reject_if: :all_blank, :allow_destroy => true
   accepts_nested_attributes_for :cross_references, reject_if: :all_blank, :allow_destroy => true
+  accepts_nested_attributes_for :components,  reject_if: :all_blank, :allow_destroy => true
 
   paginates_per 60
 

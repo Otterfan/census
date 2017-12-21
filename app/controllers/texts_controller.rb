@@ -72,7 +72,6 @@ class TextsController < ApplicationController
         format.html {redirect_to edit_text_path(@text), notice: 'Text was successfully updated.'}
         format.json {render :show, status: :ok, location: @text}
       else
-        puts 'ARGH!!!'
         format.html {redirect_to edit_text_path(@text), notice: @text.errors}
         format.json {render json: @text.errors, status: :unprocessable_entity}
       end
@@ -119,7 +118,10 @@ class TextsController < ApplicationController
                                  text_citations_attributes: [:id, :role, :name, :from_language_id, :to_language_id, :source_edition, :_destroy],
                                  standard_numbers_attributes: [:id, :value, :_destroy],
                                  components_attributes: [:id, :title, :pages, :note, :ordinal, :text_type,
-                                                         :genre, :is_bilingual, :_destroy],
+                                                         :genre, :is_bilingual, :_destroy,
+                                                         component_citations_attributes: [:id, :name, :role]
+                                 ],
+                                 component_citations_attributes: [:id, :name, :role],
                                  other_text_languages_attributes: [:id, :language_id, :destroy],
                                  cross_references_attributes: [:id, :census_id, :destroy]
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171218192902) do
+ActiveRecord::Schema.define(version: 20171221203441) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,7 +31,11 @@ ActiveRecord::Schema.define(version: 20171218192902) do
     t.datetime "updated_at", null: false
     t.string "name"
     t.string "role"
+    t.bigint "from_language_id"
+    t.bigint "to_language_id"
     t.index ["component_id"], name: "index_component_citations_on_component_id"
+    t.index ["from_language_id"], name: "index_component_citations_on_from_language_id"
+    t.index ["to_language_id"], name: "index_component_citations_on_to_language_id"
   end
 
   create_table "components", force: :cascade do |t|
@@ -302,6 +306,8 @@ ActiveRecord::Schema.define(version: 20171218192902) do
   add_foreign_key "comments", "texts"
   add_foreign_key "comments", "users"
   add_foreign_key "component_citations", "components"
+  add_foreign_key "component_citations", "languages", column: "from_language_id"
+  add_foreign_key "component_citations", "languages", column: "to_language_id"
   add_foreign_key "components", "texts"
   add_foreign_key "cross_references", "texts"
   add_foreign_key "places", "countries"

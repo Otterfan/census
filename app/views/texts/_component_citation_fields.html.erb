@@ -1,0 +1,7 @@
+<div class='nested-fields citaiton-fields'>
+  <%= link_to_remove_association "x", f, {:class => 'remove-link'} %>
+  <%= f.input :name, as: :string %>
+  <%= f.label :role %>
+  <%= f.select(:role, [['author', 'author'], ['translator', 'translator'], ['editor', 'editor'], ['illustrator', 'illustrator']],
+               {}, :onChange => 'showForTranslator(this)') %>
+</div>
