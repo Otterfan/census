@@ -121,7 +121,7 @@ class TextsController < ApplicationController
                                                          :genre, :is_bilingual, :_destroy,
                                                          component_citations_attributes: [:id, :name, :role, :first_name, :last_name, :from_language_id, :to_language_id]
                                  ],
-                                 component_citations_attributes: [:id, :name, :role, :first_name, :last_name],
+                                 component_citations_attributes: [:id, :name, :role, :first_name, :last_name, :_destroy],
                                  other_text_languages_attributes: [:id, :language_id, :destroy],
                                  cross_references_attributes: [:id, :census_id, :destroy]
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171221214549) do
+ActiveRecord::Schema.define(version: 20180111203255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,7 +49,6 @@ ActiveRecord::Schema.define(version: 20171221214549) do
     t.datetime "updated_at", null: false
     t.string "genre"
     t.string "text_type"
-    t.string "material_type", limit: 255
     t.text "note"
     t.boolean "is_bilingual"
     t.index ["text_id"], name: "index_components_on_text_id"
@@ -310,7 +309,7 @@ ActiveRecord::Schema.define(version: 20171221214549) do
 
   add_foreign_key "comments", "texts"
   add_foreign_key "comments", "users"
-  add_foreign_key "component_citations", "components"
+  add_foreign_key "component_citations", "components", on_delete: :cascade
   add_foreign_key "component_citations", "languages", column: "from_language_id"
   add_foreign_key "component_citations", "languages", column: "to_language_id"
   add_foreign_key "components", "texts"
@@ -324,6 +323,7 @@ ActiveRecord::Schema.define(version: 20171221214549) do
   add_foreign_key "texts", "journals", on_delete: :nullify
   add_foreign_key "texts", "languages", on_delete: :nullify
   add_foreign_key "texts", "people", column: "topic_author_id"
+  add_foreign_key "texts", "sections", on_delete: :nullify
   add_foreign_key "texts", "statuses", on_delete: :nullify
   add_foreign_key "texts", "volumes", on_delete: :nullify
   add_foreign_key "volume_citations", "languages", column: "from_language_id_id"
