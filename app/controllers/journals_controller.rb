@@ -66,6 +66,10 @@ class JournalsController < ApplicationController
     end
   end
 
+  def user_for_paper_trail
+    current_user.email
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_journal
