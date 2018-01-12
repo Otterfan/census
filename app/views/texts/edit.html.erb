@@ -20,12 +20,14 @@
       <span id="collapse-original-button" data-toggle="collapse" data-target="#original">
         <span class="glyphicon glyphicon glyphicon-collapse-down" aria-hidden="true"></span>
       </span>
-      <div id="original" class="collapse in">
+      <div id="original" class="collapse in original-box">
         <div class="topic-author">
           <%= @text.topic_author.full_name %>
         </div>
         <div class="census-id"><%= @text.census_id %></div>
-        <%= markdown(@text.original) %>
+        <textarea>
+          <%= formatted_text(@text.original) %>
+        </textarea>
       </div>
     </div>
     <div class="comments-section">

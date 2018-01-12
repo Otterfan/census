@@ -2,6 +2,7 @@ class TextsController < ApplicationController
   before_action :set_text, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
+  skip_before_action :verify_authenticity_token
 
   # GET /texts
   # GET /texts.json
@@ -36,6 +37,18 @@ class TextsController < ApplicationController
     @comment.text = @text
 
     @user = current_user
+  end
+
+  # POST /texts/1/original
+  def update_original
+    puts 'finding and saving...'
+    text = Text.find(params[:id])
+    puts 'FOUND TEXT'
+    puts text.title
+    text.original = params[:original]
+    puts params[:original]
+    puts 'saving!!!'
+    text.save
   end
 
   # POST /texts
@@ -112,7 +125,7 @@ class TextsController < ApplicationController
                                  :authors_name_from_source, :editorial_annotation,
                                  :physical_description, :original_greek_collection,
                                  :special_location_of_item, :special_source_of_info,
-                                 :section_id, :status_id, :topic_author_id,
+                                 :section_id, :status_id, :topic_author_id, :original,
                                  :publication_places_id, :journal_id, :volume_id,
                                  publication_places_attributes: [:id, :place_id, :primary, :_destroy],
                                  text_citations_attributes: [:id, :role, :name, :first_name, :last_name, :from_language_id, :to_language_id, :source_edition, :_destroy],

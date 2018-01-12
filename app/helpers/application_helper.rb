@@ -1,4 +1,15 @@
 module ApplicationHelper
+
+  def formatted_text(text)
+    if ! text
+      ''
+    elsif text.include? '<p>'
+      text
+    else
+      markdown(text)
+    end
+  end
+
   def markdown(text)
     options = {
         filter_html:     true,

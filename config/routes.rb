@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :roles
   resources :texts do
     resources :components
+    post 'original', on: :member, to: 'texts#update_original'
   end
   resources :standard_identifiers
   resources :people, :path => 'authors'

@@ -34,4 +34,10 @@ class Text < ApplicationRecord
   def previous
     Text.where(["sort_id < ?", sort_id]).order(sort_id: :desc).first
   end
+
+  def formatted_original
+    if original.include? '<p>'
+      markdown
+    end
+  end
 end
