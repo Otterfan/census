@@ -41,6 +41,15 @@
       </div>
     </div>
 
+    <fieldset class="volume-fields">
+      <legend>
+        Volume
+      </legend>
+      <div>
+        <%= f.association :volume, :collection => Volume.order('sort_title asc') %>
+      </div>
+    </fieldset>
+
     <div>
       <%= f.input :series, as: :string %>
     </div>
@@ -124,15 +133,6 @@
     <div>
       <%= f.input :collection %>
     </div>
-
-    <fieldset class="volume-fields">
-      <legend>
-        Volume
-      </legend>
-      <div>
-        <%= f.association :volume, :collection => Volume.order('sort_title asc') %>
-      </div>
-    </fieldset>
 
     <div>
       <h2>Standardized numbers</h2>
