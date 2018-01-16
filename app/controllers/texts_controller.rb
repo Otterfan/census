@@ -41,13 +41,8 @@ class TextsController < ApplicationController
 
   # POST /texts/1/original
   def update_original
-    puts 'finding and saving...'
     text = Text.find(params[:id])
-    puts 'FOUND TEXT'
-    puts text.title
     text.original = params[:original]
-    puts params[:original]
-    puts 'saving!!!'
     text.save
   end
 

@@ -1,31 +1,26 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="pagination-stuff col-md-12">
+    <%= paginate @versions %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <ul class="list-group">
+      <% @versions.each do |version| %>
+          <li class="list-group-item change">
+            <%= link_to changed_item_label(version.item), changed_item_url(version.item), :class => 'change-link' %>
+            <br>
+            <span class="date"><%= version.created_at %> — <%= version.whodunnit %></span><br>
+            <% changes(version).each do |change| %>
+                <span class="field"><%= change[:field] %></span>
+                <span class="from"><%= change[:from] %></span> >
+                <span class="to"><%= change[:to] %></span><br>
+                <span class="whodunnit"><%= change[:whodunnit] %></span>
+            <% end %>
+          </li>
+      <% end %>
+    </ul>
+    <%= paginate @versions %>
+  </div>
+</div>
 
-<h1>Changes</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Item type</th>
-      <th>Item</th>
-      <th>Event</th>
-      <th>Time</th>
-      <th>Changes</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @versions.each do |version| %>
-      <tr>
-        <td><%= version.item_type %></td>
-        <td><%= version.item_id %></td>
-        <td><%= version.event %></td>
-        <td><%= version.created_at %></td>
-        <td><%= version.object_changes %></td>
-        <td><%= link_to 'Show', version %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>

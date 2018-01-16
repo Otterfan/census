@@ -26,6 +26,7 @@
         <li class="<%= 'active' if in_current_path? 'place' %>"><a href="/places">Places <span class="sr-only">(current)</span></a></li>
         <li class="<%= 'active' if in_current_path? 'volume' %>"><a href="/volumes">Volumes<span class="sr-only">(current)</span></a></li>
         <li class="<%= 'active' if in_current_path? 'journal' %>"><a href="/journals">Journals<span class="sr-only">(current)</span></a></li>
+        <li class="<%= 'active' if in_current_path? 'changes' %>"><a href="/changes">All changes<span class="sr-only">(current)</span></a></li>
       </ul>
       <p class="navbar-text navbar-right">
         <% if user_signed_in? %>
