@@ -24,7 +24,10 @@
         <div class="topic-author">
           <%= @text.topic_author.full_name %>
         </div>
-        <div class="census-id"><%= @text.census_id %></div>
+        <% if @text.census_id %>
+            <div class="census-id"><%= @text.census_id %></div>
+        <% else %>
+        <% end %>
         <textarea>
           <%= formatted_text(@text.original) %>
         </textarea>

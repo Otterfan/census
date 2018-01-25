@@ -18,4 +18,20 @@ module TextsHelper
     end
     authors.push(author_group)
   end
+
+  def topic_authors
+    topic_authors = []
+    Person.where(topic_flag: true).each do |person|
+      topic_authors.push([person.full_name, person.id])
+    end
+    topic_authors
+  end
+
+  def journals
+    journals = []
+    Journal.limit(1000).each do |journal|
+      journals.push([journal.title, journal.id])
+    end
+    journals
+  end
 end

@@ -23,16 +23,6 @@ class TextsController < ApplicationController
 
   # GET /texts/1/edit
   def edit
-    @topic_authors = []
-    Person.where(topic_flag: true).each do |person|
-      @topic_authors.push([person.full_name, person.id])
-    end
-
-    @journals = []
-    Journal.limit(1000).each do |journal|
-      @journals.push([journal.title, journal.id])
-    end
-
     @comment = Comment.new
     @comment.text = @text
 

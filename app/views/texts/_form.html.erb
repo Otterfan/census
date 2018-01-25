@@ -1,6 +1,13 @@
 <%= simple_form_for @text do |f| %>
-    <div class="census-id"><span class="census-id-label">Census ID</span> <%= @text.census_id %></div>
-
+    <% if text.census_id %>
+        <div class="census-id"><span class="census-id-label">Census ID</span>
+          <%= @text.census_id %>
+        </div>
+    <% else %>
+        <div>
+          <%= f.input :census_id, as: :string %>
+        </div>
+    <% end %>
     <div>
       <%= f.association :section %>
     </div>
@@ -14,7 +21,7 @@
     </div>
 
     <div>
-      <%= f.association :topic_author, :collection => @topic_authors %>
+      <%= f.association :topic_author, :collection => topic_authors %>
     </div>
 
     <div>
