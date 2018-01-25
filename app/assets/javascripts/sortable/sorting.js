@@ -6,11 +6,11 @@ BCSorter = (function () {
 
     function numberForm() {
         var ordinal = 0;
-        var citation_divs = document.getElementById('components').children;
+        var component_divs = document.getElementById('components').children;
 
-        for (var i = 0; i < citation_divs.length; i++) {
-            if (isSortableNode(citation_divs[i])) {
-                assignNumber(citation_divs[i], ordinal);
+        for (var i = 0; i < component_divs.length; i++) {
+            if (isSortableNode(component_divs[i])) {
+                assignNumber(component_divs[i], ordinal);
                 ordinal++;
             }
         }
@@ -23,7 +23,7 @@ BCSorter = (function () {
     }
 
     function isSortableNode(node) {
-        return node.classList.contains('component-fields');
+        return node.classList.contains('sortable-item');
     }
 
 

@@ -5,9 +5,6 @@ function ready() {
     BCSorter.addSort();
     BCSorter.sortBeforeSubmit();
 
-    var el = document.getElementsByTagName('form');
-    var sortable = Sortable.create(el[0]);
-
     var comment_form = $('#new-comment-form');
     comment_form.submit(function (event) {
         event.preventDefault();
@@ -23,8 +20,6 @@ function ready() {
 
     function upload_orginal() {
         var pathArray = window.location.pathname.split('/');
-
-
         var original_text = tinymce.activeEditor.getContent(),
             post_address = '/texts/' + pathArray[2] + '/original';
         $.post(post_address, {original: original_text}, function (data) {
