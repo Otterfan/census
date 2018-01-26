@@ -2,21 +2,31 @@ BCSorter = (function () {
     var sortable;
 
     const components_field_id = 'components';
+    const citations_field_id = 'citations';
 
 
     function numberForm() {
-        var ordinal = 0;
-        var component_divs = document.getElementById('components').children;
+        var component_divs = document.getElementById(components_field_id).children,
+            citation_divs = document.getElementById(citations_field_id).children;
 
-        for (var i = 0; i < component_divs.length; i++) {
-            if (isSortableNode(component_divs[i])) {
-                assignNumber(component_divs[i], ordinal);
-                ordinal++;
-            }
-        }
+        //assignOrdinals(component_divs, 0);
+        assignOrdinals(citation_divs, 0);
         return false;
     }
 
+    function assignOrdinals(sortable_elements, ordinal) {
+        console.log('assigning');
+        for (var i = 0; i < sortable_elements.length; i++) {
+            if (isSortableNode(sortable_elements[i])) {
+                console.log('is sortable');
+                assignNumber(sortable_elements[i], ordinal);
+                ordinal++;
+            } else {
+                console.log('nope');
+                console.log(sortable_elements[i]);
+            }
+        }
+    }
 
     function assignNumber(div, ordinal) {
         div.querySelector('.ordinal-num').value = ordinal;
@@ -27,18 +37,21 @@ BCSorter = (function () {
     }
 
 
-    addSort = function () {
-        var el, options;
-
-        options = {
-            handle: '.handle',
-            filter: '.non-sorting'
-        };
-
-        el = document.getElementById(components_field_id);
-        if (el !== null) {
-            sortable = Sortable.create(el, options);
+    function makeSortable(to_sort, options) {
+        if (to_sort !== null) {
+            sortable = Sortable.create(to_sort, options);
         }
+    }
+
+    addSort = function () {
+        var component_elements = document.getElementById(components_field_id),
+            citation_elements = document.getElementById(citations_field_id),
+            options = {
+                handle: '.handle',
+                filter: '.non-sorting'
+            };
+        //makeSortable(component_elements, options);
+        makeSortable(citation_elements, options);
     };
 
     sortBeforeSubmit = function () {
