@@ -9,7 +9,7 @@ BCSorter = (function () {
         var component_divs = document.getElementById(components_field_id).children,
             citation_divs = document.getElementById(citations_field_id).children;
 
-        //assignOrdinals(component_divs, 0);
+        assignOrdinals(component_divs, 0);
         assignOrdinals(citation_divs, 0);
         return false;
     }
