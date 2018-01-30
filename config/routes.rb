@@ -14,4 +14,8 @@ Rails.application.routes.draw do
   resources :standard_identifiers
   resources :people, :path => 'authors'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  namespace :public do
+    resources :texts
+  end
 end
