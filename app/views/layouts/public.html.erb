@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Census</title>
+  <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+  <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400i,700|Source+Sans+Pro:300,400,400i,600,700&amp;subset=greek,greek-ext,latin-ext" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <a class="navbar-brand" href="/">Home</a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="<%= 'active' if in_current_path? 'public/texts' %>"><%= link_to 'Browse Texts', public_texts_path %></li>
+        <li class="<%= 'active' if in_current_path? 'public/search' %>"><%= link_to 'Search', public_texts_path %></li>
+      </ul>
+      <p class="navbar-text navbar-right">
+        <% if user_signed_in? %>
+          <%= current_user.email %>
+          <%= link_to('logout', destroy_user_session_path, method: :delete, :class => 'logout-link navbar-link') %>
+        <% else %>
+        <ul class="nav navbar-right navbar-nav"><li>
+          <%= link_to('Login', new_user_session_path) %>
+        </li></ul>
+        <% end %>
+      </p>
+    </div>
+  </div>
+</nav>
+<% if notice %>
+  <p class="alert alert-success"><%= notice %></p>
+<% end %>
+<% if alert %>
+  <p class="alert alert-danger"><%= alert %></p>
+<% end %>
+<main class="container">
+  <%= yield %>
+</main>
+</body>
+</html>
