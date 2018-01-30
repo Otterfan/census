@@ -21,7 +21,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="<%= 'active' if in_current_path? 'public/texts' %>"><%= link_to 'Browse Texts', public_texts_path %></li>
-        <li class="<%= 'active' if in_current_path? 'public/search' %>"><%= link_to 'Search', public_texts_path %></li>
+        <li class="<%= 'active' if in_current_path? 'public/search' %>"><%= link_to 'Search', public_search_index_path %></li>
       </ul>
       <p class="navbar-text navbar-right">
         <% if user_signed_in? %>
