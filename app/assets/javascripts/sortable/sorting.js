@@ -50,7 +50,7 @@ BCSorter = (function () {
                 handle: '.handle',
                 filter: '.non-sorting'
             };
-        //makeSortable(component_elements, options);
+        makeSortable(component_elements, options);
         makeSortable(citation_elements, options);
     };
 
