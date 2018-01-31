@@ -3,7 +3,7 @@ module ApplicationHelper
   def formatted_text(text)
     if !text
       ''
-    elsif text.include? '<p>'
+    elsif text.include? '<'
       text
     else
       markdown(text)
@@ -36,7 +36,6 @@ module ApplicationHelper
     changes = []
 
     if version.respond_to? :changeset
-      puts 'HERE!!!'
       changeset = version.changeset
     else
       changeset = version.changes
