@@ -17,7 +17,7 @@
     </div>
 
     <div>
-      <%= f.input :material_type, as: :string %>
+      <%= f.input :material_type, :collection => [['Book', 'Book'], ['Journal', 'Journal'], ['Online', 'Online'], ['Conference proceedings', 'Conference proceedings'], ['Thesis/dissertation', 'Thesis/dissertation'], ['Other', 'Other']] %>
     </div>
 
     <div>
