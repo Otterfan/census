@@ -5,14 +5,11 @@ class Public::SearchController < ApplicationController
   # GET /public/search.json ???
   def index
     if params[:keyword] && params[:keyword].present?
-      @texts = Text.where('original LIKE ?', "%#{params[:keyword]}%")
+      # @texts = Text.where('original LIKE ?', "%#{params[:keyword]}%")
+      @texts = Text.search(params[:keyword])
     else
-      @texts = nil
+      @texts = Text.none
     end
-  end
-
-  def show
-
   end
 
   private

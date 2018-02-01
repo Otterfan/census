@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   namespace :public do
-    resources :search, :only => [:index, :show]
-    resources :texts
+    resources :search, :only => [:index]
+    resources :texts, :only => [:index, :show]
   end
 end

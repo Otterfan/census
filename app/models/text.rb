@@ -27,6 +27,31 @@ class Text < ApplicationRecord
 
   has_paper_trail
 
+  include PgSearch
+
+  pg_search_scope :search,
+                  :against => {
+                      :title => 'A',
+                      :original => 'A',
+                      :source => 'B',
+                      :publisher => 'B',
+                      :journal_title => 'C',
+                      :series => 'C',
+                      :place_of_publication => 'C',
+                      :authors_name_from_source => 'B'
+                  },
+                  :associated_against => {
+                      :text_citations => {
+                          :name => 'A',
+                          :role => 'D'
+                      }
+                  },
+                  :using => {
+                      :tsearch => {
+                          dictionary: "english"
+                      }
+                  }
+
   def next
     Text.where(["sort_id > ?", sort_id]).order(sort_id: :asc).first
   end
