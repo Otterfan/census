@@ -36,7 +36,7 @@ function ready() {
             plugins: 'save paste',
             paste_retain_style_properties: 'all',
             paste_word_valid_elements: 'b,strong,i,em,h1,h2,u,p,ol,ul,li,a[href],span,color,font-size,font-color,font-family,mark,pre,code',
-            toolbar: 'bold italic styleselect | removeformat | paste | save',
+            toolbar: 'bold italic formats styleselect | removeformat | paste | save',
             convert_urls : false,
 
             //template_external_list_url : "gen4tinymce/lists/template_list.js",
@@ -66,8 +66,11 @@ function ready() {
             extended_valid_elements : "p[style]",
             inline_styles : true,
             verify_html : false,
-            save_onsavecallback: upload_orginal
-
+            save_onsavecallback: upload_orginal,
+            style_formats: [
+                {title: 'Small', inline: 'span', classes: 'small-text'}
+            ],
+            content_style: content_style
         };
         tinymce.init(opts);
     } else {
