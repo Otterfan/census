@@ -26,7 +26,7 @@
           <% author[:texts].each do |text| %>
             <li class="<%= text.status.code %> list-group-item">
               <span class="census-id"><%= text.census_id %></span>
-              <%= link_to text.title, public_text_path(text) %>
+              <%= link_to (text.title.blank? ? "[No title]" : text.title), public_text_path(text) %>
             </li>
           <% end %>
         </ul>
@@ -35,8 +35,8 @@
       <% @texts.each do |text| %>
         <ul class="list-group">
             <li class="<%= text.status.code %> list-group-item">
-              <span class="census-id"><%= text.census_id %></span>
-              <%= link_to text.title, public_text_path(text) %>
+              <span class="census-id"> (<%= text.census_id %>)</span>
+              <%= link_to (text.title.blank? ? "[No title]" : text.title), public_text_path(text) %>
             </li>
         </ul>
       <% end %>

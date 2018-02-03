@@ -4,7 +4,7 @@ class Public::TextsController < ApplicationController
   # GET /public/texts
   # GET /public/texts.json
   def index
-    @texts = Text.order(:id).page(params[:page])
+    @texts = Text.order(:title).page(params[:page])
 
     if params[:sort] == "author"
       @sorted = "author"
