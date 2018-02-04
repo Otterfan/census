@@ -1,13 +1,19 @@
 <h3>Search Texts</h3>
 
 <%= form_tag(public_search_index_path, method: :get, id: "search_form") do %>
-  Keyword <%= text_field_tag :keyword, params[:keyword] %>
+  <div>Keyword <%= text_field_tag :keyword, params[:keyword] %></div>
+  <div>Title <%= text_field_tag :title, params[:title] %></div>
+  <div>Journal <%= text_field_tag :journal, params[:journal] %></div>
+  <div>Publication Location <%= text_field_tag :location, params[:location] %></div>
+  <div>People <%= text_field_tag :people, params[:people] %></div>
   <%= submit_tag 'Search', name: nil %>
 <% end %>
 
 <br/>
 
-<% if @texts.blank? %>
+<% if @new_search %>
+  <h4>Enter a search query.</h4>
+<% elsif @texts.blank? %>
   <h4>There are no texts containing the term <strong><%= params[:keyword] %></strong>.</h4>
 <% else %>
   <% @texts.each do |text| %>
