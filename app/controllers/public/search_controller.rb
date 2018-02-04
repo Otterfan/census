@@ -42,7 +42,8 @@ class Public::SearchController < ApplicationController
         # TODO consider using AREL to simplify complex SQL queries
         # https://github.com/rails/arel
         @texts = @texts.joins("LEFT OUTER JOIN text_citations tc ON tc.text_id = texts.id")
-                     .joins("LEFT OUTER JOIN component_citations cc ON cc.component_id = texts.id")
+                     .joins("LEFT OUTER JOIN components c ON c.text_id = texts.id")
+                     .joins("LEFT OUTER JOIN component_citations cc ON cc.component_id = c.id")
                      .where('tc.name ILIKE ? OR cc.name ILIKE ?', "%#{params[:people]}%", "%#{params[:people]}%")
 
         # joins() method doesn't support aliasing, which is necessary to not conflict with complex full-text JOINs
