@@ -1,27 +1,62 @@
 <h3>Search Texts</h3>
 
-<%= form_tag(public_search_index_path, method: :get, id: "search_form") do %>
-  <div>Keyword <%= text_field_tag :keyword, params[:keyword] %></div>
-  <div>Title <%= text_field_tag :title, params[:title] %></div>
-  <div>Journal <%= text_field_tag :journal, params[:journal] %></div>
-  <div>Publication Location <%= text_field_tag :location, params[:location] %></div>
-  <div>People <%= text_field_tag :people, params[:people] %></div>
-  <%= submit_tag 'Search', name: nil %>
-<% end %>
+<div class="container">
 
-<br/>
+  <div class="row">
+    <%= form_tag(public_search_index_path, method: :get, id: "search_form") do %>
+      <div class="input-group">
+      <%= label_tag(:keyword, "Keyword") %>
+      <%= text_field_tag :keyword, params[:keyword], :class => 'form-control' %>
+      </div>
 
-<% if @new_search %>
-  <h4>Enter a search query.</h4>
-<% elsif @texts.blank? %>
-  <h4>There are no texts containing the term <strong><%= params[:keyword] %></strong>.</h4>
-<% else %>
-  <% @texts.each do |text| %>
-    <ul class="list-group">
-      <li class="<%= text.status.code %> list-group-item">
-        <span class="census-id"><%= text.census_id %></span>
-        <%= link_to text.title, public_text_path(text) %>
-      </li>
-    </ul>
-  <% end %>
-<% end %>
+      <div class="input-group">
+      <%= label_tag(:title, "Title") %>
+      <%= text_field_tag :title, params[:title], :class => 'form-control' %>
+      </div>
+
+      <div class="input-group">
+      <%= label_tag(:journal, "Journal") %>
+      <%= text_field_tag :journal, params[:journal], :class => 'form-control' %>
+      </div>
+
+      <div class="input-group">
+      <%= label_tag(:location, "Publication location") %>
+      <%= text_field_tag :location, params[:location], :class => 'form-control' %>
+      </div>
+
+      <div class="input-group">
+      <%= label_tag(:people, "People") %>
+      <%= text_field_tag :people, params[:people], :class => 'form-control' %>
+      </div>
+
+      <div class="">
+      <%= submit_tag 'Search', name: nil, :class => 'btn btn-primary' %>
+      <%= submit_tag("Reset", { :name => 'reset', :id => 'reset', :type => 'reset', :class => 'btn btn-default'}) %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="row">
+    <% if @new_search %>
+      <h4>Enter a search query.</h4>
+    <% elsif @texts.blank? %>
+      <h4>There are no texts containing the term <strong><%= params[:keyword] %></strong>.</h4>
+    <% else %>
+      <h3>Found <%= @texts.length %> results.</h3>
+      <% @texts.each do |text| %>
+        <ul class="list-group">
+          <li class="<%= text.status.code %> list-group-item">
+            <span class="census-id"><%= text.census_id %></span>
+            <%= link_to text.title, public_text_path(text) %>
+          </li>
+        </ul>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<script>
+    $("input#reset").click(function() {
+        window.location = window.location.pathname;
+    });
+</script>
