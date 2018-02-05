@@ -3,7 +3,18 @@ class Public::SearchController < ApplicationController
 
   # GET /public/search
   # GET /public/search.json ???
-  def index
+  #
+
+  def search
+    if params[:keyword].present?
+      @texts = Text.search params[:keyword]
+    else
+      @new_search = true
+      @texts = []
+    end
+  end
+
+  def index_old
     # TODO check if using PostgreSQL or other RDB since the 'ILIKE' operator isn't universal
 
     if params[:keyword].present? ||

@@ -3,6 +3,8 @@ class Public::TextsController < ApplicationController
 
   # GET /public/texts
   # GET /public/texts.json
+  #
+
   def index
     @texts = Text.order(:title).page(params[:page])
 

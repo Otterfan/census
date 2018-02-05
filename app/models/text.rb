@@ -1,4 +1,9 @@
+require 'elasticsearch/model'
+
 class Text < ApplicationRecord
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
   belongs_to :language, optional: true
   belongs_to :topic_author, class_name: 'Person', optional: true
   belongs_to :status
@@ -27,30 +32,58 @@ class Text < ApplicationRecord
 
   has_paper_trail
 
-  include PgSearch
+=begin
+  settings do
+    mappings dynamic: false do
+      indexes :title, type: :text, analyzer: :english
+      indexes :original, type: :text, analyzer: :english
+      indexes :journal_title, type: :text, analyzer: :english
+      indexes :publisher, type: :text, analyzer: :english
+      indexes :place_of_publication, type: :text, analyzer: :english
+      indexes :authors_name_from_source, type: :text
+      indexes :census_id, type: :text
+      indexes :id, type: :text
+    end
+  end
+=end
 
-  pg_search_scope :search,
-                  :against => {
-                      :title => 'A',
-                      :original => 'A',
-                      :source => 'B',
-                      :publisher => 'B',
-                      :journal_title => 'C',
-                      :series => 'C',
-                      :place_of_publication => 'C',
-                      :authors_name_from_source => 'B'
-                  },
-                  :associated_against => {
-                      :text_citations => {
-                          :name => 'A',
-                          :role => 'D'
-                      }
-                  },
-                  :using => {
-                      :tsearch => {
-                          dictionary: "english"
-                      }
-                  }
+  def as_indexed_json(options={})
+    as_json(
+        only: [:title, :original, :id, :journal_title, :publisher, :place_of_publication, :authors_name_from_source, :census_id],
+        include: {
+            text_citations: {
+                only: [:id, :name, :role]
+            },
+            components: {
+                only: [:id, :title, :text_id, :genre],
+                include: {
+                    component_citations: {
+                        only: [:id, :component_id, :name, :role]
+                    }
+                }
+            }
+        }
+    )
+  end
+
+  def self.search(query)
+    __elasticsearch__.search(
+        {
+            query: {
+                multi_match: {
+                    query: query,
+                    fields: ['title', 'original', 'id', 'journal_title', 'publisher',
+                             'place_of_publication', 'authors_name_from_source', 'census_id',
+                             'text_citations.id', 'text_citations.name', 'text_citations.role',
+                             'components.id', 'components.title', 'components.text_id', 'components.genre',
+                             'components.component_citations.id', 'components.component_citations.component_id',
+                             'components.component_citations.name', 'components.component_citations.role'
+                    ]
+                }
+            }
+        }
+    )
+  end
 
   def next
     Text.where(["sort_id > ?", sort_id]).order(sort_id: :asc).first
@@ -66,3 +99,5 @@ class Text < ApplicationRecord
     end
   end
 end
+
+#Text.import(force: true) # for auto sync model with elastic search
