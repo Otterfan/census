@@ -42,12 +42,11 @@
     <% elsif @texts.nil? %>
       <h4>There are no texts containing the term <strong><%= params[:keyword] %></strong>.</h4>
     <% else %>
-      <h3>Found <%= @texts.size %> results.</h3>
+      <h3>Found <%= @texts.count %> results.</h3>
       <% @texts.records.each do |text| %>
         <ul class="list-group">
           <li class=" list-group-item">
             <span class="census-id"><%= text.census_id %></span>
-            <pre><%= @texts.records.first =%></pre>
             <%= link_to text.title, public_text_path(text.id) %>
           </li>
         </ul>

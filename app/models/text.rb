@@ -49,18 +49,45 @@ class Text < ApplicationRecord
 
   def as_indexed_json(options={})
     as_json(
-        only: [:title, :original, :id, :journal_title, :publisher, :place_of_publication, :authors_name_from_source, :census_id],
+        #only: [:title, :original, :journal_title, :publisher, :place_of_publication, :authors_name_from_source, :census_id],
+        except: [
+            :sort_date, :language_id, :topic_author_id,
+            :status_id, :section_id, :country_id, :journal_id,
+            :volume_id, :sort_id
+        ],
         include: {
             text_citations: {
-                only: [:id, :name, :role]
+                only: [:name, :role]
             },
             components: {
-                only: [:id, :title, :text_id, :genre],
+                only: [:title, :genre],
                 include: {
                     component_citations: {
-                        only: [:id, :component_id, :name, :role]
+                        only: [:name, :role]
                     }
                 }
+            },
+            languages: {
+                only: [:name]
+            },
+            topic_author: {
+                only: [:full_name, :greek_full_name, :birth, :death]
+            },
+            status: {
+                only: [:name]
+            },
+            section: {
+                only: [:name]
+            },
+            # can't get this table to get indexed
+            #countries: {
+            #    only: [:name]
+            #},
+            journal: {
+                only: [:title]
+            },
+            volume: {
+                only: [:title, :author, :date]
             }
         }
     )
@@ -72,13 +99,21 @@ class Text < ApplicationRecord
             query: {
                 multi_match: {
                     query: query,
-                    fields: ['title', 'original', 'id', 'journal_title', 'publisher',
-                             'place_of_publication', 'authors_name_from_source', 'census_id',
-                             'text_citations.id', 'text_citations.name', 'text_citations.role',
-                             'components.id', 'components.title', 'components.text_id', 'components.genre',
-                             'components.component_citations.id', 'components.component_citations.component_id',
-                             'components.component_citations.name', 'components.component_citations.role'
-                    ]
+                    type: "best_fields",
+                    fields: %w{
+                      title
+                      original
+                      journal_title
+                      publisher
+                      place_of_publication
+                      authors_name_from_source
+                      text_citations.name
+                      text_citations.role
+                      components.title
+                      components.genre
+                      components.component_citations.name
+                      components.component_citations.role
+                    }
                 }
             }
         }
