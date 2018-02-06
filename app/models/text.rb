@@ -93,33 +93,6 @@ class Text < ApplicationRecord
     )
   end
 
-  def self.search(query)
-    __elasticsearch__.search(
-        {
-            query: {
-                multi_match: {
-                    query: query,
-                    type: "best_fields",
-                    fields: %w{
-                      title
-                      original
-                      journal_title
-                      publisher
-                      place_of_publication
-                      authors_name_from_source
-                      text_citations.name
-                      text_citations.role
-                      components.title
-                      components.genre
-                      components.component_citations.name
-                      components.component_citations.role
-                    }
-                }
-            }
-        }
-    )
-  end
-
   def next
     Text.where(["sort_id > ?", sort_id]).order(sort_id: :asc).first
   end

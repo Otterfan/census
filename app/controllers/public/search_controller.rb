@@ -6,8 +6,80 @@ class Public::SearchController < ApplicationController
   #
 
   def search
-    if params[:keyword].present?
-      @texts = Text.search params[:keyword]
+    if params[:keyword].present? ||
+        params[:title].present? ||
+        params[:journal].present? ||
+        params[:location].present? ||
+        params[:people].present?
+
+
+      if params[:keyword].present?
+        all_search = {
+           query: {
+               bool: {
+                   must: {
+                       multi_match: {
+                           query: params[:keyword],
+                           type: "best_fields",
+                           fields: %w{
+                              title
+                              original
+                              journal_title
+                              publisher
+                              place_of_publication
+                              authors_name_from_source
+                              text_citations.name
+                              text_citations.role
+                              components.title
+                              components.genre
+                              components.component_citations.name
+                              components.component_citations.role
+                           }
+                       }
+                   }
+               }
+           }
+        }
+      else
+        all_search = {
+          query: {
+            bool: {}
+          }
+        }
+      end
+
+
+      if params[:title].present? ||
+          params[:journal].present? ||
+          params[:location].present? ||
+          params[:people].present?
+
+        filter_array = []
+
+        if params[:title].present?
+          filter_array << {term: {title: params[:title]}}
+        end
+
+        if params[:journal].present?
+          filter_array << {term: {journal: params[:journal]}}
+        end
+
+        if params[:location].present?
+          filter_array << {term: {place_of_publication: params[:location]}}
+        end
+
+        # TODO add in nested OR filter for both text_citations.name and components.component_citations.name
+        if params[:people].present?
+          filter_array << {term: {"text_citations.name": params[:people]}}
+        end
+
+
+        # insert filter to all_search hash
+        all_search[:query][:bool][:filter] = filter_array
+
+      end
+
+      @texts = Text.search(all_search)
     else
       @new_search = true
       @texts = []
