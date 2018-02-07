@@ -1,25 +1,22 @@
-<ul class="list-group sortable-item">
-  <li class='component-fields nested-fields list-group-item row'>
-    <div class="handle col-sm-1"></div>
-    <div class="col-sm-11">
-      <%= f.input :title, as: :string %>
-      <%= f.input :pages, as: :string %>
-      <%= f.input :genre, as: :string %>
-      <%= f.input :text_type, as: :string %>
-      <%= f.input :is_bilingual, label: "Text is bilingual" %>
-      <%= f.input :collection, as: :string %>
-      <%= f.input :note %>
-      <%= f.hidden_field :ordinal, as: :string, class: 'ordinal-num' %>
+<li class='component-fields nested-fields list-group-item row'>
+  <div class="handle col-sm-1"></div>
+  <div class="col-sm-11">
+    <%= f.input :title, as: :string %>
+    <%= f.input :pages, as: :string %>
+    <%= f.input :genre, as: :string %>
+    <%= f.input :text_type, as: :string %>
+    <%= f.input :is_bilingual, label: "Text is bilingual" %>
+    <%= f.input :collection, as: :string %>
+    <%= f.input :note %>
+    <%= f.hidden_field :ordinal, as: :string, class: 'ordinal-num' %>
+  </div>
+  <div id='component-citations'>
+    <%= f.simple_fields_for :component_citations do |citation| %>
+        <%= render 'component_citation_fields', :f => citation %>
+    <% end %>
+    <div class='links'>
+      <%= link_to_add_association 'add citation', f, :component_citations %>
     </div>
-    <div id='component-citations'>
-      <%= f.simple_fields_for :component_citations do |citation| %>
-          <%= render 'component_citation_fields', :f => citation %>
-      <% end %>
-      <div class='links'>
-        <%= link_to_add_association 'add citation', f, :component_citations %>
-      </div>
-    </div>
-    <%= link_to_remove_association "x", f, {:class => 'remove-link'} %>
-  </li>
-</ul>
-
+  </div>
+  <%= link_to_remove_association "x", f, {:class => 'remove-link'} %>
+</li>

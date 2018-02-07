@@ -162,11 +162,11 @@
       <h2>Components</h2>
     </div>
     <div>
-      <div id='components'>
+      <ul id="components" class="list-group sortable-item">
         <%= f.simple_fields_for :components do |component| %>
             <%= render 'component_fields', :f => component %>
         <% end %>
-      </div>
+      </ul>
       <div class='links'>
         <%= link_to_add_association 'add component', f, :components, :class => 'row', :data => {'association-insertion-node' => '#components', 'association-insertion-method' => 'append'} %>
       </div>

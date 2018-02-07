@@ -47,8 +47,8 @@ BCSorter = (function () {
         var component_elements = document.getElementById(components_field_id),
             citation_elements = document.getElementById(citations_field_id),
             options = {
-                handle: '.handle',
-                filter: '.non-sorting'
+                animation: 250,
+                ghostClass: 'ghost'
             };
         makeSortable(component_elements, options);
         makeSortable(citation_elements, options);
