@@ -5,6 +5,8 @@ function ready() {
     BCSorter.addSort();
     BCSorter.sortBeforeSubmit();
 
+
+
     var comment_form = $('#new-comment-form');
     comment_form.submit(function (event) {
         event.preventDefault();

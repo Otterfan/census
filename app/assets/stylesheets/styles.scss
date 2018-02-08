@@ -70,9 +70,19 @@ h2 {
   }
 
   .nested-fields, .isbn-fields, .component-fields {
+
+    &.citation-fields.collapsed-li {
+        height: 60px;
+    }
+
     margin-bottom: 1em;
     padding: 1em;
     margin-right: 1em;
+
+    &.collapsed-li {
+      margin-bottom: 0;
+      border-top: 1px dotted #555;
+    }
 
     .handle {
       content: '....';
@@ -105,7 +115,8 @@ h2 {
     background: #f1eef1;
   }
   .component-fields {
-    background: #f3f5fa;
+    cursor: move;
+    background: #e1dedc;
   }
 
   #components, #citations, #isbns {
@@ -270,7 +281,29 @@ a:visited {
   text-decoration: line-through;
 }
 
-.ghost {
+.edit-form .component-fields.ghost, .edit_volume .component-fields.ghost,
+.edit-form .citation-fields.ghost {
   opacity: .5;
-  background: #cece88;
+  background: yellow;
+}
+
+a#collapse-components, a#collapse-citations {
+  display: block;
+  float: right;
+  padding-right: 1em;
+  position: relative;
+  top: 12px;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.collapsed-display {
+  display: none;
+}
+
+.open-command {
+  display: none;
 }
