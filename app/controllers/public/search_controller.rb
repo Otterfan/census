@@ -24,6 +24,8 @@ class Public::SearchController < ApplicationController
                            fields: %w{
                               title
                               original
+                              original_greek_title
+                              date
                               journal.title
                               publisher
                               publication_places.place.name
