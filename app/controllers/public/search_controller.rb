@@ -67,12 +67,12 @@ class Public::SearchController < ApplicationController
         end
 
         if params[:location].present?
-          filter_array << {term: {'publication_places.place.name'=> params[:location]}}
+          filter_array << {term: {'publication_places.place.name' => params[:location]}}
         end
 
         # TODO add in nested OR filter for both text_citations.name and components.component_citations.name
         if params[:people].present?
-          filter_array << {term: {'text_citations.name': params[:people]}}
+          filter_array << {term: {'text_citations.name' => params[:people]}}
         end
 
 
