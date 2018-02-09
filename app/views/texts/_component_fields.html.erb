@@ -1,6 +1,9 @@
 <li class='component-fields nested-fields list-group-item row'>
-  <div class="col-sm-12 collapsed-display">
-    <%= f.object.title %> <%= f.object.pages %>
+  <div class="show-when-collapsed">
+    <div class="col-sm-1 handle collapsed-handle"></div>
+    <div class="col-sm-11 collapsed-display">
+      <%= f.object.title %> <%= f.object.pages %>
+    </div>
   </div>
   <div class="component-collapsable collapse in">
     <div class="col-sm-12">

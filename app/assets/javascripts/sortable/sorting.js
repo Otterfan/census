@@ -51,10 +51,10 @@ BCSorter = (function () {
             title = $target.find('[name*="title"]').val(),
             pages = $target.find('[name*="pages"]').val(),
             name = $target.find('[name*="name"]').val();
-        if (name) {
-            collapsed_display_val = name;
-        } else {
+        if (title) {
             collapsed_display_val = title + " " + pages;
+        } else {
+            collapsed_display_val = name;
         }
         collapse_display.text(collapsed_display_val);
     }
