@@ -5,6 +5,26 @@
 </p>
 
 <p>
+  <strong>Section:</strong>
+  <%= @text.section.name %>
+</p>
+
+<p>
+  <strong>Text Type:</strong>
+  <%= @text.text_type %>
+</p>
+
+<p>
+  <strong>Material Type:</strong>
+  <%= @text.material_type %>
+</p>
+
+<p>
+  <strong>Topic Author:</strong>
+  <%= @text.topic_author.full_name %>
+</p>
+
+<p>
   <strong>Source:</strong>
   <%= @text.source %>
 </p>
@@ -21,12 +41,33 @@
 
 <p>
   <strong>Place of publication:</strong>
-  <%= @text.place_of_publication %>
+  <% @text.publication_places.each do |pubplace| %>
+    <%= pubplace.place.name %>
+  <% end %>
 </p>
 
 <p>
   <strong>Language:</strong>
-  <%= @text.language %>
+  <% @text.languages.each do |lang| %>
+    <%= lang.name =%>
+  <% end %>
+</p>
+
+<p>
+  <strong>Text Citations:</strong>
+  <% @text.text_citations.each do |citation| %>
+    <p><%= citation.name =%> (<%= citation.role =%>)</p>
+  <% end %>
+</p>
+
+<p>
+  <strong>Components:</strong>
+  <% @text.components.each do |component| %>
+    <p><%= component.title =%> - <%= component.note =%></p>
+    <% component.component_citations.each do |component_citation| %>
+    <p> -- Component Citation:  <%= component_citation.name =%> (<%= component_citation.role =%>)</p>
+    <% end %>
+<% end %>
 </p>
 
 <p>

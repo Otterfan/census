@@ -24,16 +24,14 @@ class Public::SearchController < ApplicationController
                            fields: %w{
                               title
                               original
-                              journal_title
+                              journal.title
                               publisher
-                              place_of_publication
-                              authors_name_from_source
+                              publication_places.place.name
+                              topic_author.full_name
+                              topic_author.alternate_name
                               text_citations.name
-                              text_citations.role
                               components.title
-                              components.genre
                               components.component_citations.name
-                              components.component_citations.role
                            }
                        }
                    }
@@ -42,13 +40,17 @@ class Public::SearchController < ApplicationController
         }
       else
         all_search = {
-          query: {
-            bool: {}
-          }
+            query: {
+                bool: {
+                    must: {
+                        match_all: {}
+                    }
+                }
+            }
         }
       end
 
-
+      # TODO check filter logic
       if params[:title].present? ||
           params[:journal].present? ||
           params[:location].present? ||
@@ -61,16 +63,16 @@ class Public::SearchController < ApplicationController
         end
 
         if params[:journal].present?
-          filter_array << {term: {journal: params[:journal]}}
+          filter_array << {term: {'journal.title' => params[:journal]}}
         end
 
         if params[:location].present?
-          filter_array << {term: {place_of_publication: params[:location]}}
+          filter_array << {term: {'publication_places.place.name'=> params[:location]}}
         end
 
         # TODO add in nested OR filter for both text_citations.name and components.component_citations.name
         if params[:people].present?
-          filter_array << {term: {"text_citations.name": params[:people]}}
+          filter_array << {term: {'text_citations.name': params[:people]}}
         end
 
 
