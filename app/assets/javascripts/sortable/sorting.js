@@ -6,6 +6,7 @@ BCSorter = (function () {
 
 
     function numberForm() {
+        console.log('numbering');
         var component_divs = document.getElementById(components_field_id).children,
             citation_divs = document.getElementById(citations_field_id).children;
 
@@ -112,6 +113,7 @@ BCSorter = (function () {
     sortBeforeSubmit = function () {
         var edit_forms = document.getElementsByClassName('edit_text');
         if (edit_forms.length > 0) {
+            console.log('adding event listener');
             edit_forms[0].addEventListener('submit', numberForm, false);
         }
     };
