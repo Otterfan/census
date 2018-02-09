@@ -57,37 +57,113 @@ class Text < ApplicationRecord
         ],
         include: {
             text_citations: {
-                only: [:name, :role]
+                except: [:id, :text_id, :created_at, :updated_at, :from_language_id, :to_language_id],
+                include: {
+                    from_language: {
+                        except: [:id, :created_at, :updated_at]
+                    },
+                    to_language: {
+                        except: [:id, :created_at, :updated_at]
+                    }
+                }
             },
             components: {
-                only: [:title, :genre],
+                except: [:id, :text_id, :created_at, :updated_at],
                 include: {
                     component_citations: {
-                        only: [:name, :role]
+                        except: [:id, :component_id, :from_language_id, :to_language_id, :created_at, :updated_at],
+                        include: {
+                            from_language: {
+                                except: [:id, :created_at, :updated_at]
+                            },
+                            to_language: {
+                                except: [:id, :created_at, :updated_at]
+                            }
+                        }
+                    }
+                }
+            },
+            publication_places: {
+                except: [:id, :place_id, :text_id],
+                include: {
+                    place: {
+                        except: [:id, :country_id, :created_at, :updated_at],
+                        include: {
+                            country: {
+                                except: [:id, :created_at, :updated_at]
+                            }
+                        }
                     }
                 }
             },
             languages: {
-                only: [:name]
+                except: [:id, :created_at, :updated_at]
             },
             topic_author: {
-                only: [:full_name, :greek_full_name, :birth, :death]
+                except: [:id, :created_at, :updated_at]
             },
             status: {
-                only: [:name]
+                except: [:id, :created_at, :updated_at]
             },
             section: {
-                only: [:name]
+                except: [:id, :created_at, :updated_at]
             },
             # can't get this table to get indexed
-            #countries: {
-            #    only: [:name]
+            #country: {
+            #    except: [:id, :created_at, :updated_at]
             #},
             journal: {
-                only: [:title]
+                except: [:id, :place_id, :created_at, :updated_at],
+                include: {
+                    place: {
+                        except: [:id, :country_id, :created_at, :updated_at],
+                        include: {
+                            country: {
+                                except: [:id, :created_at, :updated_at]
+                            }
+                        }
+                    }
+                }
             },
             volume: {
-                only: [:title, :author, :date]
+                except: [:id, :created_at, :updated_at],
+                include: {
+                  volume_citations: {
+                      except: [:id, :volume_id, :from_language_id_id, :to_language_id_id, :created_at, :updated_at],
+                      include: {
+                          from_language: {
+                              except: [:id, :created_at, :updated_at]
+                          },
+                          to_language: {
+                              except: [:id, :created_at, :updated_at]
+                          }
+                      }
+                  }
+                }
+            },
+            standard_numbers: {
+                except: [:id, :text_id, :created_at, :updated_at]
+            },
+            other_text_languages: {
+                except: [:id, :language_id],
+                include: {
+                    language: {
+                        except: [:id, :created_at, :updated_at]
+                    }
+                }
+            },
+            cross_references: {
+                except: [:id, :text_id, :created_at, :updated_at],
+                include: {
+                    text: {
+                        only: [:title, :date],
+                        include: {
+                            topic_author: {
+                                only: [:full_name, :birth, :death, :viaf, :loc]
+                            }
+                        }
+                    }
+                }
             }
         }
     )
