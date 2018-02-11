@@ -32,28 +32,13 @@ class Text < ApplicationRecord
 
   has_paper_trail
 
-=begin
-  settings do
-    mappings dynamic: false do
-      indexes :title, type: :text, analyzer: :english
-      indexes :original, type: :text, analyzer: :english
-      indexes :journal_title, type: :text, analyzer: :english
-      indexes :publisher, type: :text, analyzer: :english
-      indexes :place_of_publication, type: :text, analyzer: :english
-      indexes :authors_name_from_source, type: :text
-      indexes :census_id, type: :text
-      indexes :id, type: :text
-    end
-  end
-=end
-
   def as_indexed_json(options={})
     as_json(
         #only: [:title, :original, :journal_title, :publisher, :place_of_publication, :authors_name_from_source, :census_id],
         except: [
-            :sort_date, :language_id, :topic_author_id,
-            :status_id, :section_id, :country_id, :journal_id,
-            :volume_id, :sort_id
+            :language_id, :topic_author_id,
+            :status_id, :section_id, :country_id,
+            :journal_id, :volume_id, :sort_id
         ],
         include: {
             text_citations: {

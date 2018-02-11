@@ -29,10 +29,13 @@
   <%= @text.source %>
 </p>
 
+
+<% if @text.journal %>
 <p>
   <strong>Journal:</strong>
   <%= @text.journal.title %>
 </p>
+<% end %>
 
 <p>
   <strong>Date:</strong>
