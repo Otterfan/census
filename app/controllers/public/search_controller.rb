@@ -14,12 +14,6 @@ class Public::SearchController < ApplicationController
 
       query_string_array = []
 
-      all_search = {
-          query: {
-              bool: {}
-          }
-      }
-
       if params[:keyword].present?
         query_string_array << {
             query_string: {
@@ -83,8 +77,14 @@ class Public::SearchController < ApplicationController
         }
       end
 
-      # insert filter to all_search hash
-      all_search[:query][:bool][:must] = query_string_array
+      # create elasticsearch search query
+      all_search = {
+          query: {
+              bool: {
+                  must: query_string_array
+              }
+          }
+      }
 
       @texts = Text.search(all_search)
     else
