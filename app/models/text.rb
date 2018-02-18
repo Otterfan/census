@@ -138,17 +138,7 @@ class Text < ApplicationRecord
                 }
             },
             cross_references: {
-                except: [:id, :text_id, :created_at, :updated_at],
-                include: {
-                    text: {
-                        only: [:title, :date],
-                        include: {
-                            topic_author: {
-                                only: [:full_name, :birth, :death, :viaf, :loc]
-                            }
-                        }
-                    }
-                }
+                except: [:id, :text_id, :created_at, :updated_at]
             }
         }
     )
