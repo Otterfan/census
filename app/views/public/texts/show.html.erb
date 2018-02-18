@@ -69,7 +69,7 @@
 <% if @text.volume.present? %>
 <p>
   <strong>Volume:</strong>
-  <%= link_to @text.volume.title, public_volume_path(@text.volume.id) %>
+  <%= link_to (@text.volume.title.present? ? @text.volume.title : "[no volume title]"), public_volume_path(@text.volume.id) %>
 </p>
 <% end %>
 
@@ -154,7 +154,7 @@
 <% if @text.journal.present? %>
   <p>
     <strong>Journal:</strong>
-    <p>Title: <%= @text.journal.title %></p>
+    <p>Title: <%= link_to (@text.journal.title.present? ? @text.journal.title : "[no journal title]"), public_journal_path(@text.journal.id) %></p>
     <ul>
       <% if @text.issue_volume.present? %><li>Issue volume: <%= @text.issue_volume %></li><% end %>
       <% if @text.issue_number.present? %><li>Issue number: <%= @text.issue_number %></li><% end %>
