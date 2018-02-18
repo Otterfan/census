@@ -58,8 +58,8 @@
     <p>Name: <%= citation.name %></strong></p>
     <ul>
       <% if citation.role.present? %><li>Role: <%= citation.role %></li><% end %>
-      <% if citation.from_language_id.present? %><li>From language: <%= get_lang_name_from_id(citation.from_language_id.to_i) %></li><% end %>
-      <% if citation.to_language_id.present? %><li>To language: <%= get_lang_name_from_id(citation.to_language_id.to_i) %></li><% end %>
+      <% if citation.from_language_id.present? %><li>From language: <%= get_lang_from_id(citation.from_language_id.to_i).name %></li><% end %>
+      <% if citation.to_language_id.present? %><li>To language: <%= get_lang_from_id(citation.to_language_id.to_i).name %></li><% end %>
       <% if citation.source_edition.present? %><li>Source edition: <%= citation.source_edition %></li><% end %>
     </ul>
   <% end %>

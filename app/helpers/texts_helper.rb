@@ -35,10 +35,11 @@ module TextsHelper
     journals
   end
 
-  # HACK remove find_by model method from view helper
-  def get_lang_name_from_id(lang_id)
+  # HACK should be able to pull nested Language relationships automatically
+  # TODO remove where model method from view helper - place in controller or model
+  def get_lang_from_id(lang_id)
     if lang_id.is_a? Integer
-      Language.find_by(:id => lang_id).name
+      Language.where(:id => lang_id).first
     else
       nil
     end
