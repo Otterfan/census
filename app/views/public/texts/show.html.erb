@@ -1,96 +1,343 @@
 <h3>Record View</h3>
-<p>
-  <strong>Title:</strong>
-  <%= @text.title %>
-</p>
 
-<p>
-  <strong>Section:</strong>
-  <%= @text.section.name %>
-</p>
-
-<p>
-  <strong>Text Type:</strong>
-  <%= @text.text_type %>
-</p>
-
-<p>
-  <strong>Material Type:</strong>
-  <%= @text.material_type %>
-</p>
-
-<p>
-  <strong>Topic Author:</strong>
-  <%= @text.topic_author.full_name %>
-</p>
-
-<p>
-  <strong>Source:</strong>
-  <%= @text.source %>
-</p>
-
-
-<% if @text.journal %>
-<p>
-  <strong>Journal:</strong>
-  <%= @text.journal.title %>
-</p>
-<% end %>
-
-<p>
-  <strong>Date:</strong>
-  <%= @text.date %>
-</p>
-
-<p>
-  <strong>Publisher:</strong>
-  <%= @text.publisher %>
-</p>
-
-<p>
-  <strong>Place of publication:</strong>
-  <% @text.publication_places.each do |pubplace| %>
-    <%= pubplace.place.name %>
-  <% end %>
-</p>
-
-<p>
-  <strong>Language:</strong>
-  <% @text.languages.each do |lang| %>
-    <%= lang.name =%>
-  <% end %>
-</p>
-
-<p>
-  <strong>Text Citations:</strong>
-  <% @text.text_citations.each do |citation| %>
-    <p><%= citation.name =%> (<%= citation.role =%>)</p>
-  <% end %>
-</p>
-
-<p>
-  <strong>Components:</strong>
-  <% @text.components.each do |component| %>
-    <p><%= component.title =%> - <%= component.note =%></p>
-    <% component.component_citations.each do |component_citation| %>
-    <p> -- Component Citation:  <%= component_citation.name =%> (<%= component_citation.role =%>)</p>
-    <% end %>
-<% end %>
-</p>
-
-<p>
-  <strong>Note:</strong>
-  <%= @text.note %>
-</p>
-
-<p>
-  <strong>Original:</strong>
-  <%= raw(formatted_text(@text.original)) %>
-</p>
-
+<% if @text.census_id %>
 <p>
   <strong>Census:</strong>
   <%= @text.census_id %>
 </p>
+<% end %>
+
+<% if @text.section %>
+  <p>
+    <strong>Section:</strong>
+    <%= @text.section.name %>
+  </p>
+<% end %>
+
+
+<% if @text.text_type %>
+<p>
+  <strong>Text type:</strong>
+  <%= @text.text_type %>
+</p>
+<% end %>
+
+
+<% if @text.material_type %>
+<p>
+  <strong>Material type:</strong>
+  <%= @text.material_type %>
+</p>
+<% end %>
+
+<% if @text.topic_author.full_name %>
+<p>
+  <strong>Topic author:</strong>
+  <%= @text.topic_author.full_name %>
+</p>
+<% end %>
+
+<% if @text.authors_name_from_source %>
+  <p>
+    <strong>Author's name as it appears in this source:</strong>
+    <%= @text.authors_name_from_source %>
+  </p>
+<% end %>
+
+<% if @text.title %>
+<p>
+  <strong>Title:</strong>
+  <%= @text.title %>
+</p>
+<% end %>
+
+<% if @text.text_citations %>
+<p>
+  <strong>Citations:</strong>
+  <pre><%= @text.text_citations.inspect %></pre>
+  <% @text.text_citations.each do |citation| %>
+    <pre><%= citation.inspect %></pre>
+    <p>Name: <%= citation.name =%></strong></p>
+    <ul>
+      <% if citation.role %><li>Role: <%= citation.role =%></li><% end %>
+      <% if citation.from_language_id %><li>From language: <%= get_lang_name_from_id(citation.from_language_id.to_i) =%></li><% end %>
+      <% if citation.to_language_id %><li>To language: <%= get_lang_name_from_id(citation.to_language_id.to_i) =%></li><% end %>
+      <% if citation.source_edition %><li>Source edition: <%= citation.source_edition =%></li><% end %>
+    </ul>
+  <% end %>
+</p>
+<% end %>
+
+<% if @text.volume %>
+<p>
+  <strong>Volume:</strong>
+  <%= @text.volume.title %>
+</p>
+<% end %>
+
+<% if @text.series %>
+  <p>
+    <strong>Series:</strong>
+    <%= @text.series %>
+  </p>
+<% end %>
+
+<% if @text.publication_places %>
+  <p>
+    <strong>Places of Publication:</strong>
+  <ul>
+    <% @text.publication_places.each do |pubplace| %>
+      <% if pubplace.place %><li><%= pubplace.place.name =%> <% if pubplace.primary %> (primary)<% end %></li><% end %>
+    <% end %>
+  </ul>
+  </p>
+<% end %>
+
+<% if @text.publisher %>
+<p>
+  <strong>Publisher:</strong>
+  <%= @text.publisher %>
+</p>
+<% end %>
+
+<% if @text.date %>
+<p>
+  <strong>Date:</strong>
+  <%= @text.date %>
+</p>
+<% end %>
+
+<% if @text.page_count %>
+  <p>
+    <strong>Page count:</strong>
+    <%= @text.page_count %>
+  </p>
+<% end %>
+
+<% if @text.page_span %>
+  <p>
+    <strong>Page span:</strong>
+    <%= @text.page_span %>
+  </p>
+<% end %>
+
+<p>
+  <strong>Text is bilingual:</strong>
+  <% if @text.is_bilingual %>
+      True
+  <% else %>
+      False
+  <% end %>
+</p>
+
+<% if @text.genre %>
+  <p>
+    <strong>Genre:</strong>
+    <%= @text.genre %>
+  </p>
+<% end %>
+
+<p>
+  <strong>Illustrations noted:</strong>
+  <% if @text.illustrations_noted %>
+      True
+  <% else %>
+      False
+  <% end %>
+</p>
+
+<% if @text.url %>
+  <p>
+    <strong>URL:</strong>
+    <%= @text.url %>
+  </p>
+<% end %>
+
+<% if @text.journal %>
+  <p>
+    <strong>Journal:</strong>
+    <p>Title: <%= @text.journal.title %></p>
+      <ul>
+        <% if @text.issue_volume %><li>Issue volume: <%= @text.issue_volume %></li><% end %>
+        <% if @text.issue_number %><li>Issue number: <%= @text.issue_number %></li><% end %>
+        <% if @text.issue_season_month %><li>Season/month: <%= @text.issue_season_month %></li><% end %>
+        <% if @text.issue_title %><li>Special Season Title: <%= @text.issue_title %></li><% end %>
+        <% if @text.issue_editor %><li>Special Season Editor: <%= @text.issue_editor %></li><% end %>
+      </ul>
+  </p>
+<% end %>
+
+<% if @text.sponsoring_organization %>
+  <p>
+    <strong>Sponsoring organization:</strong>
+    <%= @text.sponsoring_organization %>
+  </p>
+<% end %>
+
+<% if @text.collection %>
+  <p>
+    <strong>Collection:</strong>
+    <%= @text.collection %>
+  </p>
+<% end %>
+
+<% if @text.standard_numbers %>
+  <p>
+    <strong>Standardized numbers:</strong>
+  <ul>
+    <% @text.standard_numbers.each do |stdnum| %>
+      <li><%= stdnum.value =%> <% if stdnum.numtype %>Type: <%= stdnum.numtype =%><% end %></li>
+    <% end %>
+  </ul>
+  </p>
+<% end %>
+
+<% if @text.dai %>
+  <p>
+    <strong>DAI:</strong>
+    <%= @text.dai %>
+  </p>
+<% end %>
+
+<% if @text.components %>
+<p>
+  <strong>Components:</strong>
+  <% @text.components.each do |component| %>
+  <p>Title: <%= component.title =%>
+    <ul>
+      <% if component.pages %><li>Pages: <%= component.pages =%></li><% end %>
+      <% if component.genre %><li>Genre: <%= component.genre =%></li><% end %>
+      <% if component.note %><li>Note: <%= component.note =%></li><% end %>
+      <% if component.text_type %><li>Text type: <%= component.text_type =%></li><% end %>
+      <% if component.is_bilingual %><li>Is Bilingual: <%= component.is_bilingual =%></li><% end %>
+      <% if component.component_citations %>
+        <li> Component Citations:
+          <ul>
+          <% component.component_citations.each do |component_citation| %>
+            <li>Name: <%= component_citation.name =%></li>
+            <li>Role: <%= component_citation.role =%></li>
+          <% end %>
+          </ul>
+        </li>
+      </ul>
+      <% end %>
+    <% end %>
+</p>
+<% end %>
+
+<% if @text.abstract %>
+  <p>
+    <strong>Abstract:</strong>
+    <%= @text.abstract %>
+  </p>
+<% end %>
+
+<% if @text.editorial_annotation %>
+  <p>
+    <strong>Editorial annotation:</strong>
+    <%= @text.editorial_annotation %>
+  </p>
+<% end %>
+
+<% if @text.physical_description %>
+  <p>
+    <strong>Physical description:</strong>
+    <%= @text.physical_description %>
+  </p>
+<% end %>
+
+<% if @text.note %>
+  <p>
+    <strong>Other notes:</strong>
+    <%= @text.note %>
+  </p>
+<% end %>
+
+<p>Original Greek Text</p>
+
+<% if @text.source %>
+  <p>
+    <strong>Source:</strong>
+    <%= @text.source %>
+  </p>
+<% end %>
+
+<% if @text.original_greek_title %>
+  <p>
+    <strong>Original Greek title:</strong>
+    <%= @text.original_greek_title %>
+  </p>
+<% end %>
+
+<% if @text.original_greek_collection %>
+  <p>
+    <strong>Original Greek collection:</strong>
+    <%= @text.original_greek_collection %>
+  </p>
+<% end %>
+
+<% if @text.original_greek_place_of_publication %>
+  <p>
+    <strong>Original Greek place of publication:</strong>
+    <%= @text.original_greek_place_of_publication %>
+  </p>
+<% end %>
+
+<% if @text.original_greek_publisher %>
+  <p>
+    <strong>Original Greek publisher:</strong>
+    <%= @text.original_greek_publisher %>
+  </p>
+<% end %>
+
+<% if @text.original_greek_date %>
+  <p>
+    <strong>Original Greek date:</strong>
+    <%= @text.original_greek_date %>
+  </p>
+<% end %>
+
+<% if @text.other_text_languages %>
+  <p>
+    <strong>Other text languages:</strong>
+  <ul>
+    <% @text.other_text_languages.each do |olang| %>
+      <li><%= olang.language.name =%></li>
+    <% end %>
+  </ul>
+  </p>
+<% end %>
+
+<% if @text.special_location_of_item %>
+  <p>
+    <strong>Special location of item:</strong>
+    <%= @text.special_location_of_item %>
+  </p>
+<% end %>
+
+<% if @text.special_source_of_info %>
+  <p>
+    <strong>Special source of info:</strong>
+    <%= @text.special_source_of_info %>
+  </p>
+<% end %>
+
+<% if @text.cross_references %>
+  <p>
+    <strong>Cross references:</strong>
+  <ul>
+    <% @text.cross_references.each do |ref| %>
+      <li>Census ID: <%= ref.census_id =%></a></li>
+    <% end %>
+  </ul>
+  </p>
+<% end %>
+
+<% if @text.original %>
+<p>
+  <strong>Original:</strong>
+  <%= raw(formatted_text(@text.original)) %>
+</p>
+<% end %>
 
 <%= link_to 'Back', public_texts_path %>

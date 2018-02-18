@@ -34,4 +34,13 @@ module TextsHelper
     end
     journals
   end
+
+  # HACK remove find_by model method from view helper
+  def get_lang_name_from_id(lang_id)
+    if lang_id.is_a? Integer
+      Language.find_by(:id => lang_id).name
+    else
+      nil
+    end
+  end
 end
