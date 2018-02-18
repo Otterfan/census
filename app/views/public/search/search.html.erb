@@ -1,40 +1,61 @@
-<h3>Search Texts</h3>
-
 <div class="container">
 
-  <div class="row">
-    <%= form_tag(public_search_path, method: :get, id: "search_form") do %>
-      <div class="input-group">
-        <%= label_tag(:keyword, "Keyword") %>
-        <%= text_field_tag :keyword, params[:keyword], :class => 'form-control' %>
-      </div>
+  <% if @search_type == "adv" %>
+    <div class="row">
+      <h3>Advanced Search</h3>
+      <p>Try the <%= link_to 'Keyword search', public_search_path(:type => "kw") %></p>
 
-      <div class="input-group">
-        <%= label_tag(:title, "Title") %>
-        <%= text_field_tag :title, params[:title], :class => 'form-control' %>
-      </div>
+      <%= form_tag(public_search_path, method: :get, id: "search_form") do %>
+        <div class="input-group">
+          <%= label_tag(:keyword, "All fields") %>
+          <%= text_field_tag :keyword, params[:keyword], :class => 'form-control' %>
+        </div>
 
-      <div class="input-group">
-        <%= label_tag(:journal, "Journal") %>
-        <%= text_field_tag :journal, params[:journal], :class => 'form-control' %>
-      </div>
+        <div class="input-group">
+          <%= label_tag(:title, "Title") %>
+          <%= text_field_tag :title, params[:title], :class => 'form-control' %>
+        </div>
 
-      <div class="input-group">
-        <%= label_tag(:location, "Publication location") %>
-        <%= text_field_tag :location, params[:location], :class => 'form-control' %>
-      </div>
+        <div class="input-group">
+          <%= label_tag(:journal, "Journal") %>
+          <%= text_field_tag :journal, params[:journal], :class => 'form-control' %>
+        </div>
 
-      <div class="input-group">
-        <%= label_tag(:people, "People") %>
-        <%= text_field_tag :people, params[:people], :class => 'form-control' %>
-      </div>
+        <div class="input-group">
+          <%= label_tag(:location, "Publication location") %>
+          <%= text_field_tag :location, params[:location], :class => 'form-control' %>
+        </div>
 
-      <div class="">
-        <%= submit_tag 'Search', name: nil, :class => 'btn btn-primary' %>
-        <%= submit_tag("Reset", { :name => 'reset', :id => 'reset', :type => 'reset', :class => 'btn btn-default'}) %>
-      </div>
-    <% end %>
-  </div>
+        <div class="input-group">
+          <%= label_tag(:people, "People") %>
+          <%= text_field_tag :people, params[:people], :class => 'form-control' %>
+        </div>
+
+        <div class="">
+          <%= submit_tag 'Search', name: nil, :class => 'btn btn-primary' %>
+          <%= submit_tag("Reset", {:name => 'reset', :id => 'reset', :type => 'reset', :class => 'btn btn-default'}) %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="row">
+      <h3>Keyword Search</h3>
+      <p>Try the <%= link_to 'Advanced search', public_search_path(:type => "adv") %></p>
+
+      <%= form_tag(public_search_path, method: :get, id: "search_form") do %>
+        <div class="input-group">
+          <%= label_tag(:keyword, "Keyword") %>
+          <%= text_field_tag :keyword, params[:keyword], :class => 'form-control' %>
+        </div>
+
+        <div class="">
+          <%= submit_tag 'Search', name: nil, :class => 'btn btn-primary' %>
+          <%= submit_tag("Reset", {:name => 'reset', :id => 'reset', :type => 'reset', :class => 'btn btn-default'}) %>
+        </div>
+      <% end %>
+    </div>
+
+  <% end %>
 
   <div class="row">
     <% if @new_search %>
@@ -57,6 +78,11 @@
 
 <script>
     $("input#reset").click(function() {
-        window.location = window.location.pathname;
+        if (window.location.search.indexOf('type=adv') > -1) {
+            console.log("this is an advanced search");
+            window.location = window.location.pathname += "?type=adv";
+        } else {
+            window.location = window.location.pathname;
+        }
     });
 </script>

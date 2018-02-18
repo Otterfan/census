@@ -6,6 +6,12 @@ class Public::SearchController < ApplicationController
   #
 
   def search
+    if params[:type] == "adv"
+      @search_type = "adv"
+    else
+      @search_type = "kw"
+    end
+
     if params[:keyword].present? ||
         params[:title].present? ||
         params[:journal].present? ||
