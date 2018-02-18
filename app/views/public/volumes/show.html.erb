@@ -1,0 +1,45 @@
+<h3>Record View</h3>
+
+<% if @volume.title.present? %>
+  <p>
+    <strong>Title:</strong>
+    <%= @volume.title %>
+  </p>
+<% end %>
+
+<% if @volume.author.present? %>
+  <p>
+    <strong>Author:</strong>
+    <%= @volume.author %>
+  </p>
+<% end %>
+
+<% if @volume.date.present? %>
+  <p>
+    <strong>Date:</strong>
+    <%= @volume.date %>
+  </p>
+<% end %>
+
+<% if @citations.present? %>
+  <p>
+    <strong>Citations:</strong>
+    <% @citations.each do |citation| %>
+      <p>Name: <% if citation.first_name.present? %><%= citation.first_name %><% end %> <% if citation.last_name.present? %><%= citation.last_name %><% end %></p>
+      <ul>
+        <% if citation.role.present? %><li>Role: <%= citation.role %></li><% end %>
+        <% if citation.from_language_id_id.present? %><li>From language: <%= get_lang_name_from_id(citation.from_language_id_id.to_i) %></li><% end %>
+        <% if citation.to_language_id_id.present? %><li>To language: <%= get_lang_name_from_id(citation.to_language_id_id.to_i) %></li><% end %>
+      </ul>
+    <% end %>
+  </p>
+<% end %>
+
+<% if @referenced_texts.present? %>
+  <p>
+    <strong>Referenced in the following Texts:</strong>
+    <% @referenced_texts.each do |text| %>
+      <p><% if text.census_id.present? %>(<%= text.census_id %>) <% end %> <%= link_to (text.title.blank? ? "[No title]" : text.title), public_text_path(text) %></p>
+    <% end %>
+  </p>
+<% end %>

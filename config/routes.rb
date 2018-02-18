@@ -20,5 +20,6 @@ Rails.application.routes.draw do
     # resources :search, :only => [:index, :search]
     get "search", to: "search#search"
     resources :texts, :only => [:index, :show]
+    resources :volumes, :only => [:index, :show]
   end
 end
