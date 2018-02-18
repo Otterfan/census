@@ -21,5 +21,6 @@ Rails.application.routes.draw do
     get "search", to: "search#search"
     resources :texts, :only => [:index, :show]
     resources :volumes, :only => [:index, :show]
+    resources :journals, :only => [:index, :show]
   end
 end

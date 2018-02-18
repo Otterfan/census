@@ -1,0 +1,45 @@
+<h3>Record View</h3>
+
+<% if @journal.title.present? %>
+  <p>
+    <strong>Title:</strong>
+    <%= @journal.title %>
+  </p>
+<% end %>
+
+<% if @journal.issn.present? %>
+  <p>
+    <strong>ISSN:</strong>
+    <%= @journal.issn %>
+  </p>
+<% end %>
+
+<% if @journal.place.present? %>
+  <p>
+    <strong>Place:</strong>
+    <% if @journal.place.name.present? %><%= @journal.place.name %><% end %>
+  </p>
+<% end %>
+
+<% if @journal.sponsoring_organization.present? %>
+  <p>
+    <strong>Sponsoring organization:</strong>
+    <%= @journal.sponsoring_organization %>
+  </p>
+<% end %>
+
+<% if @journal.indexed_range.present? %>
+  <p>
+    <strong>Indexed range:</strong>
+    <%= @journal.indexed_range %>
+  </p>
+<% end %>
+
+<% if @referenced_texts.present? %>
+  <p>
+    <strong>Appears in the following Texts:</strong>
+    <% @referenced_texts.each do |text| %>
+    <p><% if text.census_id.present? %>(<%= text.census_id %>) <% end %> <%= link_to (text.title.blank? ? "[No title]" : text.title), public_text_path(text) %></p>
+  <% end %>
+  </p>
+<% end %>

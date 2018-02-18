@@ -1,0 +1,20 @@
+<h3>Browse all Journals</h3>
+
+<div class="row">
+  <div class="pagination-stuff col-md-10">
+    <%= paginate @journals %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <% @journals.each do |journal| %>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <%= link_to (journal.title.blank? ? "[No title]" : journal.title), public_journal_path(journal) %>
+        </li>
+      </ul>
+    <% end %>
+
+    <%= paginate @journals %>
+  </div>
+</div>
