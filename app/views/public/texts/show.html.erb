@@ -69,7 +69,7 @@
 <% if @text.volume.present? %>
 <p>
   <strong>Volume:</strong>
-  <%= @text.volume.title %>
+  <%= link_to @text.volume.title, public_volume_path(@text.volume.id) %>
 </p>
 <% end %>
 
