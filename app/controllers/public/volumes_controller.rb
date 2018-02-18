@@ -17,6 +17,7 @@ class Public::VolumesController < ApplicationController
 
   # GET /public/volumes/1
   # GET /public/volumes/1.json
+  # TODO don't use multiple controller actions across different Models
   def show
     #redirect_to volumes_path(@volumes)
     @volume = Volume.find(params[:id])
