@@ -201,7 +201,7 @@
 <p>
   <strong>Components:</strong>
   <% @text.components.each do |component| %>
-  <p>Title: <%= component.title %>
+    <p>Title: <%= component.title %></p>
     <ul>
       <% if component.pages.present? %><li>Pages: <%= component.pages %></li><% end %>
       <% if component.genre.present? %><li>Genre: <%= component.genre %></li><% end %>
@@ -217,9 +217,9 @@
           <% end %>
           </ul>
         </li>
-      </ul>
       <% end %>
-    <% end %>
+    </ul>
+  <% end %>
 </p>
 <% end %>
 
