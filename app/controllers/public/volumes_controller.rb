@@ -7,12 +7,6 @@ class Public::VolumesController < ApplicationController
 
   def index
     @volumes = Volume.order(:title).page(params[:page])
-
-    if params[:sort] == "author"
-      @sorted = "author"
-    else
-      @sorted = "title"
-    end
   end
 
   # GET /public/volumes/1
