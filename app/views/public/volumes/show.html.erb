@@ -37,7 +37,7 @@
 
 <% if @referenced_texts.present? %>
   <p>
-    <strong>Referenced in the following Texts:</strong>
+    <strong>Appears in the following Texts:</strong>
     <% @referenced_texts.each do |text| %>
       <p><% if text.census_id.present? %>(<%= text.census_id %>) <% end %> <%= link_to (text.title.blank? ? "[No title]" : text.title), public_text_path(text) %></p>
     <% end %>
