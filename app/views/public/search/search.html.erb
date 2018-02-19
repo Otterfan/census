@@ -250,4 +250,28 @@
             window.location = window.location.pathname;
         }
     });
+
+    $(".facet-remove-DEMO").click(function(event) {
+        event.preventDefault();
+        var facet_control = $(this).attr('data-control');
+        console.log("facet clicked: " + facet_control);
+
+        // generate facet object
+        var facets = {
+            <% if @facets.present? %>
+            <% @facets.each do |k, v| %>
+            "<%= k %>" : "<%= v.gsub('"', '') %>",
+            <% end %>
+            <% end %>
+        };
+        console.log(facets);
+
+        // remove the facet_control clicked
+        delete facets[facet_control];
+
+        console.log(jQuery.param( facets ));
+
+        // go to new url
+        window.location = window.location.pathname += "?" + jQuery.param( facets );
+    });
 </script>
