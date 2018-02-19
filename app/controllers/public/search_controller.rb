@@ -6,6 +6,10 @@ class Public::SearchController < ApplicationController
   #
 
   def search
+    # set the number of results per page for this specific search controller.
+    # this overrides the paginates_per variable in the Text model
+    @pagination_page_size = 10
+
     if params[:type] == "adv"
       @search_type = "adv"
     else
@@ -92,7 +96,7 @@ class Public::SearchController < ApplicationController
           }
       }
 
-      @texts = Text.search(all_search)
+      @texts = Text.search(all_search).page(params[:page]).per(@pagination_page_size)
     else
       @new_search = true
       @texts = []

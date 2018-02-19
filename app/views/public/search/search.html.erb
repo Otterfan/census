@@ -6,6 +6,8 @@
       <p>Try the <%= link_to 'Keyword search', public_search_path(:type => "kw") %></p>
 
       <%= form_tag(public_search_path, method: :get, id: "search_form") do %>
+        <%= hidden_field_tag :type, @search_type %>
+
         <div class="input-group">
           <%= label_tag(:keyword, "All fields") %>
           <%= text_field_tag :keyword, params[:keyword], :class => 'form-control' %>
@@ -43,6 +45,8 @@
       <p>Try the <%= link_to 'Advanced search', public_search_path(:type => "adv") %></p>
 
       <%= form_tag(public_search_path, method: :get, id: "search_form") do %>
+        <%= hidden_field_tag :type, @search_type %>
+
         <div class="input-group">
           <%= label_tag(:keyword, "Keyword") %>
           <%= text_field_tag :keyword, params[:keyword], :class => 'form-control' %>
@@ -63,7 +67,9 @@
     <% elsif @texts.nil? %>
       <h4>There are no texts containing the term <strong><%= params[:keyword] %></strong>.</h4>
     <% else %>
-      <h3>Found <%= @texts.count %> results.</h3>
+      <h3><%= page_entries_info @texts, entry_name: 'records' %> </h3>
+      <%= paginate @texts %>
+
       <% @texts.records.each do |text| %>
         <ul class="list-group">
           <li class=" list-group-item">
@@ -72,6 +78,8 @@
           </li>
         </ul>
       <% end %>
+
+      <%= paginate @texts %>
     <% end %>
   </div>
 </div>
