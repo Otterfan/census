@@ -199,7 +199,27 @@
         </div>
 
         <div class="col-lg-8 col-md-8 col-sm-6">
-          <h3><%= page_entries_info @texts, entry_name: 'records' %> </h3>
+
+          <% if @facets.present? %>
+            <div class="constraints-container">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <span class="constraints-label">You searched for:</span>
+                  <% @facets.each do |k, v| %>
+                  <div class="input-group">
+                    <span class="input-group-btn">
+                      <a href="#" class="btn btn-default btn-disabled disabled"><%= k.capitalize.gsub('_', ' ') %> > <%= v.gsub('"', '') %></a>
+                      <button class="btn btn-default facet-control facet-remove" type="button" data-control="<%= k %>"><strong>X</strong></button>
+                    </span>
+                  </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
+          <h3><%= page_entries_info @texts, entry_name: 'records' %></h3>
+
           <%= paginate @texts %>
 
           <% @texts.records.each do |text| %>
