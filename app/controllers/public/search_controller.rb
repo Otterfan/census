@@ -32,6 +32,9 @@ class Public::SearchController < ApplicationController
                   original
                   original_greek_title
                   date
+                  genre
+                  material_type
+                  text_type
                   journal.title
                   publisher
                   publication_places.place.name
@@ -92,6 +95,38 @@ class Public::SearchController < ApplicationController
           query: {
               bool: {
                   must: query_string_array
+              }
+          },
+          aggs: {
+              genre: {
+                  terms: {
+                      field: "genre.keyword"
+                  }
+              },
+              "material_type": {
+                  terms: {
+                      field: "material_type.keyword"
+                  }
+              },
+              "text_type": {
+                  terms: {
+                      field: "text_type.keyword"
+                  }
+              },
+              "topic_author": {
+                  terms: {
+                      field: "topic_author.full_name.keyword"
+                  }
+              },
+              "publication_places": {
+                  terms: {
+                      field: "publication_places.place.name.keyword"
+                  }
+              },
+              "other_text_languages": {
+                  terms: {
+                      field: "other_text_languages.language.name.keyword"
+                  }
               }
           }
       }
