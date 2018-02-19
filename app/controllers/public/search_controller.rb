@@ -21,9 +21,15 @@ class Public::SearchController < ApplicationController
         params[:journal].present? ||
         params[:location].present? ||
         params[:people].present? ||
-        params[:genre].present?
+        params[:genre].present? ||
+        params[:material_type].present? ||
+        params[:text_type].present? ||
+        params[:topic_author].present? ||
+        params[:other_text_languages].present?
 
       query_string_array = []
+
+      @facets = {}
 
       if params[:keyword].present?
         query_string_array << {
@@ -38,6 +44,7 @@ class Public::SearchController < ApplicationController
                   text_type
                   journal.title
                   publisher
+                  other_text_languages.language.name
                   publication_places.place.name
                   topic_author.full_name
                   topic_author.alternate_name
@@ -79,11 +86,61 @@ class Public::SearchController < ApplicationController
       end
 
       if params[:genre].present?
-        @genre = params[:genre]
+        @facets["genre"] = params[:genre]
         query_string_array << {
             query_string: {
                 fields: ['genre'],
                 query: params[:genre]
+            }
+        }
+      end
+
+      if params[:material_type].present?
+        @facets["material_type"] = params[:material_type]
+        query_string_array << {
+            query_string: {
+                fields: ['material_type'],
+                query: params[:material_type]
+            }
+        }
+      end
+
+      if params[:text_type].present?
+        @facets["text_type"] = params[:text_type]
+        query_string_array << {
+            query_string: {
+                fields: ['text_type'],
+                query: params[:text_type]
+            }
+        }
+      end
+
+      if params[:topic_author].present?
+        @facets["topic_author"] = params[:topic_author]
+        query_string_array << {
+            query_string: {
+                fields: ['topic_author.full_name'],
+                query: params[:topic_author]
+            }
+        }
+      end
+
+      if params[:publication_places].present?
+        @facets["publication_places"] = params[:publication_places]
+        query_string_array << {
+            query_string: {
+                fields: ['publication_places.place.name'],
+                query: params[:publication_places]
+            }
+        }
+      end
+
+      if params[:other_text_languages].present?
+        @facets["other_text_languages"] = params[:other_text_languages]
+        query_string_array << {
+            query_string: {
+                fields: ['other_text_languages.language.name'],
+                query: params[:other_text_languages]
             }
         }
       end
@@ -151,6 +208,7 @@ class Public::SearchController < ApplicationController
 
   private
   def search_params
-    params.permit(:keyword, :title, :journal, :location, :people, :type, :genre)
+    params.permit(:keyword, :title, :journal, :location, :people, :type,
+                  :genre, :material_type, :text_type, :topic_author, :publication_places, :other_text_languages)
   end
 end

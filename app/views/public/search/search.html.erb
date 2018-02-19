@@ -73,12 +73,17 @@
               <div class="panel-heading">Genre</div>
               <div class="panel-body">
                 <ul class="facet-list-group">
-                  <% @texts.aggregations.genre.buckets.each do |facet| %>
-                    <% if facet["key"].present? %>
-                      <li class="facet-list-group-item">
-                        <a href="<%= request.original_url %>&genre=%22<%= facet["key"] %>%22"><div class="facet-label"><%= facet["key"] %></div></a>
-                        <div class="facet-value"><%= facet.doc_count %></div>
-                      </li>
+                  <% if @facets["genre"].present? %>
+                    <div class="facet-label"><%= @facets["genre"].gsub('"', '') %> <a href="#" class="facet-control facet-remove" data-control="genre">[X]</a></div>
+                    <div class="facet-value"></div>
+                  <% else %>
+                    <% @texts.aggregations.genre.buckets.each do |facet| %>
+                      <% if facet["key"].present? %>
+                        <li class="facet-list-group-item">
+                          <div class="facet-label"><a href="<%= request.original_url %>&genre=%22<%= facet["key"] %>%22"><%= facet["key"] %></a></div>
+                          <div class="facet-value"><%= facet.doc_count %></div>
+                        </li>
+                      <% end %>
                     <% end %>
                   <% end %>
                 </ul>
@@ -89,12 +94,17 @@
               <div class="panel-heading">Material type</div>
               <div class="panel-body">
                 <ul class="facet-list-group">
-                  <% @texts.aggregations.material_type.buckets.each do |facet| %>
-                    <% if facet["key"].present? %>
-                      <li class="facet-list-group-item">
-                        <div class="facet-label"><%= facet["key"] %></div>
-                        <div class="facet-value"><%= facet.doc_count %></div>
-                      </li>
+                  <% if @facets["material_type"].present? %>
+                    <div class="facet-label"><%= @facets["material_type"].gsub('"', '') %> <a href="#" class="facet-control facet-remove" data-control="material_type">[X]</a></div>
+                    <div class="facet-value"></div>
+                  <% else %>
+                    <% @texts.aggregations.material_type.buckets.each do |facet| %>
+                      <% if facet["key"].present? %>
+                        <li class="facet-list-group-item">
+                          <div class="facet-label"><a href="<%= request.original_url %>&material_type=%22<%= facet["key"] %>%22"><%= facet["key"] %></a></div>
+                          <div class="facet-value"><%= facet.doc_count %></div>
+                        </li>
+                      <% end %>
                     <% end %>
                   <% end %>
                 </ul>
@@ -105,12 +115,17 @@
               <div class="panel-heading">Text type</div>
               <div class="panel-body">
                 <ul class="facet-list-group">
-                  <% @texts.aggregations.text_type.buckets.each do |facet| %>
-                    <% if facet["key"].present? %>
-                      <li class="facet-list-group-item">
-                        <div class="facet-label"><%= facet["key"].capitalize.gsub!('_', ' ') %></div>
-                        <div class="facet-value"><%= facet.doc_count %></div>
-                      </li>
+                  <% if @facets["text_type"].present? %>
+                    <div class="facet-label"><%= @facets["text_type"].gsub('"', '') %> <a href="#" class="facet-control facet-remove" data-control="text_type">[X]</a></div>
+                    <div class="facet-value"></div>
+                  <% else %>
+                    <% @texts.aggregations.text_type.buckets.each do |facet| %>
+                      <% if facet["key"].present? %>
+                        <li class="facet-list-group-item">
+                          <div class="facet-label"><a href="<%= request.original_url %>&text_type=%22<%= facet["key"] %>%22"><%= facet["key"].capitalize.gsub!('_', ' ') %></a></div>
+                          <div class="facet-value"><%= facet.doc_count %></div>
+                        </li>
+                      <% end %>
                     <% end %>
                   <% end %>
                 </ul>
@@ -121,12 +136,17 @@
               <div class="panel-heading">Topic author</div>
               <div class="panel-body">
                 <ul class="facet-list-group">
-                  <% @texts.aggregations.topic_author.buckets.each do |facet| %>
-                    <% if facet["key"].present? %>
-                      <li class="facet-list-group-item">
-                        <div class="facet-label"><%= facet["key"] %></div>
-                        <div class="facet-value"><%= facet.doc_count %></div>
-                      </li>
+                  <% if @facets["topic_author"].present? %>
+                    <div class="facet-label"><%= @facets["topic_author"].gsub('"', '') %> <a href="#" class="facet-control facet-remove" data-control="topic_author">[X]</a></div>
+                    <div class="facet-value"></div>
+                  <% else %>
+                    <% @texts.aggregations.topic_author.buckets.each do |facet| %>
+                      <% if facet["key"].present? %>
+                        <li class="facet-list-group-item">
+                          <div class="facet-label"><a href="<%= request.original_url %>&topic_author=%22<%= facet["key"] %>%22"><%= facet["key"] %></a></div>
+                          <div class="facet-value"><%= facet.doc_count %></div>
+                        </li>
+                      <% end %>
                     <% end %>
                   <% end %>
                 </ul>
@@ -137,12 +157,17 @@
               <div class="panel-heading">Places</div>
               <div class="panel-body">
                 <ul class="facet-list-group">
-                  <% @texts.aggregations.publication_places.buckets.each do |facet| %>
-                    <% if facet["key"].present? %>
-                      <li class="facet-list-group-item">
-                        <div class="facet-label"><%= facet["key"] %></div>
-                        <div class="facet-value"><%= facet.doc_count %></div>
-                      </li>
+                  <% if @facets["publication_places"].present? %>
+                    <div class="facet-label"><%= @facets["publication_places"].gsub('"', '') %> <a href="#" class="facet-control facet-remove" data-control="publication_places">[X]</a></div>
+                    <div class="facet-value"></div>
+                  <% else %>
+                    <% @texts.aggregations.publication_places.buckets.each do |facet| %>
+                      <% if facet["key"].present? %>
+                        <li class="facet-list-group-item">
+                          <a href="<%= request.original_url %>&publication_places=%22<%= facet["key"] %>%22"><div class="facet-label"><%= facet["key"] %></div></a>
+                          <div class="facet-value"><%= facet.doc_count %></div>
+                        </li>
+                      <% end %>
                     <% end %>
                   <% end %>
                 </ul>
@@ -153,12 +178,17 @@
               <div class="panel-heading">Other languages</div>
               <div class="panel-body">
                 <ul class="facet-list-group">
-                  <% @texts.aggregations.other_text_languages.buckets.each do |facet| %>
-                    <% if facet["key"].present? %>
-                      <li class="facet-list-group-item">
-                        <div class="facet-label"><%= facet["key"] %></div>
-                        <div class="facet-value"><%= facet.doc_count %></div>
-                      </li>
+                  <% if @facets["other_text_languages"].present? %>
+                    <div class="facet-label"><%= @facets["other_text_languages"].gsub('"', '') %> <a href="#" class="facet-control facet-remove" data-control="other_text_languages">[X]</a></div>
+                    <div class="facet-value"></div>
+                  <% else %>
+                    <% @texts.aggregations.other_text_languages.buckets.each do |facet| %>
+                      <% if facet["key"].present? %>
+                        <li class="facet-list-group-item">
+                          <a href="<%= request.original_url %>&other_text_languages=%22<%= facet["key"] %>%22"><div class="facet-label"><%= facet["key"] %></div></a>
+                          <div class="facet-value"><%= facet.doc_count %></div>
+                        </li>
+                      <% end %>
                     <% end %>
                   <% end %>
                 </ul>
