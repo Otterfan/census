@@ -1,45 +1,53 @@
-<h3>Record View</h3>
+<div class="container">
+  <div class="row">
+    <h3>Record View</h3>
 
-<% if @journal.title.present? %>
-  <p>
-    <strong>Title:</strong>
-    <%= @journal.title %>
-  </p>
-<% end %>
+    <div class="col-lg-6 col-md-8 col-sm-12">
+      <% if @journal.title.present? %>
+        <div class="field">
+          <div class="field-label">Title:</div>
+          <%= @journal.title %>
+        </div>
+      <% end %>
 
-<% if @journal.issn.present? %>
-  <p>
-    <strong>ISSN:</strong>
-    <%= @journal.issn %>
-  </p>
-<% end %>
+      <% if @journal.issn.present? %>
+        <div class="field">
+          <div class="field-label">ISSN:</div>
+          <%= @journal.issn %>
+        </div>
+      <% end %>
 
-<% if @journal.place.present? %>
-  <p>
-    <strong>Place:</strong>
-    <% if @journal.place.name.present? %><%= @journal.place.name %><% end %>
-  </p>
-<% end %>
+      <% if @journal.place.present? %>
+        <div class="field">
+          <div class="field-label">Place:</div>
+          <% if @journal.place.name.present? %><%= @journal.place.name %><% end %>
+        </div>
+      <% end %>
 
-<% if @journal.sponsoring_organization.present? %>
-  <p>
-    <strong>Sponsoring organization:</strong>
-    <%= @journal.sponsoring_organization %>
-  </p>
-<% end %>
+      <% if @journal.sponsoring_organization.present? %>
+        <div class="field">
+          <div class="field-label">Sponsoring organization:</div>
+          <%= @journal.sponsoring_organization %>
+        </div>
+      <% end %>
 
-<% if @journal.indexed_range.present? %>
-  <p>
-    <strong>Indexed range:</strong>
-    <%= @journal.indexed_range %>
-  </p>
-<% end %>
+      <% if @journal.indexed_range.present? %>
+        <div class="field">
+          <div class="field-label">Indexed range:</div>
+          <%= @journal.indexed_range %>
+        </div>
+      <% end %>
 
-<% if @referenced_texts.present? %>
-  <p>
-    <strong>Appears in the following Texts:</strong>
-    <% @referenced_texts.each do |text| %>
-    <p><% if text.census_id.present? %>(<%= text.census_id %>) <% end %> <%= link_to (text.title.blank? ? "[No title]" : text.title), public_text_path(text) %></p>
-  <% end %>
-  </p>
-<% end %>
+      <% if @referenced_texts.present? %>
+        <div class="field">
+          <div class="field-label">Appears in the following Texts:</div>
+          <ul class="list-group">
+          <% @referenced_texts.each do |text| %>
+            <li class="list-group-item"><% if text.census_id.present? %>(<%= text.census_id %>) <% end %> <%= link_to (text.title.blank? ? "[No title]" : text.title), public_text_path(text) %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

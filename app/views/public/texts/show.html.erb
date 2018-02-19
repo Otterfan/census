@@ -1,341 +1,364 @@
-<h3>Record View</h3>
+<div class="container">
+  <div class="row">
+    <h3>Record View</h3>
 
-<% if @text.census_id.present? %>
-<p>
-  <strong>Census:</strong>
-  <%= @text.census_id %>
-</p>
-<% end %>
-
-<% if @text.section.present? %>
-  <p>
-    <strong>Section:</strong>
-    <%= @text.section.name %>
-  </p>
-<% end %>
-
-
-<% if @text.text_type.present? %>
-<p>
-  <strong>Text type:</strong>
-  <%= @text.text_type.capitalize.gsub!('_', ' ') %>
-</p>
-<% end %>
-
-
-<% if @text.material_type.present? %>
-<p>
-  <strong>Material type:</strong>
-  <%= @text.material_type %>
-</p>
-<% end %>
-
-<% if @text.topic_author.full_name.present? %>
-<p>
-  <strong>Topic author:</strong>
-  <%= @text.topic_author.full_name %>
-</p>
-<% end %>
-
-<% if @text.authors_name_from_source.present? %>
-  <p>
-    <strong>Author's name as it appears in this source:</strong>
-    <%= @text.authors_name_from_source %>
-  </p>
-<% end %>
-
-<% if @text.title.present? %>
-<p>
-  <strong>Title:</strong>
-  <%= @text.title %>
-</p>
-<% end %>
-
-<% if @text.text_citations.present? %>
-<p>
-  <strong>Citations:</strong>
-  <% @text.text_citations.each do |citation| %>
-    <p>Name: <%= citation.name %></strong></p>
-    <ul>
-      <% if citation.role.present? %><li>Role: <%= citation.role %></li><% end %>
-      <% if citation.from_language_id.present? %><li>From language: <%= get_lang_from_id(citation.from_language_id.to_i).name %></li><% end %>
-      <% if citation.to_language_id.present? %><li>To language: <%= get_lang_from_id(citation.to_language_id.to_i).name %></li><% end %>
-      <% if citation.source_edition.present? %><li>Source edition: <%= citation.source_edition %></li><% end %>
-    </ul>
-  <% end %>
-</p>
-<% end %>
-
-<% if @text.volume.present? %>
-<p>
-  <strong>Volume:</strong>
-  <%= link_to (@text.volume.title.present? ? @text.volume.title : "[no volume title]"), public_volume_path(@text.volume.id) %>
-</p>
-<% end %>
-
-<% if @text.series.present? %>
-  <p>
-    <strong>Series:</strong>
-    <%= @text.series %>
-  </p>
-<% end %>
-
-<% if @text.publication_places.present? %>
-  <p>
-    <strong>Places of Publication:</strong>
-    <ul>
-      <% @text.publication_places.each do |pubplace| %>
-        <% if pubplace.place.present? %><li><%= pubplace.place.name %> <% if pubplace.primary.present? %> (primary)<% end %></li><% end %>
+    <div class="col-lg-6 col-md-6">
+      <% if @text.census_id.present? %>
+        <div class="field">
+          <div class="field-label">Census:</div>
+          <%= @text.census_id %>
+        </div>
       <% end %>
-    </ul>
-  </p>
-<% end %>
 
-<% if @text.publisher.present? %>
-<p>
-  <strong>Publisher:</strong>
-  <%= @text.publisher %>
-</p>
-<% end %>
-
-<% if @text.date.present? %>
-<p>
-  <strong>Date:</strong>
-  <%= @text.date %>
-</p>
-<% end %>
-
-<% if @text.page_count.present? %>
-  <p>
-    <strong>Page count:</strong>
-    <%= @text.page_count %>
-  </p>
-<% end %>
-
-<% if @text.page_span.present? %>
-  <p>
-    <strong>Page span:</strong>
-    <%= @text.page_span %>
-  </p>
-<% end %>
-
-<p>
-  <strong>Text is bilingual:</strong>
-  <% if @text.is_bilingual %>
-      True
-  <% else %>
-      False
-  <% end %>
-</p>
-
-<% if @text.genre.present? %>
-  <p>
-    <strong>Genre:</strong>
-    <%= @text.genre %>
-  </p>
-<% end %>
-
-<p>
-  <strong>Illustrations noted:</strong>
-  <% if @text.illustrations_noted %>
-      True
-  <% else %>
-      False
-  <% end %>
-</p>
-
-<% if @text.url.present? %>
-  <p>
-    <strong>URL:</strong>
-    <%= @text.url %>
-  </p>
-<% end %>
-
-<% if @text.journal.present? %>
-  <p>
-    <strong>Journal:</strong>
-    <p>Title: <%= link_to (@text.journal.title.present? ? @text.journal.title : "[no journal title]"), public_journal_path(@text.journal.id) %></p>
-    <ul>
-      <% if @text.issue_volume.present? %><li>Issue volume: <%= @text.issue_volume %></li><% end %>
-      <% if @text.issue_number.present? %><li>Issue number: <%= @text.issue_number %></li><% end %>
-      <% if @text.issue_season_month.present? %><li>Season/month: <%= @text.issue_season_month %></li><% end %>
-      <% if @text.issue_title.present? %><li>Special Season Title: <%= @text.issue_title %></li><% end %>
-      <% if @text.issue_editor.present? %><li>Special Season Editor: <%= @text.issue_editor %></li><% end %>
-    </ul>
-  </p>
-<% end %>
-
-<% if @text.sponsoring_organization.present? %>
-  <p>
-    <strong>Sponsoring organization:</strong>
-    <%= @text.sponsoring_organization %>
-  </p>
-<% end %>
-
-<% if @text.collection.present? %>
-  <p>
-    <strong>Collection:</strong>
-    <%= @text.collection %>
-  </p>
-<% end %>
-
-<% if @text.standard_numbers.present? %>
-  <p>
-    <strong>Standardized numbers:</strong>
-    <ul>
-      <% @text.standard_numbers.each do |stdnum| %>
-        <% if stdnum.value.present? %><li>Number: <%= stdnum.value %> <% if stdnum.numtype.present? %>Type: <%= stdnum.numtype %><% end %></li><% end %>
+      <% if @text.section.present? %>
+        <div class="field">
+          <div class="field-label">Section:</div>
+          <%= @text.section.name %>
+        </div>
       <% end %>
-    </ul>
-  </p>
-<% end %>
 
-<% if @text.dai.present? %>
-  <p>
-    <strong>DAI:</strong>
-    <%= @text.dai %>
-  </p>
-<% end %>
+      <% if @text.text_type.present? %>
+        <div class="field">
+          <div class="field-label">Text type:</div>
+          <%= @text.text_type.capitalize.gsub!('_', ' ') %>
+        </div>
+      <% end %>
 
-<% if @text.components.present? %>
-<p>
-  <strong>Components:</strong>
-  <% @text.components.each do |component| %>
-    <p>Title: <%= component.title %></p>
-    <ul>
-      <% if component.pages.present? %><li>Pages: <%= component.pages %></li><% end %>
-      <% if component.genre.present? %><li>Genre: <%= component.genre %></li><% end %>
-      <% if component.note.present? %><li>Note: <%= component.note %></li><% end %>
-      <% if component.text_type.present? %><li>Text type: <%= component.text_type %></li><% end %>
-      <% if component.is_bilingual.present? %><li>Is Bilingual: <%= component.is_bilingual %></li><% end %>
-      <% if component.component_citations.present? %>
-        <li> Component Citations:
-          <ul>
-          <% component.component_citations.each do |component_citation| %>
-              <% if component_citation.name.present? %><li>Name: <%= component_citation.name %></li><% end %>
-              <% if component_citation.role.present? %><li>Role: <%= component_citation.role %></li><% end %>
-          <% end %>
+      <% if @text.material_type.present? %>
+        <div class="field">
+          <div class="field-label">Material type:</div>
+          <%= @text.material_type %>
+        </div>
+      <% end %>
+
+      <% if @text.topic_author.full_name.present? %>
+        <div class="field">
+          <div class="field-label">Topic author:</div>
+          <%= @text.topic_author.full_name %>
+        </div>
+      <% end %>
+
+      <% if @text.authors_name_from_source.present? %>
+        <div class="field">
+          <div class="field-label">Author's name as it appears in this source:</div>
+          <%= @text.authors_name_from_source %>
+        </div>
+      <% end %>
+
+      <% if @text.title.present? %>
+        <div class="field">
+          <div class="field-label">Title:</div>
+          <%= @text.title %>
+        </div>
+      <% end %>
+
+      <% if @text.text_citations.present? %>
+        <div class="field">
+          <div class="field-label">Citations:</div>
+          <% @text.text_citations.each do |citation| %>
+            <ul class="list-group">
+              <% if citation.name.present? %><li class="list-group-item"><div class="field-label">Name:</div> <%= citation.name %></li><% end %>
+              <% if citation.role.present? %><li class="list-group-item"><div class="field-label">Role:</div> <%= citation.role %></li><% end %>
+              <% if citation.from_language_id.present? %><li class="list-group-item"><div class="field-label">From language:</div> <%= get_lang_from_id(citation.from_language_id.to_i).name %></li><% end %>
+              <% if citation.to_language_id.present? %><li class="list-group-item"><div class="field-label">To language:</div> <%= get_lang_from_id(citation.to_language_id.to_i).name %></li><% end %>
+              <% if citation.source_edition.present? %><li class="list-group-item"><div class="field-label">Source edition:</div> <%= citation.source_edition %></li><% end %>
+            </ul>
+        <% end %>
+        </div>
+      <% end %>
+
+      <% if @text.volume.present? %>
+        <div class="field">
+          <div class="field-label">Volume:</div>
+          <%= link_to (@text.volume.title.present? ? @text.volume.title : "[no volume title]"), public_volume_path(@text.volume.id) %>
+        </div>
+      <% end %>
+
+      <% if @text.series.present? %>
+        <div class="field">
+          <div class="field-label">Series:</div>
+          <%= @text.series %>
+        </div>
+      <% end %>
+
+      <% if @text.publication_places.present? %>
+        <div class="field">
+          <div class="field-label">Places of Publication:</div>
+          <ul class="list-group">
+            <% @text.publication_places.each do |pubplace| %>
+              <% if pubplace.place.present? %><li class="list-group-item"><%= pubplace.place.name %> <% if pubplace.primary.present? %> (primary)<% end %></li><% end %>
+            <% end %>
           </ul>
-        </li>
+        </div>
       <% end %>
-    </ul>
-  <% end %>
-</p>
-<% end %>
 
-<% if @text.abstract.present? %>
-  <p>
-    <strong>Abstract:</strong>
-    <%= @text.abstract %>
-  </p>
-<% end %>
-
-<% if @text.editorial_annotation.present? %>
-  <p>
-    <strong>Editorial annotation:</strong>
-    <%= @text.editorial_annotation %>
-  </p>
-<% end %>
-
-<% if @text.physical_description.present? %>
-  <p>
-    <strong>Physical description:</strong>
-    <%= @text.physical_description %>
-  </p>
-<% end %>
-
-<% if @text.note.present? %>
-  <p>
-    <strong>Other notes:</strong>
-    <%= @text.note %>
-  </p>
-<% end %>
-
-<!--p>Original Greek Text</p-->
-
-<% if @text.source.present? %>
-  <p>
-    <strong>Source:</strong>
-    <%= @text.source %>
-  </p>
-<% end %>
-
-<% if @text.original_greek_title.present? %>
-  <p>
-    <strong>Original Greek title:</strong>
-    <%= @text.original_greek_title %>
-  </p>
-<% end %>
-
-<% if @text.original_greek_collection.present? %>
-  <p>
-    <strong>Original Greek collection:</strong>
-    <%= @text.original_greek_collection %>
-  </p>
-<% end %>
-
-<% if @text.original_greek_place_of_publication.present? %>
-  <p>
-    <strong>Original Greek place of publication:</strong>
-    <%= @text.original_greek_place_of_publication %>
-  </p>
-<% end %>
-
-<% if @text.original_greek_publisher.present? %>
-  <p>
-    <strong>Original Greek publisher:</strong>
-    <%= @text.original_greek_publisher %>
-  </p>
-<% end %>
-
-<% if @text.original_greek_date.present? %>
-  <p>
-    <strong>Original Greek date:</strong>
-    <%= @text.original_greek_date %>
-  </p>
-<% end %>
-
-<% if @text.other_text_languages.present? %>
-  <p>
-    <strong>Other text languages:</strong>
-    <ul>
-      <% @text.other_text_languages.each do |olang| %>
-        <% if olang.language.name.present? %><li><%= olang.language.name %></li><% end %>
+      <% if @text.publisher.present? %>
+        <div class="field">
+          <div class="field-label">Publisher:</div>
+          <%= @text.publisher %>
+        </div>
       <% end %>
-    </ul>
-  </p>
-<% end %>
 
-<% if @text.special_location_of_item.present? %>
-  <p>
-    <strong>Special location of item:</strong>
-    <%= @text.special_location_of_item %>
-  </p>
-<% end %>
-
-<% if @text.special_source_of_info.present? %>
-  <p>
-    <strong>Special source of info:</strong>
-    <%= @text.special_source_of_info %>
-  </p>
-<% end %>
-
-<% if @text.cross_references.present? %>
-  <p>
-    <strong>Cross references:</strong>
-    <ul>
-      <% @text.cross_references.each do |ref| %>
-        <% if ref.census_id.present? %><li>Census ID: <%= ref.census_id %></a></li><% end %>
+      <% if @text.date.present? %>
+        <div class="field">
+          <div class="field-label">Date:</div>
+          <%= @text.date %>
+        </div>
       <% end %>
-    </ul>
-  </p>
-<% end %>
 
-<% if @text.original.present? %>
-  <p>
-    <strong>Original:</strong>
-    <%= raw(formatted_text(@text.original)) %>
-  </p>
-<% end %>
+      <% if @text.page_count.present? %>
+        <div class="field">
+          <div class="field-label">Page count:</div>
+          <%= @text.page_count %>
+        </div>
+      <% end %>
 
-<%= link_to 'Back', public_texts_path %>
+      <% if @text.page_span.present? %>
+        <div class="field">
+          <div class="field-label">Page span:</div>
+          <%= @text.page_span %>
+        </div>
+      <% end %>
+
+      <div class="field">
+        <div class="field-label">Text is bilingual:</div>
+        <% if @text.is_bilingual %>
+          True
+        <% else %>
+          False
+        <% end %>
+      </div>
+
+      <% if @text.genre.present? %>
+        <div class="field">
+          <div class="field-label">Genre:</div>
+          <%= @text.genre %>
+        </div>
+      <% end %>
+
+      <div class="field">
+        <div class="field-label">Illustrations noted:</div>
+        <% if @text.illustrations_noted %>
+          True
+        <% else %>
+          False
+        <% end %>
+      </div>
+
+      <% if @text.url.present? %>
+        <div class="field">
+          <div class="field-label">URL:</div>
+          <%= @text.url %>
+        </div>
+      <% end %>
+
+      <% if @text.journal.present? %>
+        <div class="field">
+          <div class="field-label">Journal:</div>
+          <ul class="list-group">
+            <% if @text.title.present? %><li class="list-group-item"><div class="field-label">Title:</div> <%= link_to (@text.journal.title.present? ? @text.journal.title : "[no journal title]"), public_journal_path(@text.journal.id) %></li><% end %>
+            <% if @text.issue_volume.present? %><li class="list-group-item"><div class="field-label">Issue volume:</div> <%= @text.issue_volume %></li><% end %>
+            <% if @text.issue_number.present? %><li class="list-group-item"><div class="field-label">Issue number:</div> <%= @text.issue_number %></li><% end %>
+            <% if @text.issue_season_month.present? %><li class="list-group-item"><div class="field-label">Season/month:</div> <%= @text.issue_season_month %></li><% end %>
+            <% if @text.issue_title.present? %><li class="list-group-item"><div class="field-label">Special Season Title:</div> <%= @text.issue_title %></li><% end %>
+            <% if @text.issue_editor.present? %><li class="list-group-item"><div class="field-label">Special Season Editor:</div> <%= @text.issue_editor %></li><% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <% if @text.sponsoring_organization.present? %>
+        <div class="field">
+          <div class="field-label">Sponsoring organization:</div>
+          <%= @text.sponsoring_organization %>
+        </div>
+      <% end %>
+
+      <% if @text.collection.present? %>
+        <div class="field">
+          <div class="field-label">Collection:</div>
+          <%= @text.collection %>
+        </div>
+      <% end %>
+
+      <% if @text.standard_numbers.present? %>
+        <div class="field">
+          <div class="field-label">Standardized numbers:</div>
+          <ul class="list-group">
+            <% @text.standard_numbers.each do |stdnum| %>
+              <% if stdnum.value.present? %><li class="list-group-item"><div class="field-label">Number:</div> <%= stdnum.value %> <% if stdnum.numtype.present? %>Type: <%= stdnum.numtype %><% end %></li><% end %>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <% if @text.dai.present? %>
+        <div class="field">
+          <div class="field-label">DAI:</div>
+          <%= @text.dai %>
+        </div>
+      <% end %>
+
+      <% if @text.components.present? %>
+        <div class="field">
+          <div class="field-label">Components:</div>
+          <% @text.components.each do |component| %>
+          <ul class="list-group">
+            <% if component.title.present? %><li class="list-group-item"><div class="field-label">Title:</div> <%= component.title %></li><% end %>
+            <% if component.pages.present? %><li class="list-group-item"><div class="field-label">Pages:</div> <%= component.pages %></li><% end %>
+            <% if component.genre.present? %><li class="list-group-item"><div class="field-label">Genre:</div> <%= component.genre %></li><% end %>
+            <% if component.note.present? %><li class="list-group-item"><div class="field-label">Note:</div> <%= component.note %></li><% end %>
+            <% if component.text_type.present? %><li class="list-group-item"><div class="field-label">Text type:</div> <%= component.text_type %></li><% end %>
+            <% if component.is_bilingual.present? %><li class="list-group-item"><div class="field-label">Is Bilingual:</div> <%= component.is_bilingual %></li><% end %>
+            <% if component.component_citations.present? %>
+              <li class="list-group-item"> <div class="field-label">Component Citations:</div>
+                <ul class="list-group">
+                  <% component.component_citations.each do |component_citation| %>
+                    <% if component_citation.name.present? %><li class="list-group-item"><div class="field-label">Name:</div> <%= component_citation.name %></li><% end %>
+                    <% if component_citation.role.present? %><li class="list-group-item"><div class="field-label">Role:</div> <%= component_citation.role %></li><% end %>
+                  <% end %>
+                </ul>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+        </div>
+      <% end %>
+
+      <% if @text.abstract.present? %>
+        <div class="field">
+          <div class="field-label">Abstract:</div>
+          <%= @text.abstract %>
+        </div>
+      <% end %>
+
+      <% if @text.editorial_annotation.present? %>
+        <div class="field">
+          <div class="field-label">Editorial annotation:</div>
+          <%= @text.editorial_annotation %>
+        </div>
+      <% end %>
+
+      <% if @text.physical_description.present? %>
+        <div class="field">
+          <div class="field-label">Physical description:</div>
+          <%= @text.physical_description %>
+        </div>
+      <% end %>
+
+      <% if @text.note.present? %>
+        <div class="field">
+          <div class="field-label">Other notes:</div>
+          <%= @text.note %>
+        </div>
+      <% end %>
+
+      <% if @text.source.present? ||
+          @text.original_greek_title.present? ||
+          @text.original_greek_collection.present? ||
+          @text.original_greek_place_of_publication.present? ||
+          @text.original_greek_publisher.present? ||
+          @text.original_greek_date.present?
+      %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="field-label">Original Greek Text</div>
+          </div>
+          <div class="panel-body">
+
+            <% if @text.source.present? %>
+              <div class="field">
+                <div class="field-label">Source:</div>
+                <%= @text.source %>
+              </div>
+            <% end %>
+
+            <% if @text.original_greek_title.present? %>
+              <div class="field">
+                <div class="field-label">Original Greek title:</div>
+                <%= @text.original_greek_title %>
+              </div>
+            <% end %>
+
+            <% if @text.original_greek_collection.present? %>
+              <div class="field">
+                <div class="field-label">Original Greek collection:</div>
+                <%= @text.original_greek_collection %>
+              </div>
+            <% end %>
+
+            <% if @text.original_greek_place_of_publication.present? %>
+              <div class="field">
+                <div class="field-label">Original Greek place of publication:</div>
+                <%= @text.original_greek_place_of_publication %>
+              </div>
+            <% end %>
+
+            <% if @text.original_greek_publisher.present? %>
+              <div class="field">
+                <div class="field-label">Original Greek publisher:</div>
+                <%= @text.original_greek_publisher %>
+              </div>
+            <% end %>
+
+            <% if @text.original_greek_date.present? %>
+              <div class="field">
+                <div class="field-label">Original Greek date:</div>
+                <%= @text.original_greek_date %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <% if @text.other_text_languages.present? %>
+        <div class="field">
+          <div class="field-label">Other text languages:</div>
+          <ul class="list-group">
+            <% @text.other_text_languages.each do |olang| %>
+              <% if olang.language.name.present? %><li class="list-group-item"><%= olang.language.name %></li><% end %>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <% if @text.special_location_of_item.present? %>
+        <div class="field">
+          <div class="field-label">Special location of item:</div>
+          <%= @text.special_location_of_item %>
+        </div>
+      <% end %>
+
+      <% if @text.special_source_of_info.present? %>
+        <div class="field">
+          <div class="field-label">Special source of info:</div>
+          <%= @text.special_source_of_info %>
+        </div>
+      <% end %>
+
+      <% if @text.cross_references.present? %>
+        <div class="field">
+          <div class="field-label">Cross references:</div>
+          <ul class="list-group">
+            <% @text.cross_references.each do |ref| %>
+              <% if ref.census_id.present? %><li class="list-group-item"><div class="field-label">Census ID:</div> <%= ref.census_id %></a></li><% end %>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="col-lg-6 col-md-6">
+      <% if @text.original.present? %>
+        <div class="panel panel-default">
+          <div class="panel-heading"><div class="field-label">Original</div></div>
+          <div class="panel-body">
+            <%= raw(formatted_text(@text.original)) %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <%= link_to 'Back', public_texts_path %>
+  </div>
+</div>

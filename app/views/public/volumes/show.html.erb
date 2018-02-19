@@ -1,45 +1,53 @@
-<h3>Record View</h3>
+<div class="container">
+  <div class="row">
+    <h3>Record View</h3>
 
-<% if @volume.title.present? %>
-  <p>
-    <strong>Title:</strong>
-    <%= @volume.title %>
-  </p>
-<% end %>
+    <div class="col-lg-6 col-md-8 col-sm-12">
+      <% if @volume.title.present? %>
+        <div class="field">
+          <div class="field-label">Title:</div>
+          <%= @volume.title %>
+        </div>
+      <% end %>
 
-<% if @volume.author.present? %>
-  <p>
-    <strong>Author:</strong>
-    <%= @volume.author %>
-  </p>
-<% end %>
+      <% if @volume.author.present? %>
+        <div class="field">
+          <div class="field-label">Author:</div>
+          <%= @volume.author %>
+        </div>
+      <% end %>
 
-<% if @volume.date.present? %>
-  <p>
-    <strong>Date:</strong>
-    <%= @volume.date %>
-  </p>
-<% end %>
+      <% if @volume.date.present? %>
+        <div class="field">
+          <div class="field-label">Date:</div>
+          <%= @volume.date %>
+        </div>
+      <% end %>
 
-<% if @citations.present? %>
-  <p>
-    <strong>Citations:</strong>
-    <% @citations.each do |citation| %>
-      <p>Name: <% if citation.first_name.present? %><%= citation.first_name %><% end %> <% if citation.last_name.present? %><%= citation.last_name %><% end %></p>
-      <ul>
-        <% if citation.role.present? %><li>Role: <%= citation.role %></li><% end %>
-        <% if citation.from_language_id_id.present? %><li>From language: <%= get_lang_from_id(citation.from_language_id_id.to_i).name %></li><% end %>
-        <% if citation.to_language_id_id.present? %><li>To language: <%= get_lang_from_id(citation.to_language_id_id.to_i).name %></li><% end %>
-      </ul>
-    <% end %>
-  </p>
-<% end %>
+      <% if @citations.present? %>
+        <div class="field">
+          <div class="field-label">Citations:</div>
+          <% @citations.each do |citation| %>
+            <ul class="list-group">
+              <% if citation.first_name.present? || citation.last_name.present? %><li class="list-group-item"><div class="field-label">Name:</div> <% if citation.first_name.present? %><%= citation.first_name %><% end %> <% if citation.last_name.present? %><%= citation.last_name %><% end %></li><% end %>
+              <% if citation.role.present? %><li class="list-group-item"><div class="field-label">Role:</div> <%= citation.role %></li><% end %>
+              <% if citation.from_language_id_id.present? %><li class="list-group-item"><div class="field-label">From language:</div> <%= get_lang_from_id(citation.from_language_id_id.to_i).name %></li><% end %>
+              <% if citation.to_language_id_id.present? %><li class="list-group-item"><div class="field-label">To language:</div> <%= get_lang_from_id(citation.to_language_id_id.to_i).name %></li><% end %>
+            </ul>
+          <% end %>
+        </div>
+      <% end %>
 
-<% if @referenced_texts.present? %>
-  <p>
-    <strong>Appears in the following Texts:</strong>
-    <% @referenced_texts.each do |text| %>
-      <p><% if text.census_id.present? %>(<%= text.census_id %>) <% end %> <%= link_to (text.title.blank? ? "[No title]" : text.title), public_text_path(text) %></p>
-    <% end %>
-  </p>
-<% end %>
+      <% if @referenced_texts.present? %>
+        <div class="field">
+          <div class="field-label">Appears in the following Texts:</div>
+          <ul class="list-group">
+          <% @referenced_texts.each do |text| %>
+            <li class="list-group-item"><% if text.census_id.present? %>(<%= text.census_id %>) <% end %> <%= link_to (text.title.blank? ? "[No title]" : text.title), public_text_path(text) %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

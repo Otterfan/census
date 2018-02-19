@@ -269,3 +269,15 @@ a:visited {
 .change-from .change-value {
   text-decoration: line-through;
 }
+
+.field {
+  padding:.2rem;
+}
+.field-label {
+  font-weight: bold;
+  display: inline-block;
+}
+
+.field ul:last-child {
+  margin-bottom: 0;
+}
