@@ -105,6 +105,6 @@ class Public::SearchController < ApplicationController
 
   private
   def search_params
-    params.permit(:keyword, :title, :journal, :location, :people, )
+    params.permit(:keyword, :title, :journal, :location, :people, :type)
   end
 end
