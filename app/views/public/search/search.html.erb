@@ -45,8 +45,6 @@
         <%= form_tag(public_search_path, method: :get, id: "search_form") do %>
           <%= hidden_field_tag :type, @search_type %>
 
-          <%= hidden_field_tag :genre, @genre %>
-
           <div class="input-group">
             <%= label_tag(:keyword, "Keyword") %>
             <%= text_field_tag :keyword, params[:keyword], :class => 'form-control' %>
