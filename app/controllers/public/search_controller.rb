@@ -20,7 +20,8 @@ class Public::SearchController < ApplicationController
         params[:title].present? ||
         params[:journal].present? ||
         params[:location].present? ||
-        params[:people].present?
+        params[:people].present? ||
+        params[:genre].present?
 
       query_string_array = []
 
@@ -73,6 +74,16 @@ class Public::SearchController < ApplicationController
             query_string: {
                 fields: ['publication_places.place.name'],
                 query: params[:location]
+            }
+        }
+      end
+
+      if params[:genre].present?
+        @genre = params[:genre]
+        query_string_array << {
+            query_string: {
+                fields: ['genre'],
+                query: params[:genre]
             }
         }
       end
@@ -140,6 +151,6 @@ class Public::SearchController < ApplicationController
 
   private
   def search_params
-    params.permit(:keyword, :title, :journal, :location, :people, :type)
+    params.permit(:keyword, :title, :journal, :location, :people, :type, :genre)
   end
 end
