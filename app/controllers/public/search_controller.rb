@@ -25,6 +25,7 @@ class Public::SearchController < ApplicationController
         params[:material_type].present? ||
         params[:text_type].present? ||
         params[:topic_author].present? ||
+        params[:publication_places].present? ||
         params[:other_text_languages].present?
 
       query_string_array = []
@@ -200,6 +201,25 @@ class Public::SearchController < ApplicationController
       }
 
       @texts = Text.search(all_search).page(params[:page]).per(@pagination_page_size)
+
+
+      # create facet delete urls
+      @facet_delete_paths = {}
+      @facets.each do |k, v|
+        new_hash = {}
+        new_hash[:utf8] = "✓"
+        new_hash[:type] = @search_type
+        new_hash[:keyword] = params[:keyword]
+        new_hash.merge!(@facets.deep_dup)
+
+        new_hash.each do |f, w|
+          if k == f
+            new_hash.delete(k)
+          end
+        end
+
+        @facet_delete_paths[k] = new_hash
+      end
     else
       @new_search = true
       @texts = []
