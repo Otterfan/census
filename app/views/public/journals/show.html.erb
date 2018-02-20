@@ -3,12 +3,11 @@
     <h3>Record View</h3>
 
     <div class="col-lg-6 col-md-8 col-sm-12">
-      <% if @journal.title.present? %>
-        <div class="field">
-          <div class="field-label">Title:</div>
-          <%= @journal.title %>
-        </div>
-      <% end %>
+
+      <div class="field">
+        <div class="field-label">Title:</div>
+        <% if @journal.title.present? %><%= @journal.title %><% else %>[No title]<% end %>
+      </div>
 
       <% if @journal.issn.present? %>
         <div class="field">

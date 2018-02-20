@@ -3,12 +3,11 @@
     <h3>Record View</h3>
 
     <div class="col-lg-6 col-md-8 col-sm-12">
-      <% if @volume.title.present? %>
-        <div class="field">
-          <div class="field-label">Title:</div>
-          <%= @volume.title %>
-        </div>
-      <% end %>
+
+      <div class="field">
+        <div class="field-label">Title:</div>
+        <% if @volume.title.present? %><%= @volume.title %><% else %>[No title]<% end %>
+      </div>
 
       <% if @volume.author.present? %>
         <div class="field">
