@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180126040001) do
+ActiveRecord::Schema.define(version: 20180207191358) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20180126040001) do
     t.string "text_type"
     t.text "note"
     t.boolean "is_bilingual"
+    t.text "collection"
     t.index ["text_id"], name: "index_components_on_text_id"
   end
 

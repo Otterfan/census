@@ -17,7 +17,7 @@
     </div>
 
     <div>
-      <%= f.input :material_type, as: :string %>
+      <%= f.input :material_type, :collection => [['Book', 'Book'], ['Journal', 'Journal'], ['Online', 'Online'], ['Conference proceedings', 'Conference proceedings'], ['Thesis/dissertation', 'Thesis/dissertation'], ['Other', 'Other']] %>
     </div>
 
     <div>
@@ -25,7 +25,7 @@
     </div>
 
     <div>
-      <%= f.input :authors_name_from_source, label: 'Author\'s name as it appears in this source' %>
+      <%= f.input :authors_name_from_source, label: 'Author\'s name as spelled in source' %>
     </div>
 
     <!-- Author’s name as it appears in this source -->
@@ -35,6 +35,10 @@
     </div>
 
     <div>
+      <a id="collapse-citations">
+        <span class="collapse-command">collapse</span>
+        <span class="open-command">open</span>
+      </a>
       <h2>Citations</h2>
     </div>
     <div>
@@ -159,14 +163,18 @@
     </div>
 
     <div>
+      <a id="collapse-components">
+        <span class="collapse-command">collapse</span>
+        <span class="open-command">open</span>
+      </a>
       <h2>Components</h2>
     </div>
     <div>
-      <div id='components'>
+      <ul id="components" class="list-group sortable-item">
         <%= f.simple_fields_for :components do |component| %>
             <%= render 'component_fields', :f => component %>
         <% end %>
-      </div>
+      </ul>
       <div class='links'>
         <%= link_to_add_association 'add component', f, :components, :class => 'row', :data => {'association-insertion-node' => '#components', 'association-insertion-method' => 'append'} %>
       </div>

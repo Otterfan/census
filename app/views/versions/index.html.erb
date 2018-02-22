@@ -8,6 +8,9 @@
     <ul class="list-group">
       <% @versions.each do |version| %>
           <li class="list-group-item change">
+            <% if defined? version.item.census_id %>
+                <strong><%= version.item.census_id %></strong>
+            <% end %>
             <%= link_to changed_item_label(version.item), changed_item_url(version.item), :class => 'change-link' %>
             <br>
             <span class="date"><%= version.created_at %> — <%= version.whodunnit %></span><br>
