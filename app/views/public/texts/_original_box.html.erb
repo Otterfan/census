@@ -1,0 +1,5 @@
+<% if @text.original.present? %>
+    <div class="original-entry">
+      <%= raw(formatted_text(@text.original)) %>
+    </div>
+<% end %>

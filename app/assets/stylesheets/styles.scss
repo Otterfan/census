@@ -6,317 +6,318 @@ $danger-color: #d9534f;
 $warning-color: #f0ad4e;
 $safe-color: #5cb85c;
 
-body {
-  font-family: $main-font-stack;
-
-}
-
-select.form-control {
-  width: auto;
-  max-width: 95%;
-}
-
-h2 {
-  font-weight: 600;
-}
-
-.prev-next-row-top, .prev-next-row-bottom {
-  font-weight: bold;
-  margin-bottom: 1em;
-
-  .next-record-col {
-    text-align: right;
-  }
-
-}
-
-.prev-next-row-bottom {
-  margin-top: 1em;
-}
-
-.edit-form, .edit_volume {
-
-  label {
-  }
-
-  .input {
-    margin-bottom: 1em;
-  }
-
-  input[type=text], textarea {
+.admin {
+  body {
     font-family: $main-font-stack;
+
   }
 
-  .remove-link {
-    font-size: 21px;
-    text-decoration: none;
-    float: right;
-    position: relative;
-    top: -27px;
-    left: 24px;
-    background: #eef;
-    color: red;
-    display: block;
-    border: none;
-    width: 18px;
-    border-radius: 10px;
-    text-align: center;
-    height: 23px;
-    line-height: 16px;
-  }
-
-  textarea {
-    height: 10em;
-  }
-
-  .nested-fields, .isbn-fields, .component-fields {
-
-    &.citation-fields.collapsed-li {
-        height: 60px;
-    }
-
-    margin-bottom: 1em;
-    padding: 1em;
-    margin-right: 1em;
-
-    &.collapsed-li {
-      margin-bottom: 0;
-      border-top: 2px dashed #999;
-    }
-
-    .handle {
-      content: '....';
-      width: 20px;
-      height: 20px;
-      display: inline-block;
-      overflow: hidden;
-      line-height: 5px;
-      padding: 3px 4px;
-      cursor: move;
-      vertical-align: middle;
-      margin-top: -.7em;
-      margin-right: .3em;
-      font-size: 12px;
-      font-family: sans-serif;
-      letter-spacing: 2px;
-      color: #cccccc;
-      text-shadow: 1px 0 1px black;
-    }
-    .handle::after {
-      content: '.. .. .. ..';
-    }
-  }
-
-  .nested-fields {
-    background: #f1eeee;
-  }
-
-  .isbn-fields {
-    background: #f1eef1;
-  }
-  .component-fields {
-    cursor: move;
-    background: #e1dedc;
-  }
-
-  #components, #citations, #isbns {
-    margin-bottom: 1em
-  }
-
-  select {
-    height: 2em;
+  select.form-control {
     width: auto;
-    font-size: 14px;
-    font-family: $main-font-stack;
+    max-width: 95%;
   }
-}
 
-.edit_text {
-  .census-id {
-    font-size: 14px;
-    margin-bottom: 15px;
+  h2 {
+    font-weight: 600;
+  }
 
-    .census-id-label {
+  .prev-next-row-top, .prev-next-row-bottom {
+    font-weight: bold;
+    margin-bottom: 1em;
+
+    .next-record-col {
+      text-align: right;
+    }
+
+  }
+
+  .prev-next-row-bottom {
+    margin-top: 1em;
+  }
+
+  .edit-form, .edit_volume {
+
+    label {
+    }
+
+    .input {
+      margin-bottom: 1em;
+    }
+
+    input[type=text], textarea {
+      font-family: $main-font-stack;
+    }
+
+    .remove-link {
+      font-size: 21px;
+      text-decoration: none;
+      float: right;
+      position: relative;
+      top: -27px;
+      left: 24px;
+      background: #eef;
+      color: red;
+      display: block;
+      border: none;
+      width: 18px;
+      border-radius: 10px;
+      text-align: center;
+      height: 23px;
+      line-height: 16px;
+    }
+
+    textarea {
+      height: 10em;
+    }
+
+    .nested-fields, .isbn-fields, .component-fields {
+
+      &.citation-fields.collapsed-li {
+        height: 60px;
+      }
+
+      margin-bottom: 1em;
+      padding: 1em;
+      margin-right: 1em;
+
+      &.collapsed-li {
+        margin-bottom: 0;
+        border-top: 2px dashed #999;
+      }
+
+      .handle {
+        content: '....';
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        overflow: hidden;
+        line-height: 5px;
+        padding: 3px 4px;
+        cursor: move;
+        vertical-align: middle;
+        margin-top: -.7em;
+        margin-right: .3em;
+        font-size: 12px;
+        font-family: sans-serif;
+        letter-spacing: 2px;
+        color: #cccccc;
+        text-shadow: 1px 0 1px black;
+      }
+      .handle::after {
+        content: '.. .. .. ..';
+      }
+    }
+
+    .nested-fields {
+      background: #f1eeee;
+    }
+
+    .isbn-fields {
+      background: #f1eef1;
+    }
+    .component-fields {
+      cursor: move;
+      background: #e1dedc;
+    }
+
+    #components, #citations, #isbns {
+      margin-bottom: 1em
+    }
+
+    select {
+      height: 2em;
+      width: auto;
+      font-size: 14px;
+      font-family: $main-font-stack;
+    }
+  }
+
+  .edit_text {
+    .census-id {
+      font-size: 14px;
+      margin-bottom: 15px;
+
+      .census-id-label {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .topic-author {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 1em;
+  }
+
+  .original {
+    font-family: $alt-font-stack;
+    background: #efefd5;
+    padding: 1em;
+
+    .census-id {
       font-weight: bold;
     }
   }
-}
 
-.topic-author {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 1em;
-}
+  .badge {
+    &.unseen {
+      background-color: $danger-color;
+    }
 
-.original {
-  font-family: $alt-font-stack;
-  background: #efefd5;
-  padding: 1em;
+    &.needs_review {
+      background-color: $warning-color;
+    }
 
-  .census-id {
-    font-weight: bold;
-  }
-}
-
-.badge {
-  &.unseen {
-    background-color: $danger-color;
+    &.finished {
+      background-color: $safe-color;
+    }
   }
 
-  &.needs_review {
-    background-color: $warning-color;
+  a.logout-link.navbar-link {
+    padding-left: 1em;
+    font-size: .9em;
   }
 
-  &.finished {
-    background-color: $safe-color;
+  .new-thing a {
+    margin-top: 18px;
+    display: block;
+    text-align: right
   }
-}
 
-a.logout-link.navbar-link {
-  padding-left: 1em;
-  font-size: .9em;
-}
+  a:visited button, a.btn.btn-primary:visited {
+    color: #fff;
+  }
 
-.new-thing a {
-  margin-top: 18px;
-  display: block;
-  text-align: right
-}
+  fieldset.journal-fields, fieldset.volume-fields {
+    padding: 4em .5em .5em .5em;
+    position: relative;
+    clear: both;
+    margin-bottom: 2em;
+  }
 
-a:visited button, a.btn.btn-primary:visited {
-  color: #fff;
-}
+  fieldset.journal-fields {
+    background: #f3f8a7;
+  }
 
-fieldset.journal-fields, fieldset.volume-fields {
-  padding: 4em .5em .5em .5em;
-  position: relative;
-  clear: both;
-  margin-bottom: 2em;
-}
+  fieldset.volume-fields {
+    background: #a7f8f4;
+  }
 
-fieldset.journal-fields {
-  background: #f3f8a7;
-}
+  fieldset legend {
+    font-size: 30px;
+    border-bottom: 0;
+    margin: 0;
+    position: absolute;
+    top: 0;
+  }
 
-fieldset.volume-fields {
-  background: #a7f8f4;
-}
+  .change {
+    margin-bottom: 1em;
 
-fieldset legend {
-  font-size: 30px;
-  border-bottom: 0;
-  margin: 0;
-  position: absolute;
-  top: 0;
-}
+    .date, .who {
+      color: #999;
+    }
 
-.change {
-  margin-bottom: 1em;
+    .field {
+      font-weight: bold;
+    }
 
-  .date, .who {
-    color: #999;
+    .from {
+      text-decoration: line-through;
+    }
+  }
+
+  .affix {
+    -webkit-box-shadow: 5px 5px 10px 0 rgba(136, 136, 136, 0.78);
+    -moz-box-shadow: 5px 5px 10px 0 rgba(136, 136, 136, 0.78);
+    box-shadow: 5px 5px 10px 0px rgba(136, 136, 136, 0.78);
+    z-index: 2
+  }
+
+  .text-comments {
+    .comment-metadata {
+      color: #999
+    }
+
+    .the-title {
+    }
+  }
+
+  .new_comment {
+    .title-field {
+      width: 75%;
+    }
+
+    .btn {
+      margin-bottom: 25px
+    }
+  }
+
+  .comments-section {
+    padding: 1em;
+    background-color: #eaebe9;
+    margin: 1em 0;
+  }
+
+  a:hover {
+    background-color: transparent;
+  }
+
+  a:visited {
+    color: #337ab7;
+  }
+
+  .original #collapse-original-button {
+    position: relative;
+    left: 101%;
+    top: -25px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #656963;
+    float: left;
+    width: 0;
+  }
+
+  .change-from .change-value {
+    text-decoration: line-through;
   }
 
   .field {
+    padding: .2rem;
+  }
+  .field-label {
     font-weight: bold;
+    display: inline-block;
   }
 
-  .from {
-    text-decoration: line-through;
-  }
-}
-
-.affix {
-  -webkit-box-shadow: 5px 5px 10px 0 rgba(136, 136, 136, 0.78);
-  -moz-box-shadow: 5px 5px 10px 0 rgba(136, 136, 136, 0.78);
-  box-shadow: 5px 5px 10px 0px rgba(136, 136, 136, 0.78);
-  z-index: 2
-}
-
-.text-comments {
-  .comment-metadata {
-    color: #999
+  .field ul:last-child {
+    margin-bottom: 0;
   }
 
-  .the-title {
-  }
-}
-
-.new_comment {
-  .title-field {
-    width: 75%;
+  .edit-form .component-fields.ghost, .edit_volume .component-fields.ghost,
+  .edit-form .citation-fields.ghost {
+    opacity: .5;
+    background: yellow;
   }
 
-  .btn {
-    margin-bottom: 25px
+  a#collapse-components, a#collapse-citations {
+    display: block;
+    float: right;
+    padding-right: 1em;
+    position: relative;
+    top: 12px;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: none;
+    }
   }
-}
 
-.comments-section {
-  padding: 1em;
-  background-color: #eaebe9;
-  margin: 1em 0;
-}
-
-a:hover {
-  background-color: transparent;
-}
-
-a:visited {
-  color: #337ab7;
-}
-
-.original #collapse-original-button {
-  position: relative;
-  left: 101%;
-  top: -25px;
-  font-size: 20px;
-  cursor: pointer;
-  color: #656963;
-  float: left;
-  width: 0;
-}
-
-.change-from .change-value {
-  text-decoration: line-through;
-}
-
-
-.field {
-  padding:.2rem;
-}
-.field-label {
-  font-weight: bold;
-  display: inline-block;
-}
-
-.field ul:last-child {
-  margin-bottom: 0;
-}
-
-.edit-form .component-fields.ghost, .edit_volume .component-fields.ghost,
-.edit-form .citation-fields.ghost {
-  opacity: .5;
-  background: yellow;
-}
-
-a#collapse-components, a#collapse-citations {
-  display: block;
-  float: right;
-  padding-right: 1em;
-  position: relative;
-  top: 12px;
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: none;
+  .collapsed-display {
+    display: none;
   }
-}
 
-.collapsed-display {
-  display: none;
-}
-
-.open-command {
-  display: none;
+  .open-command {
+    display: none;
+  }
 }

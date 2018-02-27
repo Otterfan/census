@@ -1,0 +1,19 @@
+<% if @text.poems && @text.poems.count > 0 %>
+    <dt>Contains poems</dt>
+    <% @text.poems.each do |component| %>
+        <%= render 'single_component', component: component %>
+    <% end %>
+<% end %>
+
+<% if @text.stories && @text.stories.count > 0 %>
+    <dt>Contains stories</dt>
+    <dd>
+    </dd>
+<% end %>
+
+<% if @text.other_components && @text.other_components.count > 0 %>
+    <dt>Contains other components</dt>
+    <% @text.other_components.each do |component| %>
+        <%= render 'single_component', component: component %>
+    <% end %>
+<% end %>

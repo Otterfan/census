@@ -22,11 +22,11 @@ class Text < ApplicationRecord
   has_many :publication_places, inverse_of: :text, :dependent => :delete_all
   has_many :places, :through => :publication_places, :class_name => 'Place'
 
-  accepts_nested_attributes_for :text_citations, :standard_numbers, :components , reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :text_citations, :standard_numbers, :components, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :other_text_languages, reject_if: :all_blank, :allow_destroy => true
   accepts_nested_attributes_for :publication_places, reject_if: :all_blank, :allow_destroy => true
   accepts_nested_attributes_for :cross_references, reject_if: :all_blank, :allow_destroy => true
-  accepts_nested_attributes_for :components,  reject_if: :all_blank, :allow_destroy => true
+  accepts_nested_attributes_for :components, reject_if: :all_blank, :allow_destroy => true
 
   paginates_per 60
 
@@ -113,17 +113,17 @@ class Text < ApplicationRecord
             volume: {
                 except: [:id, :created_at, :updated_at],
                 include: {
-                  volume_citations: {
-                      except: [:id, :volume_id, :from_language_id_id, :to_language_id_id, :created_at, :updated_at],
-                      include: {
-                          from_language: {
-                              except: [:id, :created_at, :updated_at]
-                          },
-                          to_language: {
-                              except: [:id, :created_at, :updated_at]
-                          }
-                      }
-                  }
+                    volume_citations: {
+                        except: [:id, :volume_id, :from_language_id_id, :to_language_id_id, :created_at, :updated_at],
+                        include: {
+                            from_language: {
+                                except: [:id, :created_at, :updated_at]
+                            },
+                            to_language: {
+                                except: [:id, :created_at, :updated_at]
+                            }
+                        }
+                    }
                 }
             },
             standard_numbers: {
@@ -150,6 +150,84 @@ class Text < ApplicationRecord
 
   def previous
     Text.where(["sort_id < ?", sort_id]).order(sort_id: :desc).first
+  end
+
+  def authors
+    unless @authors
+      get_contributors
+    end
+
+    if text_type.starts_with? 'translat'
+      author_citation = TextCitation.new
+      author_citation.name = topic_author.full_name
+      @authors = [author_citation]
+    end
+  end
+
+  def translators
+    unless @translators
+      get_contributors
+    end
+    @translators
+  end
+
+  def other_contributors
+    unless @other_contributors
+      get_contributors
+    end
+    @other_contributors
+  end
+
+  def get_contributors
+    @authors, @translators, @other_contributors = [], [], []
+    text_citations.each do |citation|
+      if citation.role == 'translator'
+        @translators << citation
+      elsif citation.role == 'author'
+        @authors << citation
+      else
+        @other_contributors << citation
+      end
+    end
+  end
+
+  def poems
+    unless @poems
+      get_components
+    end
+    puts @poems
+    @poems
+  end
+
+  def stories
+    unless  @stories
+      get_components
+    end
+    @stories
+  end
+
+  def isbns
+    @isbns ||= standard_numbers.select {|n| n.numtype = 'ISBN'}
+  end
+
+  def other_components
+    unless  @other_components
+      get_components
+    end
+    @other_components
+  end
+
+  def get_components
+    @poems, @stories, @other_components = [],[], []
+    components.each do |component|
+      if component.genre == 'Poetry'
+        @poems << component
+      elsif component.genre == 'Short story'
+        @stories << component
+      else
+        @other_components << component
+      end
+    end
   end
 
   def formatted_original

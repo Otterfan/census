@@ -6,7 +6,7 @@ class Public::TextsController < ApplicationController
   #
 
   def index
-    @texts = Text.order(:title).page(params[:page])
+    @texts = Text.order(:sort_id).page(params[:page])
 
     if params[:sort] == "author"
       @sorted = "author"

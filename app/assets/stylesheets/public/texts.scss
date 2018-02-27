@@ -1,3 +1,42 @@
 // Place all the styles related to the public/texts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import "bootstrap";
+
+$metadata-spacing: .25em;
+
+.public {
+  .original-entry {
+    background-color: hsl(36, 63%, 96%);
+    box-shadow: #cccccc;
+    box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
+    padding: 1em 1em;
+    font-family: 'Noto Serif', serif;
+    line-height: 1.4;
+  }
+
+  .metadata {
+    dl {
+      margin: 20px auto;
+      overflow: hidden;
+      position: relative;
+    }
+    dt {
+      float: left;
+      width: 32%;
+      clear: both;
+      padding: $metadata-spacing 2% $metadata-spacing 0;
+      position: relative;
+      text-align: right;
+    }
+    dd {
+      float: right;
+      width: 66%;
+      padding: $metadata-spacing 0 $metadata-spacing 3%;
+    }
+
+    .journal-title {
+      font-style: italic;
+    }
+  }
+}

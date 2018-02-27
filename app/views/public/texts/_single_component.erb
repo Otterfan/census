@@ -1,0 +1,8 @@
+<dd>
+  <%= convert_underscores component.title %>
+  <% if component.translators && component.translators.count > 0 %>
+      <div class="component-translators">tr:
+        <%= component.translators.to_sentence.html_safe %>
+      </div>
+  <% end %>
+</dd>
