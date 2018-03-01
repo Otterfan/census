@@ -32,6 +32,27 @@ class Text < ApplicationRecord
 
   has_paper_trail
 
+  # apply stemming dynamically to all string/text fields
+  settings index: {} do
+    mapping dynamic_templates: [
+        {
+            strings: {
+                match_mapping_type: :string,
+                mapping: {
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        }
+                    },
+                    analyzer: :english
+                }
+            }
+        }
+    ]
+  end
+
+
   def as_indexed_json(options={})
     as_json(
         #only: [:title, :original, :journal_title, :publisher, :place_of_publication, :authors_name_from_source, :census_id],
