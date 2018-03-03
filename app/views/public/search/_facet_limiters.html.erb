@@ -2,6 +2,7 @@
   <% if @texts.aggregations.present? %>
     <h3>Limit your search</h3>
 
+    <% if @texts.aggregations.genre.buckets.present? %>
     <div class="panel panel-default">
       <div class="panel-heading">Genre</div>
       <div class="panel-body">
@@ -22,7 +23,9 @@
         </ul>
       </div>
     </div>
+    <% end %>
 
+    <% if @texts.aggregations.material_type.buckets.present? %>
     <div class="panel panel-default">
       <div class="panel-heading">Material type</div>
       <div class="panel-body">
@@ -43,7 +46,9 @@
         </ul>
       </div>
     </div>
+    <% end %>
 
+    <% if @texts.aggregations.text_type.buckets.present? %>
     <div class="panel panel-default">
       <div class="panel-heading">Text type</div>
       <div class="panel-body">
@@ -64,7 +69,9 @@
         </ul>
       </div>
     </div>
+    <% end %>
 
+    <% if @texts.aggregations.topic_author.buckets.present? %>
     <div class="panel panel-default">
       <div class="panel-heading">Topic author</div>
       <div class="panel-body">
@@ -85,7 +92,9 @@
         </ul>
       </div>
     </div>
+    <% end %>
 
+    <% if @texts.aggregations.publication_places.buckets.present? %>
     <div class="panel panel-default">
       <div class="panel-heading">Places</div>
       <div class="panel-body">
@@ -106,7 +115,9 @@
         </ul>
       </div>
     </div>
+    <% end %>
 
+    <% if @texts.aggregations.other_text_languages.buckets.present? %>
     <div class="panel panel-default">
       <div class="panel-heading">Other languages</div>
       <div class="panel-body">
@@ -127,5 +138,7 @@
         </ul>
       </div>
     </div>
+    <% end %>
+
   <% end %>
 </div> <!-- facets container -->
