@@ -5,6 +5,27 @@ class Public::SearchController < ApplicationController
   # GET /public/search.json ???
   #
 
+  # https://stackoverflow.com/questions/16205341/symbols-in-query-string-for-elasticsearch
+  def sanitize_query(str)
+    # Escape special characters
+    # https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#_regular_expressions
+    escaped_characters = Regexp.escape('\\/+-&|!(){}[]^~*?:')
+    str = str.gsub(/([#{escaped_characters}])/, '\\\\\1')
+
+    # AND, OR and NOT are used by lucene as logical operators. We need
+    # to escape them
+    ['AND', 'OR', 'NOT'].each do |word|
+      escaped_word = word.split('').map {|char| "\\#{char}" }.join('')
+      str = str.gsub(/\s*\b(#{word.upcase})\b\s*/, " #{escaped_word} ")
+    end
+
+    # Escape odd quotes
+    quote_count = str.count '"'
+    str = str.gsub(/(.*)"(.*)/, '\1\"\3') if quote_count % 2 == 1
+
+    str
+  end
+
   def search
     # set the number of results per page for this specific search controller.
     # this overrides the paginates_per variable in the Text model
@@ -54,7 +75,7 @@ class Public::SearchController < ApplicationController
                   components.component_citations.name
                 },
                 type: "best_fields",
-                query: params[:keyword],
+                query: sanitize_query(params[:keyword])
             }
         }
       end
@@ -63,7 +84,7 @@ class Public::SearchController < ApplicationController
         query_string_array << {
             query_string: {
                 fields: ['title'],
-                query: params[:title]
+                query: sanitize_query(params[:title])
             }
         }
       end
@@ -72,7 +93,7 @@ class Public::SearchController < ApplicationController
         query_string_array << {
             query_string: {
                 fields: ['journal.title'],
-                query: params[:journal]
+                query: sanitize_query(params[:journal])
             }
         }
       end
@@ -81,7 +102,7 @@ class Public::SearchController < ApplicationController
         query_string_array << {
             query_string: {
                 fields: ['publication_places.place.name'],
-                query: params[:location]
+                query: sanitize_query(params[:location])
             }
         }
       end
@@ -91,7 +112,7 @@ class Public::SearchController < ApplicationController
         query_string_array << {
             query_string: {
                 fields: ['genre'],
-                query: params[:genre]
+                query: sanitize_query(params[:genre])
             }
         }
       end
@@ -101,7 +122,7 @@ class Public::SearchController < ApplicationController
         query_string_array << {
             query_string: {
                 fields: ['material_type'],
-                query: params[:material_type]
+                query: sanitize_query(params[:material_type])
             }
         }
       end
@@ -111,7 +132,7 @@ class Public::SearchController < ApplicationController
         query_string_array << {
             query_string: {
                 fields: ['text_type'],
-                query: params[:text_type]
+                query: sanitize_query(params[:text_type])
             }
         }
       end
@@ -121,7 +142,7 @@ class Public::SearchController < ApplicationController
         query_string_array << {
             query_string: {
                 fields: ['topic_author.full_name'],
-                query: params[:topic_author]
+                query: sanitize_query(params[:topic_author])
             }
         }
       end
@@ -131,7 +152,7 @@ class Public::SearchController < ApplicationController
         query_string_array << {
             query_string: {
                 fields: ['publication_places.place.name'],
-                query: params[:publication_places]
+                query: sanitize_query(params[:publication_places])
             }
         }
       end
@@ -141,7 +162,7 @@ class Public::SearchController < ApplicationController
         query_string_array << {
             query_string: {
                 fields: ['other_text_languages.language.name'],
-                query: params[:other_text_languages]
+                query: sanitize_query(params[:other_text_languages])
             }
         }
       end
@@ -154,7 +175,7 @@ class Public::SearchController < ApplicationController
                   components.component_citations.name
                   topic_author.full_name
                 },
-                query: params[:people]
+                query: sanitize_query(params[:people])
             }
         }
       end

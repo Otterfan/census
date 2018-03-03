@@ -10,7 +10,7 @@
           <% @texts.aggregations[facet_name].buckets.each do |facet| %>
             <% if facet["key"].present? %>
               <li class="facet-list-group-item">
-                <div class="facet-label"><a href="<%= request.original_url %>&<%= facet_name %>=<%= facet["key"] %>"><%= format_label(facet["key"]) %></a></div>
+                <div class="facet-label"><a href="<%= request.original_url %>&<%= facet_name %>=<%= u facet["key"] %>"><%= format_label(facet["key"]) %></a></div>
                 <div class="facet-value"><%= facet.doc_count %></div>
               </li>
             <% end %>
