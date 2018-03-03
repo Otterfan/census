@@ -6,10 +6,10 @@
   <% @texts.records.each do |text| %>
     <ul class="list-group">
       <li class=" list-group-item">
-        <%= link_to text.title, public_text_path(text.id) %>
+        <%= link_to convert_underscores(text.title), public_text_path(text.id) %>
         <ul>
           <li>Census ID: <%= text.census_id %></li>
-          <li>Title: <%= text.title %></li>
+          <li>Title: <%= convert_underscores(text.title) %></li>
           <li>Topic author: <%= text.topic_author.full_name %></li>
         </ul>
       </li>
