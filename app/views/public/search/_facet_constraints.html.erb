@@ -6,7 +6,7 @@
         <% @facets.each do |k, v| %>
           <div class="input-group">
             <span class="input-group-btn">
-              <a href="#" class="btn btn-default btn-disabled disabled"><%= k.capitalize.gsub('_', ' ') %> > <%= v.gsub('"', '').capitalize %></a>
+              <a href="#" class="btn btn-default btn-disabled disabled"><%= format_label(k) %> > <%= format_label(v) %></a>
               <%= link_to 'X', @facet_delete_paths[k], :class =>"btn btn-default facet-control facet-remove", "data-control" => k %>
             </span>
           </div>

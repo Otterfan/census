@@ -31,4 +31,20 @@ module Public::TextsHelper
     end
     retval.html_safe
   end
+
+  def format_label(value)
+    unless value
+      return value
+    end
+
+    if value.include?("_")
+      value.gsub('_', ' ').capitalize
+    elsif value == value.downcase
+      value.capitalize
+    else
+      value
+    end
+
+
+  end
 end
