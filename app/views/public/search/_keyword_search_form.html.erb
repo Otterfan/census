@@ -1,0 +1,16 @@
+<h3>Keyword Search</h3>
+<p>Try the <%= link_to 'Advanced search', public_search_path(:type => "adv") %></p>
+
+<%= form_tag(public_search_path, method: :get, id: "search_form") do %>
+  <%= hidden_field_tag :type, @search_type %>
+
+  <div class="input-group">
+    <%= label_tag(:keyword, "Keyword") %>
+    <%= text_field_tag :keyword, params[:keyword], :class => 'form-control' %>
+  </div>
+
+  <div class="">
+    <%= submit_tag 'Search', name: nil, :class => 'btn btn-primary' %>
+    <%= link_to 'Reset', public_search_path, :class => 'btn btn-default' %>
+  </div>
+<% end %>

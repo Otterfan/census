@@ -1,0 +1,20 @@
+<div class="results-list">
+  <h3><%= page_entries_info @texts, entry_name: 'records' %></h3>
+
+  <%= paginate @texts %>
+
+  <% @texts.records.each do |text| %>
+    <ul class="list-group">
+      <li class=" list-group-item">
+        <%= link_to text.title, public_text_path(text.id) %>
+        <ul>
+          <li>Census ID: <%= text.census_id %></li>
+          <li>Title: <%= text.title %></li>
+          <li>Topic author: <%= text.topic_author.full_name %></li>
+        </ul>
+      </li>
+    </ul>
+  <% end %>
+
+  <%= paginate @texts %>
+</div>
