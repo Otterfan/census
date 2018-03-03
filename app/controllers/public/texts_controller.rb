@@ -2,9 +2,6 @@ class Public::TextsController < ApplicationController
   layout "public"
 
   # GET /public/texts
-  # GET /public/texts.json
-  #
-
   def index
     @texts = Text.order(:sort_id).page(params[:page])
 
@@ -16,7 +13,6 @@ class Public::TextsController < ApplicationController
   end
 
   # GET /public/texts/1
-  # GET /public/texts/1.json
   def show
     #redirect_to texts_path(@texts)
     @text = Text.find(params[:id])

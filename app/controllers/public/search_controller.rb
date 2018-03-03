@@ -1,10 +1,6 @@
 class Public::SearchController < ApplicationController
   layout "public"
 
-  # GET /public/search
-  # GET /public/search.json ???
-  #
-
   # https://stackoverflow.com/questions/16205341/symbols-in-query-string-for-elasticsearch
   def sanitize_query(str)
     # Escape special characters
@@ -26,6 +22,7 @@ class Public::SearchController < ApplicationController
     str
   end
 
+  # GET /public/search
   def search
     # set the number of results per page for this specific search controller.
     # this overrides the paginates_per variable in the Text model
