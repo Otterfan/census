@@ -4,13 +4,16 @@
 <%= form_tag(public_search_path, method: :get, id: "search_form") do %>
   <%= hidden_field_tag :type, @search_type %>
 
-  <div class="input-group">
-    <%= label_tag(:keyword, "Keyword") %>
-    <%= text_field_tag :keyword, params[:keyword], :class => 'form-control' %>
+  <div class="row">
+    <div class="col-lg-8 col-md-9 col-sm-12">
+      <%= label_tag(:keyword, "Keyword") %>
+      <%= text_field_tag :keyword, params[:keyword], :class => 'form-control input-lg' %>
+    </div>
+
+    <div class="keyword-search-submit col-lg-12 col-md-12 col-sm-12">
+      <%= submit_tag 'Search', name: nil, :class => 'btn btn-primary btn' %>
+      <%= link_to 'Reset', public_search_path, :class => 'btn btn-default' %>
+    </div>
   </div>
 
-  <div class="">
-    <%= submit_tag 'Search', name: nil, :class => 'btn btn-primary' %>
-    <%= link_to 'Reset', public_search_path, :class => 'btn btn-default' %>
-  </div>
 <% end %>
