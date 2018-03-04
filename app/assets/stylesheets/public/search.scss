@@ -30,12 +30,26 @@ ul.facet-list-group li.facet-list-group-item {
   width: 80%;
 }
 
+.facet-label .facet-remove {
+  padding-left: 1.5rem;
+}
+
 .facet-value {
   text-align: right;
 }
 
-.constraints-container .input-group {
+.constraints-container {
   display: inline-block;
+}
+
+.constraints-container .btn-group button,
+.constraints-container .btn-group a {
+  margin: 0;
+}
+
+.constraints-container .btn-group .disabled {
+  color: #000;
+  font-weight: bold;
 }
 
 .adv-search-fields input {

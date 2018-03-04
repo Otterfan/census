@@ -4,7 +4,7 @@
     <div class="panel-body">
       <ul class="facet-list-group">
         <% if @facets[facet_name].present? %>
-          <div class="facet-label"><%= format_label(@facets[facet_name]) %> <%= link_to '[X]', reset_facet_path(request.fullpath, facet_name), :class =>"facet-control facet-remove", "data-control" => facet_name %></div>
+          <div class="facet-label"><%= format_label(@facets[facet_name]) %> <%= link_to '&nbsp;<i class="fas fa-times"></i>'.html_safe, reset_facet_path(request.fullpath, facet_name), :class =>"facet-control facet-remove", "data-control" => facet_name %></div>
           <div class="facet-value"></div>
         <% else %>
           <% @texts.aggregations[facet_name].buckets.each do |facet| %>

@@ -1,17 +1,8 @@
 <% if @facets.present? %>
-  <div class="constraints-container">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <span class="constraints-label">You searched for:</span>
-        <% @facets.each do |k, v| %>
-          <div class="input-group">
-            <span class="input-group-btn">
-              <a href="#" class="btn btn-default btn-disabled disabled"><%= format_label(k) %> > <%= format_label(v) %></a>
-              <%= link_to 'X', reset_facet_path(request.fullpath, k), :class =>"btn btn-default facet-control facet-remove", "data-control" => k %>
-            </span>
-          </div>
-        <% end %>
-      </div>
+  <% @facets.each do |k, v| %>
+    <div class="btn-group" role="group" aria-label="facets">
+      <button type="button" class="btn btn-default disabled" disabled="disabled"><%= format_label(k) %> <i class="fas fa-angle-right"></i> <%= format_label(v) %></button>
+      <%= link_to '<i class="fas fa-times"></i>'.html_safe, reset_facet_path(request.fullpath, k), :class =>"btn btn-default facet-control facet-remove", "data-control" => k %>
     </div>
-  </div> <!-- facets constraints container -->
+  <% end %>
 <% end %>
