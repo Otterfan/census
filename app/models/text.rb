@@ -28,6 +28,8 @@ class Text < ApplicationRecord
   accepts_nested_attributes_for :cross_references, reject_if: :all_blank, :allow_destroy => true
   accepts_nested_attributes_for :components, reject_if: :all_blank, :allow_destroy => true
 
+  after_commit() { __elasticsearch__.index_document }
+
   paginates_per 60
 
   has_paper_trail
