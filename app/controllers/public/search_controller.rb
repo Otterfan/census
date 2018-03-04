@@ -48,6 +48,7 @@ class Public::SearchController < ApplicationController
         params[:journal].present? ||
         params[:location].present? ||
         params[:people].present? ||
+        params[:component_title].present? ||
         params[:genre].present? ||
         params[:material_type].present? ||
         params[:text_type].present? ||
@@ -127,6 +128,15 @@ class Public::SearchController < ApplicationController
                   topic_author.full_name
                 },
                 query: sanitize_query(params[:people])
+            }
+        }
+      end
+
+      if params[:component_title].present?
+        query_string_array << {
+            query_string: {
+                fields: ['components.title'],
+                query: sanitize_query(params[:component_title])
             }
         }
       end
@@ -246,7 +256,7 @@ class Public::SearchController < ApplicationController
 
   private
   def search_params
-    params.permit(:keyword, :title, :journal, :location, :people, :type,
+    params.permit(:keyword, :title, :journal, :location, :people, :type, :component_title,
                   :genre, :material_type, :text_type, :topic_author, :publication_places, :other_text_languages)
   end
 end
