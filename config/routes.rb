@@ -17,8 +17,8 @@ Rails.application.routes.draw do
 
   namespace :public do
     root :to => "search#search"
-    # resources :search, :only => [:index, :search]
-    get "search", to: "search#search"
+    resources :search, :only => [:index], to: "search#search"
+    # get "search", to: "search#search"
     resources :texts, :only => [:index, :show]
     resources :volumes, :only => [:index, :show]
     resources :journals, :only => [:index, :show]

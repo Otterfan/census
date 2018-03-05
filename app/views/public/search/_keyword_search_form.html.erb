@@ -1,7 +1,7 @@
 <h2>Keyword Search</h2>
-<p>Try the <%= link_to 'Advanced search', public_search_path(:type => "adv") %></p>
+<p>Try the <%= link_to 'Advanced search', public_search_index_path(:type => "adv") %></p>
 
-<%= form_tag(public_search_path, method: :get, id: "search_form") do %>
+<%= form_tag(public_search_index_path, method: :get, id: "search_form") do %>
   <%= hidden_field_tag :type, @search_type %>
 
   <div class="row">
@@ -17,7 +17,7 @@
 
     <div class="keyword-search-submit col-lg-12 col-md-12 col-sm-12">
       <div class="constraints-container">
-        <%= link_to 'Start over', public_search_path, :class => 'btn btn-primary', style: 'display: inline-block' %>
+        <%= link_to 'Start over', public_search_index_path, :class => 'btn btn-primary', style: 'display: inline-block' %>
         <%= render 'facet_constraints' %>
       </div>
     </div> <!-- facets constraints container -->

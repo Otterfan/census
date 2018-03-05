@@ -1,7 +1,7 @@
 <h2>Advanced Search</h2>
-<p>Try the <%= link_to 'Keyword search', public_search_path(:type => "kw") %></p>
+<p>Try the <%= link_to 'Keyword search', public_search_index_path(:type => "kw") %></p>
 
-<%= form_tag(public_search_path, method: :get, id: "search_form") do %>
+<%= form_tag(public_search_index_path, method: :get, id: "search_form") do %>
   <div class="panel panel-default">
     <div class="panel-body">
       <div class="adv-search-fields row">
@@ -34,7 +34,7 @@
 
       <div class="adv-search-submit row col-lg-12 col-md-12 col-sm-12">
         <%= submit_tag 'Search', name: nil, :class => 'btn btn-primary' %>
-        <%= link_to 'Start over', public_search_path(type: @search_type), :class => 'btn btn-default' %>
+        <%= link_to 'Start over', public_search_index_path(type: @search_type), :class => 'btn btn-default' %>
       </div>
     </div>
   </div>
