@@ -25,9 +25,10 @@
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="<%= 'active' if in_current_path? 'public/texts' %>"><%= link_to 'Browse Texts', public_texts_path %></li>
-        <li class="<%= 'active' if in_current_path? 'public/volumes' %>"><%= link_to 'Browse Volumes', public_volumes_path %></li>
-        <li class="<%= 'active' if in_current_path? 'public/journals' %>"><%= link_to 'Browse Journals', public_journals_path %></li>
+        <li class="<%= 'active' if in_current_path? 'public/texts' %>"><%= link_to 'Texts', public_texts_path %></li>
+        <li class="<%= 'active' if in_current_path? 'public/texts' %>"><%= link_to 'Authors', public_authors_path %></li>
+        <li class="<%= 'active' if in_current_path? 'public/volumes' %>"><%= link_to 'Volumes', public_volumes_path %></li>
+        <li class="<%= 'active' if in_current_path? 'public/journals' %>"><%= link_to 'Journals', public_journals_path %></li>
         <li class="<%= 'active' if in_current_path? 'public/search' %>"><%= link_to 'Search', public_search_index_path %></li>
       </ul>
     </div>
