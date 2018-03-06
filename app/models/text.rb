@@ -235,6 +235,10 @@ class Text < ApplicationRecord
       markdown
     end
   end
+
+  def sort_title
+    title.gsub(/["'_\[\]]/, '').sub(/^(An? )|(The )/,'')
+  end
 end
 
 #Text.import(force: true) # for auto sync model with elastic search

@@ -19,5 +19,12 @@ class Component < ApplicationRecord
     end
   end
 
+  def sort_title
+    unless title
+      return ''
+    end
+    title.gsub(/["'_\[\]]/, '').sub(/^(An? )|(The )/,'')
+  end
+
   default_scope { order("ordinal ASC") }
 end

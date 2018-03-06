@@ -22,5 +22,6 @@ Rails.application.routes.draw do
     resources :texts, :only => [:index, :show]
     resources :volumes, :only => [:index, :show]
     resources :journals, :only => [:index, :show]
+    resources :authors, :only => [:index, :show]
   end
 end
