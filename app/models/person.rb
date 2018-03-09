@@ -61,4 +61,46 @@ class Person < ApplicationRecord
     @poems.uniq!
     @stories.uniq!
   end
+
+
+  def translations_years
+    unless @translation_years
+      @translation_years = get_text_years translations
+    end
+    @translation_years
+  end
+
+  def get_text_years(texts)
+    years = []
+    texts.each do |text|
+      year = text.date.to_s[/(\d{4})/, 1]
+      if year
+        years << year
+      end
+    end
+    years
+  end
+
+  def translation_countries
+    unless @translation_countries
+      @translation_countries = get_text_countries translations
+    end
+    @translation_countries
+  end
+
+  def get_text_countries(texts)
+    countries = {}
+    texts.each do |text|
+      text.places.each do |place|
+        if place.country
+          if countries[place.country.al3_code]
+            countries[place.country.al3_code] = countries[place.country.al3_code] + 1
+          else
+            countries[place.country.al3_code] = 1
+          end
+        end
+      end
+    end
+    countries
+  end
 end

@@ -1,0 +1,31 @@
+<h3>Timeline</h3>
+<div id="timeline"></div>
+<script>
+    var x = [<%= years_list @author %>];
+
+    var trace = {
+        x: x,
+        type: 'histogram',
+        autobinx: false,
+        xbins: {
+            end: <%= latest_translation @author %>,
+            size: 1,
+            start: <%= earliest_translation @author %>
+
+        }
+    };
+    var data = [trace];
+    var layout = {
+        xaxis: {range: [<%= earliest_translation @author %>, <%= latest_translation @author %>]},
+        yaxis: {
+            autotick: false,
+            ticks: 'outside',
+            tick0: 0,
+            dtick: 1,
+            ticklen: 8,
+            tickwidth: 1,
+            tickcolor: '#000'
+        }
+    };
+    Plotly.newPlot('timeline', data, layout);
+</script>
