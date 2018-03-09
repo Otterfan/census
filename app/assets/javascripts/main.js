@@ -70,7 +70,8 @@ function ready() {
             verify_html : false,
             save_onsavecallback: upload_orginal,
             style_formats: [
-                {title: 'Small', inline: 'span', classes: 'small-text'}
+                {title: 'Small', inline: 'span', classes: 'small-text'},
+                {title: 'Superscript', inline: 'sup'}
             ],
             content_style: content_style
         };
