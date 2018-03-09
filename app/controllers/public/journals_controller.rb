@@ -1,6 +1,8 @@
 class Public::JournalsController < ApplicationController
   layout "public"
 
+  before_action :authenticate_user!
+
   # GET /public/journals
   def index
     @journals = Journal.order(:title).page(params[:page])

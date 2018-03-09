@@ -1,6 +1,8 @@
 class Public::TextsController < ApplicationController
   layout "public"
 
+  before_action :authenticate_user!\
+
   # GET /public/texts
   def index
     @texts = Text.order(:sort_id).page(params[:page])

@@ -1,6 +1,8 @@
 class Public::SearchController < ApplicationController
   layout "public"
 
+  before_action :authenticate_user!
+
   # https://stackoverflow.com/questions/16205341/symbols-in-query-string-for-elasticsearch
   def sanitize_query(str)
     # Escape special characters

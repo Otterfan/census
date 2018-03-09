@@ -1,6 +1,8 @@
 class Public::VolumesController < ApplicationController
   layout "public"
 
+  before_action :authenticate_user!
+
   # GET /public/volumes
   def index
     @volumes = Volume.order(:title).page(params[:page])
