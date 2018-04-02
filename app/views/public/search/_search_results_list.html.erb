@@ -3,13 +3,13 @@
 
   <%= paginate @texts %>
 
-  <% @texts.records.each do |text| %>
+  <% @texts.each do |text| %>
     <ul class="list-group">
-      <li class=" list-group-item">
-        <%= link_to (text.title.blank? ? "[No title]" : convert_underscores(text.title)), public_text_path(text.id) %>
+      <li class="list-group-item">
+        <%= link_to (text.title.blank? ? "[No title]" : @results_formatter.format(text.title)), public_text_path(text.id) %>
         <ul>
           <li>Census ID: <%= text.census_id %></li>
-          <li>Title: <%= (text.title.blank? ? "[No title]" : convert_underscores(text.title)) %></li>
+          <li>Title: <%= (text.title.blank? ? "[No title]" : @results_formatter.format(text.title)) %></li>
           <li>Topic author: <%= text.topic_author.full_name %></li>
         </ul>
       </li>

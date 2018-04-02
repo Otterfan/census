@@ -3,6 +3,26 @@ class Public::SearchController < ApplicationController
 
   before_action :authenticate_user!
 
+  SEARCH_PARAMS = [
+      :keyword,
+      :title,
+      :journal,
+      :location,
+      :people,
+      :component_title,
+      :genre,
+      :material_type,
+      :text_type,
+      :topic_author,
+      :publication_places,
+      :other_text_languages
+  ]
+
+  DEFAULT_VIEW_PARAMS = [
+      :title,
+      :topic_author
+  ]
+
   # https://stackoverflow.com/questions/16205341/symbols-in-query-string-for-elasticsearch
   def sanitize_query(str)
     # Escape special characters
@@ -13,7 +33,7 @@ class Public::SearchController < ApplicationController
     # AND, OR and NOT are used by lucene as logical operators. We need
     # to escape them
     ['AND', 'OR', 'NOT'].each do |word|
-      escaped_word = word.split('').map {|char| "\\#{char}" }.join('')
+      escaped_word = word.split('').map {|char| "\\#{char}"}.join('')
       str = str.gsub(/\s*\b(#{word.upcase})\b\s*/, " #{escaped_word} ")
     end
 
@@ -45,18 +65,7 @@ class Public::SearchController < ApplicationController
       @search_type = "kw"
     end
 
-    if params[:keyword].present? ||
-        params[:title].present? ||
-        params[:journal].present? ||
-        params[:location].present? ||
-        params[:people].present? ||
-        params[:component_title].present? ||
-        params[:genre].present? ||
-        params[:material_type].present? ||
-        params[:text_type].present? ||
-        params[:topic_author].present? ||
-        params[:publication_places].present? ||
-        params[:other_text_languages].present?
+    if is_search?
 
       query_string_array = []
 
@@ -214,6 +223,9 @@ class Public::SearchController < ApplicationController
                   must: query_string_array
               }
           },
+          highlight: {
+              fields: highlight_fields
+          },
           aggs: {
               genre: {
                   terms: {
@@ -248,7 +260,8 @@ class Public::SearchController < ApplicationController
           }
       }
 
-      @texts = Text.search(all_search).page(params[:page]).per(@pagination_page_size)
+      @texts = Text.search(all_search).page(params[:page]).per(@pagination_page_size).results
+      @results_formatter = BriefResultFormatter.new(used_params, DEFAULT_VIEW_PARAMS, params)
 
     else
       @new_search = true
@@ -261,4 +274,25 @@ class Public::SearchController < ApplicationController
     params.permit(:keyword, :title, :journal, :location, :people, :type, :component_title,
                   :genre, :material_type, :text_type, :topic_author, :publication_places, :other_text_languages)
   end
+
+  # Return a list of all symbols of search parameters used in the current request
+  def used_params
+    SEARCH_PARAMS.reject {|key| !params[key].present?}
+  end
+
+  # Return true if this is a search request
+  def is_search?
+    puts used_params
+    used_params.length > 0
+  end
+
+  # Build ES highlight fields for search fields not used in the view
+  def highlight_fields
+    fields_to_highlight = SEARCH_PARAMS - used_params
+    fields_obj = {}
+    fields_to_highlight.each {|field| fields_obj[field] = {}}
+    fields_obj
+  end
 end
+
+

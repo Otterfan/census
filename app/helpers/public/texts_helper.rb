@@ -16,6 +16,7 @@ module Public::TextsHelper
     full.html_safe
   end
 
+  # Convert words wrapped in underscores to <em>
   def convert_underscores(value)
     unless value
       return value
@@ -71,7 +72,7 @@ module Public::TextsHelper
   end
 
   # append the facet into the url when facet filter is applied to the query
-  def update_facet_path(path, facet_name, facet_value="")
+  def update_facet_path(path, facet_name, facet_value = "")
     unless path or facet_name
       return path
     end
