@@ -260,7 +260,9 @@ class Public::SearchController < ApplicationController
           }
       }
 
-      @texts = Text.search(all_search).page(params[:page]).per(@pagination_page_size).results
+      query_result = Text.search(all_search).page(params[:page]).per(@pagination_page_size)
+      @aggregations = query_result.aggregations
+      @texts = query_result.results
       @results_formatter = BriefResultFormatter.new(used_params, DEFAULT_VIEW_PARAMS, params)
 
     else

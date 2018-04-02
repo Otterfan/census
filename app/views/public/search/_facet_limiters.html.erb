@@ -1,28 +1,28 @@
 <div class="facets-container">
-  <% if @texts.aggregations.present? %>
+  <% if @aggregations.present? %>
     <h3>Limit your search</h3>
 
-    <% if @texts.aggregations.genre.buckets.present? %>
+    <% if @aggregations.genre.buckets.present? %>
       <%= render 'facet_container', facet_name: "genre" %>
     <% end %>
 
-    <% if @texts.aggregations.material_type.buckets.present? %>
+    <% if @aggregations.material_type.buckets.present? %>
       <%= render 'facet_container', facet_name: "material_type" %>
     <% end %>
 
-    <% if @texts.aggregations.text_type.buckets.present? %>
+    <% if @aggregations.text_type.buckets.present? %>
       <%= render 'facet_container', facet_name: "text_type" %>
     <% end %>
 
-    <% if @texts.aggregations.topic_author.buckets.present? %>
+    <% if @aggregations.topic_author.buckets.present? %>
       <%= render 'facet_container', facet_name: "topic_author" %>
     <% end %>
 
-    <% if @texts.aggregations.publication_places.buckets.present? %>
+    <% if @aggregations.publication_places.buckets.present? %>
       <%= render 'facet_container', facet_name: "publication_places" %>
     <% end %>
 
-    <% if @texts.aggregations.other_text_languages.buckets.present? %>
+    <% if @aggregations.other_text_languages.buckets.present? %>
       <%= render 'facet_container', facet_name: "other_text_languages" %>
     <% end %>
 

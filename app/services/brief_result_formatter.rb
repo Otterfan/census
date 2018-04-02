@@ -9,7 +9,8 @@ class BriefResultFormatter
 
   def format(value)
     underscores_converted = Public::TextsController.helpers.convert_underscores(value)
-    highlight_regex = @search_terms.join('|')
+    singularized_terms = @search_terms.map {|x| ActiveSupport::Inflector.singularize(x)}
+    highlight_regex = singularized_terms.join('|')
     ActionController::Base.helpers.highlight(underscores_converted, /#{highlight_regex}/i)
   end
 
