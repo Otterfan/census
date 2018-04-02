@@ -67,14 +67,14 @@ class Public::SearchController < ApplicationController
 
     if is_search?
 
-      query_string_array = []
+      @query_string_array = []
 
       @facets = {}
 
       # define the fields that a keyword search will query
       # complex associated models use dot notation, e.g., publication_places.place.name
       if params[:keyword].present?
-        query_string_array << {
+        @query_string_array << {
             query_string: {
                 fields: %w{
                   title
@@ -95,132 +95,40 @@ class Public::SearchController < ApplicationController
                   components.component_citations.name
                 },
                 type: "best_fields",
+                default_operator: "and",
                 query: sanitize_query(params[:keyword])
             }
         }
       end
 
       # advanced search fields
-
-      if params[:title].present?
-        query_string_array << {
-            query_string: {
-                fields: ['title'],
-                query: sanitize_query(params[:title])
-            }
-        }
-      end
-
-      if params[:journal].present?
-        query_string_array << {
-            query_string: {
-                fields: ['journal.title'],
-                query: sanitize_query(params[:journal])
-            }
-        }
-      end
-
-      if params[:location].present?
-        query_string_array << {
-            query_string: {
-                fields: ['publication_places.place.name'],
-                query: sanitize_query(params[:location])
-            }
-        }
-      end
+      add_field_search(['title'], :title)
+      add_field_search(['journal.title'], :journal)
+      add_field_search(['publication_places.place.name'], :location)
+      add_field_search(['components.title'], :component_title)
 
       # the 'people' form field queries several different fields
-      if params[:people].present?
-        query_string_array << {
-            query_string: {
-                fields: %w{
+      people_fields = %w{
                   text_citations.name
                   components.component_citations.name
                   topic_author.full_name
-                },
-                query: sanitize_query(params[:people])
-            }
-        }
-      end
-
-      if params[:component_title].present?
-        query_string_array << {
-            query_string: {
-                fields: ['components.title'],
-                query: sanitize_query(params[:component_title])
-            }
-        }
-      end
-
+                }
+      add_field_search(people_fields, :people)
 
       # facet filter fields
-
-      if params[:genre].present?
-        @facets["genre"] = params[:genre]
-        query_string_array << {
-            query_string: {
-                fields: ['genre'],
-                query: wrap_in_quotes(sanitize_query(params[:genre]))
-            }
-        }
-      end
-
-      if params[:material_type].present?
-        @facets["material_type"] = params[:material_type]
-        query_string_array << {
-            query_string: {
-                fields: ['material_type'],
-                query: wrap_in_quotes(sanitize_query(params[:material_type]))
-            }
-        }
-      end
-
-      if params[:text_type].present?
-        @facets["text_type"] = params[:text_type]
-        query_string_array << {
-            query_string: {
-                fields: ['text_type'],
-                query: wrap_in_quotes(sanitize_query(params[:text_type]))
-            }
-        }
-      end
-
-      if params[:topic_author].present?
-        @facets["topic_author"] = params[:topic_author]
-        query_string_array << {
-            query_string: {
-                fields: ['topic_author.full_name'],
-                query: wrap_in_quotes(sanitize_query(params[:topic_author]))
-            }
-        }
-      end
-
-      if params[:publication_places].present?
-        @facets["publication_places"] = params[:publication_places]
-        query_string_array << {
-            query_string: {
-                fields: ['publication_places.place.name'],
-                query: wrap_in_quotes(sanitize_query(params[:publication_places]))
-            }
-        }
-      end
-
-      if params[:other_text_languages].present?
-        @facets["other_text_languages"] = params[:other_text_languages]
-        query_string_array << {
-            query_string: {
-                fields: ['other_text_languages.language.name'],
-                query: wrap_in_quotes(sanitize_query(params[:other_text_languages]))
-            }
-        }
-      end
+      add_facet_search(['genre'], :genre)
+      add_facet_search(['material_type'], :material_type)
+      add_facet_search(['text_type'], :text_type)
+      add_facet_search(['topic_author'], :topic_author)
+      add_facet_search(['publication_places.place.name'], :publication_places)
+      add_facet_search(['other_text_languages.language.name'], :other_text_languages)
 
       # create Elasticsearch search query
       # add in aggregated fields (facets) here
       all_search = {
           query: {
               bool: {
-                  must: query_string_array
+                  must: @query_string_array
               }
           },
           highlight: {
@@ -295,6 +203,24 @@ class Public::SearchController < ApplicationController
     fields_to_highlight.each {|field| fields_obj[field] = {}}
     fields_obj
   end
+
+  # Add a search on a facet to the query string array
+  def add_facet_search(fields, param)
+    add_field_search(fields, param, true)
+  end
+
+  # Add a search on a specific field to the string array
+  def add_field_search(fields, param, is_facet=false)
+    if params[param].present?
+      if is_facet
+        @facets[param] = params[param]
+      end
+      @query_string_array << {
+          query_string: {
+              fields: fields,
+              query: wrap_in_quotes(sanitize_query(params[param]))
+          }
+      }
+    end
+  end
 end
-
-
