@@ -77,22 +77,22 @@ class Public::SearchController < ApplicationController
         @query_string_array << {
             query_string: {
                 fields: %w{
-                  title
-                  original
-                  original_greek_title
-                  date
-                  genre
-                  material_type
+                  topic_author.full_name^10
+                  topic_author.alternate_name^10
+                  text_citations.name^10
+                  components.component_citations.name^10
+                  title^5
+                  components.title^5
                   text_type
-                  journal.title
-                  publisher
-                  other_text_languages.language.name
+                  date
+                  original_greek_title
+                  genre
                   publication_places.place.name
-                  topic_author.full_name
-                  topic_author.alternate_name
-                  text_citations.name
-                  components.title
-                  components.component_citations.name
+                  publisher
+                  journal.title
+                  material_type
+                  other_text_languages.language.name
+                  original
                 },
                 type: "best_fields",
                 default_operator: "and",
