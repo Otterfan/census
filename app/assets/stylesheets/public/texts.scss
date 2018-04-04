@@ -5,10 +5,26 @@
 
 $metadata-spacing: .25em;
 
+
+// The original box should render on the right of the show
+// item page but on the top for small screens.
+.public-show-text .original-div {
+  @extend .col-sm-6;
+  @extend .col-sm-push-6;
+  @extend .col-xs-12;
+  margin-bottom: 1em;
+}
+
+.public-show-text .metadata-div {
+  @extend .col-sm-6;
+  @extend .col-sm-pull-6;
+  @extend .col-xs-12;
+}
+
+
 .public {
   .original-entry {
     background-color: hsl(36, 63%, 96%);
-    box-shadow: #cccccc;
     box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
     padding: 1em 1em;
     font-family: 'Noto Serif', serif;

@@ -1,0 +1,4 @@
+<li class="<%= text.status.code %> list-group-item">
+  <span class="census-id"> (<%= text.census_id %>)</span>
+  <%= link_to (text.title.blank? ? "[No title]" : convert_underscores(text.title)), public_text_path(text) %>
+</li>

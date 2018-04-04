@@ -23,20 +23,14 @@
         <h3><%= author[:author] %></h3>
         <ul class="list-group">
           <% author[:texts].each do |text| %>
-            <li class="<%= text.status.code %> list-group-item">
-              <span class="census-id"><%= text.census_id %></span>
-              <%= link_to (text.title.blank? ? "[No title]" : text.title), public_text_path(text) %>
-            </li>
+            <%= render 'brief_result', text: text %>
           <% end %>
         </ul>
       <% end %>
     <% else %>
       <% @texts.each do |text| %>
         <ul class="list-group">
-            <li class="<%= text.status.code %> list-group-item">
-              <span class="census-id"> (<%= text.census_id %>)</span>
-              <%= link_to (text.title.blank? ? "[No title]" : text.title), public_text_path(text) %>
-            </li>
+          <%= render 'brief_result', text: text %>
         </ul>
       <% end %>
     <% end %>
