@@ -40,6 +40,8 @@ module Public::TextsHelper
       return value
     end
 
+    value = value.to_s
+
     if value.include?("_")
       value.gsub('_', ' ').capitalize
     elsif value == value.downcase

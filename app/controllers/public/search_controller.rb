@@ -119,7 +119,7 @@ class Public::SearchController < ApplicationController
       add_facet_search(['genre'], :genre)
       add_facet_search(['material_type'], :material_type)
       add_facet_search(['text_type'], :text_type)
-      add_facet_search(['topic_author'], :topic_author)
+      add_facet_search(['topic_author.full_name'], :topic_author)
       add_facet_search(['publication_places.place.name'], :publication_places)
       add_facet_search(['other_text_languages.language.name'], :other_text_languages)
 
