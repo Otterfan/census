@@ -131,6 +131,7 @@ class Public::SearchController < ApplicationController
                   must: @query_string_array
               }
           },
+          sort: query_sort(params[:sort]),
           highlight: {
               fields: highlight_fields
           },
@@ -177,6 +178,11 @@ class Public::SearchController < ApplicationController
       @new_search = true
       @texts = []
     end
+    @sort_options = [
+        ['Relevance', 'score'],
+        ['Date (oldest first)', 'date-oldest-first'],
+        ['Date (newest first)', 'date-newest-first']
+    ]
   end
 
   private
@@ -210,7 +216,7 @@ class Public::SearchController < ApplicationController
   end
 
   # Add a search on a specific field to the string array
-  def add_field_search(fields, param, is_facet=false)
+  def add_field_search(fields, param, is_facet = false)
     if params[param].present?
       if is_facet
         @facets[param] = params[param]
@@ -221,6 +227,18 @@ class Public::SearchController < ApplicationController
               query: wrap_in_quotes(sanitize_query(params[param]))
           }
       }
+    end
+  end
+
+  # Build the query's sort clause
+  def query_sort(sort_type)
+    case sort_type
+      when 'date-oldest-first'
+        [{sort_date: {order: 'asc'}}, '_score']
+      when 'date-newest-first'
+        [{sort_date: {order: 'desc'}}, '_score']
+      else
+        ['_score']
     end
   end
 end

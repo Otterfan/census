@@ -65,3 +65,10 @@ ul.facet-list-group li.facet-list-group-item {
 .keyword-search-submit input {
   margin: 1.5rem 0;
 }
+
+.public #search-results {
+  #select_sort_order {
+    height: 36px;
+    margin: 20px;
+  }
+}

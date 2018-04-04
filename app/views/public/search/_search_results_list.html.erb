@@ -1,7 +1,14 @@
 <div class="results-list">
   <h3><%= page_entries_info @texts, entry_name: 'records' %></h3>
 
-  <%= paginate @texts %>
+  <div class="row">
+    <div class="col-md-8">
+      <%= paginate @texts %>
+    </div>
+    <div class="col-md-4 sort_box">
+      <%= select_tag 'select_sort_order', options_for_select(@sort_options, params[:sort]) %>
+    </div>
+  </div>
 
   <% @texts.each do |text| %>
     <ul class="list-group">
