@@ -30,7 +30,7 @@ class Public::AuthorsController < ApplicationController
                                   .where(topic_flag: true)
                                   .where.not(full_name: [nil, ''])
                                   .order(:full_name)
-                                  .alpha_paginate(@letter, {bootstrap3: true}){|person| person.full_name}
+                                  .alpha_paginate(@letter, {bootstrap3: true, include_all: false}){|person| person.full_name}
   end
 
   def show
