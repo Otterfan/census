@@ -2,11 +2,14 @@
 
 <div class="row">
   <div class="pagination-stuff col-md-10">
-    <%= paginate @journals %>
+    <%= alphabetical_paginate @alpha_params %>
   </div>
 </div>
+
 <div class="row">
-  <div class="col-md-12">
+  <div id="pagination_table" class="col-md-12">
+    <h2><%= @letter %></h2>
+
     <% @journals.each do |journal| %>
       <ul class="list-group">
         <li class="list-group-item">
@@ -15,6 +18,5 @@
       </ul>
     <% end %>
 
-    <%= paginate @journals %>
   </div>
 </div>

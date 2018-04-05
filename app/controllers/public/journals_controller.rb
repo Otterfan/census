@@ -1,11 +1,29 @@
 class Public::JournalsController < ApplicationController
+  include Public::ControllersHelper
+
   layout "public"
 
   before_action :authenticate_user!
 
   # GET /public/journals
   def index
-    @journals = Journal.order(:title).page(params[:page])
+    default_letter = "0-9"
+    @letter = sanitize_letter(params[:letter], default_letter)
+
+    @alpha_params_options = {
+        bootstrap3: true,
+        include_all: false,
+        js: false
+    }
+
+    # @journals = Journal.order(:title).page(params[:page])
+
+    # the alpha_paginate gem has a bug where it fail if the field contains an empty or blank value.
+    # be sure to filter out empty field values!
+    @journals, @alpha_params = Journal
+                                   .where.not(title: [nil, ''])
+                                   .order(:title)
+                                   .alpha_paginate(@letter, @alpha_params_options){|journal| journal.title}
   end
 
   # GET /public/journals/1
