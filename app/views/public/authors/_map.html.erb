@@ -1,9 +1,7 @@
 <h3>Map</h3>
 <div id="map-contents" style="width:100%;height:100%"></div>
 <script>
-    console.log('happened');
-
-    Plotly.d3.csv('https://raw.githubusercontent.com/plotly/datasets/master/2014_world_gdp_with_codes.csv', function (err, rows) {
+    //Plotly.d3.csv('https://raw.githubusercontent.com/plotly/datasets/master/2014_world_gdp_with_codes.csv', function (err, rows) {
 
         var data = [{
             type: 'choropleth',
@@ -24,6 +22,6 @@
                 }
             }
         };
-        Plotly.plot('map-contents', data, layout, {showLink: false});
+        //Plotly.plot('map-contents', data, layout, {showLink: false});
     });
 </script>

@@ -15,7 +15,6 @@ function ready() {
     });
 
     $('#collapse-original-button').click(function () {
-        console.log('happened');
         $('#collapse-original-button span').toggleClass('glyphicon-collapse-down glyphicon-collapse-up');
     });
 
