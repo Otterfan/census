@@ -1,9 +1,21 @@
 <div class="row">
-  <div class="col-lg-3 col-md-3 col-sm-6">
-    <%= render 'facet_limiters' %>
-  </div> <!-- facets -->
+  <% if @texts.size > 0 %>
+    <!-- BEGIN facets -->
+    <div class="col-lg-3 col-md-3 col-sm-6">
+        <%= render 'facet_limiters' %>
+    </div>
+    <!-- END facets -->
 
-  <div class="col-lg-9 col-md-9 col-sm-6">
-    <%= render 'search_results_list' %>
-  </div> <!-- search results -->
+    <!-- BEGIN search results -->
+    <div class="col-lg-9 col-md-9 col-sm-6">
+      <%= render 'search_results_list' %>
+    </div>
+    <!-- END search results -->
+  <% else %>
+    <div class="col-lg-12">
+      <div class="results-list">
+        <h3><%= page_entries_info @texts, entry_name: 'records' %></h3>
+      </div>
+    </div>
+  <% end %>
 </div>
