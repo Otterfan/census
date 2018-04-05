@@ -2,10 +2,11 @@
   <h3><%= page_entries_info @texts, entry_name: 'records' %></h3>
 
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-7">
       <%= paginate @texts %>
     </div>
-    <div class="col-md-4 sort_box">
+    <div class="col-md-5 sort_box">
+      <label for="select_sort_order">sort</label>
       <%= select_tag 'select_sort_order', options_for_select(@sort_options, params[:sort]) %>
     </div>
   </div>

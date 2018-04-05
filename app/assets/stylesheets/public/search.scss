@@ -67,8 +67,12 @@ ul.facet-list-group li.facet-list-group-item {
 }
 
 .public #search-results {
+  .sort_box {
+    text-align: right;
+  }
+
   #select_sort_order {
     height: 36px;
-    margin: 20px;
+    margin: 20px 0 20px 6px;
   }
 }
