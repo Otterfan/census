@@ -15,7 +15,8 @@ class Public::AuthorsController < ApplicationController
 
     @alpha_params_options = {
         bootstrap3: true,
-        include_all: false
+        include_all: false,
+        js: false
     }
 
     # the alpha_paginate gem has a bug where it fail if the field contains an empty or blank value.
