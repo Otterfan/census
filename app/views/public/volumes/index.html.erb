@@ -2,19 +2,21 @@
 
 <div class="row">
   <div class="pagination-stuff col-md-10">
-    <%= paginate @volumes %>
+    <%= alphabetical_paginate @alpha_params %>
   </div>
 </div>
+
 <div class="row">
-  <div class="col-md-12">
+  <div id="pagination_table" class="col-md-12">
+    <h2><%= @letter %></h2>
+
     <% @volumes.each do |vol| %>
-      <ul class="list-group">
-        <li class="list-group-item">
-          <%= link_to (vol.title.blank? ? "[No title]" : vol.title), public_volume_path(vol) %>
-        </li>
-      </ul>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <%= link_to (vol.title.blank? ? "[No title]" : vol.title), public_volume_path(vol) %>
+      </li>
+    </ul>
     <% end %>
 
-    <%= paginate @volumes %>
   </div>
 </div>
