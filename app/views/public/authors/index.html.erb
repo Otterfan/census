@@ -1,17 +1,22 @@
-<h1>Public::Authors#index</h1>
-<p>Find me in app/views/public/authors/index.html.erb</p>
+<h2>Browse all Authors</h2>
 
 <div class="row">
-  <%= alphabetical_paginate @alpha_params %>
+  <div class="pagination-stuff col-md-10">
+    <%= alphabetical_paginate @alpha_params %>
+  </div>
+</div>
 
-  <div id="pagination_table" class="row">
-    <h2><%= @letter %></h2>
-    <ul>
+<div class="row">
+  <div id="pagination_table" class="col-md-12">
+    <h3><%= @letter %></h3>
+
     <% @authors.each do |author| %>
-      <li>
-        <%= link_to author.full_name, public_author_path(author) %>
-      </li>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <%= link_to author.full_name, public_author_path(author) %>
+        </li>
+      </ul>
     <% end %>
-    </ul>
+
   </div>
 </div>
