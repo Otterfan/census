@@ -21,6 +21,7 @@ class Public::VolumesController < ApplicationController
     # the alpha_paginate gem has a bug where it fail if the field contains an empty or blank value.
     # be sure to filter out empty field values!
     @volumes, @alpha_params = Volume
+                                  .where.not(title: [nil, ''])
                                   .order(:title)
                                   .alpha_paginate(@letter, @alpha_params_options){|volume| volume.title}
   end
