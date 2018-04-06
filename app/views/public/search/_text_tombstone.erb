@@ -1,6 +1,9 @@
 <div class="result-title">
   <%= link_to (text.title.blank? ? "[No title]" : @results_formatter.format(text.title)), public_text_path(text.id) %>
 </div>
+<div class="result-author">
+  <%= text['_source'].authors_names %>
+</div>
 <div>
   Topic author: <%= text.topic_author.full_name %>
 </div>

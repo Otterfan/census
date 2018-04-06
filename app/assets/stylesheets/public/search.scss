@@ -85,6 +85,7 @@ ul.facet-list-group li.facet-list-group-item {
   .list-group-item {
     border: none;
     padding: 1em 1em 2em 0;
+    font-size: 14px;
 
 
     &:first-child {
@@ -93,7 +94,11 @@ ul.facet-list-group li.facet-list-group-item {
     }
 
     .result-title {
-      font-size: 1.2em;
+      font-size: 18px;
+    }
+
+    .result-author {
+      font-size: 16px;
     }
   }
 }

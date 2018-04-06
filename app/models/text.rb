@@ -106,8 +106,20 @@ class Text < ApplicationRecord
                         }
                     }
                 },
-                match_pattern: "regex",
-                match: "^id$",
+                match: "id",
+                match_mapping_type: "string"
+            }
+        },
+        {
+            integer_fields: {
+                mapping: {
+                    fields: {
+                        raw: {
+                            index: "not_analyzed"
+                        }
+                    }
+                },
+                match: "authors_names",
                 match_mapping_type: "string"
             }
         }
@@ -123,6 +135,7 @@ class Text < ApplicationRecord
             :status_id, :section_id, :country_id,
             :journal_id, :volume_id, :sort_id
         ],
+        methods: [:authors_names],
         include: {
             text_citations: {
                 except: [:created_at, :updated_at, :from_language_id, :to_language_id],
@@ -242,11 +255,22 @@ class Text < ApplicationRecord
       get_contributors
     end
 
-    if text_type.starts_with? 'translat'
+    if text_type.respond_to?(:starts_with?) && text_type.starts_with?('translat')
       author_citation = TextCitation.new
       author_citation.name = topic_author.full_name
       @authors = [author_citation]
     end
+  end
+
+  def authors_names
+    unless @authors
+      get_contributors
+    end
+    puts 'start'
+    puts @authors
+    puts 'end'
+
+    @authors.map(&:name).join("; ")
   end
 
   def translators
