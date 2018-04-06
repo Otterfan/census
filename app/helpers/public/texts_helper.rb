@@ -28,7 +28,7 @@ module Public::TextsHelper
     value.each_char do |c|
       if c == '_'
         c = start_tag ? '<em>' : '</em>'
-        start_tag = ! start_tag
+        start_tag = !start_tag
       end
       retval = retval << c
     end
@@ -94,5 +94,28 @@ module Public::TextsHelper
   # Link to volume from text search result
   def link_to_volume_from_search(volume_hash)
     link_to volume_hash.title, public_volume_path(volume_hash.id)
+  end
+
+  # Formatted journal volume and issue
+  def formatted_journal_issue(text)
+    retval = ''
+
+    if !text.issue_volume.blank? && !text.issue_number.blank?
+      retval = "#{text.issue_volume}.#{text.issue_number}"
+    elsif text.issue_volume
+      retval = "#{text.issue_volume}"
+    elsif text.issue_number
+      retval = "#{text.issue_number}"
+    end
+
+    if !text.issue_season_month.blank?
+      retval = "#{retval} (#{text.issue_season_month} #{text.date})"
+    end
+
+    if !text.page_span.blank?
+      retval = "#{retval}: #{text.page_span}"
+    end
+
+    retval
   end
 end

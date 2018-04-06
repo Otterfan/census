@@ -1,0 +1,17 @@
+<div class="result-title">
+  <%= link_to (text.title.blank? ? "[No title]" : @results_formatter.format(text.title)), public_text_path(text.id) %>
+</div>
+<div>
+  Topic author: <%= text.topic_author.full_name %>
+</div>
+<% if text['_source'].volume %>
+  <div>
+    In <cite><%= link_to_volume_from_search text['_source'].volume %></cite>  <%= formatted_journal_issue(text) %>
+  </div>
+<% end %>
+<% if text['_source'].journal %>
+  <div>
+    In
+    <cite><%= link_to_journal_from_search text['_source'].journal %></cite> <%= formatted_journal_issue(text) %>
+  </div>
+<% end %>

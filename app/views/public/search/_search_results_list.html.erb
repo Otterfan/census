@@ -13,23 +13,13 @@
     </div>
   <% end %>
 
-  <% @texts.each do |text| %>
-    <ul class="list-group">
+  <ul class="list-group">
+    <% @texts.each do |text| %>
       <li class="list-group-item">
-        <%= link_to (text.title.blank? ? "[No title]" : @results_formatter.format(text.title)), public_text_path(text.id) %>
-        <ul>
-          <li>Census ID: <%= text.census_id %></li>
-          <li>Topic author: <%= text.topic_author.full_name %></li>
-          <% if text['_source'].volume %>
-            <li>In <cite><%= link_to_volume_from_search text['_source'].volume %></cite></li>
-          <% end %>
-          <% if text['_source'].journal %>
-            <li>In <cite><%= link_to_journal_from_search text['_source'].journal %></cite></li>
-          <% end %>
-        </ul>
+        <%= render 'text_tombstone', text: text %>
       </li>
-    </ul>
-  <% end %>
+    <% end %>
+  </ul>
 
   <%= paginate @texts %>
 </div>

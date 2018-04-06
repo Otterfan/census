@@ -75,4 +75,25 @@ ul.facet-list-group li.facet-list-group-item {
     height: 36px;
     margin: 20px 0 20px 6px;
   }
+
+  mark, .mark {
+    font-weight: bold;
+    color: inherit;
+    background: inherit;
+  }
+
+  .list-group-item {
+    border: none;
+    padding: 1em 1em 2em 0;
+
+
+    &:first-child {
+      border-top: none;
+      padding-top: 0
+    }
+
+    .result-title {
+      font-size: 1.2em;
+    }
+  }
 }
