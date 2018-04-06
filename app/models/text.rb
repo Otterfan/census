@@ -34,8 +34,44 @@ class Text < ApplicationRecord
 
   has_paper_trail
 
-  # apply stemming dynamically to all string/text fields
-  settings index: {} do
+  # these settings will create several dynamic mappings for each string-type field:
+  #    keyword: non-indexed, used for keyword searching and aggregations
+  #    folded : indexed with english stemming and asciifolding (cafe, cafes, café, cafés all match)
+  settings index: {
+        analysis: {
+            filter: {
+                english_stop: {
+                    type:       :stop,
+                    stopwords:  "_english_"
+                },
+                english_keywords: {
+                    type:       :keyword_marker,
+                    keywords:   [:example]
+                },
+                english_stemmer: {
+                    type:       :stemmer,
+                    language:   :english
+                },
+                english_possessive_stemmer: {
+                    type:       :stemmer,
+                    language:   :possessive_english
+                }
+            },
+            analyzer: {
+                folding: {
+                    tokenizer: :standard,
+                    filter: [
+                        :english_possessive_stemmer,
+                        :lowercase,
+                        :english_stop,
+                        :english_keywords,
+                        :english_stemmer,
+                        :asciifolding
+                    ]
+                }
+            }
+        }
+  } do
     mapping dynamic_templates: [
         {
             strings: {
@@ -44,7 +80,11 @@ class Text < ApplicationRecord
                     fields: {
                         keyword: {
                             type: "keyword",
-                            ignore_above: 256
+                            ignore_above: 256,
+                        },
+                        folded: {
+                            type: :text,
+                            analyzer: 'folding'
                         }
                     },
                     analyzer: :english
@@ -75,6 +115,7 @@ class Text < ApplicationRecord
                     }
                 }
             },
+
             components: {
                 except: [:id, :text_id, :created_at, :updated_at],
                 include: {
@@ -163,6 +204,7 @@ class Text < ApplicationRecord
             cross_references: {
                 except: [:id, :text_id, :created_at, :updated_at]
             }
+
         }
     )
   end

@@ -78,23 +78,35 @@ class Public::SearchController < ApplicationController
             query_string: {
                 fields: %w{
                   topic_author.full_name^10
+                  topic_author.full_name.folded^10
                   topic_author.alternate_name^10
+                  topic_author.alternate_name.folded^10
                   text_citations.name^10
+                  text_citations.name.folded^10
                   components.component_citations.name^10
+                  components.component_citations.name.folded^10
                   title^5
+                  title.folded^5
                   components.title^5
+                  components.title.folded^5
                   text_type
                   date
                   original_greek_title
+                  original_greek_title.folded
                   genre
                   publication_places.place.name
+                  publication_places.place.name.folded
                   publisher
+                  publisher.folded
                   journal.title
+                  journal.title.folded
                   material_type
                   other_text_languages.language.name
+                  other_text_languages.language.name.folded
                   original
+                  original.folded
                 },
-                type: "best_fields",
+                type: "most_fields",
                 default_operator: "and",
                 query: sanitize_query(params[:keyword])
             }
