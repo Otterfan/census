@@ -79,32 +79,43 @@ class Public::SearchController < ApplicationController
                 fields: %w{
                   topic_author.full_name^10
                   topic_author.full_name.folded^10
+                  topic_author.full_name.el^10
                   topic_author.alternate_name^10
                   topic_author.alternate_name.folded^10
+                  topic_author.alternate_name.el^10
                   text_citations.name^10
                   text_citations.name.folded^10
+                  text_citations.name.el^10
                   components.component_citations.name^10
                   components.component_citations.name.folded^10
+                  components.component_citations.name.el^10
                   title^5
                   title.folded^5
+                  title.el^5
                   components.title^5
                   components.title.folded^5
+                  components.title.el^5
                   text_type
                   date
                   original_greek_title
                   original_greek_title.folded
+                  original_greek_title.el
                   genre
                   publication_places.place.name
                   publication_places.place.name.folded
+                  publication_places.place.name.el
                   publisher
                   publisher.folded
+                  publisher.el
                   journal.title
                   journal.title.folded
+                  journal.title.el
                   material_type
                   other_text_languages.language.name
                   other_text_languages.language.name.folded
                   original
                   original.folded
+                  original.el
                 },
                 type: "most_fields",
                 default_operator: "and",

@@ -37,6 +37,7 @@ class Text < ApplicationRecord
   # these settings will create several dynamic mappings for each string-type field:
   #    keyword: non-indexed, used for keyword searching and aggregations
   #    folded : indexed with english stemming and asciifolding (cafe, cafes, café, cafés all match)
+  #    el     : indexed with greek stemming, which includes greek stop words
   settings index: {
         analysis: {
             filter: {
@@ -85,6 +86,10 @@ class Text < ApplicationRecord
                         folded: {
                             type: :text,
                             analyzer: 'folding'
+                        },
+                        el: {
+                            type: :text,
+                            analyzer: :greek
                         }
                     },
                     analyzer: :english
