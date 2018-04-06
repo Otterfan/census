@@ -85,4 +85,14 @@ module Public::TextsHelper
 
     reset_page_number_in_path(new_path)
   end
+
+  # Link to journal from text search result
+  def link_to_journal_from_search(journal_hash)
+    link_to journal_hash.title, public_journal_path(journal_hash.id)
+  end
+
+  # Link to volume from text search result
+  def link_to_volume_from_search(volume_hash)
+    link_to volume_hash.title, public_volume_path(volume_hash.id)
+  end
 end

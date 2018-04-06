@@ -28,7 +28,7 @@ class Text < ApplicationRecord
   accepts_nested_attributes_for :cross_references, reject_if: :all_blank, :allow_destroy => true
   accepts_nested_attributes_for :components, reject_if: :all_blank, :allow_destroy => true
 
-  after_commit() { __elasticsearch__.index_document }
+  after_commit() {__elasticsearch__.index_document}
 
   paginates_per 60
 
@@ -39,39 +39,39 @@ class Text < ApplicationRecord
   #    folded : indexed with english stemming and asciifolding (cafe, cafes, café, cafés all match)
   #    el     : indexed with greek stemming, which includes greek stop words
   settings index: {
-        analysis: {
-            filter: {
-                english_stop: {
-                    type:       :stop,
-                    stopwords:  "_english_"
-                },
-                english_keywords: {
-                    type:       :keyword_marker,
-                    keywords:   [:example]
-                },
-                english_stemmer: {
-                    type:       :stemmer,
-                    language:   :english
-                },
-                english_possessive_stemmer: {
-                    type:       :stemmer,
-                    language:   :possessive_english
-                }
-            },
-            analyzer: {
-                folding: {
-                    tokenizer: :standard,
-                    filter: [
-                        :english_possessive_stemmer,
-                        :lowercase,
-                        :english_stop,
-                        :english_keywords,
-                        :english_stemmer,
-                        :asciifolding
-                    ]
-                }
-            }
-        }
+      analysis: {
+          filter: {
+              english_stop: {
+                  type: :stop,
+                  stopwords: "_english_"
+              },
+              english_keywords: {
+                  type: :keyword_marker,
+                  keywords: [:example]
+              },
+              english_stemmer: {
+                  type: :stemmer,
+                  language: :english
+              },
+              english_possessive_stemmer: {
+                  type: :stemmer,
+                  language: :possessive_english
+              }
+          },
+          analyzer: {
+              folding: {
+                  tokenizer: :standard,
+                  filter: [
+                      :english_possessive_stemmer,
+                      :lowercase,
+                      :english_stop,
+                      :english_keywords,
+                      :english_stemmer,
+                      :asciifolding
+                  ]
+              }
+          }
+      }
   } do
     mapping dynamic_templates: [
         {
@@ -94,13 +94,28 @@ class Text < ApplicationRecord
                     },
                     analyzer: :english
                 }
+            },
+        },
+        {
+            integer_fields: {
+                mapping: {
+                    fields: {
+                        raw: {
+                            type: :integer,
+                            index: "not_analyzed"
+                        }
+                    }
+                },
+                match_pattern: "regex",
+                match: "^id$",
+                match_mapping_type: "string"
             }
         }
     ]
   end
 
 
-  def as_indexed_json(options={})
+  def as_indexed_json(options = {})
     as_json(
         #only: [:title, :original, :journal_title, :publisher, :place_of_publication, :authors_name_from_source, :census_id],
         except: [
@@ -110,19 +125,19 @@ class Text < ApplicationRecord
         ],
         include: {
             text_citations: {
-                except: [:id, :text_id, :created_at, :updated_at, :from_language_id, :to_language_id],
+                except: [:created_at, :updated_at, :from_language_id, :to_language_id],
                 include: {
                     from_language: {
-                        except: [:id, :created_at, :updated_at]
+                        except: [:created_at, :updated_at]
                     },
                     to_language: {
-                        except: [:id, :created_at, :updated_at]
+                        except: [:created_at, :updated_at]
                     }
                 }
             },
 
             components: {
-                except: [:id, :text_id, :created_at, :updated_at],
+                except: [:created_at, :updated_at],
                 include: {
                     component_citations: {
                         except: [:id, :component_id, :from_language_id, :to_language_id, :created_at, :updated_at],
@@ -138,7 +153,7 @@ class Text < ApplicationRecord
                 }
             },
             publication_places: {
-                except: [:id, :place_id, :text_id],
+                except: [:text_id],
                 include: {
                     place: {
                         except: [:id, :country_id, :created_at, :updated_at],
@@ -151,63 +166,63 @@ class Text < ApplicationRecord
                 }
             },
             languages: {
-                except: [:id, :created_at, :updated_at]
+                except: [:created_at, :updated_at]
             },
             topic_author: {
-                except: [:id, :created_at, :updated_at]
+                except: [:created_at, :updated_at]
             },
             status: {
-                except: [:id, :created_at, :updated_at]
+                except: [:created_at, :updated_at]
             },
             section: {
-                except: [:id, :created_at, :updated_at]
+                except: [:created_at, :updated_at]
             },
             # can't get this table to get indexed
             #country: {
             #    except: [:id, :created_at, :updated_at]
             #},
             journal: {
-                except: [:id, :place_id, :created_at, :updated_at],
+                except: [:created_at, :updated_at],
                 include: {
                     place: {
-                        except: [:id, :country_id, :created_at, :updated_at],
+                        except: [:created_at, :updated_at],
                         include: {
                             country: {
-                                except: [:id, :created_at, :updated_at]
+                                except: [:created_at, :updated_at]
                             }
                         }
                     }
                 }
             },
             volume: {
-                except: [:id, :created_at, :updated_at],
+                except: [:created_at, :updated_at],
                 include: {
                     volume_citations: {
-                        except: [:id, :volume_id, :from_language_id_id, :to_language_id_id, :created_at, :updated_at],
+                        except: [:volume_id, :from_language_id_id, :to_language_id_id, :created_at, :updated_at],
                         include: {
                             from_language: {
-                                except: [:id, :created_at, :updated_at]
+                                except: [:created_at, :updated_at]
                             },
                             to_language: {
-                                except: [:id, :created_at, :updated_at]
+                                except: [:created_at, :updated_at]
                             }
                         }
                     }
                 }
             },
             standard_numbers: {
-                except: [:id, :text_id, :created_at, :updated_at]
+                except: [:text_id, :created_at, :updated_at]
             },
             other_text_languages: {
-                except: [:id, :language_id],
+                except: [],
                 include: {
                     language: {
-                        except: [:id, :created_at, :updated_at]
+                        except: [:created_at, :updated_at]
                     }
                 }
             },
             cross_references: {
-                except: [:id, :text_id, :created_at, :updated_at]
+                except: [:created_at, :updated_at]
             }
 
         }
@@ -270,7 +285,7 @@ class Text < ApplicationRecord
   end
 
   def stories
-    unless  @stories
+    unless @stories
       get_components
     end
     @stories
@@ -281,14 +296,14 @@ class Text < ApplicationRecord
   end
 
   def other_components
-    unless  @other_components
+    unless @other_components
       get_components
     end
     @other_components
   end
 
   def get_components
-    @poems, @stories, @other_components = [],[], []
+    @poems, @stories, @other_components = [], [], []
     components.each do |component|
       if component.genre == 'Poetry'
         @poems << component
@@ -307,7 +322,7 @@ class Text < ApplicationRecord
   end
 
   def sort_title
-    title.gsub(/["'_\[\]]/, '').sub(/^(An? )|(The )/,'')
+    title.gsub(/["'_\[\]]/, '').sub(/^(An? )|(The )/, '')
   end
 end
 
