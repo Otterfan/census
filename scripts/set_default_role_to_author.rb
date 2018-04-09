@@ -1,0 +1,1 @@
+nulls = TextCitation.where('role ISNULL').update_all(role:'author')

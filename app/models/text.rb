@@ -260,15 +260,14 @@ class Text < ApplicationRecord
       author_citation.name = topic_author.full_name
       @authors = [author_citation]
     end
+
+    @authors
   end
 
   def authors_names
     unless @authors
       get_contributors
     end
-    puts 'start'
-    puts @authors
-    puts 'end'
 
     @authors.map(&:name).join("; ")
   end
