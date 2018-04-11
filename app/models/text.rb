@@ -5,7 +5,7 @@ class Text < ApplicationRecord
   include Elasticsearch::Model::Callbacks
 
   belongs_to :language, optional: true
-  belongs_to :topic_author, class_name: 'Person', optional: true
+  belongs_to :topic_author, class_name: 'Person', optional: false
   belongs_to :status
   belongs_to :volume, optional: true
   belongs_to :section, optional: true
