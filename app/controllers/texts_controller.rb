@@ -7,7 +7,7 @@ class TextsController < ApplicationController
   # GET /texts
   # GET /texts.json
   def index
-    @texts = Text.order(:id).page(params[:page])
+    @texts = Text.order(:sort_census_id).page(params[:page])
   end
 
   # GET /texts/1
@@ -23,6 +23,8 @@ class TextsController < ApplicationController
 
   # GET /texts/1/edit
   def edit
+    puts params[:id]
+
     @comment = Comment.new
     @comment.text = @text
 
@@ -93,7 +95,7 @@ class TextsController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_text
-    @text = Text.find(params[:id])
+    @text = Text.find_by_census_id(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

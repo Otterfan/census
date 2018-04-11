@@ -16,7 +16,6 @@ class Public::TextsController < ApplicationController
 
   # GET /public/texts/1
   def show
-    #redirect_to texts_path(@texts)
-    @text = Text.find(params[:id])
+    @text = Text.find_by_census_id(params[:id])
   end
 end
