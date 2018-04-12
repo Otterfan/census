@@ -95,8 +95,16 @@ class Public::SearchController < ApplicationController
                   components.title^5
                   components.title.folded^5
                   components.title.el^5
+                  components.genre
+                  components.text_type
+                  components.collection
+                  components.collection.folded
+                  components.collection.el
+                  components.note
+                  components.note.folded
+                  components.note.el
                   text_type
-                  date
+                  sort_date
                   original_greek_title
                   original_greek_title.folded
                   original_greek_title.el
@@ -113,10 +121,49 @@ class Public::SearchController < ApplicationController
                   material_type
                   other_text_languages.language.name
                   other_text_languages.language.name.folded
-                  original
-                  original.folded
-                  original.el
+                  source
+                  source.folded
+                  source.el
+                  note
+                  note.folded
+                  note.el
+                  census_id
+                  series
+                  series.folded
+                  series.el
+                  original_greek_place_of_publication
+                  original_greek_place_of_publication.el
+                  original_greek_publisher
+                  original_greek_publisher.el
+                  original_greek_date
+                  sponsoring_organization
+                  sponsoring_organization.folded
+                  sponsoring_organization.el
+                  special_location_of_item
+                  special_source_of_info
+                  special_source_of_info.folded
+                  special_source_of_info.el
+                  issue_editor
+                  issue_editor.el
+                  issue_title
+                  issue_title.el
+                  abstract
+                  abstract.el
+                  authors_name_from_source
+                  authors_name_from_source.el
+                  editorial_annotation
+                  editorial_annotation.folded
+                  editorial_annotation.el
+                  original_greek_collection
+                  original_greek_collection.el
+                  collection
+                  collection.el
+                  volumes.title
+                  volumes.title.folded
+                  volumes.title.el
+                  standard_numbers.value
                 },
+                lenient: true,
                 type: "most_fields",
                 default_operator: "and",
                 query: sanitize_query(params[:keyword])
