@@ -40,6 +40,8 @@ module Public::TextsHelper
       return value
     end
 
+    value = value.to_s
+
     # make label changes
     # https://github.com/BCDigSchol/census/issues/140
     case value.downcase
