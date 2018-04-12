@@ -40,7 +40,18 @@ module Public::TextsHelper
       return value
     end
 
-    value = value.to_s
+    # make label changes
+    # https://github.com/BCDigSchol/census/issues/140
+    case value.downcase
+    when "study_part"
+      value = "Study (item or component)"
+    when "study_book"
+      value = "Study (volume)"
+    when "translation_part"
+      value = "Translation (item or component)"
+    when "translation_book"
+      value = "Translation (volume)"
+    end
 
     if value.include?("_")
       value.gsub('_', ' ').capitalize
