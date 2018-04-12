@@ -1,35 +1,39 @@
 <div class="col-md-6">
   <h2>Recent comments</h2>
-  <p><%= link_to 'All comments',comments_path %></p>
+  <p><%= link_to 'All comments', comments_path %></p>
   <ul class="list-group text-comments">
     <% @comments.each do |comment| %>
-        <li class="comment list-group-item">
-          <div class="the-title"><strong><%= comment.text.census_id %></strong> <%= link_to comment.text.title, edit_text_path(comment.text.id) %></div>
-          <div class="the-text"><%= comment.value %></div>
-          <div class="comment-metadata">
-            <span class="the-user"><%= comment.user.email %></span>
-            <span class="the-date"><%= comment.created_at %></span>
-          </div>
-        </li>
+      <li class="comment list-group-item">
+        <div class="the-title">
+          <strong><%= comment.text.census_id %></strong> <%= link_to comment.text.title, edit_text_path(comment.text.id) %>
+        </div>
+        <div class="the-text"><%= comment.value %></div>
+        <div class="comment-metadata">
+          <span class="the-user"><%= comment.user.email %></span>
+          <span class="the-date"><%= comment.created_at %></span>
+        </div>
+      </li>
     <% end %>
   </ul>
 </div>
 <div class="col-md-6">
   <h2>Recent edits</h2>
-  <p><%= link_to 'All edits',versions_path %></p>
+  <p><%= link_to 'All edits', versions_path %></p>
   <ul class="list-group">
     <% @changed_texts.each do |version| %>
+      <% if version.item %>
         <li class="list-group-item change">
           <strong><%= version.item.census_id %></strong> <%= link_to changed_item_label(version.item), changed_item_url(version.item), :class => 'change-link' %>
           <br>
           <span class="date"><%= version.created_at %> — <%= version.whodunnit %></span><br>
           <% changes(version).each do |change| %>
-              <span class="field"><%= change[:field] %></span>
-              <span class="from"><%= change[:from] %></span> >
-              <span class="to"><%= change[:to] %></span><br>
-              <span class="whodunnit"><%= change[:whodunnit] %></span>
+            <span class="field"><%= change[:field] %></span>
+            <span class="from"><%= change[:from] %></span> >
+            <span class="to"><%= change[:to] %></span><br>
+            <span class="whodunnit"><%= change[:whodunnit] %></span>
           <% end %>
         </li>
+      <% end %>
     <% end %>
   </ul>
 </div>

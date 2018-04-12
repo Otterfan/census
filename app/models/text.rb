@@ -242,10 +242,6 @@ class Text < ApplicationRecord
     )
   end
 
-  def to_param
-    census_id
-  end
-
   def next
     Text.where(["sort_id > ?", sort_id]).order(sort_id: :asc).first
   end
