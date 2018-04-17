@@ -27,7 +27,7 @@ ul.facet-list-group li.facet-list-group-item {
 .facet-label {
   text-indent: -15px;
   padding-left: 15px;
-  width: 80%;
+  width: 90%;
 }
 
 .facet-label .facet-remove {
@@ -64,6 +64,10 @@ ul.facet-list-group li.facet-list-group-item {
 .keyword-search-submit a,
 .keyword-search-submit input {
   margin: 1.5rem 0;
+}
+
+.keyword-search-submit {
+  padding-top: 2rem;
 }
 
 .public #search-results {
