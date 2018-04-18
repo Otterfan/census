@@ -26,5 +26,9 @@
       <%= render 'facet_container', facet_name: "other_text_languages" %>
     <% end %>
 
+    <% if @aggregations.publication_dates.buckets.present? %>
+      <%= render 'facet_container_dates', facet_name: "publication_dates" %>
+    <% end %>
+
   <% end %>
 </div> <!-- facets container -->

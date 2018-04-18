@@ -1,0 +1,71 @@
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.1/bootstrap-slider.js"></script>
+<link rel="stylesheet" href="/assets/public/histogram.slider.css">
+<link rel="stylesheet" href="/assets/public/bootstrap.histogram.slider.css">
+<script src="/assets/public/bootstrap.histogram.slider.js"></script>
+
+<div id="publication_dates_data" data='<%= @publication_date_range %>'></div>
+
+<script>
+    $(function() {
+        // Grab the data attribute from #publication_dates_data
+        // We can assume this will be a valid JSON object once converted
+        var my_data = $("#publication_dates_data").attr("data");
+
+        if (my_data && my_data.length){
+            // Convert value into JSON object
+            var my_data_json = JSON.parse(my_data);
+
+            // Our Elasticsearch query will autofill a hardcoded value
+            // for text records that lack a publication year value
+            var unknown_placeholder_year = 1900;
+
+            // We can safely assume that the publication dates are in numerical order
+            // So, the first element in the array is the earliest year and last element is latest year
+            var earliest_year_elem = my_data_json[0];
+            var latest_year_elem = my_data_json[my_data_json.length - 1];
+
+            if ("value" in earliest_year_elem && "value" in latest_year_elem){
+                var earliest_year = earliest_year_elem.value;
+                var latest_year = latest_year_elem.value;
+
+                // For sake of making the histogram bins each a decade in width,
+                // we'll find the floor and ceiling of the earliest and latest years, respectfully
+                var earliest_year_floor = earliest_year - (earliest_year % 10);
+                var latest_year_ceiling = latest_year + 10 - (latest_year % 10);
+                var range = (latest_year_ceiling - earliest_year_floor) / 10;
+
+                // Display a small notice when the earliest year matches the unknown_placeholder_year value
+                if (earliest_year === unknown_placeholder_year) {
+                    $(".note").html("Texts without a publication date are listed in this graph as year '1900'");
+                }
+
+                //console.log("earliest: " + earliest_year + ", latest: " + latest_year);
+                //console.log("earliest_year_floor: " + earliest_year_floor + ", latest_year_ceiling: " + latest_year_ceiling);
+
+                data = {
+                    "items": my_data_json
+                };
+
+                $("#histogramSlider").histogramSlider({
+                    sliderRange: [earliest_year_floor, latest_year_ceiling],
+                    data: data,
+                    selectedRange: [earliest_year, latest_year],
+                    showSelectedRange: true,
+                    showTooltips: true,
+                    numberOfBins: range
+                });
+            }
+        }
+    });
+</script>
+
+
+<% if @aggregations[facet_name].buckets.present? %>
+  <div class="panel panel-default">
+    <div class="panel-heading"><%= format_label(facet_name) %></div>
+    <div class="panel-body">
+      <div id="histogramSlider"></div>
+      <em class="note"></em>
+    </div>
+  </div>
+<% end %>

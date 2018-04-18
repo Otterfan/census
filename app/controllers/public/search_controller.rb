@@ -192,6 +192,7 @@ class Public::SearchController < ApplicationController
       add_facet_search(['topic_author.full_name'], :topic_author)
       add_facet_search(['publication_places.place.name'], :publication_places)
       add_facet_search(['other_text_languages.language.name'], :other_text_languages)
+      add_facet_search(['date_range'], :date_range)
 
       # create Elasticsearch search query
       # add in aggregated fields (facets) here
@@ -235,12 +236,22 @@ class Public::SearchController < ApplicationController
                   terms: {
                       field: "other_text_languages.language.name.keyword"
                   }
+              },
+              "publication_dates": {
+                  date_histogram: {
+                      field: "sort_date",
+                      interval: "year",
+                      format: "yyyy",
+                      missing: "1900"
+                  }
               }
           }
       }
 
       query_result = Text.search(all_search).page(params[:page]).per(@pagination_page_size)
       @aggregations = query_result.aggregations
+      @publication_date_range = get_date_range(query_result.aggregations)
+
       @texts = query_result.results
       @results_formatter = BriefResultFormatter.new(used_params, DEFAULT_VIEW_PARAMS, params)
 
@@ -256,6 +267,26 @@ class Public::SearchController < ApplicationController
   end
 
   private
+
+  def get_date_range(aggs)
+    if aggs["publication_dates"]["buckets"].present?
+      dates = aggs["publication_dates"]["buckets"]
+      dates_json = []
+      # puts dates
+
+      dates.each do |date|
+        # puts date.key_as_string
+        if date.doc_count > 0
+          dates_json << {"value": date.key_as_string.to_i, "count": date.doc_count}
+        end
+      end
+
+      dates_json.to_json
+    else
+      dates_json.to_json
+    end
+  end
+
   def search_params
     params.permit(:keyword, :title, :journal, :location, :people, :type, :component_title,
                   :genre, :material_type, :text_type, :topic_author, :publication_places, :other_text_languages)
