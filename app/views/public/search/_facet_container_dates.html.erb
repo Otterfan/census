@@ -3,13 +3,19 @@
 <link rel="stylesheet" href="/assets/public/bootstrap.histogram.slider.css">
 <script src="/assets/public/bootstrap.histogram.slider.js"></script>
 
-<div id="publication_dates_data" data='<%= @publication_date_range %>'></div>
+<div id="publication_dates_data"
+     data='<%= @publication_date_range %>'
+     data-publication-date-earliest='<%= params[:publication_date_earliest] %>'
+     data-publication-date-latest='<%= params[:publication_date_latest] %>'>
+</div>
 
 <script>
     $(function() {
-        // Grab the data attribute from #publication_dates_data
-        // We can assume this will be a valid JSON object once converted
+        // Grab the data attributes from #publication_dates_data
+        // We can assume my_data will be a valid JSON object once converted
         var my_data = $("#publication_dates_data").attr("data");
+        var earliest_year_param = $("#publication_dates_data").attr("data-publication-date-earliest");
+        var latest_year_prarm = $("#publication_dates_data").attr("data-publication-date-latest");
 
         if (my_data && my_data.length){
             // Convert value into JSON object
@@ -25,37 +31,71 @@
             var latest_year_elem = my_data_json[my_data_json.length - 1];
 
             if ("value" in earliest_year_elem && "value" in latest_year_elem){
-                var earliest_year = earliest_year_elem.value;
-                var latest_year = latest_year_elem.value;
+                // Select the date range params if they exist.
+                // Else, use the earliest and latest values from the data object
+                var earliest_year = parseInt(earliest_year_param) || earliest_year_elem.value;
+                var latest_year = parseInt(latest_year_prarm) || latest_year_elem.value;
 
-                // For sake of making the histogram bins each a decade in width,
-                // we'll find the floor and ceiling of the earliest and latest years, respectfully
-                var earliest_year_floor = earliest_year - (earliest_year % 10);
-                var latest_year_ceiling = latest_year + 10 - (latest_year % 10);
-                var range = (latest_year_ceiling - earliest_year_floor) / 10;
+                // Be sure to add 1 to the range to be inclusive
+                var range = (latest_year - earliest_year) + 1;
+                var numOfBins = range;
 
                 // Display a small notice when the earliest year matches the unknown_placeholder_year value
                 if (earliest_year === unknown_placeholder_year) {
-                    $(".note").html("Texts without a publication date are listed in this graph as year '1900'");
+                    $(".facet-note").html("Texts without a publication date are listed in this graph as year '1900'");
                 }
 
-                //console.log("earliest: " + earliest_year + ", latest: " + latest_year);
-                //console.log("earliest_year_floor: " + earliest_year_floor + ", latest_year_ceiling: " + latest_year_ceiling);
-
+                // The slider expects the data in a specific format
                 data = {
                     "items": my_data_json
                 };
 
                 $("#histogramSlider").histogramSlider({
-                    sliderRange: [earliest_year_floor, latest_year_ceiling],
+                    sliderRange: [earliest_year, latest_year],
                     data: data,
                     selectedRange: [earliest_year, latest_year],
-                    showSelectedRange: true,
+                    showSelectedRange: false,
                     showTooltips: true,
-                    numberOfBins: range
+                    numberOfBins: numOfBins,
+                    earliestFieldId: 'publication-date-earliest-value',
+                    latestFieldId: 'publication-date-latest-value'
                 });
             }
         }
+
+        function cleanURL(path, param) {
+            var regex = RegExp("&?" + param + "=[^&?]*", "ig");
+            var cleaned = path.replace(regex, "");
+
+            return cleaned;
+        }
+
+        $("#date-range-reset").click(function(e){
+            e.preventDefault();
+
+            // remove params from current url
+            var clean_earliest = cleanURL(location.href, "publication_date_earliest");
+            var clean_latest = cleanURL(clean_earliest, "publication_date_latest");
+
+            window.location = clean_latest;
+        });
+
+        $("button#date-range-apply").click(function(e){
+            e.preventDefault();
+
+            var earliest_field_value = $("#publication-date-earliest-value").val();
+            var latest_field_value = $("#publication-date-latest-value").val();
+
+            // remove params from current url
+            var clean_earliest = cleanURL(location.href, "publication_date_earliest");
+            var clean_latest = cleanURL(clean_earliest, "publication_date_latest");
+
+            // apply new params
+            var date_param_url = clean_latest + "&publication_date_earliest=" + earliest_field_value;
+            date_param_url += "&publication_date_latest=" + latest_field_value;
+
+            window.location = date_param_url;
+        });
     });
 </script>
 
@@ -65,7 +105,31 @@
     <div class="panel-heading"><%= format_label(facet_name) %></div>
     <div class="panel-body">
       <div id="histogramSlider"></div>
-      <em class="note"></em>
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="input-group">
+            <!--<%= label_tag(:publication_date_earliest, "Earliest") %> -->
+            <%= text_field_tag :publication_date_earliest, params[:publication_date_earliest], :class => 'form-control', :id => 'publication-date-earliest-value' %>
+            <span class="input-group-btn">
+              <button class=" btn btn-secondary disabled" disabled="disabled">-</button>
+            </span>
+            <!--<%= label_tag(:publication_date_latest, "Latest") %> -->
+            <%= text_field_tag :publication_date_latest, params[:publication_date_latest], :class => 'form-control', :id => 'publication-date-latest-value' %>
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-primary" id="date-range-apply">Apply</button>
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="caret"></span>
+                  <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a href="#" id="date-range-reset">Reset dates</a></li>
+                </ul>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <p class="facet-note"></p>
     </div>
   </div>
 <% end %>

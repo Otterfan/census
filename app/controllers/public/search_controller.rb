@@ -15,7 +15,9 @@ class Public::SearchController < ApplicationController
       :text_type,
       :topic_author,
       :publication_places,
-      :other_text_languages
+      :other_text_languages,
+      :publication_date_earliest,
+      :publication_date_latest
   ]
 
   DEFAULT_VIEW_PARAMS = [
@@ -192,7 +194,13 @@ class Public::SearchController < ApplicationController
       add_facet_search(['topic_author.full_name'], :topic_author)
       add_facet_search(['publication_places.place.name'], :publication_places)
       add_facet_search(['other_text_languages.language.name'], :other_text_languages)
-      add_facet_search(['date_range'], :date_range)
+      add_facet_search_date_range(
+          'publication_date_earliest',
+          'publication_date_latest',
+          :publication_date_earliest,
+          :publication_date_latest,
+          false
+      )
 
       # create Elasticsearch search query
       # add in aggregated fields (facets) here
@@ -289,7 +297,8 @@ class Public::SearchController < ApplicationController
 
   def search_params
     params.permit(:keyword, :title, :journal, :location, :people, :type, :component_title,
-                  :genre, :material_type, :text_type, :topic_author, :publication_places, :other_text_languages)
+                  :genre, :material_type, :text_type, :topic_author, :publication_places, :other_text_languages,
+                  :publication_date_earliest, :publication_date_latest)
   end
 
   # Return a list of all symbols of search parameters used in the current request
@@ -316,6 +325,10 @@ class Public::SearchController < ApplicationController
     add_field_search(fields, param, true)
   end
 
+  def add_facet_search_date_range(field_earliest, field_latest, param_earliest, param_latest, is_facet)
+    add_field_search_date_range(field_earliest, field_latest, param_earliest, param_latest, is_facet)
+  end
+
   # Add a search on a specific field to the string array
   def add_field_search(fields, param, is_facet = false)
     if params[param].present?
@@ -328,6 +341,34 @@ class Public::SearchController < ApplicationController
               query: wrap_in_quotes(sanitize_query(params[param]))
           }
       }
+    end
+  end
+
+  # Add a date range search
+  def add_field_search_date_range(field_earliest, field_latest, param_earliest, param_latest, is_facet = false)
+    if params[param_earliest].present? and params[param_latest].present?
+      # check that we have a four-digit year for both date range params
+      check_year_regex = /^\d{4}$/
+      if check_year_regex.match(params[param_earliest]) and check_year_regex.match(params[param_latest])
+        if is_facet
+          @facets[field_earliest] = params[param_earliest]
+          @facets[field_latest] = params[param_latest]
+        end
+        @query_string_array << {
+            range: {
+                "sort_date": {
+                    gte: params[param_earliest],
+                    lte: params[param_latest],
+                    format: "yyyy"
+                }
+            }
+        }
+      else
+        # date range params didn't pass our regex so clear them out
+        params[param_earliest] = nil
+        params[param_latest] = nil
+        nil
+      end
     end
   end
 

@@ -5,17 +5,25 @@
     var pluginName = "histogramSlider",
         dataKey = "plugin_" + pluginName;
 
-    var updateHistogram = function (selectedRange, sliderMin, rangePerBin, histogramName, sliderName) {
+    var updateHistogram = function (selectedRange, sliderMin, rangePerBin, histogramName, sliderName, options) {
         var leftValue = selectedRange[0],
             rightValue = selectedRange[1];
 
         $("#" + sliderName + "-value").html(leftValue + " - " + rightValue);
 
+        if (options.earliestFieldId){
+            $("#" + options.earliestFieldId).val(leftValue);
+        }
+
+        if (options.latestFieldId){
+            $("#" + options.latestFieldId).val(rightValue);
+        }
+
         // set opacity per bin based on the slider values
         $("#" + histogramName + " .in-range").each(function (index, bin) {
             var binRange = getBinRange(rangePerBin, index, sliderMin);
 
-            if (binRange[1] < rightValue) {
+            if (binRange[1] <= rightValue) {
                 // Set opacity based on left (min) slider
                 if (leftValue > binRange[1]) {
                     setOpacity(bin, 0);
@@ -44,7 +52,7 @@
             max = sliderMin + rangePerBin * (index + 1) - 1;
 
         return [min, max];
-    }
+    };
 
     var setOpacity = function(bin, val) {
         $(bin).css("opacity", val);
@@ -52,7 +60,7 @@
 
     var convertToHeight = function (v) {
         return parseInt(5 * v + 1);
-    }
+    };
 
     var calculateHeightRatio = function(bins, histogramHeight) {
         var updatedHistogramHeight = histogramHeight;
@@ -68,7 +76,7 @@
         }
 
         return 1;
-    }
+    };
 
     var Plugin = function (element, options) {
         this.element = element;
@@ -93,13 +101,15 @@
             var self = this,
                 dataItems = self.options.data.items,
                 bins = new Array(this.options.numberOfBins).fill(0),
-                range = self.options.sliderRange[1] - self.options.sliderRange[0],
-                rangePerBin = range / this.options.numberOfBins;
+                range = self.options.sliderRange[1] - self.options.sliderRange[0] + 1, // add 1 to range to be inclusive
+                rangePerBin = (range / this.options.numberOfBins);
 
+            //console.log("slider lower: " + self.options.sliderRange[0]);
+            //console.log("slider higher: " + self.options.sliderRange[1]);
             //console.log("range: " + range);
             //console.log("number of bins: " + bins.length);
             //console.log("rangePerBin: " + rangePerBin);
-            //console.log("there are " + dataItems.length + " data points")
+            //console.log("there are " + dataItems.length + " data points");
 
             for (i = 0; i < dataItems.length; i++) {
                 var index = parseInt((dataItems[i].value - self.options.sliderRange[0]) / rangePerBin),
@@ -174,16 +184,24 @@
                 value: self.options.selectedRange,
                 tooltip: "hide"
             }).on('slide', function(event){
-                updateHistogram(event.value, self.options.sliderRange[0], rangePerBin, histogramName, sliderName);
+                updateHistogram(event.value, self.options.sliderRange[0], rangePerBin, histogramName, sliderName, self.options);
             }).on('slideStop', function(event){
-                updateHistogram(event.value, self.options.sliderRange[0], rangePerBin, histogramName, sliderName);
+                updateHistogram(event.value, self.options.sliderRange[0], rangePerBin, histogramName, sliderName, self.options);
             });
 
             if (self.options.showSelectedRange){
                 $("#" + sliderName).after("<p id='" + sliderName + "-value' class='selected-range'></p>");
             }
 
-            updateHistogram(self.options.selectedRange, self.options.sliderRange[0], rangePerBin, histogramName, sliderName);
+            if (self.options.earliestFieldId){
+                $("#" + self.options.earliestFieldId).val(self.options.sliderRange[0]);
+            }
+
+            if (self.options.latestFieldId){
+                $("#" + self.options.latestFieldId).val(self.options.sliderRange[1]);
+            }
+
+            updateHistogram(self.options.selectedRange, self.options.sliderRange[0], rangePerBin, histogramName, sliderName, self.options);
         }
     };
 
