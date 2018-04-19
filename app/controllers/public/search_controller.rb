@@ -250,7 +250,7 @@ class Public::SearchController < ApplicationController
                       field: "sort_date",
                       interval: "year",
                       format: "yyyy",
-                      missing: "1900"
+                      # missing: "1900"
                   }
               }
           }
