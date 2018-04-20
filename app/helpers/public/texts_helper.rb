@@ -86,16 +86,6 @@ module Public::TextsHelper
     reset_page_number_in_path(new_path)
   end
 
-  def reset_date_range_facet_path(path, facet_earliest, facet_latest)
-    unless path or facet_earliest or facet_latest
-      return path
-    end
-
-    # clear out each facet from url
-    updated_path = reset_facet_path(path, facet_earliest)
-    reset_facet_path(updated_path, facet_latest)
-  end
-
   # append the facet into the url when facet filter is applied to the query
   def update_facet_path(path, facet_name, facet_value = "")
     unless path or facet_name

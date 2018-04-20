@@ -1,16 +1,16 @@
-<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.1/bootstrap-slider.js"></script>
+<script src="/assets/public/bootstrap-slider.js"></script>
+<script src="/assets/public/bootstrap.histogram.slider.js"></script>
 <link rel="stylesheet" href="/assets/public/histogram.slider.css">
 <link rel="stylesheet" href="/assets/public/bootstrap.histogram.slider.css">
-<script src="/assets/public/bootstrap.histogram.slider.js"></script>
 
 <div id="publication_dates_data"
-     data='<%= @publication_date_range %>'
-     data-publication-date-earliest='<%= params[:publication_date_earliest] %>'
-     data-publication-date-latest='<%= params[:publication_date_latest] %>'>
+     data='<%= @publication_dates %>'
+     data-publication-date-earliest='<%= @publication_date_range_earliest %>'
+     data-publication-date-latest='<%= @publication_date_range_latest %>'>
 </div>
 
 <script>
-    $(function() {
+    $(document).ready(function() {
         // Grab the data attributes from #publication_dates_data
         // We can assume my_data will be a valid JSON object once converted
         var my_data = $("#publication_dates_data").attr("data");
@@ -75,10 +75,9 @@
 
             // remove params from current url
             var clean_page = cleanURL(location.href, "page");
-            var clean_earliest = cleanURL(clean_page, "publication_date_earliest");
-            var clean_latest = cleanURL(clean_earliest, "publication_date_latest");
+            var clean_date_range = cleanURL(clean_page, "publication_date_range");
 
-            window.location = clean_latest;
+            window.location = clean_date_range;
         });
 
         $("button#date-range-apply").click(function(e){
@@ -89,12 +88,10 @@
 
             // remove params from current url
             var clean_page = cleanURL(location.href, "page");
-            var clean_earliest = cleanURL(clean_page, "publication_date_earliest");
-            var clean_latest = cleanURL(clean_earliest, "publication_date_latest");
+            var clean_date_range = cleanURL(clean_page, "publication_date_range");
 
             // apply new params
-            var date_param_url = clean_latest + "&publication_date_earliest=" + earliest_field_value;
-            date_param_url += "&publication_date_latest=" + latest_field_value;
+            var date_param_url = clean_date_range + "&publication_date_range=" + earliest_field_value + "-" + latest_field_value;
 
             window.location = date_param_url;
         });
