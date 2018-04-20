@@ -53,7 +53,7 @@ ul.facet-list-group li.facet-list-group-item {
 }
 
 .adv-search-fields input {
-  margin-bottom: 1.25rem;
+  /*margin-bottom: 1.25rem;*/
 }
 
 .adv-search-submit a,
@@ -74,6 +74,11 @@ ul.facet-list-group li.facet-list-group-item {
   padding-top: 2rem;
   font-style: italic;
   margin: 0;
+}
+
+.adv-search-row .input-group,
+.adv-search-row-buttons .input-group{
+ margin: 1rem 0;
 }
 
 .public #search-results {

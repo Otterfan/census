@@ -7,7 +7,112 @@
       <div class="adv-search-fields row">
         <%= hidden_field_tag :type, @search_type %>
 
-        <div class="col-lg-12 col-md-12 col-sm-12">
+        <div id="new-form">
+          <div class="col-lg-8 col-md-8 col-sm-8">
+
+            <!-- main search field -->
+            <div class="adv-search-row" id="search-row-1">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="input-group input-group-lg">
+                  <%= text_field_tag :v_1, params[:v_1], :class => 'form-control', :id => 'v_1' %>
+                  <div class="input-group-btn fields_dropdown field_name">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select
+                      a field (optional)
+                      <span class="caret"></span></button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                      <li class="selected"><a href="#" data-name="keyword">All fields</a></li>
+                      <li><a href="#" data-name="title">Title</a></li>
+                      <li><a href="#" data-name="people">Persons</a></li>
+                      <li><a href="#" data-name="journal">Journal</a></li>
+                      <li><a href="#" data-name="component_title">Component Title</a></li>
+                      <li><a href="#" data-name="location">Publication Place</a></li>
+                    </ul>
+                  </div><!-- /btn-group -->
+                </div>
+              </div>
+            </div>
+
+            <!-- second search field -->
+            <div class="adv-search-row" id="search-row-2">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="input-group input-group-lg">
+                  <div class="input-group-btn boolean">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">AND
+                      <span class="caret"></span></button>
+                    <ul class="dropdown-menu dropdown-menu-left">
+                      <li class="selected"><a href="#" data-name="AND">AND</a></li>
+                      <li><a href="#" data-name="OR">OR</a></li>
+                      <li><a href="#" data-name="NOT">NOT</a></li>
+                    </ul>
+                  </div><!-- /btn-group -->
+                  <%= text_field_tag :v_2, params[:v_2], :class => 'form-control', :id => 'v_2' %>
+                  <div class="input-group-btn fields_dropdown field_name">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select
+                      a field (optional)
+                      <span class="caret"></span></button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                      <li class="selected"><a href="#" data-name="keyword">All fields</a></li>
+                      <li><a href="#" data-name="title">Title</a></li>
+                      <li><a href="#" data-name="people">Persons</a></li>
+                      <li><a href="#" data-name="journal">Journal</a></li>
+                      <li><a href="#" data-name="component_title">Component Title</a></li>
+                      <li><a href="#" data-name="location">Publication Place</a></li>
+                    </ul>
+                  </div><!-- /btn-group -->
+                </div>
+              </div>
+            </div>
+
+            <!-- third search field -->
+            <div class="adv-search-row" id="search-row-3">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="input-group input-group-lg">
+                  <div class="input-group-btn boolean">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">AND
+                      <span class="caret"></span></button>
+                    <ul class="dropdown-menu dropdown-menu-left">
+                      <li class="selected"><a href="#" data-name="AND">AND</a></li>
+                      <li><a href="#" data-name="OR">OR</a></li>
+                      <li><a href="#" data-name="NOT">NOT</a></li>
+                    </ul>
+                  </div><!-- /btn-group -->
+                  <%= text_field_tag :v_3, params[:v_3], :class => 'form-control', :id => 'v_3' %>
+                  <div class="input-group-btn fields_dropdown field_name">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select
+                      a field (optional)
+                      <span class="caret"></span></button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                      <li class="selected"><a href="#" data-name="keyword">All fields</a></li>
+                      <li><a href="#" data-name="title">Title</a></li>
+                      <li><a href="#" data-name="people">Persons</a></li>
+                      <li><a href="#" data-name="journal">Journal</a></li>
+                      <li><a href="#" data-name="component_title">Component Title</a></li>
+                      <li><a href="#" data-name="location">Publication Place</a></li>
+                    </ul>
+                  </div><!-- /btn-group -->
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4">
+            <div class="adv-search-row-buttons">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="input-group input-group-lg">
+                  <%= submit_tag 'Search', name: nil, :class => 'btn btn-lg btn-primary', :id => 'adv-search-submit' %>
+                </div>
+              </div>
+            </div>
+            <div class="adv-search-row-buttons">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="input-group input-group-lg">
+                  <%= link_to 'Start over', public_search_index_path(type: @search_type), :class => 'btn btn-lg btn-default' %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--div class="col-lg-12 col-md-12 col-sm-12">
           <%= label_tag(:keyword, "All fields") %>
           <%= text_field_tag :keyword, params[:keyword], :class => 'form-control' %>
         </div>
@@ -29,13 +134,194 @@
 
           <%= label_tag(:people, "Component title") %>
           <%= text_field_tag :component_title, params[:component_title], :class => 'form-control' %>
-        </div>
+        </div-->
       </div>
 
-      <div class="adv-search-submit row col-lg-12 col-md-12 col-sm-12">
+      <!--div class="adv-search-submit row col-lg-12 col-md-12 col-sm-12">
         <%= submit_tag 'Search', name: nil, :class => 'btn btn-primary' %>
-        <%= link_to 'Start over', public_search_index_path(type: @search_type), :class => 'btn btn-default' %>
-      </div>
+        <%= link_to 'Clear', public_search_index_path(type: @search_type), :class => 'btn btn-default' %>
+      </div-->
+
     </div>
   </div>
 <% end %>
+
+<script>
+    $(document).ready(function() {
+
+        // https://stackoverflow.com/a/21903119
+        function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
+                }
+            }
+        }
+
+        function load_field_vals(){
+            // get the query param
+            var bq = getUrlParameter("bq");
+
+            if (bq === undefined){
+                console.log("could not find bq param!");
+                return;
+            }
+
+            console.log("bq: " + bq);
+
+            // (title+cats)+AND+(journal+dogs)
+
+            // split up query
+
+            // var regex = /\+?[AND|OR|NOT]+?(\w+[^)])/;
+
+            var split_tokens = bq.split("++");
+
+            console.log(split_tokens);
+
+            // tokens should now be in the pattern:
+            //  [0] (field+val)
+            //  [1] BOOLEAN
+            //  [2] (field+val)
+            //  [3] BOOLEAN
+            //  ...
+
+            var row_num = 1;
+            $.each(split_tokens, function(i,tok){
+                // determine the field ids
+                var my_search_row = $("#search-row-" + row_num);
+                row_num = parseInt(i / 2) + 2;
+
+                console.log("currrently on row: " + row_num);
+
+                if (i % 2 === 0) { // get even tokens
+                    // (field+val)
+
+                    // skip if empty value
+                    if (tok === ""){
+                        return false;
+                    }
+
+                    // clean and split our token
+                    var clean_tok = tok.replace(/\(/g, "").replace(/\)/g, "");
+                    var split_toks = clean_tok.split("+");
+
+                    // check if we have two tokens
+                    // need to be careful for search terms that contain a "+"
+                    if (split_toks.length !== 2){
+                        return false;
+                    }
+
+                    var field_name = split_toks[0];
+                    var field_val = split_toks[1];
+
+                    console.log("field_name: " + field_name);
+                    console.log("field_val: " + field_val);
+
+                    // update the search field value
+                    var my_field_val = my_search_row.find("input");
+                    my_field_val.val(field_val);
+
+                    // update the search field name drop down
+                    var my_field_name_list = my_search_row.find(".field_name ul li a");
+                    my_field_name_list.each(function(){
+                        $this_item = $(this);
+                        $this_data_name = $this_item.attr("data-name");
+                        if ($this_data_name === field_name) {
+                            $this_item.click();
+                        }
+                    });
+
+                } else { // odd token
+                    // BOOLEAN
+
+                    console.log("bool: " + tok);
+
+                    // update the boolean drop down
+                    var my_field_bool_list = my_search_row.find(".boolean ul li a");
+                    my_field_bool_list.each(function () {
+                        $this_item = $(this);
+                        $this_data_name = $this_item.attr("data-name");
+                        if ($this_data_name === tok) {
+                            $this_item.click();
+                        }
+                    });
+                }
+            });
+
+        }
+
+        $(".dropdown-menu li a").click(function (e) {
+            e.preventDefault();
+            $this = $(this);
+            $this.parents(".input-group-btn").find('.btn').html($(this).text() + ' <span class="caret"></span>');
+            $this.parents(".input-group-btn").find('.btn').val($(this).data('value'));
+            $this.parents("ul").find("li").each(function(){
+                $(this).removeClass("selected");
+            });
+            $this.parents("li").addClass("selected");
+        });
+
+        $("#new-form #adv-search-submit").click(function(e){
+            e.preventDefault();
+
+            // &bquery=(TX+diabetes)+AND+(TI+health)+AND+(AU+smith)
+
+            var query_str = ""
+            // get every field value
+            $('.adv-search-row').each(function(){
+               var $this = $(this);
+
+                //get boolean value//
+                var boolean_val = ""
+                var boolean = $this.find(".boolean ul li.selected a");
+                if (boolean && boolean.length) {
+                    boolean_val = boolean.attr("data-name");
+                    //console.log("my_bool: " + boolean_val);
+                    //
+                }
+
+                // get field name
+                var field_name = "";
+                var my_field_name = $this.find(".field_name ul li.selected a");
+                if (my_field_name && my_field_name.length) {
+                    field_name = my_field_name.attr("data-name");
+                    //console.log("my_field_name: " + field_name);
+
+                    if (field_name && field_name.length){
+                        // get field value
+                        var field_val = "";
+                        var my_form_field = $this.find("input");
+                        if (my_form_field && my_form_field.length) {
+                            field_val = my_form_field.val()
+                            //console.log("my_form_field: " + field_val);
+                            if (field_val && field_val.length) {
+                                if (boolean_val){
+                                    query_str += "++" + boolean_val + "++";
+                                }
+                                query_str += "(" + field_name + "+" + field_val + ")"
+                            }
+                        }
+                    }
+                }
+            });
+
+            console.log("query_str: " + query_str);
+
+            if (query_str && query_str.length){
+                var query_url = "?type=adv&bq=" + query_str;
+                window.location = query_url;
+            }
+        });
+
+        // add values to adv search form fields
+        load_field_vals();
+    });
+</script>

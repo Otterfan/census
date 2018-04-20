@@ -16,7 +16,8 @@ class Public::SearchController < ApplicationController
       :topic_author,
       :publication_places,
       :other_text_languages,
-      :publication_date_range
+      :publication_date_range,
+      :bq
   ]
 
   DEFAULT_VIEW_PARAMS = [
@@ -68,6 +69,7 @@ class Public::SearchController < ApplicationController
 
     if is_search?
 
+      @query_hash = {}
       @query_string_array = []
 
       @facets = {}
@@ -172,36 +174,111 @@ class Public::SearchController < ApplicationController
         }
       end
 
-      # advanced search fields
-      add_field_search(['title'], :title)
-      add_field_search(['journal.title'], :journal)
-      add_field_search(['publication_places.place.name'], :location)
-      add_field_search(['components.title'], :component_title)
+      if @search_type == "adv"
+        # advanced search fields
 
-      # the 'people' form field queries several different fields
-      people_fields = %w{
-                  text_citations.name
-                  components.component_citations.name
-                  topic_author.full_name
-                }
-      add_field_search(people_fields, :people)
+        advanced_search_fields = [
+            :title,
+            :journal,
+            :location,
+            :component_title,
+            :people,
+            :keyword
+        ]
 
-      # facet filter fields
-      add_facet_search(['genre'], :genre)
-      add_facet_search(['material_type'], :material_type)
-      add_facet_search(['text_type'], :text_type)
-      add_facet_search(['topic_author.full_name'], :topic_author)
-      add_facet_search(['publication_places.place.name'], :publication_places)
-      add_facet_search(['other_text_languages.language.name'], :other_text_languages)
-      add_facet_search_date_range('publication_date_range', :publication_date_range)
+        match_re = /\((\w+)\s([^)]+)\)/i
+
+        @combined_query_list = []
+
+        # the 'people' form field queries several different fields
+        people_fields = %w{
+          text_citations.name
+          components.component_citations.name
+          topic_author.full_name
+        }
+
+
+        # bq=(location+cats)++OR++(people+dogs)++NOT++(component_title+fish)
+
+        tokens = params[:bq].split("  ")
+
+        #puts "tokens:"
+        #puts tokens
+
+        tokens.each_with_index do |tok, i|
+          if i.modulo(2).even?
+            # get even numbered tokens
+            #
+            # field + val token
+            # (location cat paws)
+
+            field_tokens = match_re.match(tok)
+
+            # we know that we should only match two elements with our regex
+            if field_tokens and field_tokens.length >= 2
+              field_name = field_tokens[1]
+              field_val = field_tokens[2]
+
+              puts "found field name: " + field_name
+              puts "found field val:  " + field_val
+
+              if advanced_search_fields.include? field_name.to_sym
+
+                case field_name
+                when "title"
+                  add_field_adv_search(['title'], field_val)
+                when "journal"
+                  add_field_adv_search(['journal.title'], field_val)
+                when "location"
+                  add_field_adv_search(['publication_places.place.name'], field_val)
+                when "component_title"
+                  add_field_adv_search(['components.title'], field_val)
+                when "people"
+                  add_field_adv_search_multiple(people_fields, field_val)
+                else
+
+                end
+              end
+            end
+
+          else
+            # get odd numbered tokens
+            # boolean tokens
+            # ignore for now
+          end
+        end
+
+        puts "combined_query_list:"
+        puts @combined_query_list
+
+        # tokens should now be in the pattern:
+        #  [0] (field val)
+        #  [1] BOOLEAN
+        #  [2] (field val)
+        #  [3] BOOLEAN
+        #  ...
+
+        @query_hash[:must] = @combined_query_list
+
+      else
+        # facet filter fields
+        add_facet_search(['genre'], :genre)
+        add_facet_search(['material_type'], :material_type)
+        add_facet_search(['text_type'], :text_type)
+        add_facet_search(['topic_author.full_name'], :topic_author)
+        add_facet_search(['publication_places.place.name'], :publication_places)
+        add_facet_search(['other_text_languages.language.name'], :other_text_languages)
+        add_facet_search_date_range('publication_date_range', :publication_date_range)
+
+        @query_hash[:must] = @query_string_array
+      end
+
 
       # create Elasticsearch search query
       # add in aggregated fields (facets) here
       all_search = {
           query: {
-              bool: {
-                  must: @query_string_array
-              }
+              bool: @query_hash
           },
           sort: query_sort(params[:sort]),
           highlight: {
@@ -291,7 +368,7 @@ class Public::SearchController < ApplicationController
   def search_params
     params.permit(:keyword, :title, :journal, :location, :people, :type, :component_title,
                   :genre, :material_type, :text_type, :topic_author, :publication_places, :other_text_languages,
-                  :publication_date_range)
+                  :publication_date_range, :bq)
   end
 
   # Return a list of all symbols of search parameters used in the current request
@@ -335,6 +412,20 @@ class Public::SearchController < ApplicationController
           }
       }
     end
+  end
+
+  def add_field_adv_search(fields, field_val)
+    fields.each do |field|
+      @combined_query_list << {
+          match: {
+              field => field_val
+          }
+      }
+    end
+  end
+
+  def add_field_adv_search_multiple(field, field_val)
+    
   end
 
   # Add a date range search
