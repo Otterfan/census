@@ -25,6 +25,29 @@ class Public::SearchController < ApplicationController
       :topic_author
   ]
 
+  # the 'people' form field queries several different fields
+  PEOPLE_FIELDS = %w{
+      text_citations.name
+      components.component_citations.name
+      topic_author.full_name
+  }
+
+  ADVANCED_SEARCH_FIELDS = [
+      :keyword
+      :title,
+      :journal,
+      :location,
+      :component_title,
+      :people,
+
+  ]
+
+  BOOLEAN_OPERATORS = [
+      :and,
+      :or,
+      :not
+  ]
+
   # https://stackoverflow.com/questions/16205341/symbols-in-query-string-for-elasticsearch
   def sanitize_query(str)
     # Escape special characters
@@ -55,31 +78,15 @@ class Public::SearchController < ApplicationController
     %Q("#{str}")
   end
 
-  # GET /public/search
-  def search
-    # set the number of results per page for this specific search controller.
-    # this overrides the paginates_per variable in the Text model
-    @pagination_page_size = 10
-
-    if params[:type] == "adv"
-      @search_type = "adv"
-    else
-      @search_type = "kw"
-    end
-
-    if is_search?
-
-      @query_hash = {}
-      @query_string_array = []
-
-      @facets = {}
-
-      # define the fields that a keyword search will query
-      # complex associated models use dot notation, e.g., publication_places.place.name
-      if params[:keyword].present?
-        @query_string_array << {
-            query_string: {
-                fields: %w{
+  # Generate the search string used for keyword searching
+  def generate_keyword_search_array(kw_param)
+    # define the fields that a keyword search will query
+    # complex associated models use dot notation, e.g., publication_places.place.name
+    @kw_query_string_array = []
+    if kw_param.present?
+      @kw_query_string_array << {
+          query_string: {
+              fields: %w{
                   topic_author.full_name^10
                   topic_author.full_name.folded^10
                   topic_author.full_name.el^10
@@ -166,101 +173,49 @@ class Public::SearchController < ApplicationController
                   volumes.title.el
                   standard_numbers.value
                 },
-                lenient: true,
-                type: "most_fields",
-                default_operator: "and",
-                query: sanitize_query(params[:keyword])
-            }
-        }
-      end
+              lenient: true,
+              type: "most_fields",
+              default_operator: "and",
+              query: sanitize_query(kw_param)
+          }
+      }
+
+      puts "keyword search array: "
+      puts @kw_query_string_array
+
+      @kw_query_string_array
+    end
+  end
+
+  # GET /public/search
+  def search
+    # set the number of results per page for this specific search controller.
+    # this overrides the paginates_per variable in the Text model
+    @pagination_page_size = 10
+
+    if params[:type] == "adv"
+      @search_type = "adv"
+    else
+      @search_type = "kw"
+    end
+
+    if is_search?
+      @query_hash = {}
+      @query_string_array = []
+      @facets = {}
 
       if @search_type == "adv"
-        # advanced search fields
-
-        advanced_search_fields = [
-            :title,
-            :journal,
-            :location,
-            :component_title,
-            :people,
-            :keyword
-        ]
-
-        match_re = /\((\w+)\s([^)]+)\)/i
-
-        @combined_query_list = []
-
-        # the 'people' form field queries several different fields
-        people_fields = %w{
-          text_citations.name
-          components.component_citations.name
-          topic_author.full_name
-        }
-
-
-        # bq=(location+cats)++OR++(people+dogs)++NOT++(component_title+fish)
-
-        tokens = params[:bq].split("  ")
-
-        #puts "tokens:"
-        #puts tokens
-
-        tokens.each_with_index do |tok, i|
-          if i.modulo(2).even?
-            # get even numbered tokens
-            #
-            # field + val token
-            # (location cat paws)
-
-            field_tokens = match_re.match(tok)
-
-            # we know that we should only match two elements with our regex
-            if field_tokens and field_tokens.length >= 2
-              field_name = field_tokens[1]
-              field_val = field_tokens[2]
-
-              puts "found field name: " + field_name
-              puts "found field val:  " + field_val
-
-              if advanced_search_fields.include? field_name.to_sym
-
-                case field_name
-                when "title"
-                  add_field_adv_search(['title'], field_val)
-                when "journal"
-                  add_field_adv_search(['journal.title'], field_val)
-                when "location"
-                  add_field_adv_search(['publication_places.place.name'], field_val)
-                when "component_title"
-                  add_field_adv_search(['components.title'], field_val)
-                when "people"
-                  add_field_adv_search_multiple(people_fields, field_val)
-                else
-
-                end
-              end
-            end
-
-          else
-            # get odd numbered tokens
-            # boolean tokens
-            # ignore for now
-          end
+        # process_adv_search method can raise ArgumentError
+        begin
+          @res = process_adv_search
+          @query_hash[:must] = @res
+        rescue ArgumentError => e
+          puts "Caught error: " + e.message
+          return nil
         end
-
-        puts "combined_query_list:"
-        puts @combined_query_list
-
-        # tokens should now be in the pattern:
-        #  [0] (field val)
-        #  [1] BOOLEAN
-        #  [2] (field val)
-        #  [3] BOOLEAN
-        #  ...
-
-        @query_hash[:must] = @combined_query_list
-
       else
+        # add the keyword field
+        @query_string_array << generate_keyword_search_array(params[:keyword])
         # facet filter fields
         add_facet_search(['genre'], :genre)
         add_facet_search(['material_type'], :material_type)
@@ -272,7 +227,6 @@ class Public::SearchController < ApplicationController
 
         @query_hash[:must] = @query_string_array
       end
-
 
       # create Elasticsearch search query
       # add in aggregated fields (facets) here
@@ -346,6 +300,105 @@ class Public::SearchController < ApplicationController
 
   private
 
+  # processes raw boolean search query string
+  def process_adv_search
+    @combined_query_list = []
+
+    # example of raw combined bool search query string
+    # bq=(title+cats paw)++OR++(people+jack)++NOT++(component_title+fish)
+    #
+    # Rails will sanitize string by replacing all "+" symbols into spaces
+    # bq=(title cats paw)  OR  (people jack)  NOT  (component_title fish)
+
+    # simple sanity checking
+    # check that the first and last characters in the search string are parenthesis
+    if params[:bq][0] != "(" or params[:bq][-1] != ")"
+      raise ArgumentError.new("The advanced search query is malformed.")
+    end
+
+    # First, split query string by double spaces to get tokens like:
+    # [0] (title cats paw)
+    # [1] OR
+    # [2] (people jack)
+    # [3] NOT
+    # [4] (component_title fish)
+    #
+    # NB There is a pattern where boolean operators are on odd-numbered indices
+    #    and the fields & values are on even-numbered indices. There will always
+    #    be an odd number of indices with this pattern.
+    tokens = params[:bq].split("  ")
+
+    # simple sanity checking
+    # we always expect an odd number of tokens
+    if tokens.length.even?
+      raise ArgumentError.new("The advanced search query has an unexpected number of tokens: " + tokens.length)
+    end
+
+    # puts "tokens:"
+    # puts tokens
+
+    # regular expression used to match the field name and search string from the combined bool search query
+    match_re = /\((\w+)\s([^)]+)\)/i
+
+    # Next, process each type of token by even- and odd-numbered indexes
+    tokens.each_with_index do |tok, i|
+      if i.modulo(2).even?
+        # get even numbered tokens
+        #
+        # (title cat paws)
+        # (field_name search_string)
+
+        field_tokens = match_re.match(tok)
+
+        # we know that we should only match two elements with our regex: a field name and search string
+        if field_tokens and field_tokens.length >= 2
+          field_name = field_tokens[1]
+          search_string = field_tokens[2]
+
+          puts "found field name   : " + field_name
+          puts "found search string: " + search_string
+
+          # make sure we're only processing advanced search fields we know.
+          # query strings will be added to @combined_query_list list object
+          if search_string and ADVANCED_SEARCH_FIELDS.include? field_name.to_sym
+            case field_name
+            when "keyword"
+              @combined_query_list << generate_keyword_search_array(search_string)
+            when "title"
+              add_field_adv_search_multiple(['title', 'title.folded', 'title.el'], search_string)
+            when "journal"
+              add_field_adv_search_multiple(['journal.title', 'journal.title.folded', 'journal.title.el'], search_string)
+            when "location"
+              add_field_adv_search_multiple(['publication_places.place.name', 'publication_places.place.name.folded', 'publication_places.place.name.el'], search_string)
+            when "component_title"
+              add_field_adv_search_multiple(['components.title', 'components.title.folded', 'components.title.el'], search_string)
+            when "people"
+              add_field_adv_search_multiple(PEOPLE_FIELDS, search_string)
+            when "volume"
+              add_field_adv_search_multiple(['volumes.title', 'volumes.title.folded', 'volumes.title.el'], search_string)
+            else
+
+            end
+          end
+        end
+
+      else
+        # get odd numbered tokens
+        # boolean tokens
+        if BOOLEAN_OPERATORS.include? tok.downcase.to_sym
+
+        else
+          raise ArgumentError.new("The advanced search query has an unknown boolean operator: " + tok)
+        end
+      end
+    end
+
+    puts "updated combined_query_list:"
+    puts @combined_query_list
+
+    @combined_query_list
+  end
+
   def get_date_range_data(aggs)
     dates_json = []
     if aggs["publication_dates"]["buckets"].present?
@@ -414,6 +467,7 @@ class Public::SearchController < ApplicationController
     end
   end
 
+  # Advanced search. Add a search on a specific field to the string array
   def add_field_adv_search(fields, field_val)
     fields.each do |field|
       @combined_query_list << {
@@ -422,10 +476,50 @@ class Public::SearchController < ApplicationController
           }
       }
     end
+
+    # must: [{
+    #       match: {
+    #           field => field_val
+    #       }
+    #   },
+    #   {
+    #       match: {
+    #           field => field_val
+    #       }
+    # }]
   end
 
-  def add_field_adv_search_multiple(field, field_val)
-    
+  # Advanced search. Add a search on a select fields to the string array
+  def add_field_adv_search_multiple(fields, field_val)
+    @should_list = []
+    fields.each do |field|
+      @should_list << {
+          match: {
+              field => field_val
+          }
+      }
+    end
+
+    @combined_query_list << {
+        bool: {
+          should: @should_list
+        }
+    }
+
+    # must: [{
+    #     bool: {
+    #         should: [{
+    #             match: {
+    #                 field1 => field_val
+    #             }
+    #         },
+    #         {
+    #             match: {
+    #                 field2 => field_val
+    #             }
+    #         }]
+    #     }
+    # }]
   end
 
   # Add a date range search
