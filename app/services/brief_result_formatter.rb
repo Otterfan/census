@@ -11,7 +11,7 @@ class BriefResultFormatter
     underscores_converted = Public::TextsController.helpers.convert_underscores(value)
     singularized_terms = @search_terms.map {|x| ActiveSupport::Inflector.singularize(x)}
     highlight_regex = singularized_terms.join('|')
-    ActionController::Base.helpers.highlight(underscores_converted, /#{highlight_regex}/i)
+    ActionController::Base.helpers.highlight(underscores_converted, /#{Regexp.escape(highlight_regex)}/i)
   end
 
   private
