@@ -33,7 +33,7 @@ class Public::SearchController < ApplicationController
   }
 
   ADVANCED_SEARCH_FIELDS = [
-      :keyword
+      :keyword,
       :title,
       :journal,
       :location,
@@ -47,6 +47,8 @@ class Public::SearchController < ApplicationController
       :or,
       :not
   ]
+
+  FACET_HITS_SIZE = 100
 
   # https://stackoverflow.com/questions/16205341/symbols-in-query-string-for-elasticsearch
   def sanitize_query(str)
@@ -241,32 +243,38 @@ class Public::SearchController < ApplicationController
           aggs: {
               genre: {
                   terms: {
-                      field: "genre.keyword"
+                      field: "genre.keyword",
+                      size: FACET_HITS_SIZE
                   }
               },
               "material_type": {
                   terms: {
-                      field: "material_type.keyword"
+                      field: "material_type.keyword",
+                      size: FACET_HITS_SIZE
                   }
               },
               "text_type": {
                   terms: {
-                      field: "text_type.keyword"
+                      field: "text_type.keyword",
+                      size: FACET_HITS_SIZE
                   }
               },
               "topic_author": {
                   terms: {
-                      field: "topic_author.full_name.keyword"
+                      field: "topic_author.full_name.keyword",
+                      size: FACET_HITS_SIZE
                   }
               },
               "publication_places": {
                   terms: {
-                      field: "publication_places.place.name.keyword"
+                      field: "publication_places.place.name.keyword",
+                      size: FACET_HITS_SIZE
                   }
               },
               "other_text_languages": {
                   terms: {
-                      field: "other_text_languages.language.name.keyword"
+                      field: "other_text_languages.language.name.keyword",
+                      size: FACET_HITS_SIZE
                   }
               },
               "publication_dates": {
