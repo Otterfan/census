@@ -39,7 +39,7 @@ class Public::SearchController < ApplicationController
       :location,
       :component_title,
       :people,
-
+      :volume
   ]
 
   BOOLEAN_OPERATORS = [
@@ -170,9 +170,9 @@ class Public::SearchController < ApplicationController
                   original_greek_collection.el
                   collection
                   collection.el
-                  volumes.title
-                  volumes.title.folded
-                  volumes.title.el
+                  volume.title
+                  volume.title.folded
+                  volume.title.el
                   standard_numbers.value
                 },
               lenient: true,
@@ -383,7 +383,7 @@ class Public::SearchController < ApplicationController
             when "people"
               add_field_adv_search_multiple(PEOPLE_FIELDS, search_string)
             when "volume"
-              add_field_adv_search_multiple(['volumes.title', 'volumes.title.folded', 'volumes.title.el'], search_string)
+              add_field_adv_search_multiple(['volume.title', 'volume.title.folded', 'volume.title.el'], search_string)
             else
 
             end
