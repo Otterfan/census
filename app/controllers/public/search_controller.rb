@@ -39,7 +39,10 @@ class Public::SearchController < ApplicationController
       :location,
       :component_title,
       :people,
-      :volume
+      :volume,
+      :topic_author,
+      :citation_name,
+      :component_citation_name
   ]
 
   BOOLEAN_OPERATORS = [
@@ -386,6 +389,12 @@ class Public::SearchController < ApplicationController
               add_field_adv_search_multiple(['components.title', 'components.title.folded', 'components.title.el'], clean_search_string)
             when "people"
               add_field_adv_search_multiple(PEOPLE_FIELDS, clean_search_string)
+            when "topic_author"
+              add_field_adv_search_multiple(['topic_author.full_name', 'topic_author.full_name.folded', 'topic_author.full_name.el'], clean_search_string)
+            when "citation_name"
+              add_field_adv_search_multiple(['text_citations.name', 'text_citations.name.folded', 'text_citations.name.el'], clean_search_string)
+            when "component_citation_name"
+              add_field_adv_search_multiple(['components.component_citations.name', 'components.component_citations.name.folded', 'components.component_citations.name.el'], clean_search_string)
             when "volume"
               add_field_adv_search_multiple(['volume.title', 'volume.title.folded', 'volume.title.el'], clean_search_string)
             else
