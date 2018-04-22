@@ -366,24 +366,28 @@ class Public::SearchController < ApplicationController
           puts "found field name   : " + field_name
           puts "found search string: " + search_string
 
+          clean_search_string = wrap_in_quotes(sanitize_query(search_string))
+
+          puts "cleaned search string: " + clean_search_string
+
           # make sure we're only processing advanced search fields we know.
           # query strings will be added to @combined_query_list list object
           if search_string and ADVANCED_SEARCH_FIELDS.include? field_name.to_sym
             case field_name
             when "keyword"
-              @combined_query_list << generate_keyword_search_array(search_string)
+              @combined_query_list << generate_keyword_search_array(clean_search_string)
             when "title"
-              add_field_adv_search_multiple(['title', 'title.folded', 'title.el'], search_string)
+              add_field_adv_search_multiple(['title', 'title.folded', 'title.el'], clean_search_string)
             when "journal"
-              add_field_adv_search_multiple(['journal.title', 'journal.title.folded', 'journal.title.el'], search_string)
+              add_field_adv_search_multiple(['journal.title', 'journal.title.folded', 'journal.title.el'], clean_search_string)
             when "location"
-              add_field_adv_search_multiple(['publication_places.place.name', 'publication_places.place.name.folded', 'publication_places.place.name.el'], search_string)
+              add_field_adv_search_multiple(['publication_places.place.name', 'publication_places.place.name.folded', 'publication_places.place.name.el'], clean_search_string)
             when "component_title"
-              add_field_adv_search_multiple(['components.title', 'components.title.folded', 'components.title.el'], search_string)
+              add_field_adv_search_multiple(['components.title', 'components.title.folded', 'components.title.el'], clean_search_string)
             when "people"
-              add_field_adv_search_multiple(PEOPLE_FIELDS, search_string)
+              add_field_adv_search_multiple(PEOPLE_FIELDS, clean_search_string)
             when "volume"
-              add_field_adv_search_multiple(['volume.title', 'volume.title.folded', 'volume.title.el'], search_string)
+              add_field_adv_search_multiple(['volume.title', 'volume.title.folded', 'volume.title.el'], clean_search_string)
             else
 
             end
