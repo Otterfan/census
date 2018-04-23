@@ -71,25 +71,23 @@
 
             console.log("bq: " + bq);
 
-            // (title+cats)+AND+(journal+dogs)
+            // example bool query
+            // (title::cats)--AND--(journal::dogs)
 
-            // split up query
-
-            // var regex = /\+?[AND|OR|NOT]+?(\w+[^)])/;
-
-            var split_tokens = bq.split("++");
+            var split_tokens = bq.split("--");
 
             console.log(split_tokens);
 
             // tokens should now be in the pattern:
-            //  [0] (field+val)
+            //  [0] (field_name::search_string)
             //  [1] BOOLEAN
-            //  [2] (field+val)
+            //  [2] (field_name::search_string)
             //  [3] BOOLEAN
             //  ...
 
             var row_num = 1;
             $.each(split_tokens, function(i,tok){
+                console.log("looking at token: " + tok);
                 // determine the field ids
                 var my_search_row = $("#search-row-" + row_num);
                 console.log("currently on row: " + row_num);
@@ -97,28 +95,33 @@
                 row_num = parseInt(i / 2) + 2;
 
                 if (i % 2 === 0) { // get even tokens
-                    // (field+val)
+                    // (field_name::search_string)
 
                     // skip if empty value
                     if (tok === ""){
-                        return false;
+                        console.log("token is empty, skipping to next token");
+                        return true;
                     }
 
                     // clean and split our token
-                    var clean_tok = tok.replace(/\(/g, "").replace(/\)/g, "");
-                    var split_toks = clean_tok.split("+");
+                    var clean_tok = tok.replace(/^\(/g, "").replace(/\)$/g, "").replace("+", " ");
+                    var split_toks = clean_tok.split("::");
+
+                    console.log("split tokens: ");
+                    console.log(split_toks);
 
                     // check if we have two tokens
-                    // need to be careful for search terms that contain a "+"
+                    // need to be careful for search terms that contain a "::"
                     if (split_toks.length !== 2){
-                        return false;
+                        console.log("split token has an unexpected number of components! expecting 2, found " + split_toks.length);
+                        return true;
                     }
 
                     var field_name = split_toks[0];
-                    var field_val = split_toks[1];
+                    var search_string = split_toks[1].trim();
 
                     console.log("field_name: " + field_name);
-                    console.log("field_val: " + field_val);
+                    console.log("search_string: " + search_string);
 
                     // update the search field name drop down
                     var my_field_name_list = my_search_row.find(".field_name ul li a");
@@ -127,12 +130,14 @@
                         $this_data_name = $this_item.attr("data-name");
                         if ($this_data_name === field_name) {
                             $this_item.click();
+
+                            // update the search field value
+                            var my_field_val = my_search_row.find(".selected");
+                            my_field_val.val(search_string);
+
+                            return false;
                         }
                     });
-
-                    // update the search field value
-                    var my_field_val = my_search_row.find(".selected");
-                    my_field_val.val(field_val);
 
                 } else { // odd token
                     // BOOLEAN
@@ -189,8 +194,6 @@
         $("#new-form #adv-search-submit").click(function(e){
             e.preventDefault();
 
-            // &bquery=(TX+diabetes)+AND+(TI+health)+AND+(AU+smith)
-
             var query_str = "";
             // get every field value
             $('.adv-search-row').each(function(){
@@ -226,15 +229,15 @@
                         }
 
                         if (my_form_field && my_form_field.length) {
-                            field_val = my_form_field.val();
+                            field_val = my_form_field.val().trim();
                             //console.log("my_form_field: " + field_val);
                             if (field_val && field_val.length) {
                                 // only add in the boolean string if we first have
                                 // a field name and search term added
                                 if (boolean_val && query_str.length) {
-                                    query_str += "++" + boolean_val + "++";
+                                    query_str += "--" + boolean_val + "--";
                                 }
-                                query_str += "(" + field_name + "+" + field_val + ")"
+                                query_str += "(" + field_name + "::" + field_val + ")"
                             }
                         }
                     }

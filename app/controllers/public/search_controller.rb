@@ -376,103 +376,113 @@ class Public::SearchController < ApplicationController
     # NB There is a pattern where boolean operators are on odd-numbered indices
     #    and the fields & values are on even-numbered indices. There will always
     #    be an odd number of indices with this pattern.
-    tokens = params[:bq].split("  ")
+
+    tokens = params[:bq].split("--")
+
+    puts "tokens:"
+    puts tokens
 
     # simple sanity checking
     # we always expect an odd number of tokens
     if tokens.length.even?
-      raise ArgumentError.new("The advanced search query has an unexpected number of tokens: " + tokens.length)
+      raise ArgumentError.new("The advanced search query has an unexpected number of tokens: " + tokens.length.to_s)
     end
 
-    # puts "tokens:"
-    # puts tokens
-
     # regular expression used to match the field name and search string from the combined bool search query
-    match_re = /\((\w+)\s([^)]+)\)/i
+    match_re = /\((\w+)::([^)]+)\)/i
 
     # Next, process each type of token by even- and odd-numbered indexes
     tokens.each_with_index do |tok, i|
       if i.modulo(2).even?
         # get even numbered tokens
         #
-        # (title cat paws)
-        # (field_name search_string)
+        # (field_name::search_string)
 
         field_tokens = match_re.match(tok)
 
+        puts "field_tokens:"
+        puts field_tokens
+
         # we know that we should only match two elements with our regex: a field name and search string
-        if field_tokens and field_tokens.length >= 2
-          field_name = field_tokens[1]
-          search_string = field_tokens[2]
+        if field_tokens
+          if field_tokens.length >= 2
+            field_name = field_tokens[1]
+            search_string = field_tokens[2]
 
-          puts "found field name   : " + field_name
-          puts "found search string: " + search_string
+            puts "found field name   : " + field_name
+            puts "found search string: " + search_string
 
-          clean_search_string = wrap_in_quotes(sanitize_query(search_string))
+            trimmed_search_string = search_string.strip
+            clean_search_string = wrap_in_quotes(sanitize_query(trimmed_search_string))
 
-          puts "cleaned search string: " + clean_search_string
+            puts "cleaned search string: " + clean_search_string
 
-          # make sure we're only processing advanced search fields we know.
-          # query strings will be added to @combined_query_list list object
-          if search_string and ADVANCED_SEARCH_FIELDS.include? field_name.to_sym
-            case field_name
-            when "keyword"
-              @combined_query_list << generate_keyword_search_array(clean_search_string)
-            when "title"
-              add_field_adv_search_multiple(['title', 'title.folded', 'title.el'], clean_search_string)
-            when "journal"
-              add_field_adv_search_multiple(['journal.title', 'journal.title.folded', 'journal.title.el'], clean_search_string)
-            when "location"
-              add_field_adv_search_multiple(['publication_places.place.name', 'publication_places.place.name.folded', 'publication_places.place.name.el'], clean_search_string)
-            when "component_title"
-              add_field_adv_search_multiple(['components.title', 'components.title.folded', 'components.title.el'], clean_search_string)
-            when "people"
-              add_field_adv_search_multiple(PEOPLE_FIELDS, clean_search_string)
-            when "topic_author"
-              add_field_adv_search_multiple(['topic_author.full_name', 'topic_author.full_name.folded', 'topic_author.full_name.el'], clean_search_string)
-            when "citation_name"
-              add_field_adv_search_multiple(['text_citations.name', 'text_citations.name.folded', 'text_citations.name.el'], clean_search_string)
-            when "component_citation_name"
-              add_field_adv_search_multiple(['components.component_citations.name', 'components.component_citations.name.folded', 'components.component_citations.name.el'], clean_search_string)
-            when "volume"
-              add_field_adv_search_multiple(['volume.title', 'volume.title.folded', 'volume.title.el'], clean_search_string)
-            when "text_type"
-              add_field_adv_search(['text_type'], clean_search_string)
-            when "material_type"
-              add_field_adv_search(['material_type'], clean_search_string)
-            when "genre"
-              add_field_adv_search(['genre'], clean_search_string)
-            when "original_greek_title"
-              add_field_adv_search_multiple(['original_greek_title', 'original_greek_title.el'], clean_search_string)
-            when "original_greek_place_of_publication"
-              add_field_adv_search_multiple(['original_greek_place_of_publication', 'original_greek_place_of_publication.el'], clean_search_string)
-            when "original_greek_publisher"
-              add_field_adv_search_multiple(['original_greek_publisher', 'original_greek_publisher.el'], clean_search_string)
-            when "original_greek_collection"
-              add_field_adv_search_multiple(['original_greek_collection', 'original_greek_collection.el'], clean_search_string)
-            when "publisher"
-              add_field_adv_search_multiple(['publisher', 'publisher.folded', 'publisher.el'], clean_search_string)
-            when "source"
-              add_field_adv_search_multiple(['source', 'source.folded', 'source.el'], clean_search_string)
-            when "census_id"
-              add_field_adv_search(['census_id'], clean_search_string)
-            when "series"
-              add_field_adv_search_multiple(['series', 'series.folded', 'series.el'], clean_search_string)
-            when "sponsoring_organization"
-              add_field_adv_search_multiple(['sponsoring_organization', 'sponsoring_organization.folded', 'sponsoring_organization.el'], clean_search_string)
-            when "issue_title"
-              add_field_adv_search_multiple(['issue_title', 'issue_title.el'], clean_search_string)
-            when "issue_editor"
-              add_field_adv_search_multiple(['issue_editor', 'issue_editor.el'], clean_search_string)
-            when "authors_name_from_source"
-              add_field_adv_search_multiple(['authors_name_from_source', 'authors_name_from_source.el'], clean_search_string)
-            when "standard_numbers"
-              add_field_adv_search(['standard_numbers.value'], clean_search_string)
-            when "collection"
-              add_field_adv_search_multiple(['collection', 'collection.el'], clean_search_string)
-            else
+            # make sure we're only processing advanced search fields we know.
+            # query strings will be added to @combined_query_list list object
+            if search_string and ADVANCED_SEARCH_FIELDS.include? field_name.to_sym
+              case field_name
+              when "keyword"
+                @combined_query_list << generate_keyword_search_array(clean_search_string)
+              when "title"
+                add_field_adv_search_multiple(['title', 'title.folded', 'title.el'], clean_search_string)
+              when "journal"
+                add_field_adv_search_multiple(['journal.title', 'journal.title.folded', 'journal.title.el'], clean_search_string)
+              when "location"
+                add_field_adv_search_multiple(['publication_places.place.name', 'publication_places.place.name.folded', 'publication_places.place.name.el'], clean_search_string)
+              when "component_title"
+                add_field_adv_search_multiple(['components.title', 'components.title.folded', 'components.title.el'], clean_search_string)
+              when "people"
+                add_field_adv_search_multiple(PEOPLE_FIELDS, clean_search_string)
+              when "topic_author"
+                add_field_adv_search_multiple(['topic_author.full_name', 'topic_author.full_name.folded', 'topic_author.full_name.el'], clean_search_string)
+              when "citation_name"
+                add_field_adv_search_multiple(['text_citations.name', 'text_citations.name.folded', 'text_citations.name.el'], clean_search_string)
+              when "component_citation_name"
+                add_field_adv_search_multiple(['components.component_citations.name', 'components.component_citations.name.folded', 'components.component_citations.name.el'], clean_search_string)
+              when "volume"
+                add_field_adv_search_multiple(['volume.title', 'volume.title.folded', 'volume.title.el'], clean_search_string)
+              when "text_type"
+                add_field_adv_search(['text_type'], clean_search_string)
+              when "material_type"
+                add_field_adv_search(['material_type'], clean_search_string)
+              when "genre"
+                add_field_adv_search(['genre'], clean_search_string)
+              when "original_greek_title"
+                add_field_adv_search_multiple(['original_greek_title', 'original_greek_title.el'], clean_search_string)
+              when "original_greek_place_of_publication"
+                add_field_adv_search_multiple(['original_greek_place_of_publication', 'original_greek_place_of_publication.el'], clean_search_string)
+              when "original_greek_publisher"
+                add_field_adv_search_multiple(['original_greek_publisher', 'original_greek_publisher.el'], clean_search_string)
+              when "original_greek_collection"
+                add_field_adv_search_multiple(['original_greek_collection', 'original_greek_collection.el'], clean_search_string)
+              when "publisher"
+                add_field_adv_search_multiple(['publisher', 'publisher.folded', 'publisher.el'], clean_search_string)
+              when "source"
+                add_field_adv_search_multiple(['source', 'source.folded', 'source.el'], clean_search_string)
+              when "census_id"
+                add_field_adv_search(['census_id'], clean_search_string)
+              when "series"
+                add_field_adv_search_multiple(['series', 'series.folded', 'series.el'], clean_search_string)
+              when "sponsoring_organization"
+                add_field_adv_search_multiple(['sponsoring_organization', 'sponsoring_organization.folded', 'sponsoring_organization.el'], clean_search_string)
+              when "issue_title"
+                add_field_adv_search_multiple(['issue_title', 'issue_title.el'], clean_search_string)
+              when "issue_editor"
+                add_field_adv_search_multiple(['issue_editor', 'issue_editor.el'], clean_search_string)
+              when "authors_name_from_source"
+                add_field_adv_search_multiple(['authors_name_from_source', 'authors_name_from_source.el'], clean_search_string)
+              when "standard_numbers"
+                add_field_adv_search(['standard_numbers.value'], clean_search_string)
+              when "collection"
+                add_field_adv_search_multiple(['collection', 'collection.el'], clean_search_string)
+              else
 
+              end
             end
+          else
+            # in this case we only have a field name but no corresponding search string.
+            # this ignores the case where we have at least one valid field name and search string pair.
+            raise ArgumentError.new("The advanced search query is missing the search string.")
           end
         end
 
