@@ -252,8 +252,15 @@ class Public::SearchController < ApplicationController
       if @search_type == "adv"
         # process_adv_search method can raise ArgumentError
         begin
-          @res = process_adv_search
-          @query_hash[:must] = @res
+          @results = process_adv_search
+          @query_hash[:must] = @results[0]
+
+          if @results[1]
+            puts "within adv search method, received a filter hash"
+            puts @results[1]
+            @query_hash[:filter] = @results[1]
+          end
+
         rescue ArgumentError => e
           puts "Caught error: " + e.message
           return nil
@@ -498,10 +505,20 @@ class Public::SearchController < ApplicationController
       end
     end
 
+    if params[:publication_date_range]
+      puts "received publication_date_range value"
+      @filter = add_facet_search_date_range('publication_date_range', :publication_date_range, true)
+    else
+      @filter = nil
+    end
+
+    puts "this filter is:"
+    puts @filter
+
     puts "updated combined_query_list:"
     puts @combined_query_list
 
-    @combined_query_list
+    return @combined_query_list, @filter
   end
 
   def get_date_range_data(aggs)
@@ -553,8 +570,8 @@ class Public::SearchController < ApplicationController
     add_field_search(fields, param, true)
   end
 
-  def add_facet_search_date_range(field, param)
-    add_field_search_date_range(field, param, true)
+  def add_facet_search_date_range(field, param, as_adv_filter=false)
+    add_field_search_date_range(field, param, as_adv_filter, true)
   end
 
   # Add a search on a specific field to the string array
@@ -628,7 +645,7 @@ class Public::SearchController < ApplicationController
   end
 
   # Add a date range search
-  def add_field_search_date_range(field, param, is_facet=false)
+  def add_field_search_date_range(field, param, as_adv_filter, is_facet=false)
     if params[param].present?
       # check that we have a four-digit year, a dash, and a four-digit year for date range param
       check_year_regex = /^\d{4}-\d{4}$/
@@ -644,7 +661,7 @@ class Public::SearchController < ApplicationController
           @publication_date_range_earliest = dates[0]
           @publication_date_range_latest = dates[1]
 
-          @query_string_array << {
+          range_hash = {
               range: {
                   "sort_date": {
                       gte: @publication_date_range_earliest,
@@ -653,6 +670,13 @@ class Public::SearchController < ApplicationController
                   }
               }
           }
+
+          if as_adv_filter
+            range_hash
+          else
+            @query_string_array << range_hash
+          end
+
         else
           params[param] = nil
           nil

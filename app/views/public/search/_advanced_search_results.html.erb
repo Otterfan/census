@@ -1,5 +1,17 @@
 <div class="row">
-  <div class="col-lg-12 col-md-12 col-sm-12">
+  <!-- BEGIN facets -->
+  <div class="col-lg-3 col-md-3 col-sm-6">
+    <div class="facets-container">
+      <h3>Filter your search</h3>
+      <% if @aggregations.present? %>
+        <%= render 'facet_container_dates', facet_name: "publication_dates" %>
+      <% else %>
+        foo
+      <% end %>
+    </div>
+  </div>
+  <!-- END facets -->
+  <div class="col-lg-9 col-md-9 col-sm-6">
     <%= render 'search_results_list' %>
   </div>
 </div>

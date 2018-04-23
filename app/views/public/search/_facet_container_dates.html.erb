@@ -17,9 +17,10 @@
         var earliest_year_param = $("#publication_dates_data").attr("data-publication-date-earliest");
         var latest_year_prarm = $("#publication_dates_data").attr("data-publication-date-latest");
 
-        if (my_data && my_data.length){
-            // Convert value into JSON object
-            var my_data_json = JSON.parse(my_data);
+        // Convert value into JSON object
+        var my_data_json = JSON.parse(my_data);
+
+        if (my_data_json && my_data_json.length){
 
             // Our Elasticsearch query will autofill a hardcoded value
             // for text records that lack a publication year value
@@ -61,6 +62,14 @@
                     latestFieldId: 'publication-date-latest-value'
                 });
             }
+        } else if (earliest_year_param && earliest_year_param.length) {
+            // there were no records found within these dates.
+            // fill in date range fields with params
+            $("#publication-date-earliest-value").val(earliest_year_param);
+            $("#publication-date-latest-value").val(latest_year_prarm);
+            $("#histogramSlider").html('<p>No dates found in this range.</p><p><a href="#" id="date-range-reset">Reset dates</a>.</p>');
+        } else {
+            $("#publication-dates-panel .panel-body").html("<p>No dates found</p>");
         }
 
         function cleanURL(path, param) {
@@ -98,37 +107,33 @@
     });
 </script>
 
-
-<% if @aggregations[facet_name].buckets.present? %>
-  <div class="panel panel-default">
-    <div class="panel-heading"><%= format_label(facet_name) %></div>
-    <div class="panel-body">
-      <div id="histogramSlider"></div>
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-          <div class="input-group">
-            <!--<%= label_tag(:publication_date_earliest, "Earliest") %> -->
-            <%= text_field_tag :publication_date_earliest, params[:publication_date_earliest], :class => 'form-control', :id => 'publication-date-earliest-value' %>
-            <span class="input-group-btn">
-              <button class=" btn btn-secondary disabled" disabled="disabled">-</button>
-            </span>
-            <!--<%= label_tag(:publication_date_latest, "Latest") %> -->
-            <%= text_field_tag :publication_date_latest, params[:publication_date_latest], :class => 'form-control', :id => 'publication-date-latest-value' %>
-            <span class="input-group-btn">
-                <button type="button" class="btn btn-primary" id="date-range-apply">Apply</button>
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span class="caret"></span>
-                  <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <ul class="dropdown-menu">
-                  <li><a href="#" id="date-range-reset">Reset dates</a></li>
-                </ul>
-            </span>
-          </div>
+<div class="panel panel-default" id="publication-dates-panel">
+  <div class="panel-heading"><%= format_label(facet_name) %></div>
+  <div class="panel-body">
+    <div id="histogramSlider"></div>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="input-group">
+          <!--<%= label_tag(:publication_date_earliest, "Earliest") %> -->
+          <%= text_field_tag :publication_date_earliest, params[:publication_date_earliest], :class => 'form-control', :id => 'publication-date-earliest-value' %>
+          <span class="input-group-btn">
+            <button class=" btn btn-secondary disabled" disabled="disabled">-</button>
+          </span>
+          <!--<%= label_tag(:publication_date_latest, "Latest") %> -->
+          <%= text_field_tag :publication_date_latest, params[:publication_date_latest], :class => 'form-control', :id => 'publication-date-latest-value' %>
+          <span class="input-group-btn">
+              <button type="button" class="btn btn-primary" id="date-range-apply">Apply</button>
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="#" id="date-range-reset">Reset dates</a></li>
+              </ul>
+          </span>
         </div>
       </div>
-
-      <p class="facet-note"></p>
     </div>
+    <p class="facet-note"></p>
   </div>
-<% end %>
+</div>
