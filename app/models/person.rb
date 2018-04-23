@@ -7,6 +7,8 @@ class Person < ApplicationRecord
 
   has_paper_trail
 
+  default_scope {order('last_name ASC, first_name ASC')}
+
   def translations
     unless @translations
       get_texts_by_type
