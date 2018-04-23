@@ -152,7 +152,7 @@ class Text < ApplicationRecord
             :status_id, :section_id, :country_id,
             :journal_id, :volume_id, :sort_id
         ],
-        methods: [:authors_names],
+        methods: [:authors_names, :sort_title],
         include: {
             text_citations: {
                 except: [:created_at, :updated_at, :from_language_id, :to_language_id],

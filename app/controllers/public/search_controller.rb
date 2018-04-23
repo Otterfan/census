@@ -351,6 +351,7 @@ class Public::SearchController < ApplicationController
     end
     @sort_options = [
         ['Relevance', 'score'],
+        ['Title','sort-title'],
         ['Date (oldest first)', 'date-oldest-first'],
         ['Date (newest first)', 'date-newest-first']
     ]
@@ -696,6 +697,8 @@ class Public::SearchController < ApplicationController
         [{sort_date: {order: 'asc'}}, '_score']
       when 'date-newest-first'
         [{sort_date: {order: 'desc'}}, '_score']
+      when 'sort-title'
+        [{'sort_title.keyword' => {order: 'asc'}}, '_score']
       else
         ['_score']
     end
