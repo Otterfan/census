@@ -46,7 +46,21 @@ class Public::SearchController < ApplicationController
       :component_citation_name,
       :text_type,
       :material_type,
-      :genre
+      :genre,
+      :original_greek_title,
+      :original_greek_place_of_publication,
+      :original_greek_publisher,
+      :original_greek_collection,
+      :publisher,
+      :source,
+      :census_id,
+      :series,
+      :sponsoring_organization,
+      :issue_title,
+      :issue_editor,
+      :authors_name_from_source,
+      :standard_numbers,
+      :collection
   ]
 
   CONTROLLED_VOCAB_SEARCH_FIELDS = [
@@ -428,6 +442,34 @@ class Public::SearchController < ApplicationController
               add_field_adv_search(['material_type'], clean_search_string)
             when "genre"
               add_field_adv_search(['genre'], clean_search_string)
+            when "original_greek_title"
+              add_field_adv_search_multiple(['original_greek_title', 'original_greek_title.el'], clean_search_string)
+            when "original_greek_place_of_publication"
+              add_field_adv_search_multiple(['original_greek_place_of_publication', 'original_greek_place_of_publication.el'], clean_search_string)
+            when "original_greek_publisher"
+              add_field_adv_search_multiple(['original_greek_publisher', 'original_greek_publisher.el'], clean_search_string)
+            when "original_greek_collection"
+              add_field_adv_search_multiple(['original_greek_collection', 'original_greek_collection.el'], clean_search_string)
+            when "publisher"
+              add_field_adv_search_multiple(['publisher', 'publisher.folded', 'publisher.el'], clean_search_string)
+            when "source"
+              add_field_adv_search_multiple(['source', 'source.folded', 'source.el'], clean_search_string)
+            when "census_id"
+              add_field_adv_search(['census_id'], clean_search_string)
+            when "series"
+              add_field_adv_search_multiple(['series', 'series.folded', 'series.el'], clean_search_string)
+            when "sponsoring_organization"
+              add_field_adv_search_multiple(['sponsoring_organization', 'sponsoring_organization.folded', 'sponsoring_organization.el'], clean_search_string)
+            when "issue_title"
+              add_field_adv_search_multiple(['issue_title', 'issue_title.el'], clean_search_string)
+            when "issue_editor"
+              add_field_adv_search_multiple(['issue_editor', 'issue_editor.el'], clean_search_string)
+            when "authors_name_from_source"
+              add_field_adv_search_multiple(['authors_name_from_source', 'authors_name_from_source.el'], clean_search_string)
+            when "standard_numbers"
+              add_field_adv_search(['standard_numbers.value'], clean_search_string)
+            when "collection"
+              add_field_adv_search_multiple(['collection', 'collection.el'], clean_search_string)
             else
 
             end
