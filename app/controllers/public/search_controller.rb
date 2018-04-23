@@ -129,6 +129,7 @@ class Public::SearchController < ApplicationController
                   components.component_citations.name.folded^10
                   components.component_citations.name.el^10
                   title^5
+                  title.trim_underscores^5
                   title.folded^5
                   title.el^5
                   components.title^5
@@ -424,7 +425,7 @@ class Public::SearchController < ApplicationController
               when "keyword"
                 @combined_query_list << generate_keyword_search_array(clean_search_string)
               when "title"
-                add_field_adv_search_multiple(['title', 'title.folded', 'title.el'], clean_search_string)
+                add_field_adv_search_multiple(['title', 'title.trim_underscores', 'title.folded', 'title.el'], clean_search_string)
               when "journal"
                 add_field_adv_search_multiple(['journal.title', 'journal.title.folded', 'journal.title.el'], clean_search_string)
               when "location"

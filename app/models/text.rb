@@ -69,6 +69,19 @@ class Text < ApplicationRecord
                       :english_stemmer,
                       :asciifolding
                   ]
+              },
+              trim_underscores: {
+                  tokenizer: :standard,
+                  char_filter: [
+                      "trim_underscores_filter"
+                  ]
+              }
+          },
+          char_filter: {
+              trim_underscores_filter: {
+                  type: "pattern_replace",
+                  pattern: "^_?([^_]+)_?$",
+                  replacement: "$1"
               }
           }
       }
@@ -85,11 +98,15 @@ class Text < ApplicationRecord
                         },
                         folded: {
                             type: :text,
-                            analyzer: 'folding'
+                            analyzer: "folding"
                         },
                         el: {
                             type: :text,
                             analyzer: :greek
+                        },
+                        trim_underscores: {
+                            type: :text,
+                            analyzer: "trim_underscores"
                         }
                     },
                     analyzer: :english
