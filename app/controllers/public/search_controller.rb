@@ -1,5 +1,6 @@
 class Public::SearchController < ApplicationController
   layout "public"
+  include Public::TextsHelper
 
   before_action :authenticate_user!
 
@@ -42,7 +43,16 @@ class Public::SearchController < ApplicationController
       :volume,
       :topic_author,
       :citation_name,
-      :component_citation_name
+      :component_citation_name,
+      :text_type,
+      :material_type,
+      :genre
+  ]
+
+  CONTROLLED_VOCAB_SEARCH_FIELDS = [
+      :text_type,
+      :material_type,
+      :genre
   ]
 
   BOOLEAN_OPERATORS = [
@@ -202,6 +212,21 @@ class Public::SearchController < ApplicationController
       @search_type = "adv"
     else
       @search_type = "kw"
+    end
+
+    # get unique values for adv search drop downs
+    @unique_values = {}
+    CONTROLLED_VOCAB_SEARCH_FIELDS.each do |field|
+      field_s = field.to_s
+      uniq_vals = Text.get_unique_values(field_s)
+
+      # text_type field requires some label editing
+      if field_s == "text_type"
+        mapped_uniq_vals = uniq_vals.map {|v| [format_label(v), v]}
+        @unique_values[field_s] = mapped_uniq_vals
+      else
+        @unique_values[field_s] = uniq_vals
+      end
     end
 
     if is_search?
@@ -397,6 +422,12 @@ class Public::SearchController < ApplicationController
               add_field_adv_search_multiple(['components.component_citations.name', 'components.component_citations.name.folded', 'components.component_citations.name.el'], clean_search_string)
             when "volume"
               add_field_adv_search_multiple(['volume.title', 'volume.title.folded', 'volume.title.el'], clean_search_string)
+            when "text_type"
+              add_field_adv_search(['text_type'], clean_search_string)
+            when "material_type"
+              add_field_adv_search(['material_type'], clean_search_string)
+            when "genre"
+              add_field_adv_search(['genre'], clean_search_string)
             else
 
             end
@@ -407,7 +438,7 @@ class Public::SearchController < ApplicationController
         # get odd numbered tokens
         # boolean tokens
         if BOOLEAN_OPERATORS.include? tok.downcase.to_sym
-
+          # TODO
         else
           raise ArgumentError.new("The advanced search query has an unknown boolean operator: " + tok)
         end

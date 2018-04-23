@@ -9,103 +9,14 @@
 
         <div id="new-form">
           <div class="col-lg-8 col-md-8 col-sm-8">
+            <!-- first search field group -->
+            <%= render partial: 'advanced_search_form_group', locals: {num: 1} %>
 
-            <!-- main search field -->
-            <div class="adv-search-row" id="search-row-1">
-              <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="input-group input-group-lg">
-                  <%= text_field_tag :v_1, params[:v_1], :class => 'form-control', :id => 'v_1' %>
-                  <div class="input-group-btn fields_dropdown field_name">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select
-                      a field (optional)
-                      <span class="caret"></span></button>
-                    <ul class="dropdown-menu dropdown-menu-right">
-                      <li class="selected"><a href="#" data-name="keyword">All fields</a></li>
-                      <li><a href="#" data-name="title">Title</a></li>
-                      <!--li><a href="#" data-name="people">Persons</a></li-->
-                      <li><a href="#" data-name="topic_author">Topic Author</a></li>
-                      <li><a href="#" data-name="citation_name">Citation Name</a></li>
-                      <li><a href="#" data-name="component_citation_name">Component Citation Name</a></li>
-                      <li><a href="#" data-name="journal">Journal</a></li>
-                      <li><a href="#" data-name="component_title">Component Title</a></li>
-                      <li><a href="#" data-name="location">Publication Place</a></li>
-                      <li><a href="#" data-name="volume">Volume Title</a></li>
-                    </ul>
-                  </div><!-- /btn-group -->
-                </div>
-              </div>
-            </div>
+            <!-- second search field group -->
+            <%= render partial: 'advanced_search_form_group', locals: {num: 2} %>
 
-            <!-- second search field -->
-            <div class="adv-search-row" id="search-row-2">
-              <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="input-group input-group-lg">
-                  <div class="input-group-btn boolean">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled="disabled">AND
-                      <span class="caret"></span></button>
-                    <ul class="dropdown-menu dropdown-menu-left">
-                      <li class="selected"><a href="#" data-name="AND">AND</a></li>
-                      <li><a href="#" data-name="OR">OR</a></li>
-                      <li><a href="#" data-name="NOT">NOT</a></li>
-                    </ul>
-                  </div><!-- /btn-group -->
-                  <%= text_field_tag :v_2, params[:v_2], :class => 'form-control', :id => 'v_2' %>
-                  <div class="input-group-btn fields_dropdown field_name">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select
-                      a field (optional)
-                      <span class="caret"></span></button>
-                    <ul class="dropdown-menu dropdown-menu-right">
-                      <li class="selected"><a href="#" data-name="keyword">All fields</a></li>
-                      <li><a href="#" data-name="title">Title</a></li>
-                      <!--li><a href="#" data-name="people">Persons</a></li-->
-                      <li><a href="#" data-name="topic_author">Topic Author</a></li>
-                      <li><a href="#" data-name="citation_name">Citation Name</a></li>
-                      <li><a href="#" data-name="component_citation_name">Component Citation Name</a></li>
-                      <li><a href="#" data-name="journal">Journal</a></li>
-                      <li><a href="#" data-name="component_title">Component Title</a></li>
-                      <li><a href="#" data-name="location">Publication Place</a></li>
-                      <li><a href="#" data-name="volume">Volume Title</a></li>
-                    </ul>
-                  </div><!-- /btn-group -->
-                </div>
-              </div>
-            </div>
-
-            <!-- third search field -->
-            <div class="adv-search-row" id="search-row-3">
-              <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="input-group input-group-lg">
-                  <div class="input-group-btn boolean">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled="disabled">AND
-                      <span class="caret"></span></button>
-                    <ul class="dropdown-menu dropdown-menu-left">
-                      <li class="selected"><a href="#" data-name="AND">AND</a></li>
-                      <li><a href="#" data-name="OR">OR</a></li>
-                      <li><a href="#" data-name="NOT">NOT</a></li>
-                    </ul>
-                  </div><!-- /btn-group -->
-                  <%= text_field_tag :v_3, params[:v_3], :class => 'form-control', :id => 'v_3' %>
-                  <div class="input-group-btn fields_dropdown field_name">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select
-                      a field (optional)
-                      <span class="caret"></span></button>
-                    <ul class="dropdown-menu dropdown-menu-right">
-                      <li class="selected"><a href="#" data-name="keyword">All fields</a></li>
-                      <li><a href="#" data-name="title">Title</a></li>
-                      <!--li><a href="#" data-name="people">Persons</a></li-->
-                      <li><a href="#" data-name="topic_author">Topic Author</a></li>
-                      <li><a href="#" data-name="citation_name">Citation Name</a></li>
-                      <li><a href="#" data-name="component_citation_name">Component Citation Name</a></li>
-                      <li><a href="#" data-name="journal">Journal</a></li>
-                      <li><a href="#" data-name="component_title">Component Title</a></li>
-                      <li><a href="#" data-name="location">Publication Place</a></li>
-                      <li><a href="#" data-name="volume">Volume Title</a></li>
-                    </ul>
-                  </div><!-- /btn-group -->
-                </div>
-              </div>
-            </div>
-
+            <!-- third search field group -->
+            <%= render partial: 'advanced_search_form_group', locals: {num: 3} %>
           </div>
           <div class="col-lg-4 col-md-4 col-sm-4">
             <div class="adv-search-row-buttons">
@@ -124,35 +35,7 @@
             </div>
           </div>
         </div>
-        <!--div class="col-lg-12 col-md-12 col-sm-12">
-          <%= label_tag(:keyword, "All fields") %>
-          <%= text_field_tag :keyword, params[:keyword], :class => 'form-control' %>
-        </div>
-
-        <div class="col-lg-6 col-md-6 col-sm-12">
-          <%= label_tag(:title, "Title") %>
-          <%= text_field_tag :title, params[:title], :class => 'form-control' %>
-
-          <%= label_tag(:journal, "Journal") %>
-          <%= text_field_tag :journal, params[:journal], :class => 'form-control' %>
-
-          <%= label_tag(:location, "Publication location") %>
-          <%= text_field_tag :location, params[:location], :class => 'form-control' %>
-        </div>
-
-        <div class="col-lg-6 col-md-6 col-sm-12">
-          <%= label_tag(:people, "Persons") %>
-          <%= text_field_tag :people, params[:people], :class => 'form-control' %>
-
-          <%= label_tag(:people, "Component title") %>
-          <%= text_field_tag :component_title, params[:component_title], :class => 'form-control' %>
-        </div-->
       </div>
-
-      <!--div class="adv-search-submit row col-lg-12 col-md-12 col-sm-12">
-        <%= submit_tag 'Search', name: nil, :class => 'btn btn-primary' %>
-        <%= link_to 'Clear', public_search_index_path(type: @search_type), :class => 'btn btn-default' %>
-      </div-->
 
     </div>
   </div>
@@ -209,9 +92,9 @@
             $.each(split_tokens, function(i,tok){
                 // determine the field ids
                 var my_search_row = $("#search-row-" + row_num);
-                row_num = parseInt(i / 2) + 2;
+                console.log("currently on row: " + row_num);
 
-                console.log("currrently on row: " + row_num);
+                row_num = parseInt(i / 2) + 2;
 
                 if (i % 2 === 0) { // get even tokens
                     // (field+val)
@@ -237,10 +120,6 @@
                     console.log("field_name: " + field_name);
                     console.log("field_val: " + field_val);
 
-                    // update the search field value
-                    var my_field_val = my_search_row.find("input");
-                    my_field_val.val(field_val);
-
                     // update the search field name drop down
                     var my_field_name_list = my_search_row.find(".field_name ul li a");
                     my_field_name_list.each(function(){
@@ -250,6 +129,10 @@
                             $this_item.click();
                         }
                     });
+
+                    // update the search field value
+                    var my_field_val = my_search_row.find(".selected");
+                    my_field_val.val(field_val);
 
                 } else { // odd token
                     // BOOLEAN
@@ -272,13 +155,35 @@
 
         $(".dropdown-menu li a").click(function (e) {
             e.preventDefault();
-            $this = $(this);
+            var $this = $(this);
+
+            // change label on field drop down button to the name of the selected field
             $this.parents(".input-group-btn").find('.btn').html($(this).text() + ' <span class="caret"></span>');
             $this.parents(".input-group-btn").find('.btn').val($(this).data('value'));
             $this.parents("ul").find("li").each(function(){
                 $(this).removeClass("selected");
             });
             $this.parents("li").addClass("selected");
+
+            // manage how controlled vocabulary fields toggle from input to select field
+            var is_controlled_vocab = $this.hasClass("controlled");
+            console.log("is controlled: " + is_controlled_vocab);
+            var selected_data_name = $this.attr("data-name");
+            var adv_search_row = $this.parents(".adv-search-row");
+            var select_fields = adv_search_row.find(".select_field");
+
+            if (selected_data_name && is_controlled_vocab) {
+                var select_class = ".select_" + selected_data_name;
+                if ($this.parents(".adv-search-row").find(select_class).length){
+                    console.log("selected text_type: " + select_class);
+                    adv_search_row.find("input").addClass("hidden").removeClass("selected");
+                    adv_search_row.find(".select_field").addClass("hidden").removeClass("selected");
+                    adv_search_row.find(select_class).addClass("selected").removeClass("hidden");
+                }
+            } else {
+                adv_search_row.find("input").addClass("selected").removeClass("hidden");
+                select_fields.addClass("hidden").removeClass("selected");
+            }
         });
 
         $("#new-form #adv-search-submit").click(function(e){
@@ -286,18 +191,17 @@
 
             // &bquery=(TX+diabetes)+AND+(TI+health)+AND+(AU+smith)
 
-            var query_str = ""
+            var query_str = "";
             // get every field value
             $('.adv-search-row').each(function(){
                var $this = $(this);
 
                 //get boolean value//
-                var boolean_val = ""
+                var boolean_val = "";
                 var boolean = $this.find(".boolean ul li.selected a");
                 if (boolean && boolean.length) {
                     boolean_val = boolean.attr("data-name");
                     //console.log("my_bool: " + boolean_val);
-                    //
                 }
 
                 // get field name
@@ -310,12 +214,24 @@
                     if (field_name && field_name.length){
                         // get field value
                         var field_val = "";
-                        var my_form_field = $this.find("input");
+                        var my_form_field;
+
+                        // first, check if a drop down is selected
+                        // else, check the input field
+                        var my_form_field_selects = $this.find("select.selected");
+                        if (my_form_field_selects && my_form_field_selects.length) {
+                            my_form_field = my_form_field_selects;
+                        } else {
+                            my_form_field = $this.find("input");
+                        }
+
                         if (my_form_field && my_form_field.length) {
-                            field_val = my_form_field.val()
+                            field_val = my_form_field.val();
                             //console.log("my_form_field: " + field_val);
                             if (field_val && field_val.length) {
-                                if (boolean_val){
+                                // only add in the boolean string if we first have
+                                // a field name and search term added
+                                if (boolean_val && query_str.length) {
                                     query_str += "++" + boolean_val + "++";
                                 }
                                 query_str += "(" + field_name + "+" + field_val + ")"

@@ -1,0 +1,46 @@
+<div class="adv-search-row" id="search-row-<%= num %>">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="input-group input-group-lg">
+      <% if num > 1 %>
+      <div class="input-group-btn boolean">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled="disabled">AND
+          <span class="caret"></span></button>
+        <ul class="dropdown-menu dropdown-menu-left">
+          <li class="selected"><a href="#" data-name="AND">AND</a></li>
+          <li><a href="#" data-name="OR">OR</a></li>
+          <li><a href="#" data-name="NOT">NOT</a></li>
+        </ul>
+      </div><!-- /btn-group -->
+      <% end %>
+
+      <div class="input-group-lg">
+        <%= select_tag(:text_type, options_for_select(@unique_values["text_type"]), {include_blank: 'Select a Text Type', class: 'form-control select_text_type select_field hidden'}) %>
+        <%= select_tag(:material_type, options_for_select(@unique_values["material_type"]), {include_blank: 'Select a Material Type', class: 'form-control select_material_type select_field hidden'}) %>
+        <%= select_tag(:genre, options_for_select(@unique_values["genre"]), {include_blank: 'Select a Genre', class: 'form-control select_genre select_field hidden'}) %>
+      </div>
+
+      <input type="text" name="v_<%= num %>" id="v_<%= num %>" class="form-control">
+      <div class="input-group-btn fields_dropdown field_name">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select
+          a field (optional)
+          <span class="caret"></span></button>
+        <ul class="dropdown-menu dropdown-menu-right">
+          <li class="selected"><a href="#" data-name="keyword">All fields</a></li>
+          <li role="seperator" class="divider"></li>
+          <li><a href="#" data-name="title">Title</a></li>
+          <!--li><a href="#" data-name="people">Persons</a></li-->
+          <li><a href="#" data-name="topic_author">Topic Author</a></li>
+          <li><a href="#" data-name="citation_name">Citation Name</a></li>
+          <li><a href="#" data-name="component_citation_name">Component Citation Name</a></li>
+          <li><a href="#" data-name="journal">Journal</a></li>
+          <li><a href="#" data-name="component_title">Component Title</a></li>
+          <li><a href="#" data-name="location">Publication Place</a></li>
+          <li><a href="#" data-name="volume">Volume Title</a></li>
+          <li><a href="#" data-name="text_type" class="controlled">Text Type</a></li>
+          <li><a href="#" data-name="material_type" class="controlled">Material Type</a></li>
+          <li><a href="#" data-name="genre" class="controlled">Genre</a></li>
+        </ul>
+      </div><!-- /btn-group -->
+    </div>
+  </div>
+</div>

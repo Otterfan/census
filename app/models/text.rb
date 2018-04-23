@@ -347,6 +347,13 @@ class Text < ApplicationRecord
   def sort_title
     title.gsub(/["'_\[\]]/, '').sub(/^(An? )|(The )/, '')
   end
+
+  # Pull out all unique and non-empty values for a column.
+  # Only useful for fields containing a controlled vocab
+  def self.get_unique_values(field_name)
+    puts "running search on field: " + field_name
+    Text.where.not(field_name => [nil, ""]).order(field_name => :asc).pluck(field_name).uniq
+  end
 end
 
 #Text.import(force: true) # for auto sync model with elastic search
