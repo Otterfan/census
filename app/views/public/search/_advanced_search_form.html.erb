@@ -22,14 +22,14 @@
             <div class="adv-search-row-buttons">
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="input-group input-group-lg">
-                  <%= submit_tag 'Search', name: nil, :class => 'btn btn-lg btn-primary', :id => 'adv-search-submit' %>
+                  <%= submit_tag 'Search', name: nil, :class => 'btn btn-lg btn-success', :id => 'adv-search-submit' %>
                 </div>
               </div>
             </div>
             <div class="adv-search-row-buttons">
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="input-group input-group-lg">
-                  <%= link_to 'Start over', public_search_index_path(type: @search_type), :class => 'btn btn-lg btn-default' %>
+                  <%= link_to 'Clear', public_search_index_path(type: @search_type), :class => 'btn btn-lg btn-success' %>
                 </div>
               </div>
             </div>
