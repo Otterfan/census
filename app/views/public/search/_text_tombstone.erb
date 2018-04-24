@@ -7,6 +7,11 @@
 <div>
   Topic author: <%= text.topic_author.full_name %>
 </div>
+<% if text['_source'].census_id %>
+<div>
+  Entry Number: <%= text.census_id %>
+</div>
+<% end %>
 <% if text['_source'].volume %>
   <div>
     In <cite><%= link_to_volume_from_search text['_source'].volume %></cite>  <%= formatted_journal_issue(text) %>
