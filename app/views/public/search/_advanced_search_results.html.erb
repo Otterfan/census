@@ -5,8 +5,6 @@
       <h3>Filter your search</h3>
       <% if @aggregations.present? %>
         <%= render 'facet_container_dates', facet_name: "publication_dates" %>
-      <% else %>
-        foo
       <% end %>
     </div>
   </div>
