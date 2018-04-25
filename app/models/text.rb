@@ -35,9 +35,11 @@ class Text < ApplicationRecord
   has_paper_trail
 
   # these settings will create several dynamic mappings for each string-type field:
-  #    keyword: non-indexed, used for keyword searching and aggregations
-  #    folded : indexed with english stemming and asciifolding (cafe, cafes, café, cafés all match)
-  #    el     : indexed with greek stemming, which includes greek stop words
+  #    keyword          : non-indexed, used for keyword searching and aggregations
+  #    folded           : indexed with english stemming and asciifolding (cafe, cafes, café, cafés all match)
+  #    el               : indexed with greek stemming, which includes greek stop words
+  #    trim_underscores : replace underscores
+  #    exact            : indexes without analyzer. provided exact token search
   settings index: {
       analysis: {
           filter: {
@@ -75,13 +77,19 @@ class Text < ApplicationRecord
                   char_filter: [
                       "trim_underscores_filter"
                   ]
+              },
+              english_exact: {
+                  tokenizer: :standard,
+                  filter: [
+                      :lowercase
+                  ]
               }
           },
           char_filter: {
               trim_underscores_filter: {
                   type: "pattern_replace",
-                  pattern: "^_?([^_]+)_?$",
-                  replacement: "$1"
+                  pattern: "([^_]+)?(\s?)?_?([^_]+)_?(\s?)?([^_]+)?",
+                  replacement: "$1$2$3$4$5"
               }
           }
       }
@@ -107,6 +115,10 @@ class Text < ApplicationRecord
                         trim_underscores: {
                             type: :text,
                             analyzer: "trim_underscores"
+                        },
+                        exact: {
+                            type: :text,
+                            analyzer: "english_exact"
                         }
                     },
                     analyzer: :english
