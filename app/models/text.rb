@@ -74,6 +74,9 @@ class Text < ApplicationRecord
               },
               trim_underscores: {
                   tokenizer: :standard,
+                  filter: [
+                      :lowercase
+                  ],
                   char_filter: [
                       "trim_underscores_filter"
                   ]
