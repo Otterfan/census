@@ -1,6 +1,7 @@
 <h2>Advanced Search</h2>
 <p>Try the <%= link_to 'Keyword search', public_search_index_path(:type => "kw") %></p>
 
+<!--pre><%= @all_search.to_json %></pre-->
 <%= form_tag(public_search_index_path, method: :get, id: "search_form") do %>
   <div class="panel panel-default">
     <div class="panel-body">
@@ -158,17 +159,30 @@
 
         }
 
+        function change_labels(elem){
+            // change label on field drop down button to the name of the selected field
+            elem.parents(".input-group-btn").find('.btn').html(elem.text() + ' <span class="caret"></span>');
+            elem.parents(".input-group-btn").find('.btn').val(elem.data('value'));
+            elem.parents("ul").find("li").each(function () {
+                $(this).removeClass("selected");
+            });
+            elem.parents("li").addClass("selected");
+        }
+
+        $(".boolean .dropdown-menu li a").click(function (e) {
+            e.preventDefault();
+            var $this = $(this);
+
+            // change label on field drop down button to the name of the selected field
+            change_labels($this);
+        });
+
         $(".fields_dropdown .dropdown-menu li a").click(function (e) {
             e.preventDefault();
             var $this = $(this);
 
             // change label on field drop down button to the name of the selected field
-            $this.parents(".input-group-btn").find('.btn').html($(this).text() + ' <span class="caret"></span>');
-            $this.parents(".input-group-btn").find('.btn').val($(this).data('value'));
-            $this.parents("ul").find("li").each(function(){
-                $(this).removeClass("selected");
-            });
-            $this.parents("li").addClass("selected");
+            change_labels($this);
 
             // manage how controlled vocabulary fields toggle from input to select field
             var is_controlled_vocab = $this.hasClass("controlled");
