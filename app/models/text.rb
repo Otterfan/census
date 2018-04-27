@@ -36,13 +36,20 @@ class Text < ApplicationRecord
 
   # these settings will create several dynamic mappings for each string-type field:
   #    keyword          : non-indexed, used for keyword searching and aggregations
-  #    folded           : indexed with english stemming and asciifolding (cafe, cafes, café, cafés all match)
-  #    el               : indexed with greek stemming, which includes greek stop words
-  #    trim_underscores : replace underscores
-  #    exact            : indexes without analyzer. provided exact token search
+  #    en               : indexed with default english filters:
+  #                       [english_possessive_stemmer, lowercase, english_stop, english_keywords, english_stemmer]
+  #    en_folded        : indexed with english lowercase, stop words and asciifolding (cafe & café both match)
+  #    el               : indexed with default greek filters:
+  #                       [greek_lowercase, greek_stop, greek_keywords, greek_stemmer]
+  #    el_folded        : indexed with greek lowercase, greek stop words and uses ICU plugin for Unicode languages. provides folding for greek letters
+  #    exact            : indexes with lowercase but without using an analyzer. provided exact token search
   settings index: {
       analysis: {
           filter: {
+              english_possessive_stemmer: {
+                  type: :stemmer,
+                  language: :possessive_english
+              },
               english_stop: {
                   type: :stop,
                   stopwords: "_english_"
@@ -55,25 +62,42 @@ class Text < ApplicationRecord
                   type: :stemmer,
                   language: :english
               },
-              english_possessive_stemmer: {
-                  type: :stemmer,
-                  language: :possessive_english
+              greek_lowercase: {
+                  type:       :lowercase,
+                  language:   :greek
+              },
+              greek_stop: {
+                  type:       :stop,
+                  stopwords:  "_greek_"
+              },
+              greek_keywords: {
+                  type:       :keyword_marker,
+                  keywords:   ["παράδειγμα"]
+              },
+              greek_stemmer: {
+                  type:       :stemmer,
+                  language:   :greek
               }
           },
           analyzer: {
-              folding: {
+              english_folding: {
                   tokenizer: :standard,
                   filter: [
-                      :english_possessive_stemmer,
                       :lowercase,
                       :english_stop,
-                      :english_keywords,
-                      :english_stemmer,
                       :asciifolding
                   ]
               },
-              english_exact: {
-                  tokenizer: :standard,
+              greek_folding: {
+                  tokenizer: :icu_tokenizer,
+                  filter: [
+                      :greek_lowercase,
+                      :greek_stop,
+                      :icu_folding
+                  ]
+              },
+              exact: {
+                  tokenizer: :keyword,
                   filter: [
                       :lowercase
                   ]
@@ -88,23 +112,31 @@ class Text < ApplicationRecord
                 mapping: {
                     fields: {
                         keyword: {
-                            type: "keyword",
+                            type: :keyword,
                             ignore_above: 256,
                         },
-                        folded: {
+                        en: {
                             type: :text,
-                            analyzer: "folding"
+                            analyzer: :english
+                        },
+                        en_folded: {
+                            type: :text,
+                            analyzer: :english_folding
                         },
                         el: {
                             type: :text,
                             analyzer: :greek
                         },
+                        el_folded: {
+                            type: :text,
+                            analyzer: :greek_folding
+                        },
                         exact: {
                             type: :text,
-                            analyzer: "english_exact"
+                            analyzer: :exact
                         }
                     },
-                    analyzer: :english
+                    analyzer: :standard
                 }
             },
         },
