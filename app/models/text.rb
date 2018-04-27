@@ -72,27 +72,11 @@ class Text < ApplicationRecord
                       :asciifolding
                   ]
               },
-              trim_underscores: {
-                  tokenizer: :standard,
-                  filter: [
-                      :lowercase
-                  ],
-                  char_filter: [
-                      "trim_underscores_filter"
-                  ]
-              },
               english_exact: {
                   tokenizer: :standard,
                   filter: [
                       :lowercase
                   ]
-              }
-          },
-          char_filter: {
-              trim_underscores_filter: {
-                  type: "pattern_replace",
-                  pattern: "([^_]+)?(\s?)?_?([^_]+)_?(\s?)?([^_]+)?",
-                  replacement: "$1$2$3$4$5"
               }
           }
       }
@@ -114,10 +98,6 @@ class Text < ApplicationRecord
                         el: {
                             type: :text,
                             analyzer: :greek
-                        },
-                        trim_underscores: {
-                            type: :text,
-                            analyzer: "trim_underscores"
                         },
                         exact: {
                             type: :text,

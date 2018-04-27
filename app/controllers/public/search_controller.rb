@@ -89,9 +89,11 @@ class Public::SearchController < ApplicationController
     components.component_citations.name.folded^10
     components.component_citations.name.el^10
     title^5
-    title.trim_underscores^5
     title.folded^5
     title.el^5
+    sort_title^10
+    sort_title.folded^10
+    sort_title.el^10
     components.title^5
     components.title.folded^5
     components.title.el^5
@@ -456,7 +458,7 @@ class Public::SearchController < ApplicationController
                   @adv_search_array <<  @keyword_query_hash
                 end
               when "title"
-                add_field_adv_search(['title', 'title.trim_underscores', 'title.folded', 'title.el'], clean_search_string, @current_bool_op)
+                add_field_adv_search(['title', 'sort_title', 'sort_title.folded', 'title.folded', 'title.el'], clean_search_string, @current_bool_op)
               when "journal"
                 add_field_adv_search(['journal.title', 'journal.title.folded', 'journal.title.el'], clean_search_string, @current_bool_op)
               when "location"
