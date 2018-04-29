@@ -2,27 +2,25 @@
   <div class="row">
     <div class="col">
       <% if @search_type == "adv" %>
-        <%# advanced search template %>
+        <%# advanced search form template %>
         <%= render 'advanced_search_form' %>
       <% else %>
-        <%# keyword search template %>
+        <%# keyword search form template %>
         <%= render 'keyword_search_form' %>
       <% end %>
-    </div>  <!-- col -->
-  </div> <!-- row -->
+    </div>
+  </div>
 
   <div class="row" id="search-results">
-    <% if @new_search %>
-      <h4>Enter a search query.</h4>
-    <% elsif @texts.nil? %>
-      <h4>There are no texts containing the term <strong><%= params[:keyword] %></strong>.</h4>
-    <% else %>
+    <div class="row">
       <% if @search_type == "adv" %>
+        <%# advanced search results template %>
         <%= render 'advanced_search_results' %>
       <% else %>
+        <%# keyword search results template %>
         <%= render 'keyword_search_results' %>
+        <script src="/js/public-js.js"></script>
       <% end %>
-    <% end %>
-  </div> <!-- row -->
-  <script src="/js/public-js.js"></script>
-</div> <!-- container -->
+    </div>
+  </div>
+</div>

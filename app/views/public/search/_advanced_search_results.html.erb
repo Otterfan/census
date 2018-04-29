@@ -1,15 +1,18 @@
-<div class="row">
-  <!-- BEGIN facets -->
-  <div class="col-lg-3 col-md-3 col-sm-6">
-    <div class="facets-container">
-      <h3>Filter your search</h3>
-      <% if @aggregations.present? %>
-        <%= render 'facet_container_dates', facet_name: "publication_dates" %>
-      <% end %>
-    </div>
-  </div>
-  <!-- END facets -->
-  <div class="col-lg-9 col-md-9 col-sm-6">
-    <%= render 'search_results_list' %>
+<!-- BEGIN facets -->
+<div class="col-lg-3 col-md-3 col-sm-6">
+  <div class="facets-container">
+    <h3>Filter your search</h3>
+    <%= render 'facet_container_dates', facet_name: "publication_dates" %>
   </div>
 </div>
+<!-- END facets -->
+
+<!-- BEGIN search results -->
+<div class="col-lg-9 col-md-9 col-sm-6">
+  <% if @new_search %>
+    <h3>Enter a search query</h3>
+  <% else %>
+    <%= render 'search_results_list' %>
+  <% end %>
+</div>
+<!-- END search results -->
