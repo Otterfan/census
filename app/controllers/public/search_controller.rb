@@ -389,6 +389,10 @@ class Public::SearchController < ApplicationController
     @filter_hash = {}
     @current_bool_op = "AND"
 
+    # create the query_string hash
+    @combined_query_hash = {}
+    @combined_query_hash[:query_string] = {}
+
     # example of raw combined bool search query string
     # bq=(title+cats paw)++OR++(people+jack)++NOT++(component_title+fish)
     #
@@ -458,13 +462,7 @@ class Public::SearchController < ApplicationController
             if search_string and ADVANCED_SEARCH_FIELDS.include? field_name.to_sym
               case field_name
               when "keyword"
-                @keyword_query_hash = generate_keyword_search_array(clean_search_string)
-                puts "@keyword_query_hash: #{@keyword_query_hash}"
-                if @current_bool_op == "NOT"
-                  @adv_search_array_bool_not <<  @keyword_query_hash
-                else
-                  @adv_search_array <<  @keyword_query_hash
-                end
+                add_field_adv_search_keyword(KEYWORD_FIELDS, clean_search_string, @current_bool_op)
               when "title"
                 add_field_adv_search(['title', 'title.en_folded', 'title.el_folded', 'sort_title', 'sort_title.en_folded', 'sort_title.el_folded'], clean_search_string, @current_bool_op)
               when "journal"
@@ -553,13 +551,9 @@ class Public::SearchController < ApplicationController
 
     puts "\nUpdated combined_query_list: #{@combined_query_string} \n\n"
 
-    # our @combined_query_string now needs to be inserted into an Elasticsearch query_string hash object
+    # our @combined_query_string is inserted into an @combined_query_hash "query" key hash
     if @combined_query_string.length > 0
-      @combined_query_hash = {
-          query_string: {
-              query: @combined_query_string
-          }
-      }
+      @combined_query_hash[:query_string][:query] = @combined_query_string
 
       # add @combined_query_hash to our @adv_search_array array of search objects
       @adv_search_array << @combined_query_hash
@@ -669,6 +663,39 @@ class Public::SearchController < ApplicationController
 
     puts "  current query_string : #{combo_field_group}"
     puts "  updated query_string : #{combo_field}"
+
+    # finally, save as the @combined_query_string
+    @combined_query_string = combo_field
+  end
+
+  def add_field_adv_search_keyword(keyword_fields, field_val, bool_op = "AND")
+
+    # create a combo_query string to include the combo_field_group, the bool operator and fields_list,
+    # and then group by parentheses
+    #
+    # EX:
+    #     wrapping parentheses   = (                               )
+    #     @combined_query_string = | (A AND B)                     |
+    #     bool_op                = |  |         AND                |
+    #     combo_field_group      = |  |         |    (D OR E OR F) |
+    #                              |  |         |     |            |
+    #                              v  v         v     v            v
+    #     combo_query            = ( (A AND B)  AND  (D OR E OR F) )
+    #
+    if bool_op and @combined_query_string.length > 0
+      combo_field = "(#{@combined_query_string} #{bool_op} #{field_val})"
+    else
+      combo_field = field_val
+    end
+
+    puts "  adding keyword search string : #{field_val}"
+    puts "  updated query_string : #{combo_field}"
+
+    # add query_string params unique to keyword search
+    @combined_query_hash[:query_string][:fields] = keyword_fields
+    @combined_query_hash[:query_string][:lenient] = true
+    @combined_query_hash[:query_string][:type] = "most_fields"
+    @combined_query_hash[:query_string][:default_operator] = "and"
 
     # finally, save as the @combined_query_string
     @combined_query_string = combo_field
