@@ -257,7 +257,6 @@ class Public::SearchController < ApplicationController
 
     if is_search?
       @query_hash = {}
-      @query_hash_bool_not = {}
       @query_string_array = []
       @facets = {}
 
@@ -267,8 +266,7 @@ class Public::SearchController < ApplicationController
         # and another for "must_not". The former only applies to keyword search with a NOT bool operator
         begin
           @results = process_adv_search
-          @query_array = @results[0]
-          @query_hash_bool_not = @results[1]
+          @query_array = @results
         rescue ArgumentError => e
           puts "Caught error: " + e.message
           return nil
@@ -353,12 +351,6 @@ class Public::SearchController < ApplicationController
         @all_search[:query][:bool][:must] = @query_array
       end
 
-      # on some occasions, we may have a keyword search using a NOT boolean.
-      # for this, we need to add in a separate "must_not" query block
-      if @query_hash_bool_not.length > 0
-        @all_search[:query][:bool][:must_not] = @query_hash_bool_not
-      end
-
       query_result = Text.search(@all_search).page(params[:page]).per(@pagination_page_size)
       @aggregations = query_result.aggregations
       @publication_dates = get_date_range_data(query_result.aggregations)
@@ -385,7 +377,6 @@ class Public::SearchController < ApplicationController
     @combined_query_string = []
     @keyword_query_hash = {}
     @adv_search_array = []
-    @adv_search_array_bool_not = []
     @filter_hash = {}
     @current_bool_op = "AND"
 
@@ -559,7 +550,7 @@ class Public::SearchController < ApplicationController
       @adv_search_array << @combined_query_hash
     end
 
-    return @adv_search_array, @adv_search_array_bool_not
+    @adv_search_array
   end
 
   def get_date_range_data(aggs)
