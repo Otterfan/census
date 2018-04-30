@@ -75,7 +75,7 @@
             $("#histogramSlider").html('<p>No dates found in this range.</p><p><a href="#" id="date-range-reset">Reset dates</a>.</p>');
         } else {
             if (data_new_search){
-                $("#date-range-apply").hide();
+                $("#date-range-change-group").hide();
                 $("#publication-dates-messages").html("<p>Enter a date range in <code>YYYY</code> format.</p>");
             } else {
                 $("#publication-dates-panel .panel-body").html("<p>No dates found</p>");
@@ -132,7 +132,7 @@
           </span>
           <!--<%= label_tag(:publication_date_latest, "Latest") %> -->
           <%= text_field_tag :publication_date_latest, params[:publication_date_latest], :class => 'form-control', :id => 'publication-date-latest-value' %>
-          <span class="input-group-btn">
+          <span class="input-group-btn" id="date-range-change-group">
               <button type="button" class="btn btn-primary" id="date-range-apply">Apply</button>
               <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="caret"></span>

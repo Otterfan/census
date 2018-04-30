@@ -60,6 +60,7 @@
             }
         }
 
+        // pull out advanced search params from URL and fit them back into the search fields
         function load_field_vals(){
             // get the query param
             var bq = getUrlParameter("bq");
@@ -158,6 +159,7 @@
 
         }
 
+        // function that changes the text of the drop down buttons to match the selected field name
         function change_labels(elem){
             // change label on field drop down button to the name of the selected field
             elem.parents(".input-group-btn").find('.btn').html(elem.text() + ' <span class="caret"></span>');
@@ -168,6 +170,7 @@
             elem.parents("li").addClass("selected");
         }
 
+        // trigger on bool field drop down selection
         $(".boolean .dropdown-menu li a").click(function (e) {
             e.preventDefault();
             var $this = $(this);
@@ -176,6 +179,7 @@
             change_labels($this);
         });
 
+        // trigger on field name drop down selection
         $(".fields_dropdown .dropdown-menu li a").click(function (e) {
             e.preventDefault();
             var $this = $(this);
@@ -204,6 +208,7 @@
             }
         });
 
+        // trigger on form submission
         $("#new-form #adv-search-submit").click(function(e){
             e.preventDefault();
 
@@ -259,9 +264,33 @@
 
             console.log("query_str: " + query_str);
 
-            if (query_str && query_str.length){
-                var query_url = "?type=adv&bq=" + query_str;
-                window.location = query_url;
+            // next, update the URL parameters
+            var query_url_param = "";
+            if (query_str && query_str.length) {
+                query_url_param = "?type=adv&bq=" + query_str;
+            }
+
+            // now check on the date range slider filter
+            var date_range_earliest = $("input#publication-date-earliest-value").val();
+            var date_range_latest = $("input#publication-date-latest-value").val();
+
+            if (date_range_earliest || date_range_latest) {
+                var publication_date_range_param = "";
+                var earliest_val = date_range_earliest || date_range_latest;
+                var latest_val = date_range_latest || date_range_earliest;
+
+                console.log("date range: " + earliest_val + " - " + latest_val);
+
+                // only add in the date range param if there is at least one search field filled out
+                if (query_url_param && query_url_param.length){
+                    publication_date_range_param = "&publication_date_range=" + earliest_val + "-" + latest_val;
+                    query_url_param += publication_date_range_param;
+                }
+            }
+
+            // finally, load the page with the updated search params
+            if (query_url_param && query_url_param.length){
+                window.location = query_url_param;
             }
         });
 
