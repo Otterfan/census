@@ -81,6 +81,15 @@ ul.facet-list-group li.facet-list-group-item {
  margin: 1rem 0;
 }
 
+.add-buttons {
+  margin-top: 1.5rem;
+}
+
+.add-buttons i.disabled {
+  cursor: not-allowed;
+  color: #ccc;
+}
+
 .public #search-results {
   .sort_box {
     text-align: right;
