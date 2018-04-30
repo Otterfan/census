@@ -102,8 +102,11 @@
         $("button#date-range-apply").click(function(e){
             e.preventDefault();
 
-            var earliest_field_value = $("#publication-date-earliest-value").val();
-            var latest_field_value = $("#publication-date-latest-value").val();
+            var earliest_field = $("#publication-date-earliest-value").val();
+            var latest_field = $("#publication-date-latest-value").val();
+
+            var earliest_field_value = earliest_field || latest_field;
+            var latest_field_value = latest_field || earliest_field;
 
             // remove params from current url
             var clean_page = cleanURL(location.href, "page");
