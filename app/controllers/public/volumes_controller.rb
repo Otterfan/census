@@ -7,7 +7,7 @@ class Public::VolumesController < ApplicationController
 
   # GET /public/volumes
   def index
-    default_letter = "0-9"
+    default_letter = "A"
     @letter = sanitize_letter(params[:letter], default_letter)
 
     @alpha_params_options = {
