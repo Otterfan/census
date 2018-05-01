@@ -444,7 +444,7 @@ class Public::SearchController < ApplicationController
             puts "  found search string  : #{search_string}"
 
             trimmed_search_string = search_string.strip
-            clean_search_string = wrap_in_quotes(sanitize_query(trimmed_search_string))
+            clean_search_string = sanitize_query(trimmed_search_string)
 
             puts "  cleaned search string: " + clean_search_string
 
