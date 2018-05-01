@@ -23,7 +23,7 @@ class Public::JournalsController < ApplicationController
     @journals, @alpha_params = Journal
                                    .where.not(title: [nil, ''])
                                    .order(:title)
-                                   .alpha_paginate(@letter, @alpha_params_options){|journal| journal.title}
+                                   .alpha_paginate(@letter, @alpha_params_options){|journal| journal.sort_title}
   end
 
   # GET /public/journals/1

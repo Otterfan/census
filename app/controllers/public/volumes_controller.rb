@@ -23,7 +23,7 @@ class Public::VolumesController < ApplicationController
     @volumes, @alpha_params = Volume
                                   .where.not(title: [nil, ''])
                                   .order(:title)
-                                  .alpha_paginate(@letter, @alpha_params_options){|volume| volume.title}
+                                  .alpha_paginate(@letter, @alpha_params_options){|volume| volume.sort_title}
   end
 
   # GET /public/volumes/1
