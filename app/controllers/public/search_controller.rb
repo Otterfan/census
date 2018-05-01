@@ -76,24 +76,51 @@ class Public::SearchController < ApplicationController
   ]
 
   KEYWORD_FIELDS = %w{
+    census_id.exact
+    text_type.exact^5
+    material_type.exact
+
     topic_author.full_name^10
     topic_author.full_name.en_folded^10
     topic_author.full_name.el_folded^10
     topic_author.alternate_name^10
     topic_author.alternate_name.en_folded^10
     topic_author.alternate_name.el_folded^10
-    text_citations.name^10
-    text_citations.name.en_folded^10
-    text_citations.name.el_folded^10
-    components.component_citations.name^10
-    components.component_citations.name.en_folded^10
-    components.component_citations.name.el_folded^10
-    title^5
-    title.en_folded^5
-    title.el_folded^5
+
+    authors_name_from_source
+    authors_name_from_source.el_folded
+    authors_name_from_source.en_folded
+
+    title^10
+    title.en_folded^10
+    title.el_folded^10
     sort_title^10
     sort_title.en_folded^10
     sort_title.el_folded^10
+
+    text_citations.name^10
+    text_citations.name.en_folded^10
+    text_citations.name.el_folded^10
+    text_citations.role.exact^5
+    volume.title^5
+    volume.title.en_folded^5
+    volume.title.el_folded^5
+    volume.sort_title^5
+    volume.sort_title.en_folded^5
+    volume.sort_title.el_folded^5
+    series
+    series.en_folded
+    series.el_folded
+
+    publication_places.place.name
+    publication_places.place.name.en_folded
+    publication_places.place.name.el_folded
+    publisher
+    publisher.en_folded
+    publisher.el_folded
+
+    sort_date
+
     components.title^5
     components.title.en_folded^5
     components.title.el_folded^5
@@ -105,72 +132,73 @@ class Public::SearchController < ApplicationController
     components.note
     components.note.en_folded
     components.note.el_folded
-    text_type.exact
-    sort_date
-    original_greek_title
-    original_greek_title.en_folded
-    original_greek_title.el_folded
-    genre.exact
-    publication_places.place.name
-    publication_places.place.name.en_folded
-    publication_places.place.name.el_folded
-    publisher
-    publisher.en_folded
-    publisher.el_folded
-    journal.title
-    journal.title.en_folded
-    journal.title.el_folded
-    material_type.exact
-    other_text_languages.language.name
-    other_text_languages.language.name.exact
-    source
-    source.en_folded
-    source.el_folded
+
+    genre.exact^5
+
+    url
+
+    journal.title^5
+    journal.title.en_folded^5
+    journal.title.el_folded^5
+    journal.sort_title^5
+    journal.sort_title.en_folded^5
+    journal.sort_title.el_folded^5
+
+    sponsoring_organization
+    sponsoring_organization.en_folded
+    sponsoring_organization.el_folded
+
+    collection
+    collection.en_folded
+    collection.el_folded
+
+    standard_numbers.value.exact
+    dai.exact
+
+    components.component_citations.name^10
+    components.component_citations.name.en_folded^10
+    components.component_citations.name.el_folded^10
+    components.component_citations.genre.exact^5
+    components.component_citations.text_type.exact
+    components.component_citations.collection^10
+    components.component_citations.collection.en_folded^10
+    components.component_citations.collection.el_folded^10
+
     note
     note.en_folded
     note.el_folded
-    census_id.exact
-    series
-    series.en_folded
-    series.el_folded
+    abstract
+    abstract.en_folded
+    abstract.el_folded
+    editorial_annotation
+    editorial_annotation.en_folded
+    editorial_annotation.el_folded
+    physical_description
+    physical_description.en_folded
+    physical_description.el_folded
+
+    source
+    source.en_folded
+    source.el_folded
+    original_greek_title^10
+    original_greek_title.el_folded^10
+    original_greek_collection
+    original_greek_collection.el_folded
     original_greek_place_of_publication
     original_greek_place_of_publication.el_folded
     original_greek_publisher
     original_greek_publisher.el_folded
-    original_greek_date
-    sponsoring_organization
-    sponsoring_organization.en_folded
-    sponsoring_organization.el_folded
+    original_greek_date^5
+
+    other_text_languages.language.name
+    other_text_languages.language.name.exact
+
     special_location_of_item
     special_location_of_item.en_folded
     special_location_of_item.el_folded
     special_source_of_info
     special_source_of_info.en_folded
     special_source_of_info.el_folded
-    issue_editor
-    issue_editor.en_folded
-    issue_editor.el_folded
-    issue_title
-    issue_title.en_folded
-    issue_title.el_folded
-    abstract
-    abstract.en_folded
-    abstract.el_folded
-    authors_name_from_source
-    authors_name_from_source.el_folded
-    authors_name_from_source.en_folded
-    editorial_annotation
-    editorial_annotation.en_folded
-    editorial_annotation.el_folded
-    original_greek_collection
-    original_greek_collection.el_folded
-    collection
-    collection.en_folded
-    collection.el_folded
-    volume.title
-    volume.title.en_folded
-    volume.title.el_folded
-    standard_numbers.value.exact
   }
 
 
@@ -457,7 +485,7 @@ class Public::SearchController < ApplicationController
               when "title"
                 add_field_adv_search(['title', 'title.en_folded', 'title.el_folded', 'sort_title', 'sort_title.en_folded', 'sort_title.el_folded'], clean_search_string, @current_bool_op)
               when "journal"
-                add_field_adv_search(['journal.title', 'journal.title.en_folded', 'journal.title.el_folded'], clean_search_string, @current_bool_op)
+                add_field_adv_search(['journal.title', 'journal.title.en_folded', 'journal.title.el_folded', 'journal.sort_title', 'journal.sort_title.en_folded', 'journal.sort_title.el_folded'], clean_search_string, @current_bool_op)
               when "location"
                 add_field_adv_search(['publication_places.place.name', 'publication_places.place.name.en_folded', 'publication_places.place.name.el_folded'], clean_search_string, @current_bool_op)
               when "component_title"
@@ -471,7 +499,7 @@ class Public::SearchController < ApplicationController
               when "component_citation_name"
                 add_field_adv_search(['components.component_citations.name', 'components.component_citations.name.en_folded', 'components.component_citations.name.el_folded'], clean_search_string, @current_bool_op)
               when "volume"
-                add_field_adv_search(['volume.title', 'volume.title.en_folded', 'volume.title.el_folded'], clean_search_string, @current_bool_op)
+                add_field_adv_search(['volume.title', 'volume.title.en_folded', 'volume.title.el_folded', 'volume.sort_title', 'volume.sort_title.en_folded', 'volume.sort_title.el_folded'], clean_search_string, @current_bool_op)
               when "text_type"
                 add_field_adv_search(['text_type.exact'], clean_search_string, @current_bool_op)
               when "material_type"
