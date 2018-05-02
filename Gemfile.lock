@@ -122,6 +122,7 @@ GEM
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     hashie (3.5.7)
+    htmlentities (4.3.4)
     i18n (1.0.0)
       concurrent-ruby (~> 1.0)
     jbuilder (2.7.0)
@@ -289,6 +290,7 @@ DEPENDENCIES
   devise
   elasticsearch-model
   elasticsearch-rails
+  htmlentities
   jbuilder (~> 2.5)
   jquery-rails
   kaminari

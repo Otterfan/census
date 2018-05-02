@@ -1,4 +1,5 @@
 require 'elasticsearch/model'
+require 'htmlentities'
 
 class Text < ApplicationRecord
   include Elasticsearch::Model
@@ -179,7 +180,7 @@ class Text < ApplicationRecord
             :status_id, :section_id, :country_id,
             :journal_id, :volume_id, :sort_id
         ],
-        methods: [:authors_names, :sort_title],
+        methods: [:authors_names, :sort_title, :original_clean],
         include: {
             text_citations: {
                 except: [:created_at, :updated_at, :from_language_id, :to_language_id],
@@ -390,6 +391,24 @@ class Text < ApplicationRecord
 
   def sort_title
     title.gsub(/["'_\[\]]/, '').sub(/^(An? )|(The )/, '')
+  end
+
+  def original_clean
+    if original
+      coder = HTMLEntities.new
+
+      # convert html entities into chars
+      @clean = coder.decode(original)
+
+      # remove all html <tags>
+      @clean.gsub!(/<[^>]*>/, " ")
+
+      # clean up special chars
+      #@clean.gsub!(/[\\\\\/_\*\.\[\]\"\':\{\}\(\)\<\>\«\»\n;,]/, "")
+      @clean.gsub!(/[\n\_\*]/, "")
+    else
+      nil
+    end
   end
 
   # Pull out all unique and non-empty values for a column.

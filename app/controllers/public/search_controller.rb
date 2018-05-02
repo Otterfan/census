@@ -199,6 +199,11 @@ class Public::SearchController < ApplicationController
     special_source_of_info
     special_source_of_info.en_folded
     special_source_of_info.el_folded
+
+    original
+    original_clean
+    original_clean.el_folded
+    original_clean.en_folded
   }
 
 
