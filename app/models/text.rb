@@ -123,6 +123,7 @@ class Text < ApplicationRecord
                         },
                         en_folded: {
                             type: :text,
+                            term_vector: :with_positions_offsets,
                             analyzer: :english_folding
                         },
                         el: {
@@ -131,6 +132,7 @@ class Text < ApplicationRecord
                         },
                         el_folded: {
                             type: :text,
+                            term_vector: :with_positions_offsets,
                             analyzer: :greek_folding
                         },
                         exact: {
@@ -138,7 +140,8 @@ class Text < ApplicationRecord
                             analyzer: :exact
                         }
                     },
-                    analyzer: :standard
+                    analyzer: :standard,
+                    term_vector: :with_positions_offsets
                 }
             },
         },

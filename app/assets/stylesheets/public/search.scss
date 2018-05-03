@@ -90,6 +90,18 @@ ul.facet-list-group li.facet-list-group-item {
   color: #ccc;
 }
 
+.original-highlighted {
+  border-top: 1px solid #eee;
+  padding-top: .5rem;
+  margin-top: .5rem;
+}
+
+.original-highlighted p {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
 .public #search-results {
   .sort_box {
     text-align: right;

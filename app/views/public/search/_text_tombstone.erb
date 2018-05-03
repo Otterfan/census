@@ -23,3 +23,12 @@
     <cite><%= link_to_journal_from_search text['_source'].journal %></cite> <%= formatted_journal_issue(text) %>
   </div>
 <% end %>
+
+<% if text.has_key? 'highlight' %>
+  <% if text.highlight.original_clean %>
+    <div class="original-highlighted" data-field="original_cleaned"><%= ellipses_for_highlights(text.highlight.original_clean, text.original_clean).html_safe %></div>
+  <% elsif text.highlight.original %>
+    <div class="original-highlighted" data-field="original"><%= ellipses_for_highlights(text.highlight.original, text.original).html_safe %></div>
+  <% end %>
+<% end %>
+

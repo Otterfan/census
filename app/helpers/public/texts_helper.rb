@@ -131,4 +131,46 @@ module Public::TextsHelper
 
     retval
   end
+
+  # add in ellipses for record search results highlighting
+  def ellipses_for_highlights(params_highlight, params_original)
+    # http://www.concept47.com/austin_web_developer_blog/craftsmanship/showing-better-highlighted-search-result-fragments-with-elasticsearch/
+    highlighted_items = []
+
+    if not params_highlight
+      return ""
+    end
+
+    len = params_highlight.length
+
+    params_highlight.each_with_index do |match, idx|
+      # have to do this because highlighted stuff from ES has a trailing space for whatever reason
+      stripped_highlighted_item = strip_tags(match).rstrip
+      # if the beginning of the highlighted text doesn't match the original it has been clipped
+      tmp = params_original =~ /#{Regexp.escape(stripped_highlighted_item)}/
+      front_ellipsis = tmp != 0
+      # if the last 10 characters of the highlighted text don't match the original, same deal
+      # back_ellipsis = last_string_chars(stripped_highlighted_item, 10) != last_string_chars(params_original, 10)
+      back_ellipsis = stripped_highlighted_item.split(//).last(10).join != params_original.split(//).last(10).join
+
+      if idx == 0 and front_ellipsis
+        highlighted_items << ""
+      end
+
+      if front_ellipsis
+        highlighted_items << match
+      end
+
+      if back_ellipsis
+        highlighted_items << match
+      end
+
+      if idx+1 == len and back_ellipsis
+        highlighted_items << ""
+      end
+    end
+
+    highlighted_items.join("  &hellip;  ").strip
+  end
+
 end

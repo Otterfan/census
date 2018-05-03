@@ -329,7 +329,25 @@ class Public::SearchController < ApplicationController
           },
           sort: query_sort(params[:sort]),
           highlight: {
-              fields: highlight_fields
+              #fields: highlight_fields
+              fragment_size: "90",
+              pre_tags: ["<mark>"],
+              post_tags: ["</mark>"],
+              fields: [
+                  {
+                      "original_clean": {
+                          matched_fields: ["original_clean", "original_clean.en_folded", "original_clean.el_folded"],
+                          force_source: :true,
+                          type: :fvh
+                      }
+                  }, {
+                    "original": {
+                        matched_fields: ["original", "original.en_folded", "original.el_folded"],
+                        force_source: :true,
+                        type: :fvh
+                    }
+                }
+              ]
           },
           aggs: {
               genre: {
