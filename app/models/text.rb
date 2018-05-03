@@ -415,7 +415,7 @@ class Text < ApplicationRecord
 
       # clean up special chars
       #@clean.gsub!(/[\\\\\/_\*\.\[\]\"\':\{\}\(\)\<\>\«\»\n;,]/, "")
-      @clean.gsub!(/[\n\_\*]/, "")
+      @clean.gsub(/[\n\_\*]/, "")
     else
       nil
     end
