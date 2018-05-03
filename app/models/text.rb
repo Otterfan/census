@@ -85,6 +85,7 @@ class Text < ApplicationRecord
                   tokenizer: :standard,
                   filter: [
                       :lowercase,
+                      :english_possessive_stemmer,
                       :english_stop,
                       :asciifolding
                   ]
@@ -397,8 +398,14 @@ class Text < ApplicationRecord
     if original
       coder = HTMLEntities.new
 
+      @cleaned_original = original.dup
+
+      # escape quotes
+      @cleaned_original.gsub!(/\'/, "\'")
+      @cleaned_original.gsub!(/\"/, "\"")
+
       # convert html entities into chars
-      @clean = coder.decode(original)
+      @clean = coder.decode(@cleaned_original)
 
       # remove all html <tags>
       @clean.gsub!(/<[^>]*>/, " ")
