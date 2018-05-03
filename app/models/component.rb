@@ -26,5 +26,19 @@ class Component < ApplicationRecord
     title.gsub(/["'_\[\]]/, '').sub(/^(An? )|(The )/,'')
   end
 
+  def title_clean
+    unless title
+      return ''
+    end
+    title.gsub(/\_/, "")
+  end
+
+  def collection_clean
+    unless collection
+      return ''
+    end
+    collection.gsub(/\_/, "")
+  end
+
   default_scope { order("ordinal ASC") }
 end

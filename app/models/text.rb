@@ -175,7 +175,7 @@ class Text < ApplicationRecord
     ]
   end
 
-
+  
   def as_indexed_json(options = {})
     as_json(
         #only: [:title, :original, :journal_title, :publisher, :place_of_publication, :authors_name_from_source, :census_id],
@@ -197,9 +197,9 @@ class Text < ApplicationRecord
                     }
                 }
             },
-
             components: {
                 except: [:created_at, :updated_at],
+                methods: [:sort_title, :title_clean, :collection_clean],
                 include: {
                     component_citations: {
                         except: [:id, :component_id, :from_language_id, :to_language_id, :created_at, :updated_at],
