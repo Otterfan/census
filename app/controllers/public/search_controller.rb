@@ -577,6 +577,7 @@ class Public::SearchController < ApplicationController
 
     # our @combined_query_string is inserted into an @combined_query_hash "query" key hash
     if @combined_query_string.length > 0
+      @combined_query_hash[:query_string][:default_operator] = "and"
       @combined_query_hash[:query_string][:query] = @combined_query_string
 
       # add @combined_query_hash to our @adv_search_array array of search objects
@@ -658,8 +659,15 @@ class Public::SearchController < ApplicationController
   def add_field_adv_search(fields, field_val, bool_op = "AND")
     # loop through fields list and create field_name:search_term pair string, and add them to @combined_fields_list list
     @combined_fields_list = []
-    fields.each do |field|
-      @combined_fields_list << "#{field}:#{field_val}"
+
+    # handle field_vals that are multiple words
+    # A search on Title with terms `cavafy cafe` will produce a grouping similar to: (title:cavafy AND title:cafe)
+    fields.each do |field_str|
+      @combined_field_parts_list = []
+      field_val.split(" ").each do |field_val_part|
+        @combined_field_parts_list << "#{field_str}:#{field_val_part}"
+      end
+      @combined_fields_list << "(#{@combined_field_parts_list.join(" AND ")})"
     end
 
     # each term in @combined_fields_list list will be OR'ed together and grouped by parentheses, and saved as a string
