@@ -146,9 +146,11 @@ module Public::TextsHelper
     params_highlight.each_with_index do |match, idx|
       # have to do this because highlighted stuff from ES has a trailing space for whatever reason
       stripped_highlighted_item = strip_tags(match).rstrip
+
       # if the beginning of the highlighted text doesn't match the original it has been clipped
       tmp = params_original =~ /#{Regexp.escape(stripped_highlighted_item)}/
       front_ellipsis = tmp != 0
+
       # if the last 10 characters of the highlighted text don't match the original, same deal
       # back_ellipsis = last_string_chars(stripped_highlighted_item, 10) != last_string_chars(params_original, 10)
       back_ellipsis = stripped_highlighted_item.split(//).last(10).join != params_original.split(//).last(10).join
@@ -159,9 +161,7 @@ module Public::TextsHelper
 
       if front_ellipsis
         highlighted_items << match
-      end
-
-      if back_ellipsis
+      elsif back_ellipsis
         highlighted_items << match
       end
 
