@@ -526,11 +526,11 @@ class Public::SearchController < ApplicationController
               when "volume"
                 add_field_adv_search(['volume.title', 'volume.title.en_folded', 'volume.title.el_folded', 'volume.sort_title', 'volume.sort_title.en_folded', 'volume.sort_title.el_folded'], clean_search_string, @current_bool_op)
               when "text_type"
-                add_field_adv_search(['text_type.exact'], clean_search_string, @current_bool_op)
+                add_field_adv_search(['text_type.exact'], wrap_in_quotes(clean_search_string), @current_bool_op)
               when "material_type"
-                add_field_adv_search(['material_type.exact'], clean_search_string, @current_bool_op)
+                add_field_adv_search(['material_type.exact'], wrap_in_quotes(clean_search_string), @current_bool_op)
               when "genre"
-                add_field_adv_search(['genre.exact'], clean_search_string, @current_bool_op)
+                add_field_adv_search(['genre.exact'], wrap_in_quotes(clean_search_string), @current_bool_op)
               when "original_greek_title"
                 add_field_adv_search(['original_greek_title', 'original_greek_title.el_folded'], clean_search_string, @current_bool_op)
               when "original_greek_place_of_publication"
@@ -684,8 +684,17 @@ class Public::SearchController < ApplicationController
     # A search on Title with terms `cavafy cafe` will produce a grouping similar to: (title:cavafy AND title:cafe)
     fields.each do |field_str|
       @combined_field_parts_list = []
-      field_val.split(" ").each do |field_val_part|
-        @combined_field_parts_list << "#{field_str}:#{field_val_part}"
+
+      # check if field_val is wrapped in quotes
+      # if true, treat the entire field_val as a single item
+      # else, split field_val by whitespace and treat each item as a separate search term
+      if /^\".*\"$/.match?(field_val)
+        puts "  this search string is wrapped in quotes"
+        @combined_field_parts_list << "#{field_str}:#{field_val}"
+      else
+        field_val.split(" ").each do |field_val_part|
+          @combined_field_parts_list << "#{field_str}:#{field_val_part}"
+        end
       end
       @combined_fields_list << "(#{@combined_field_parts_list.join(" AND ")})"
     end
