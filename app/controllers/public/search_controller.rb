@@ -474,7 +474,7 @@ class Public::SearchController < ApplicationController
     end
 
     # regular expression used to match the field name and search string from the combined bool search query
-    match_re = /\((\w+)::([^)]+)\)/i
+    match_re = /^\((\w+)::(.+)\)$/i
 
     # Next, process each type of token by even- and odd-numbered indexes
     tokens.each_with_index do |tok, i|
@@ -568,6 +568,8 @@ class Public::SearchController < ApplicationController
             # this ignores the case where we have at least one valid field name and search string pair.
             raise ArgumentError.new("The advanced search query is missing the search string.")
           end
+        else
+          puts "  couldn't match on the field regex!"
         end
 
       else
