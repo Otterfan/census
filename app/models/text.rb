@@ -401,21 +401,24 @@ class Text < ApplicationRecord
     if original
       coder = HTMLEntities.new
 
+      # duplicate the original field for our transformations
       @cleaned_original = original.dup
 
-      # escape quotes
-      @cleaned_original.gsub!(/\'/, "\'")
-      @cleaned_original.gsub!(/\"/, "\"")
+      # remove &gt; and &lt; html entities to avoid removing words wrapped in <> in a later gsub command
+      @clean = @cleaned_original.gsub(/(&gt;|&lt;)/, "")
 
       # convert html entities into chars
-      @clean = coder.decode(@cleaned_original)
+      @clean = coder.decode(@clean)
 
       # remove all html <tags>
-      @clean.gsub!(/<[^>]*>/, " ")
+      @clean = @clean.gsub(/<[^>]*>/, "")
 
       # clean up special chars
       #@clean.gsub!(/[\\\\\/_\*\.\[\]\"\':\{\}\(\)\<\>\«\»\n;,]/, "")
-      @clean.gsub(/[\n\_\*]/, "")
+      @clean = @clean.gsub(/[\_\*«»]/, "")
+
+      # replace newlines with spaces, and strip leading/trailing whitespace
+      @clean.gsub(/[\n]/, " ").strip
     else
       nil
     end
