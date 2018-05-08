@@ -39,7 +39,7 @@ class Person < ApplicationRecord
 
   def get_texts_by_type
     @translations, @studies = [], []
-    texts.sort_by {|text| text.sort_title}.each do |text|
+    texts.sort_by {|text| text.sort_title.downcase}.each do |text|
       if !text.text_type
       elsif text.text_type.start_with? 'trans'
         @translations << text

@@ -394,7 +394,7 @@ class Text < ApplicationRecord
   end
 
   def sort_title
-    title.gsub(/["'_\[\]]/, '').sub(/^(An? )|(The )/, '')
+    title.gsub(/["'“”‘’«»:_.\[\]]/, '').sub(/^(An? )|(The )/, '').strip
   end
 
   def original_clean
@@ -415,7 +415,7 @@ class Text < ApplicationRecord
 
       # clean up special chars
       #@clean.gsub!(/[\\\\\/_\*\.\[\]\"\':\{\}\(\)\<\>\«\»\n;,]/, "")
-      @clean = @clean.gsub(/[\_\*«»]/, "")
+      @clean = @clean.gsub(/["'“”‘’«»:_.\[\]\*]/, "")
 
       # replace newlines with spaces, and strip leading/trailing whitespace
       @clean.gsub(/[\n]/, " ").strip
