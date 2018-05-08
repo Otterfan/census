@@ -9,6 +9,13 @@ class Person < ApplicationRecord
 
   default_scope {order('last_name ASC, first_name ASC')}
 
+=begin
+  after_update {
+    puts "Person record '#{self.id}' was updated. Will now touch related Text record(s)"
+    self.texts.each(&:touch)
+  }
+=end
+
   def translations
     unless @translations
       get_texts_by_type

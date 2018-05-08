@@ -8,4 +8,9 @@ class Volume < ApplicationRecord
 
   has_paper_trail
 
+  after_save {
+    puts "Volume record '#{self.id}' was updated. Will now touch related Text record(s)"
+    self.texts.each(&:touch)
+  }
+
 end

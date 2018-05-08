@@ -4,4 +4,8 @@ class TextCitation < ApplicationRecord
   belongs_to :to_language, class_name: 'Language', foreign_key: 'to_language', optional: true
 
   default_scope { order("text_citations.ordinal ASC, id ASC") }
+
+  after_save {
+    puts "TextCitation record '#{self.id}' was updated. Will now update related Text record: [#{self.text.id}]"
+  }
 end

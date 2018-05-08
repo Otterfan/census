@@ -29,7 +29,15 @@ class Text < ApplicationRecord
   accepts_nested_attributes_for :cross_references, reject_if: :all_blank, :allow_destroy => true
   accepts_nested_attributes_for :components, reject_if: :all_blank, :allow_destroy => true
 
-  after_commit() {__elasticsearch__.index_document}
+  after_touch() {
+    puts "Text record '#{self.id}' was touched. Will now update."
+    #__elasticsearch__.index_document
+  }
+
+  after_commit {
+    puts "Text record '#{self.id}' was updated. Will now reindex."
+    __elasticsearch__.index_document
+  }
 
   paginates_per 60
 

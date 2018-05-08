@@ -8,4 +8,12 @@ class Place < ApplicationRecord
   has_paper_trail
 
   default_scope {order(name: :asc)}
+
+=begin
+  after_update {
+    puts "Place record '#{self.id}' was updated. Will now touch related Text record(s)"
+    self.texts.each(&:touch)
+  }
+=end
+
 end

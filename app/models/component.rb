@@ -3,6 +3,10 @@ class Component < ApplicationRecord
   has_many :component_citations
   accepts_nested_attributes_for :component_citations,  reject_if: :all_blank, :allow_destroy => true
 
+  after_save {
+    puts "Component record '#{self.id}' was updated. Will now update related Text record: [#{self.text.id}]"
+  }
+
   def translators
     unless @translators
       load_citations_by_role
