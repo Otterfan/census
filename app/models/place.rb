@@ -10,7 +10,7 @@ class Place < ApplicationRecord
   default_scope {order(name: :asc)}
 
 =begin
-  after_update {
+  after_commit {
     puts "Place record '#{self.id}' was updated. Will now touch related Text record(s)"
     self.texts.each(&:touch)
   }

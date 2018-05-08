@@ -4,7 +4,7 @@ class OtherTextLanguage < ApplicationRecord
 
   accepts_nested_attributes_for :language, :reject_if => :all_blank
 
-  after_save {
+  after_commit {
     puts "OtherTextLanguage record '#{self.id}' was updated. Will now update related Text record: [#{self.text.id}]"
   }
 end

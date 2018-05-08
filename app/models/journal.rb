@@ -5,7 +5,7 @@ class Journal < ApplicationRecord
 
   has_paper_trail
 
-  after_save {
+  after_commit {
     puts "Journal record '#{self.id}' was updated. Will now touch related Text record(s)"
     self.texts.each(&:touch)
   }

@@ -3,7 +3,7 @@ class Component < ApplicationRecord
   has_many :component_citations
   accepts_nested_attributes_for :component_citations,  reject_if: :all_blank, :allow_destroy => true
 
-  after_save {
+  after_commit {
     puts "Component record '#{self.id}' was updated. Will now update related Text record: [#{self.text.id}]"
   }
 

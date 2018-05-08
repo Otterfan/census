@@ -5,7 +5,7 @@ class TextCitation < ApplicationRecord
 
   default_scope { order("text_citations.ordinal ASC, id ASC") }
 
-  after_save {
+  after_commit {
     puts "TextCitation record '#{self.id}' was updated. Will now update related Text record: [#{self.text.id}]"
   }
 end
