@@ -27,7 +27,7 @@ class VolumesController < ApplicationController
   # POST /volumes.json
   def create
     @volume = Volume.new(volume_params)
-    @volume.sort_title = volume_params[:title].sub(/^The +/, '').sub(/^An +/, '').sub(/^A +/, '')
+    @volume.sort_title = volume_params[:title].sub(/^The +/, '').sub(/^An +/, '').sub(/^A +/, '').sub(/:/, '')
 
     respond_to do |format|
       if @volume.save
@@ -44,7 +44,7 @@ class VolumesController < ApplicationController
   # PATCH/PUT /volumes/1.json
   def update
     respond_to do |format|
-      @volume.sort_title = volume_params[:title].sub(/^The +/, '').sub(/^An +/, '').sub(/^A +/, '')
+      @volume.sort_title = volume_params[:title].sub(/^The +/, '').sub(/^An +/, '').sub(/^A +/, '').sub(/:/, '')
       @volume.save
 
       if @volume.update(volume_params)

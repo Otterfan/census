@@ -328,20 +328,34 @@
             }
 
             // now check on the date range slider filter
-            var date_range_earliest = $("input#publication-date-earliest-value").val();
-            var date_range_latest = $("input#publication-date-latest-value").val();
 
-            if (date_range_earliest || date_range_latest) {
-                var publication_date_range_param = "";
-                var earliest_val = date_range_earliest || date_range_latest;
-                var latest_val = date_range_latest || date_range_earliest;
+            // check if this is a new search
+            var new_search = $("#publication_dates_data").attr("data-new-search");
 
-                console.log("date range: " + earliest_val + " - " + latest_val);
+            // get the faceted years from attribute
+            var date_range_earliest_from_facet = $("#publication_dates_data").attr("data-publication-date-earliest");
+            var date_range_latest_from_facet = $("#publication_dates_data").attr("data-publication-date-latest");
 
-                // only add in the date range param if there is at least one search field filled out
-                if (query_url_param && query_url_param.length){
-                    publication_date_range_param = "&publication_date_range=" + earliest_val + "-" + latest_val;
-                    query_url_param += publication_date_range_param;
+            // only apply date range filter if this is a new search or
+            // the faceted years from attribute contains a value, which means that the filter was already applied
+            if (new_search === "true" || (date_range_latest_from_facet && date_range_earliest_from_facet)) {
+
+                // get the value from the date range sliders
+                var date_range_earliest = $("input#publication-date-earliest-value").val();
+                var date_range_latest = $("input#publication-date-latest-value").val();
+
+                if (date_range_earliest || date_range_latest) {
+                    var publication_date_range_param = "";
+                    var earliest_val = date_range_earliest || date_range_latest;
+                    var latest_val = date_range_latest || date_range_earliest;
+
+                    console.log("date range: " + earliest_val + " - " + latest_val);
+
+                    // only add in the date range param if there is at least one search field filled out
+                    if (query_url_param && query_url_param.length) {
+                        publication_date_range_param = "&publication_date_range=" + earliest_val + "-" + latest_val;
+                        query_url_param += publication_date_range_param;
+                    }
                 }
             }
 

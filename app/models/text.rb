@@ -175,7 +175,7 @@ class Text < ApplicationRecord
     ]
   end
 
-
+  
   def as_indexed_json(options = {})
     as_json(
         #only: [:title, :original, :journal_title, :publisher, :place_of_publication, :authors_name_from_source, :census_id],
@@ -197,9 +197,9 @@ class Text < ApplicationRecord
                     }
                 }
             },
-
             components: {
                 except: [:created_at, :updated_at],
+                methods: [:sort_title, :title_clean, :collection_clean],
                 include: {
                     component_citations: {
                         except: [:id, :component_id, :from_language_id, :to_language_id, :created_at, :updated_at],
@@ -401,21 +401,24 @@ class Text < ApplicationRecord
     if original
       coder = HTMLEntities.new
 
+      # duplicate the original field for our transformations
       @cleaned_original = original.dup
 
-      # escape quotes
-      @cleaned_original.gsub!(/\'/, "\'")
-      @cleaned_original.gsub!(/\"/, "\"")
+      # remove &gt; and &lt; html entities to avoid removing words wrapped in <> in a later gsub command
+      @clean = @cleaned_original.gsub(/(&gt;|&lt;)/, "")
 
       # convert html entities into chars
-      @clean = coder.decode(@cleaned_original)
+      @clean = coder.decode(@clean)
 
       # remove all html <tags>
-      @clean.gsub!(/<[^>]*>/, " ")
+      @clean = @clean.gsub(/<[^>]*>/, "")
 
       # clean up special chars
       #@clean.gsub!(/[\\\\\/_\*\.\[\]\"\':\{\}\(\)\<\>\«\»\n;,]/, "")
-      @clean.gsub!(/[\n\_\*]/, "")
+      @clean = @clean.gsub(/[\_\*«»]/, "")
+
+      # replace newlines with spaces, and strip leading/trailing whitespace
+      @clean.gsub(/[\n]/, " ").strip
     else
       nil
     end

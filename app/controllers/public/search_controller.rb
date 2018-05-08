@@ -121,14 +121,14 @@ class Public::SearchController < ApplicationController
 
     sort_date
 
-    components.title^5
-    components.title.en_folded^5
-    components.title.el_folded^5
+    components.title_clean^5
+    components.title_clean.en_folded^5
+    components.title_clean.el_folded^5
     components.genre
     components.text_type
-    components.collection
-    components.collection.en_folded
-    components.collection.el_folded
+    components.collection_clean
+    components.collection_clean.en_folded
+    components.collection_clean.el_folded
     components.note
     components.note.en_folded
     components.note.el_folded
@@ -474,7 +474,7 @@ class Public::SearchController < ApplicationController
     end
 
     # regular expression used to match the field name and search string from the combined bool search query
-    match_re = /\((\w+)::([^)]+)\)/i
+    match_re = /^\((\w+)::(.+)\)$/i
 
     # Next, process each type of token by even- and odd-numbered indexes
     tokens.each_with_index do |tok, i|
@@ -514,7 +514,7 @@ class Public::SearchController < ApplicationController
               when "location"
                 add_field_adv_search(['publication_places.place.name', 'publication_places.place.name.en_folded', 'publication_places.place.name.el_folded'], clean_search_string, @current_bool_op)
               when "component_title"
-                add_field_adv_search(['components.title', 'components.title.en_folded', 'components.title.el_folded'], clean_search_string, @current_bool_op)
+                add_field_adv_search(['components.title_clean', 'components.title_clean.en_folded', 'components_clean.title.el_folded'], clean_search_string, @current_bool_op)
               when "people"
                 add_field_adv_search(PEOPLE_FIELDS, clean_search_string, @current_bool_op)
               when "topic_author"
@@ -526,11 +526,11 @@ class Public::SearchController < ApplicationController
               when "volume"
                 add_field_adv_search(['volume.title', 'volume.title.en_folded', 'volume.title.el_folded', 'volume.sort_title', 'volume.sort_title.en_folded', 'volume.sort_title.el_folded'], clean_search_string, @current_bool_op)
               when "text_type"
-                add_field_adv_search(['text_type.exact'], clean_search_string, @current_bool_op)
+                add_field_adv_search(['text_type.exact'], wrap_in_quotes(clean_search_string), @current_bool_op)
               when "material_type"
-                add_field_adv_search(['material_type.exact'], clean_search_string, @current_bool_op)
+                add_field_adv_search(['material_type.exact'], wrap_in_quotes(clean_search_string), @current_bool_op)
               when "genre"
-                add_field_adv_search(['genre.exact'], clean_search_string, @current_bool_op)
+                add_field_adv_search(['genre.exact'], wrap_in_quotes(clean_search_string), @current_bool_op)
               when "original_greek_title"
                 add_field_adv_search(['original_greek_title', 'original_greek_title.el_folded'], clean_search_string, @current_bool_op)
               when "original_greek_place_of_publication"
@@ -568,6 +568,8 @@ class Public::SearchController < ApplicationController
             # this ignores the case where we have at least one valid field name and search string pair.
             raise ArgumentError.new("The advanced search query is missing the search string.")
           end
+        else
+          puts "  couldn't match on the field regex!"
         end
 
       else
@@ -684,8 +686,17 @@ class Public::SearchController < ApplicationController
     # A search on Title with terms `cavafy cafe` will produce a grouping similar to: (title:cavafy AND title:cafe)
     fields.each do |field_str|
       @combined_field_parts_list = []
-      field_val.split(" ").each do |field_val_part|
-        @combined_field_parts_list << "#{field_str}:#{field_val_part}"
+
+      # check if field_val is wrapped in quotes
+      # if true, treat the entire field_val as a single item
+      # else, split field_val by whitespace and treat each item as a separate search term
+      if /^\".*\"$/.match?(field_val)
+        puts "  this search string is wrapped in quotes"
+        @combined_field_parts_list << "#{field_str}:#{field_val}"
+      else
+        field_val.split(" ").each do |field_val_part|
+          @combined_field_parts_list << "#{field_str}:#{field_val_part}"
+        end
       end
       @combined_fields_list << "(#{@combined_field_parts_list.join(" AND ")})"
     end
