@@ -121,9 +121,9 @@ class Public::SearchController < ApplicationController
 
     sort_date
 
-    components.title_clean^5
-    components.title_clean.en_folded^5
-    components.title_clean.el_folded^5
+    components.sort_title^5
+    components.sort_title.en_folded^5
+    components.sort_title.el_folded^5
     components.genre
     components.text_type
     components.collection_clean
@@ -514,7 +514,7 @@ class Public::SearchController < ApplicationController
               when "location"
                 add_field_adv_search(['publication_places.place.name', 'publication_places.place.name.en_folded', 'publication_places.place.name.el_folded'], clean_search_string, @current_bool_op)
               when "component_title"
-                add_field_adv_search(['components.title_clean', 'components.title_clean.en_folded', 'components_clean.title.el_folded'], clean_search_string, @current_bool_op)
+                add_field_adv_search(['components.sort_title', 'components.sort_title.en_folded', 'components.sort_title.el_folded'], clean_search_string, @current_bool_op)
               when "people"
                 add_field_adv_search(PEOPLE_FIELDS, clean_search_string, @current_bool_op)
               when "topic_author"

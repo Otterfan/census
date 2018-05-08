@@ -23,21 +23,14 @@ class Component < ApplicationRecord
     unless title
       return ''
     end
-    title.gsub(/["'_\[\]]/, '').sub(/^(An? )|(The )/,'')
-  end
-
-  def title_clean
-    unless title
-      return ''
-    end
-    title.gsub(/\_/, "")
+    title.gsub(/["'“”‘’«»:_.\[\]\*]/, '').sub(/^(An? )|(The )/,'').strip
   end
 
   def collection_clean
     unless collection
       return ''
     end
-    collection.gsub(/\_/, "")
+    collection.gsub(/["'“”‘’«»:_.\[\]\*]/, "").sub(/^(An? )|(The )/,'').strip
   end
 
   default_scope { order("ordinal ASC") }
