@@ -72,20 +72,20 @@ class Text < ApplicationRecord
                   language: :english
               },
               greek_lowercase: {
-                  type:       :lowercase,
-                  language:   :greek
+                  type: :lowercase,
+                  language: :greek
               },
               greek_stop: {
-                  type:       :stop,
-                  stopwords:  "_greek_"
+                  type: :stop,
+                  stopwords: "_greek_"
               },
               greek_keywords: {
-                  type:       :keyword_marker,
-                  keywords:   ["παράδειγμα"]
+                  type: :keyword_marker,
+                  keywords: ["παράδειγμα"]
               },
               greek_stemmer: {
-                  type:       :stemmer,
-                  language:   :greek
+                  type: :stemmer,
+                  language: :greek
               }
           },
           analyzer: {
@@ -183,7 +183,7 @@ class Text < ApplicationRecord
     ]
   end
 
-  
+
   def as_indexed_json(options = {})
     as_json(
         #only: [:title, :original, :journal_title, :publisher, :place_of_publication, :authors_name_from_source, :census_id],
@@ -326,7 +326,10 @@ class Text < ApplicationRecord
       get_contributors
     end
 
-    @authors.map(&:name).join("; ")
+    authors_names = @authors.map.map(&:name)
+    translators_names = @translators.map {|person| person.name + ' (tr)'}
+    named_contributors = authors_names + translators_names
+    named_contributors.join('; ')
   end
 
   def translators

@@ -1,16 +1,18 @@
 <div class="result-title">
   <%= link_to (text.title.blank? ? "[No title]" : @results_formatter.format(text.title)), public_text_path(text.id) %>
+  <span class="title-date">(<%= text.date %>)</span>
+</div>
+<div class="result-author">
+  Topic author: <span class="topic-author-english"><%= text.topic_author.full_name %></span>
+  <span class="topic-author-greek"><%= text.topic_author.greek_full_name %></span>
 </div>
 <div class="result-author">
   <%= text['_source'].authors_names %>
 </div>
-<div>
-  Topic author: <%= text.topic_author.full_name %>
-</div>
 <% if text['_source'].census_id %>
-<div>
-  Entry Number: <%= text.census_id %>
-</div>
+  <div>
+    Entry Number: <%= text.census_id %>
+  </div>
 <% end %>
 <% if text['_source'].volume %>
   <div>
