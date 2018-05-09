@@ -290,6 +290,7 @@ DEPENDENCIES
   devise
   elasticsearch-model
   elasticsearch-rails
+  faraday
   htmlentities
   jbuilder (~> 2.5)
   jquery-rails
