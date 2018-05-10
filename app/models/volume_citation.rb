@@ -5,5 +5,6 @@ class VolumeCitation < ApplicationRecord
 
   after_commit {
     puts "VolumeCitation record '#{self.id}' was updated. Will now update related Volume record: [#{self.volume.id}]"
+    self.volume.update(updated_at: Time.current)
   }
 end

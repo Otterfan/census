@@ -9,11 +9,29 @@ class Place < ApplicationRecord
 
   default_scope {order(name: :asc)}
 
-=begin
-  after_commit {
-    puts "Place record '#{self.id}' was updated. Will now touch related Text record(s)"
-    self.texts.each(&:touch)
+  def get_associated_texts_ids
+    self.texts.pluck(:id)
+  end
+
+  def start_index_process
+    ids = get_associated_texts_ids
+    puts "Will now trigger reindexing for the following #{ids.length} related Text record(s): #{ids}"
+    ReindexerWorker.perform_async(ids)
+  end
+
+  @should_reindex = false
+
+  before_save {
+    if self.changes.present?
+      @should_reindex = true
+    end
   }
-=end
+
+  after_commit {
+    if @should_reindex
+      puts "Place record '#{self.id}' was updated."
+      start_index_process
+    end
+  }
 
 end

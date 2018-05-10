@@ -31,7 +31,6 @@ class Text < ApplicationRecord
 
   after_touch() {
     puts "Text record '#{self.id}' was touched. Will now update."
-    #__elasticsearch__.index_document
   }
 
   after_commit {
