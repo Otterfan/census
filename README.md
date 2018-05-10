@@ -33,7 +33,7 @@ Check that Elasticsearch is running on the default port -- [http://localhost:920
 
 The following plugin adds extended Unicode support for foreign language analysis.
 
-Be sure to shut off Elasticsearch before installing this plugin. Run:
+Be sure to shut off Elasticsearch before installing this plugin. Then run:
 
 ```sudo bin/elasticsearch-plugin install analysis-icu```
 
@@ -67,7 +67,7 @@ Install the most recent [Redis](https://www.redis.io/) 4.0.x version through the
 Make note of where the Redis config file is stored. Brew may store this file at `/usr/local/etc/redis.conf`. 
 Other package managers may store this file at `/etc/redis/6379.conf` or similar locations.
 
-#### Update config
+#### Update configuration
 
 To improve security we'll bind Redis to listen only to localhost. Open the Redis config file for editing and make sure this setting line is uncommented:
 `bind 127.0.0.1`
@@ -84,18 +84,19 @@ Check that Redis is running on the default port -- [http://localhost:6379](http:
 
 ### Sidekiq
 
-[Sidekiq](https://github.com/mperham/sidekiq) is a Ruby gem for managing background jobs. It connects with Redis to manage the job queue.
+[Sidekiq](https://github.com/mperham/sidekiq) is a Ruby gem for managing background jobs. 
+It connects to Redis to process jobs from the job queue.
 
-This gem should automatically get installed when the application is installed. 
+This gem should automatically be installed with the application gemfile. 
 
-#### Config
+#### Configuration
 
 Sidekiq is configured to run with the default configuration settings. 
 If Redis is running on non-default ports then those settings can be changed in the [sidekiq.rb](../sidekiq/config/initializers/sidekiq.rb) initializer file. 
 
 #### Run
 
-It does require a separate Rails process to be run:
+Sidekiq require a separate Rails process to be run:
 
 `bundle exec sidekiq -L log/sidekiq.log`
 
