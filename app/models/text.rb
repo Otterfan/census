@@ -41,7 +41,13 @@ class Text < ApplicationRecord
 
   paginates_per 60
 
-  has_paper_trail
+  # set the callbacks we want to trigger for versioning
+  has_paper_trail on: []
+  paper_trail.on_destroy
+  paper_trail.on_update
+  paper_trail.on_create
+  # ignore on_touch callbacks from associated records
+  # paper_trail.on_touch
 
   # these settings will create several dynamic mappings for each string-type field:
   #    keyword          : non-indexed, used for keyword searching and aggregations
