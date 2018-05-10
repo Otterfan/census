@@ -90,7 +90,8 @@ This gem should automatically get installed when the application is installed.
 
 #### Config
 
-Sidekiq is configured to run with the default configuration settings. If Redis is running on non-default ports then those settings can be changed in the [sidekiq.rb](../blob/sidekiq/config/initializers/sidekiq.rb) initializer file. 
+Sidekiq is configured to run with the default configuration settings. 
+If Redis is running on non-default ports then those settings can be changed in the [sidekiq.rb](../sidekiq/config/initializers/sidekiq.rb) initializer file. 
 
 #### Run
 
