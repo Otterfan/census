@@ -4,6 +4,7 @@ require 'htmlentities'
 class Text < ApplicationRecord
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
+  include ElasticsearchHelper
 
   belongs_to :language, optional: true
   belongs_to :topic_author, class_name: 'Person', optional: false
@@ -35,7 +36,8 @@ class Text < ApplicationRecord
 
   after_commit {
     puts "Text record '#{self.id}' was updated. Will now reindex."
-    __elasticsearch__.index_document
+    #__elasticsearch__.index_document
+    index_document(self, self.id)
   }
 
   paginates_per 60

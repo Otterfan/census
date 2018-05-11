@@ -1,5 +1,6 @@
 class ReindexerWorker
   include Sidekiq::Worker
+  include ElasticsearchHelper
 
   def info_output(message)
     logger.info message
@@ -28,18 +29,7 @@ class ReindexerWorker
         end
 
         # attempt to index Text record
-        begin
-          info_output "Reindexing Text record id '#{tid}'"
-          @text.__elasticsearch__.index_document
-        rescue Elasticsearch::Transport::Transport::Errors::NotFound => e
-          error_output "Elasticsearch NotFound Error: #{e}"
-        rescue Elasticsearch::Transport::Transport::ServerError => e
-          error_output "Elasticsearch ServerError: #{e}"
-        rescue Elasticsearch::Transport::Transport::Error => e
-          error_output "Elasticsearch Transport Error: #{e}"
-        rescue StandardError => e
-          error_output "Rails StandardError: #{e}"
-        end
+        index_document(@text, tid)
       else
         info_output "Text id '#{text_ids}' is not a valid ID"
       end
