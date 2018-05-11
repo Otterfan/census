@@ -29,7 +29,7 @@ class ReindexerWorker
         end
 
         # attempt to index Text record
-        index_document(@text, tid)
+        document_index(@text, tid)
       else
         info_output "Text id '#{text_ids}' is not a valid ID"
       end

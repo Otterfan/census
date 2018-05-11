@@ -10,10 +10,25 @@ module ElasticsearchHelper
     puts message
   end
 
-  def index_document(record, record_id)
+  def document_index(record, record_id)
     begin
       info_output "Reindexing Text record id '#{record_id}'"
       record.__elasticsearch__.index_document
+    rescue Elasticsearch::Transport::Transport::Errors::NotFound => e
+      error_output "Elasticsearch NotFound Error: #{e}"
+    rescue Elasticsearch::Transport::Transport::ServerError => e
+      error_output "Elasticsearch ServerError: #{e}"
+    rescue Elasticsearch::Transport::Transport::Error => e
+      error_output "Elasticsearch Transport Error: #{e}"
+    rescue StandardError => e
+      error_output "Rails StandardError: #{e}"
+    end
+  end
+
+  def document_delete(record, record_id)
+    begin
+      info_output "Deleting Text record id '#{record_id}' from index"
+      record.__elasticsearch__.delete_document
     rescue Elasticsearch::Transport::Transport::Errors::NotFound => e
       error_output "Elasticsearch NotFound Error: #{e}"
     rescue Elasticsearch::Transport::Transport::ServerError => e

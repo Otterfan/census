@@ -3,7 +3,7 @@ require 'htmlentities'
 
 class Text < ApplicationRecord
   include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  # include Elasticsearch::Model::Callbacks
   include ElasticsearchHelper
 
   belongs_to :language, optional: true
@@ -30,15 +30,27 @@ class Text < ApplicationRecord
   accepts_nested_attributes_for :cross_references, reject_if: :all_blank, :allow_destroy => true
   accepts_nested_attributes_for :components, reject_if: :all_blank, :allow_destroy => true
 
-  after_touch() {
+  after_touch {
     puts "Text record '#{self.id}' was touched. Will now update."
   }
 
-  after_commit {
+  after_commit on: [:create] do
+    puts "Text record '#{self.id}' was created. Will now index."
+    # __elasticsearch__.index_document
+    document_index(self, self.id)
+  end
+
+  after_commit on: [:update] do
     puts "Text record '#{self.id}' was updated. Will now reindex."
-    #__elasticsearch__.index_document
-    index_document(self, self.id)
-  }
+    # __elasticsearch__.index_document
+    document_index(self, self.id)
+  end
+
+  after_commit on: [:destroy] do
+    puts "Text record '#{self.id}' was deleted. Will now delete record in index."
+    # __elasticsearch__.delete_document
+    document_delete(self, self.id)
+  end
 
   paginates_per 60
 
