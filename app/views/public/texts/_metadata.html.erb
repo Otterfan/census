@@ -23,22 +23,13 @@
           <dd><%= citation.name %> <span class="role"><%= citation.role %></span></dd>
       <% end %>
   <% end %>
-
   <% if @text.journal && @text.journal.title != '' %>
       <dt>From</dt>
       <dd>
         <span class="journal-title">
           <%= @text.journal.title %>
       </span>
-        <% if @text.issue_volume %>
-            (<%= @text.issue_volume %>)
-        <% end %>
-        <% if @text.issue_season_month %>
-            <%= @text.issue_season_month %>
-        <% end %>
-        <% if @text.date %>
-            <%= @text.date %>
-        <% end %>
+        <%= formatted_journal_issue @text %>
       </dd>
       <%= metadata_row 'Page span', @text.page_span %>
   <% else %>
