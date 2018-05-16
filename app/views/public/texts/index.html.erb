@@ -1,16 +1,5 @@
 <h3>Browse all Texts</h3>
 
-<!-- sort drop down -->
-<div class="btn-group">
-  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Sort By: <%= @sorted.capitalize %> <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu">
-    <li class="<% if @sorted == "title" %>active<% end %>"><%= link_to 'Title', public_texts_path(:sort => "title") %></li>
-    <li class="<% if @sorted == "author" %>active<% end %>"><%= link_to 'Author', public_texts_path(:sort => "author") %></li>
-  </ul>
-</div>
-
 <div class="row">
   <div class="pagination-stuff col-md-10">
     <%= paginate @texts %>
@@ -18,21 +7,13 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <% if @sorted == "author" %>
-      <% texts_by_author(@texts).each do |author| %>
-        <h3><%= author[:author] %></h3>
-        <ul class="list-group">
-          <% author[:texts].each do |text| %>
-            <%= render 'brief_result', text: text %>
-          <% end %>
-        </ul>
-      <% end %>
-    <% else %>
-      <% @texts.each do |text| %>
-        <ul class="list-group">
+    <% texts_by_author(@texts).each do |author| %>
+      <h3><%= author[:author] %></h3>
+      <ul class="list-group">
+        <% author[:texts].each do |text| %>
           <%= render 'brief_result', text: text %>
-        </ul>
-      <% end %>
+        <% end %>
+      </ul>
     <% end %>
 
     <%= paginate @texts %>
