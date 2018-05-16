@@ -21,7 +21,6 @@ $metadata-spacing: .25em;
   @extend .col-xs-12;
 }
 
-
 .public {
   .original-entry {
     background-color: hsl(36, 63%, 96%);
@@ -55,4 +54,8 @@ $metadata-spacing: .25em;
       font-style: italic;
     }
   }
+}
+
+.back-link, .back-link:active, .back-link:hover {
+  text-decoration: none;
 }

@@ -1,5 +1,8 @@
 <div class="container public-show-text">
   <div class="row">
+    <a class="back-link" href="javascript:history.back();">◀ Result list</a>
+  </div>
+  <div class="row">
     <div>
       <h2><%= @text.topic_author.full_name %></h2>
       <h3><%= formatted_text(@text.title) %></h3>
@@ -12,9 +15,5 @@
     <div class="metadata-div">
       <%= render 'metadata', text: @text %>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="back-link"><%= link_to 'Return to Browse All Texts', public_texts_path %></div>
   </div>
 </div>
