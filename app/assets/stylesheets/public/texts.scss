@@ -59,3 +59,16 @@ $metadata-spacing: .25em;
 .back-link, .back-link:active, .back-link:hover {
   text-decoration: none;
 }
+
+
+.public {
+  .pagination > li > a, .pagination > li > span {
+    border: none;
+    padding: 6px 8px;
+  }
+
+  .list-group-item {
+    border: none;
+  }
+
+}
