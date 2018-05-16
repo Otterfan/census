@@ -29,6 +29,8 @@ class Text < ApplicationRecord
   accepts_nested_attributes_for :cross_references, reject_if: :all_blank, :allow_destroy => true
   accepts_nested_attributes_for :components, reject_if: :all_blank, :allow_destroy => true
 
+  before_save :default_values
+
   after_touch() {
     puts "Text record '#{self.id}' was touched. Will now update."
     #__elasticsearch__.index_document
@@ -440,6 +442,18 @@ class Text < ApplicationRecord
   def self.get_unique_values(field_name)
     puts "running search on field: " + field_name
     Text.where.not(field_name => [nil, ""]).order(field_name => :asc).pluck(field_name).uniq
+  end
+
+  # Default values for blank fields
+  def default_values
+
+    # Set publication place to journal pub place if blank
+    if self.publication_places.empty? && self.journal && self.journal.place
+      pub_place = PublicationPlace.new
+      pub_place.place = self.journal.place
+      pub_place.text = self
+      self.publication_places << pub_place
+    end
   end
 end
 
