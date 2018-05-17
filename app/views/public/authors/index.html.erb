@@ -8,15 +8,13 @@
 
 <div class="row">
   <div id="pagination_table" class="col-md-12">
-    <h3><%= @letter %></h3>
-
-    <% @authors.each do |author| %>
-      <ul class="list-group">
+    <ul class="list-group">
+      <% @authors.each do |author| %>
         <li class="list-group-item">
           <%= link_to author.full_name, public_author_path(author) %>
         </li>
-      </ul>
-    <% end %>
+      <% end %>
+    </ul>
 
   </div>
 </div>
