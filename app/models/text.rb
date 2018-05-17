@@ -194,7 +194,7 @@ class Text < ApplicationRecord
             :status_id, :section_id, :country_id,
             :journal_id, :volume_id, :sort_id
         ],
-        methods: [:authors_names, :sort_title, :original_clean],
+        methods: [:authors_names, :sort_title, :original_clean, :collection_clean, :editorial_annotation_clean, :abstract_clean, :physical_description_clean, :note_clean],
         include: {
             text_citations: {
                 except: [:created_at, :updated_at, :from_language_id, :to_language_id],
@@ -439,6 +439,66 @@ class Text < ApplicationRecord
 
       # apply clean_field method
       clean_field @cleaned_original
+    else
+      nil
+    end
+  end
+
+  def collection_clean
+    if collection
+      # duplicate the original field for our transformations
+      @cleaned_collection = collection.dup
+
+      # apply clean_field method
+      clean_field @cleaned_collection
+    else
+      nil
+    end
+  end
+
+  def editorial_annotation_clean
+    if editorial_annotation
+      # duplicate the original field for our transformations
+      @cleaned_editorial_annotation = editorial_annotation.dup
+
+      # apply clean_field method
+      clean_field @cleaned_editorial_annotation
+    else
+      nil
+    end
+  end
+
+  def abstract_clean
+    if abstract
+      # duplicate the original field for our transformations
+      @cleaned_abstract = abstract.dup
+
+      # apply clean_field method
+      clean_field @cleaned_abstract
+    else
+      nil
+    end
+  end
+
+  def physical_description_clean
+    if physical_description
+      # duplicate the original field for our transformations
+      @cleaned_physical_description = physical_description.dup
+
+      # apply clean_field method
+      clean_field @cleaned_physical_description
+    else
+      nil
+    end
+  end
+
+  def note_clean
+    if note
+      # duplicate the original field for our transformations
+      @cleaned_note = note.dup
+
+      # apply clean_field method
+      clean_field @cleaned_note
     else
       nil
     end

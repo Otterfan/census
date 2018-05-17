@@ -47,9 +47,9 @@ class Public::SearchController < ApplicationController
       issue_title
       issue_title.el_folded
       issue_title.en_folded
-      collection
-      collection.en_folded
-      collection.el_folded
+      collection_clean
+      collection_clean.en_folded
+      collection_clean.el_folded
   }
 
   UNIFIED_PERSONS_CITED_FIELDS = %w{
@@ -179,9 +179,9 @@ class Public::SearchController < ApplicationController
     sponsoring_organization.en_folded
     sponsoring_organization.el_folded
 
-    collection
-    collection.en_folded
-    collection.el_folded
+    collection_clean
+    collection_clean.en_folded
+    collection_clean.el_folded
 
     standard_numbers.value.exact
     dai.exact
@@ -195,18 +195,18 @@ class Public::SearchController < ApplicationController
     components.component_citations.collection.en_folded^10
     components.component_citations.collection.el_folded^10
 
-    note
-    note.en_folded
-    note.el_folded
-    abstract
-    abstract.en_folded
-    abstract.el_folded
-    editorial_annotation
-    editorial_annotation.en_folded
-    editorial_annotation.el_folded
-    physical_description
-    physical_description.en_folded
-    physical_description.el_folded
+    note_clean
+    note_clean.en_folded
+    note_clean.el_folded
+    abstract_clean
+    abstract_clean.en_folded
+    abstract_clean.el_folded
+    editorial_annotation_clean
+    editorial_annotation_clean.en_folded
+    editorial_annotation_clean.el_folded
+    physical_description_clean
+    physical_description_clean.en_folded
+    physical_description_clean.el_folded
 
     source
     source.en_folded
