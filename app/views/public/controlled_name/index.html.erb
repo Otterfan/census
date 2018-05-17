@@ -1,0 +1,16 @@
+<h3>Browse all people</h3>
+
+<div class="row">
+  <div class="pagination-stuff col-md-10">
+    <%= alphabetical_paginate @alpha_params %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <ul id="names-list">
+      <% @names.each do |name| %>
+        <li><%= link_to name.controlled_name, public_controlled_name_path(name) %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>

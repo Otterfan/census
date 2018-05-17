@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180411220352) do
+ActiveRecord::Schema.define(version: 20180517163544) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20180411220352) do
     t.bigint "to_language_id"
     t.string "first_name"
     t.string "last_name"
+    t.text "controlled_name"
     t.index ["component_id"], name: "index_component_citations_on_component_id"
     t.index ["from_language_id"], name: "index_component_citations_on_from_language_id"
     t.index ["to_language_id"], name: "index_component_citations_on_to_language_id"
@@ -183,6 +184,7 @@ ActiveRecord::Schema.define(version: 20180411220352) do
     t.string "first_name"
     t.string "last_name"
     t.integer "ordinal", default: 0
+    t.text "controlled_name"
     t.index ["from_language_id"], name: "index_text_citations_on_from_language_id"
     t.index ["ordinal"], name: "index_text_citations_on_ordinal"
     t.index ["text_id"], name: "index_text_citations_on_text_id"
@@ -291,6 +293,8 @@ ActiveRecord::Schema.define(version: 20180411220352) do
     t.text "source_edition"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "name"
+    t.text "controlled_name"
     t.index ["from_language_id_id"], name: "index_volume_citations_on_from_language_id_id"
     t.index ["to_language_id_id"], name: "index_volume_citations_on_to_language_id_id"
     t.index ["volume_id"], name: "index_volume_citations_on_volume_id"

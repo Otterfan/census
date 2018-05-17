@@ -1,0 +1,13 @@
+<div class="container public-show-text">
+  <div class="row">
+    <h2><%= @name.controlled_name %></h2>
+    <% @name.roles.each do |role| %>
+      <h3>Appears as <%= role %> in</h3>
+      <ul>
+        <% @name.texts(role).each do |text| %>
+          <li><%= link_to (text.title.blank? ? "[No title]" : @results_formatter.format(text.title)), public_text_path(text.id) %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+</div>
