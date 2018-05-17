@@ -23,5 +23,6 @@ Rails.application.routes.draw do
     resources :volumes, :only => [:index, :show]
     resources :journals, :only => [:index, :show]
     resources :authors, :only => [:index, :show]
+    resources :controlled_name, :only => [:index, :show], :id => /.*/, :path => 'people'
   end
 end

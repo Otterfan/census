@@ -93,6 +93,7 @@ class TextsController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_text
     @text = Text.find(params[:id])
@@ -115,14 +116,14 @@ class TextsController < ApplicationController
                                  :section_id, :status_id, :topic_author_id, :original,
                                  :publication_places_id, :journal_id, :volume_id,
                                  publication_places_attributes: [:id, :place_id, :primary, :_destroy],
-                                 text_citations_attributes: [:id, :role, :name, :first_name, :last_name, :from_language_id,
+                                 text_citations_attributes: [:id, :role, :name, :first_name, :last_name, :controlled_name, :from_language_id,
                                                              :to_language_id, :ordinal, :source_edition, :_destroy],
                                  standard_numbers_attributes: [:id, :value, :_destroy],
                                  components_attributes: [:id, :title, :pages, :note, :ordinal, :text_type,
                                                          :genre, :is_bilingual, :collection, :_destroy,
-                                                         component_citations_attributes: [:id, :name, :role, :first_name, :last_name, :from_language_id, :to_language_id]
+                                                         component_citations_attributes: [:id, :name, :role, :first_name, :last_name, :controlled_name, :from_language_id, :to_language_id]
                                  ],
-                                 component_citations_attributes: [:id, :name, :role, :first_name, :last_name, :_destroy],
+                                 component_citations_attributes: [:id, :name, :role, :first_name, :last_name, :_destroy, :controlled_name],
                                  other_text_languages_attributes: [:id, :language_id, :destroy],
                                  cross_references_attributes: [:id, :census_id, :destroy]
 
