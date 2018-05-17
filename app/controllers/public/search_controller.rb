@@ -26,41 +26,68 @@ class Public::SearchController < ApplicationController
       :topic_author
   ]
 
-  # the 'people' form field queries several different fields
-  PEOPLE_FIELDS = %w{
-      text_citations.name
-      components.component_citations.name
+  UNIFIED_TITLE_FIELDS = %w{
+      title
+      title.en_folded
+      title.el_folded
+      sort_title
+      sort_title.en_folded
+      sort_title.el_folded
+      components.sort_title
+      components.sort_title.en_folded
+      components.sort_title.el_folded
+      volume.title
+      volume.title.en_folded
+      volume.title.el_folded
+      volume.sort_title
+      volume.sort_title.en_folded
+      volume.sort_title.el_folded
+      original_greek_title
+      original_greek_title.el_folded
+      issue_title
+      issue_title.el_folded
+      issue_title.en_folded
+      collection
+      collection.en_folded
+      collection.el_folded
+  }
+
+  UNIFIED_PERSONS_CITED_FIELDS = %w{
       topic_author.full_name
+      topic_author.full_name.en_folded
+      topic_author.full_name.el_folded
+      authors_name_from_source
+      authors_name_from_source.el_folded
+      authors_name_from_source.en_folded
+      text_citations.name
+      text_citations.name.en_folded
+      text_citations.name.el_folded
+      components.component_citations.name
+      components.component_citations.name.en_folded
+      components.component_citations.name.el_folded
+      issue_editor
+      issue_editor.en_folded
+      issue_editor.el_folded
   }
 
   ADVANCED_SEARCH_FIELDS = [
       :keyword,
       :title,
-      :journal,
-      :location,
-      :component_title,
-      :people,
-      :volume,
-      :topic_author,
-      :citation_name,
-      :component_citation_name,
+      :author_heading,
+      :persons_cited,
+      :census_id,
       :text_type,
       :material_type,
       :genre,
+      :journal_title,
       :original_greek_title,
-      :original_greek_place_of_publication,
-      :original_greek_publisher,
-      :original_greek_collection,
+      :publication_place,
       :publisher,
-      :source,
-      :census_id,
       :series,
       :sponsoring_organization,
-      :issue_title,
-      :issue_editor,
-      :authors_name_from_source,
-      :standard_numbers,
-      :collection
+      :isbn,
+      :issn,
+      :dai
   ]
 
   CONTROLLED_VOCAB_SEARCH_FIELDS = [
@@ -90,6 +117,10 @@ class Public::SearchController < ApplicationController
     authors_name_from_source
     authors_name_from_source.el_folded
     authors_name_from_source.en_folded
+
+    issue_editor
+    issue_editor.en_folded
+    issue_editor.el_folded
 
     title^10
     title.en_folded^10
@@ -508,57 +539,64 @@ class Public::SearchController < ApplicationController
               when "keyword"
                 add_field_adv_search_keyword(KEYWORD_FIELDS, clean_search_string, @current_bool_op)
               when "title"
-                add_field_adv_search(['title', 'title.en_folded', 'title.el_folded', 'sort_title', 'sort_title.en_folded', 'sort_title.el_folded'], clean_search_string, @current_bool_op)
-              when "journal"
-                add_field_adv_search(['journal.title', 'journal.title.en_folded', 'journal.title.el_folded', 'journal.sort_title', 'journal.sort_title.en_folded', 'journal.sort_title.el_folded'], clean_search_string, @current_bool_op)
-              when "location"
-                add_field_adv_search(['publication_places.place.name', 'publication_places.place.name.en_folded', 'publication_places.place.name.el_folded'], clean_search_string, @current_bool_op)
-              when "component_title"
-                add_field_adv_search(['components.sort_title', 'components.sort_title.en_folded', 'components.sort_title.el_folded'], clean_search_string, @current_bool_op)
-              when "people"
-                add_field_adv_search(PEOPLE_FIELDS, clean_search_string, @current_bool_op)
-              when "topic_author"
+                add_field_adv_search(UNIFIED_TITLE_FIELDS, clean_search_string, @current_bool_op)
+              when "author_heading"
                 add_field_adv_search(['topic_author.full_name', 'topic_author.full_name.en_folded', 'topic_author.full_name.el_folded'], clean_search_string, @current_bool_op)
-              when "citation_name"
-                add_field_adv_search(['text_citations.name', 'text_citations.name.en_folded', 'text_citations.name.el_folded'], clean_search_string, @current_bool_op)
-              when "component_citation_name"
-                add_field_adv_search(['components.component_citations.name', 'components.component_citations.name.en_folded', 'components.component_citations.name.el_folded'], clean_search_string, @current_bool_op)
-              when "volume"
-                add_field_adv_search(['volume.title', 'volume.title.en_folded', 'volume.title.el_folded', 'volume.sort_title', 'volume.sort_title.en_folded', 'volume.sort_title.el_folded'], clean_search_string, @current_bool_op)
+              when "persons_cited"
+                add_field_adv_search(UNIFIED_PERSONS_CITED_FIELDS, clean_search_string, @current_bool_op)
+              when "entry_number"
+                add_field_adv_search(['census_id.exact'], clean_search_string, @current_bool_op)
               when "text_type"
                 add_field_adv_search(['text_type.exact'], wrap_in_quotes(clean_search_string), @current_bool_op)
               when "material_type"
                 add_field_adv_search(['material_type.exact'], wrap_in_quotes(clean_search_string), @current_bool_op)
               when "genre"
                 add_field_adv_search(['genre.exact'], wrap_in_quotes(clean_search_string), @current_bool_op)
+              when "journal_title"
+                add_field_adv_search(['journal.title', 'journal.title.en_folded', 'journal.title.el_folded', 'journal.sort_title', 'journal.sort_title.en_folded', 'journal.sort_title.el_folded'], clean_search_string, @current_bool_op)
               when "original_greek_title"
                 add_field_adv_search(['original_greek_title', 'original_greek_title.el_folded'], clean_search_string, @current_bool_op)
-              when "original_greek_place_of_publication"
-                add_field_adv_search(['original_greek_place_of_publication', 'original_greek_place_of_publication.el_folded'], clean_search_string, @current_bool_op)
-              when "original_greek_publisher"
-                add_field_adv_search(['original_greek_publisher', 'original_greek_publisher.el_folded'], clean_search_string, @current_bool_op)
-              when "original_greek_collection"
-                add_field_adv_search(['original_greek_collection', 'original_greek_collection.el_folded'], clean_search_string, @current_bool_op)
+              when "publication_place"
+                add_field_adv_search(['publication_places.place.name', 'publication_places.place.name.en_folded', 'publication_places.place.name.el_folded'], clean_search_string, @current_bool_op)
               when "publisher"
                 add_field_adv_search(['publisher', 'publisher.en_folded', 'publisher.el_folded'], clean_search_string, @current_bool_op)
-              when "source"
-                add_field_adv_search(['source', 'source.en_folded', 'source.el_folded'], clean_search_string, @current_bool_op)
-              when "census_id"
-                add_field_adv_search(['census_id.exact'], clean_search_string, @current_bool_op)
               when "series"
                 add_field_adv_search(['series', 'series.en_folded', 'series.el_folded'], clean_search_string, @current_bool_op)
               when "sponsoring_organization"
                 add_field_adv_search(['sponsoring_organization', 'sponsoring_organization.en_folded', 'sponsoring_organization.el_folded'], clean_search_string, @current_bool_op)
-              when "issue_title"
-                add_field_adv_search(['issue_title', 'issue_title.el_folded', 'issue_title.en_folded'], clean_search_string, @current_bool_op)
-              when "issue_editor"
-                add_field_adv_search(['issue_editor', 'issue_editor.el_folded', 'issue_editor.en_folded'], clean_search_string, @current_bool_op)
-              when "authors_name_from_source"
-                add_field_adv_search(['authors_name_from_source', 'authors_name_from_source.en_folded', 'authors_name_from_source.el_folded'], clean_search_string, @current_bool_op)
-              when "standard_numbers"
+              when "issn"
                 add_field_adv_search(['standard_numbers.value.exact'], clean_search_string, @current_bool_op)
-              when "collection"
-                add_field_adv_search(['collection', 'collection.en_folded', 'collection.el_folded'], clean_search_string, @current_bool_op)
+              when "isbn"
+                add_field_adv_search(['standard_numbers.value.exact'], clean_search_string, @current_bool_op)
+              when "dai"
+                add_field_adv_search(['dai.exact'], clean_search_string, @current_bool_op)
+
+              # when "component_title"
+              #   add_field_adv_search(['components.sort_title', 'components.sort_title.en_folded', 'components.sort_title.el_folded'], clean_search_string, @current_bool_op)
+              # when "people"
+              #   add_field_adv_search(PEOPLE_FIELDS, clean_search_string, @current_bool_op)
+              # when "component_citation_name"
+              #  add_field_adv_search(['components.component_citations.name', 'components.component_citations.name.en_folded', 'components.component_citations.name.el_folded'], clean_search_string, @current_bool_op)
+              # when "volume"
+              #   add_field_adv_search(['volume.title', 'volume.title.en_folded', 'volume.title.el_folded', 'volume.sort_title', 'volume.sort_title.en_folded', 'volume.sort_title.el_folded'], clean_search_string, @current_bool_op)
+              # when "original_greek_place_of_publication"
+              #   add_field_adv_search(['original_greek_place_of_publication', 'original_greek_place_of_publication.el_folded'], clean_search_string, @current_bool_op)
+              # when "original_greek_publisher"
+              #   add_field_adv_search(['original_greek_publisher', 'original_greek_publisher.el_folded'], clean_search_string, @current_bool_op)
+              # when "original_greek_collection"
+              #   add_field_adv_search(['original_greek_collection', 'original_greek_collection.el_folded'], clean_search_string, @current_bool_op)
+              # when "source"
+              #   add_field_adv_search(['source', 'source.en_folded', 'source.el_folded'], clean_search_string, @current_bool_op)
+              # when "issue_title"
+              #   add_field_adv_search(['issue_title', 'issue_title.el_folded', 'issue_title.en_folded'], clean_search_string, @current_bool_op)
+              # when "issue_editor"
+              #   add_field_adv_search(['issue_editor', 'issue_editor.el_folded', 'issue_editor.en_folded'], clean_search_string, @current_bool_op)
+              # when "authors_name_from_source"
+              #   add_field_adv_search(['authors_name_from_source', 'authors_name_from_source.en_folded', 'authors_name_from_source.el_folded'], clean_search_string, @current_bool_op)
+              # when "standard_numbers"
+              #   add_field_adv_search(['standard_numbers.value.exact'], clean_search_string, @current_bool_op)
+              # when "collection"
+              #   add_field_adv_search(['collection', 'collection.en_folded', 'collection.el_folded'], clean_search_string, @current_bool_op)
               else
 
               end
