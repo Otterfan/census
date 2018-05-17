@@ -2,6 +2,7 @@
   <%= link_to_remove_association "x", f, {:class => 'remove-link'} %>
   <%= f.input :last_name, as: :string %>
   <%= f.input :first_name, as: :string %>
+  <%= f.input :controlled_name, as :string %>
   <%= f.label :role %>
   <%= f.select(:role, [['author', 'author'], ['translator', 'translator'], ['editor', 'editor'], ['illustrator', 'illustrator']],
                {}, :onChange => 'showForTranslator(this)') %>

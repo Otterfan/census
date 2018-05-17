@@ -72,6 +72,7 @@ class VolumesController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_volume
     @volume = Volume.find(params[:id])
@@ -82,7 +83,7 @@ class VolumesController < ApplicationController
     params.require(:volume).permit(
         :title, :author, :location_id, :date,
         # @TODO fix the from_language_id_id problem
-        volume_citations_attributes: [:id, :role, :last_name, :first_name, :from_language_id_id, :to_language_id_id, :source_edition, :_destroy],
+        volume_citations_attributes: [:id, :role, :last_name, :first_name, :controlled_name, :from_language_id_id, :to_language_id_id, :source_edition, :_destroy],
     )
   end
 end
