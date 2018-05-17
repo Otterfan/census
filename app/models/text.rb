@@ -410,28 +410,35 @@ class Text < ApplicationRecord
     title.gsub(/["'“”‘’«»:_.\[\]]/, '').sub(/^(An? )|(The )/, '').strip
   end
 
+  def clean_field(field_val)
+    coder = HTMLEntities.new
+
+    # remove &gt; and &lt; html entities to avoid removing words wrapped in <> in a later gsub command
+    field_val = field_val.gsub(/(&gt;|&lt;)/, "")
+
+    # convert html entities into chars
+    field_val = coder.decode(field_val)
+
+    # remove all html <tags>
+    field_val = field_val.gsub(/<[^>]*>/, "")
+
+    # clean up special chars
+    field_val = field_val.gsub(/["'“”‘’«»:_\[\]\*]/, "")
+
+    # remove leading periods
+    field_val = field_val.gsub(/^\.+/, "")
+
+    # replace newlines with spaces, and strip leading/trailing whitespace
+    field_val.gsub(/[\n]/, " ").strip
+  end
+
   def original_clean
     if original
-      coder = HTMLEntities.new
-
       # duplicate the original field for our transformations
       @cleaned_original = original.dup
 
-      # remove &gt; and &lt; html entities to avoid removing words wrapped in <> in a later gsub command
-      @clean = @cleaned_original.gsub(/(&gt;|&lt;)/, "")
-
-      # convert html entities into chars
-      @clean = coder.decode(@clean)
-
-      # remove all html <tags>
-      @clean = @clean.gsub(/<[^>]*>/, "")
-
-      # clean up special chars
-      #@clean.gsub!(/[\\\\\/_\*\.\[\]\"\':\{\}\(\)\<\>\«\»\n;,]/, "")
-      @clean = @clean.gsub(/["'“”‘’«»:_.\[\]\*]/, "")
-
-      # replace newlines with spaces, and strip leading/trailing whitespace
-      @clean.gsub(/[\n]/, " ").strip
+      # apply clean_field method
+      clean_field @cleaned_original
     else
       nil
     end
