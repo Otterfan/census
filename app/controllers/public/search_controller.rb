@@ -166,6 +166,7 @@ class Public::SearchController < ApplicationController
     components.note.el_folded
 
     genre.exact^5
+    component.genre.exact^5
 
     url
 
@@ -552,7 +553,7 @@ class Public::SearchController < ApplicationController
               when "material_type"
                 add_field_adv_search(['material_type.exact'], wrap_in_quotes(clean_search_string), @current_bool_op)
               when "genre"
-                add_field_adv_search(['genre.exact'], wrap_in_quotes(clean_search_string), @current_bool_op)
+                add_field_adv_search(['genre.exact', 'component.genre.exact'], wrap_in_quotes(clean_search_string), @current_bool_op)
               when "journal_title"
                 add_field_adv_search(['journal.title', 'journal.title.en_folded', 'journal.title.el_folded', 'journal.sort_title', 'journal.sort_title.en_folded', 'journal.sort_title.el_folded'], clean_search_string, @current_bool_op)
               when "original_greek_title"
