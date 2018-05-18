@@ -197,6 +197,7 @@ class Public::SearchController < ApplicationController
     components.component_citations.name^10
     components.component_citations.name.en_folded^10
     components.component_citations.name.el_folded^10
+    components.component_citations.role.exact^5
     components.component_citations.genre.exact^5
     components.component_citations.text_type.exact
     components.component_citations.collection^10
