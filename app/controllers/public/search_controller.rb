@@ -68,6 +68,9 @@ class Public::SearchController < ApplicationController
       components.component_citations.name
       components.component_citations.name.en_folded
       components.component_citations.name.el_folded
+      components.component_citations.controlled_name
+      components.component_citations.controlled_name.en_folded
+      components.component_citations.controlled_name.el_folded
       issue_editor
       issue_editor.en_folded
       issue_editor.el_folded
@@ -199,6 +202,9 @@ class Public::SearchController < ApplicationController
     components.component_citations.collection^10
     components.component_citations.collection.en_folded^10
     components.component_citations.collection.el_folded^10
+    components.component_citations.controlled_name^10
+    components.component_citations.controlled_name.en_folded^10
+    components.component_citations.controlled_name.el_folded^10
 
     note_clean
     note_clean.en_folded
