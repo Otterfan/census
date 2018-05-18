@@ -105,6 +105,7 @@ class Public::SearchController < ApplicationController
   KEYWORD_FIELDS = %w{
     census_id.exact
     text_type.exact^5
+    component.text_type.exact^5
     material_type.exact
 
     topic_author.full_name^10
