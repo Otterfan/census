@@ -81,7 +81,7 @@ class Public::SearchController < ApplicationController
       :title,
       :author_heading,
       :persons_cited,
-      :census_id,
+      :entry_number,
       :text_type,
       :material_type,
       :genre,
