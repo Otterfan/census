@@ -2,6 +2,35 @@
 <div class="col-lg-3 col-md-3 col-sm-6">
   <div class="facets-container">
     <h3>Filter your search</h3>
+
+    <div class="input-group-lg">
+      <div class="panel panel-default filter-panel" id="panel-text_type">
+        <div class="panel-heading">
+          <%= label_tag(:text_type, "Text Type") %>
+        </div>
+        <div class="panel-body">
+          <%= select_tag(:text_type, options_for_select(@unique_values["text_type"]), {include_blank: '---', class: 'form-control select_text_type select_field'}) %>
+        </div>
+      </div>
+
+      <div class="panel panel-default filter-panel" id="panel-material_type">
+        <div class="panel-heading">
+          <%= label_tag(:material_type, "Material Type") %>
+        </div>
+        <div class="panel-body">
+          <%= select_tag(:material_type, options_for_select(@unique_values["material_type"]), {include_blank: '---', class: 'form-control select_material_type select_field'}) %>
+        </div>
+      </div>
+
+      <div class="panel panel-default filter-panel" id="panel-genre">
+        <div class="panel-heading">
+          <%= label_tag(:genre, "Genre") %>
+        </div>
+        <div class="panel-body">
+          <%= select_tag(:genre, options_for_select(@unique_values["genre"]), {include_blank: '---', class: 'form-control select_genre select_field'}) %>
+        </div>
+      </div>
+    </div>
     <%= render 'facet_container_dates', facet_name: "publication_dates" %>
   </div>
 </div>

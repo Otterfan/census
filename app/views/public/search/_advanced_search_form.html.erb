@@ -92,6 +92,12 @@
 <% end %>
 <script>
     $(document).ready(function() {
+        // list of fields that are drop down filters and not free text
+        var FILTER_FIELDS = [
+            "text_type",
+            "material_type",
+            "genre"
+        ];
 
         // https://stackoverflow.com/a/21903119
         function getUrlParameter(sParam) {
@@ -181,22 +187,28 @@
                     console.log("field_name: " + field_name);
                     console.log("search_string: " + search_string);
 
-                    // update the search field name drop down
-                    var my_field_name_list = my_search_row.find(".field_name ul li a");
-                    my_field_name_list.each(function(){
-                        $this_item = $(this);
-                        $this_data_name = $this_item.attr("data-name");
-                        if ($this_data_name === field_name) {
-                            $this_item.click();
+                    // check if this file_name is a filter
+                    if ($.inArray(field_name, FILTER_FIELDS) >= 0) {
+                        console.log("this field is a filter: " + field_name);
+                        var my_field = $(".facets-container .filter-panel #" + field_name);
+                        my_field.val(search_string).attr('selected','selected');
+                    } else { // regular search field
+                        // update the search field name drop down
+                        var my_field_name_list = my_search_row.find(".field_name ul li a");
+                        my_field_name_list.each(function () {
+                            var $this_item = $(this);
+                            var $this_data_name = $this_item.attr("data-name");
+                            if ($this_data_name === field_name) {
+                                $this_item.click();
 
-                            // update the search field value
-                            var my_field_val = my_search_row.find(".selected");
-                            my_field_val.val(search_string);
+                                // update the search field value
+                                var my_field_val = my_search_row.find(".selected");
+                                my_field_val.val(search_string);
 
-                            return false;
-                        }
-                    });
-
+                                return false;
+                            }
+                        });
+                    }
                 } else { // odd token
                     // BOOLEAN
 
@@ -269,12 +281,14 @@
         $("#new-form #adv-search-submit").click(function(e){
             e.preventDefault();
 
+            //
+            // First, get every field value and append to query_str string
+            //
             var query_str = "";
-            // get every field value
             $('.adv-search-row').each(function(){
                var $this = $(this);
 
-                //get boolean value//
+                // get boolean value
                 var boolean_val = "";
                 var boolean = $this.find(".boolean ul li.selected a");
                 if (boolean && boolean.length) {
@@ -318,17 +332,38 @@
                     }
                 }
             });
-
             console.log("query_str: " + query_str);
 
-            // next, update the URL parameters
+            //
+            // Second, check on filters that append to query_str.
+            // Only append filter string to query_str if it already has a value
+            //
+            if (query_str && query_str.length){
+                $(".facets-container .filter-panel :input").each(function () {
+                    var $this = $(this);
+                    var field_val = $this.val();
+
+                    // if value is selected of changed then add to query_str
+                    if (field_val && field_val.length) {
+                        var field_name = $this.attr("id");
+                        console.log("found: " + field_name + ": " + field_val);
+                        query_str += "--AND--" + "(" + field_name + "::" + field_val + ")"
+                    }
+                    console.log("updated query_str: " + query_str);
+                });
+            }
+
+            //
+            // Third, update the URL parameters
+            //
             var query_url_param = "";
             if (query_str && query_str.length) {
                 query_url_param = "?type=adv&bq=" + query_str;
             }
 
-            // now check on the date range slider filter
-
+            //
+            // Fourth, check on the date range slider filter
+            //
             // check if this is a new search
             var new_search = $("#publication_dates_data").attr("data-new-search");
 
@@ -359,7 +394,9 @@
                 }
             }
 
-            // finally, load the page with the updated search params
+            //
+            // Last, load the page with the updated search params
+            //
             if (query_url_param && query_url_param.length){
                 window.location = query_url_param;
             }
