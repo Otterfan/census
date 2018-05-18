@@ -547,7 +547,7 @@ class Public::SearchController < ApplicationController
               when "entry_number"
                 add_field_adv_search(['census_id.exact'], clean_search_string, @current_bool_op)
               when "text_type"
-                add_field_adv_search(['text_type.exact'], wrap_in_quotes(clean_search_string), @current_bool_op)
+                add_field_adv_search(['text_type.exact', 'component.text_type.exact'], wrap_in_quotes(clean_search_string), @current_bool_op)
               when "material_type"
                 add_field_adv_search(['material_type.exact'], wrap_in_quotes(clean_search_string), @current_bool_op)
               when "genre"
