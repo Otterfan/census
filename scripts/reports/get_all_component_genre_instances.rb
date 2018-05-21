@@ -39,11 +39,27 @@ genres_sorted.each do |genre|
 
   components = Component.where(:genre => genre).order(:text_id)
 
-  output.puts "<ul>"
+  # get list of all unique text ids and a hash of text.id and text.census_id
+  text_ids = []
+  text_hashes = []
   components.each do |comp|
-    output.puts "<li><a href='#{site_url}#{comp.text.id}' target='_blank'>#{comp.text.census_id}</a></li>"
+    if text_ids.include? comp.text.id
+    else
+      text_ids << comp.text.id
+      text_hashes << {id: comp.text.id, census_id: comp.text.census_id}
+    end
+  end
+
+  # sort list of hashes
+  text_hashes.sort_by!(&:zip)
+
+  # output list of hashes
+  output.puts "<ul>"
+  text_hashes.each do |text|
+    output.puts "<li><a href='#{site_url}#{text[:id]}' target='_blank'>#{text[:census_id]}</a></li>"
   end
   output.puts "</ul>"
+
 end
 output.puts "</body>"
 
