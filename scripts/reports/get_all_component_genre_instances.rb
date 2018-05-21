@@ -51,11 +51,11 @@ genres_sorted.each do |genre|
   end
 
   # sort list of hashes
-  text_hashes.sort_by!(&:zip)
+  text_hashes_sorted = text_hashes.sort_by(&:zip)
 
   # output list of hashes
   output.puts "<ul>"
-  text_hashes.each do |text|
+  text_hashes_sorted.each do |text|
     output.puts "<li><a href='#{site_url}#{text[:id]}' target='_blank'>#{text[:census_id]}</a></li>"
   end
   output.puts "</ul>"
