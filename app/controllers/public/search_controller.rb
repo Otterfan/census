@@ -33,9 +33,18 @@ class Public::SearchController < ApplicationController
       sort_title
       sort_title.en_folded
       sort_title.el_folded
+      components.title
+      components.title.en_folded
+      components.title.el_folded
       components.sort_title
       components.sort_title.en_folded
       components.sort_title.el_folded
+      journal.title
+      journal.title.en_folded
+      journal.title.el_folded
+      journal.sort_title
+      journal.sort_title.en_folded
+      journal.sort_title.el_folded
       volume.title
       volume.title.en_folded
       volume.title.el_folded
