@@ -85,6 +85,19 @@ class Public::SearchController < ApplicationController
       issue_editor.el_folded
   }
 
+  PUBLICATION_PLACES = %w{
+      publication_places.place.name
+      publication_places.place.name.en_folded
+      publication_places.place.name.el_folded
+      publication_places.place.subdivision
+      publication_places.place.subdivision.en_folded
+      publication_places.place.subdivision.el_folded
+      publication_places.place.country.name
+      publication_places.place.country.name.en_folded
+      publication_places.place.country.name.el_folded
+      publication_places.place.country.al3_code.exact
+  }
+
   ADVANCED_SEARCH_FIELDS = [
       :keyword,
       :title,
@@ -162,6 +175,13 @@ class Public::SearchController < ApplicationController
     publication_places.place.name
     publication_places.place.name.en_folded
     publication_places.place.name.el_folded
+    publication_places.place.subdivision
+    publication_places.place.subdivision.en_folded
+    publication_places.place.subdivision.el_folded
+    publication_places.place.country.name
+    publication_places.place.country.name.en_folded
+    publication_places.place.country.name.el_folded
+    publication_places.place.country.al3_code.exact
     publisher
     publisher.en_folded
     publisher.el_folded
@@ -578,7 +598,7 @@ class Public::SearchController < ApplicationController
               when "original_greek_title"
                 add_field_adv_search(['original_greek_title', 'original_greek_title.el_folded'], clean_search_string, @current_bool_op)
               when "publication_place"
-                add_field_adv_search(['publication_places.place.name', 'publication_places.place.name.en_folded', 'publication_places.place.name.el_folded'], clean_search_string, @current_bool_op)
+                add_field_adv_search(PUBLICATION_PLACES, clean_search_string, @current_bool_op)
               when "publisher"
                 add_field_adv_search(['publisher', 'publisher.en_folded', 'publisher.el_folded'], clean_search_string, @current_bool_op)
               when "series"
