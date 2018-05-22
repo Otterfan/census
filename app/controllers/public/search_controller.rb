@@ -4,22 +4,38 @@ class Public::SearchController < ApplicationController
 
   before_action :authenticate_user!
 
-  SEARCH_PARAMS = [
+  KEYWORD_SEARCH_PARAMS = [
       :keyword,
-      :title,
-      :journal,
-      :location,
-      :people,
-      :component_title,
       :genre,
       :material_type,
       :text_type,
       :topic_author,
       :publication_places,
-      :other_text_languages,
-      :publication_date_range,
-      :bq
+      :publication_date_range
   ]
+
+  ADVANCED_SEARCH_PARAMS = [
+      :keyword,
+      :bq,
+      :title,
+      :author_heading,
+      :persons_cited,
+      :entry_number,
+      :text_type,
+      :material_type,
+      :genre,
+      :journal_title,
+      :original_greek_title,
+      :publication_place,
+      :publisher,
+      :series,
+      :sponsoring_organization,
+      :isbn,
+      :issn,
+      :dai
+  ]
+
+  SEARCH_PARAMS = KEYWORD_SEARCH_PARAMS + ADVANCED_SEARCH_PARAMS
 
   DEFAULT_VIEW_PARAMS = [
       :title,
@@ -97,26 +113,6 @@ class Public::SearchController < ApplicationController
       publication_places.place.country.name.el_folded
       publication_places.place.country.al3_code.exact
   }
-
-  ADVANCED_SEARCH_FIELDS = [
-      :keyword,
-      :title,
-      :author_heading,
-      :persons_cited,
-      :entry_number,
-      :text_type,
-      :material_type,
-      :genre,
-      :journal_title,
-      :original_greek_title,
-      :publication_place,
-      :publisher,
-      :series,
-      :sponsoring_organization,
-      :isbn,
-      :issn,
-      :dai
-  ]
 
   CONTROLLED_VOCAB_SEARCH_FIELDS = [
       :text_type,
@@ -279,8 +275,7 @@ class Public::SearchController < ApplicationController
     original_clean.el_folded
     original_clean.en_folded
   }
-
-
+  
   FACET_HITS_SIZE = 100
 
   # https://stackoverflow.com/questions/16205341/symbols-in-query-string-for-elasticsearch
@@ -398,9 +393,7 @@ class Public::SearchController < ApplicationController
       # create Elasticsearch search query using the @query_array list we've been constructing.
       # add in aggregated fields (facets), highlighting and sort configuration here
       @all_search = {
-          query: {
-              bool: {}
-          },
+          query: {},
           sort: query_sort(params[:sort]),
           highlight: {
               #fields: highlight_fields
@@ -472,8 +465,13 @@ class Public::SearchController < ApplicationController
       }
 
       # add in the @query_array array elements to the "must" query block
-      if @query_array.length > 0
+      if @query_array.any?
+        @all_search[:query][:bool] = {}
         @all_search[:query][:bool][:must] = @query_array
+      else
+        @all_search[:query] = {
+            "match_all": {}
+        }
       end
 
       query_result = Text.search(@all_search).page(params[:page]).per(@pagination_page_size)
@@ -575,7 +573,7 @@ class Public::SearchController < ApplicationController
 
             # make sure we're only processing advanced search fields we know.
             # query strings will be added to @combined_query_list list object
-            if search_string and ADVANCED_SEARCH_FIELDS.include? field_name.to_sym
+            if search_string and ADVANCED_SEARCH_PARAMS.include? field_name.to_sym
               case field_name
               when "keyword"
                 add_field_adv_search_keyword(KEYWORD_FIELDS, clean_search_string, @current_bool_op)
@@ -708,9 +706,7 @@ class Public::SearchController < ApplicationController
   end
 
   def search_params
-    params.permit(:keyword, :title, :journal, :location, :people, :type, :component_title,
-                  :genre, :material_type, :text_type, :topic_author, :publication_places, :other_text_languages,
-                  :publication_date_range, :bq)
+    params.permit(SEARCH_PARAMS)
   end
 
   # Return a list of all symbols of search parameters used in the current request
@@ -720,8 +716,11 @@ class Public::SearchController < ApplicationController
 
   # Return true if this is a search request
   def is_search?
-    puts used_params
-    used_params.length > 0
+    puts "Received the following search params: #{used_params}"
+
+    # allow search if there are valid search params
+    # or if the "keyword" param exists but is an empty string
+    used_params.length > 0 || params["keyword"] == ""
   end
 
   # Build ES highlight fields for search fields not used in the view
