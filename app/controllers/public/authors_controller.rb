@@ -29,6 +29,8 @@ class Public::AuthorsController < ApplicationController
   end
 
   def show
+    @results_formatter = BriefResultFormatter.new([],[],[])
     @author = Person.find(params[:id])
+    @texts = @author.texts.order(:sort_census_id).page(params[:page])
   end
 end

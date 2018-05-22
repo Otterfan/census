@@ -4,46 +4,27 @@
   </div>
 
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-7">
       <div class="row">
-        <div class="col-md-12">
-          <h2>Translations</h2>
-          <ul>
-            <% @author.translations.each do |text| %>
-                <li><%= link_to convert_underscores(text.title), public_text_path(text) %></li>
-            <% end %>
-          </ul>
+        <div class="pagination-stuff col-md-10">
+          <%= paginate @texts %>
         </div>
       </div>
-      <% if @author.studies.count > 0 %>
-          <div class="row">
-            <div class="col-md-12">
-              <h2>Studies</h2>
-              <ul>
-                <% @author.studies.each do |text| %>
-                    <li><%= link_to convert_underscores(text.title), public_text_path(text) %></li>
-                <% end %>
-              </ul>
-            </div>
-          </div>
-      <% end %>
-      <% if @author.poems.count > 0 %>
-
-          <div class="row">
-            <div class="col-md-12">
-              <h2>Poems</h2>
-              <ul>
-                <% @author.poems.each do |poem| %>
-                    <li><%= convert_underscores poem %></li>
-                <% end %>
-              </ul>
-            </div>
-          </div>
-      <% end %>
+      <ul class="list-group">
+        <% @texts.order(:sort_census_id).each do |text| %>
+          <%= render 'text_brief_result', text: text %>
+        <% end %>
+      </ul>
     </div>
-    <div class="col-md-6">
-      <%= render partial: 'public/authors/timeline', locals: {author: @author} %>
-      <%= render partial: 'public/authors/map', locals: {author: @author} %>
+    <div class="col-md-5">
+      <h3>Alternate names</h3>
+      <ul>
+        <% alt_name_list(@author).each do |name| %>
+          <li>
+            <%= name %>
+          </li>
+        <% end %>
+      </ul>
     </div>
   </div>
 
