@@ -1,4 +1,8 @@
-# get a list of all Text records that have a specific genre value
+# Get a list of all Text records that have a specific illustrations_noted value.
+#
+# Run this script from a rails console:
+# load './scripts/get_all_illustrations_noted_instances.rb'
+
 time_stamp_start = Time.now
 time_stamp_file_name = time_stamp_start.strftime('%Y%m%d-%H%M%S')
 time_stamp_readable = time_stamp_start.strftime('%B %d %Y %H:%M%p')
