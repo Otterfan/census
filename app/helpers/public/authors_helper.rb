@@ -19,4 +19,8 @@ module Public::AuthorsHelper
   def country_count_list(author)
     author.translation_countries.values
   end
+
+  def alt_name_list(author)
+    author.alternate_name.split("\n")
+  end
 end
