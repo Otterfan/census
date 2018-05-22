@@ -359,9 +359,9 @@
             //
             // Third, update the URL parameters
             //
-            var query_url_param = "";
+            var query_url_param = "?type=adv";
             if (query_str && query_str.length) {
-                query_url_param = "?type=adv&bq=" + query_str;
+                query_url_param += "&bq=" + query_str;
             }
 
             //
@@ -389,11 +389,8 @@
 
                     console.log("date range: " + earliest_val + " - " + latest_val);
 
-                    // only add in the date range param if there is at least one search field filled out
-                    if (query_url_param && query_url_param.length) {
-                        publication_date_range_param = "&publication_date_range=" + earliest_val + "-" + latest_val;
-                        query_url_param += publication_date_range_param;
-                    }
+                    publication_date_range_param = "&publication_date_range=" + earliest_val + "-" + latest_val;
+                    query_url_param += publication_date_range_param;
                 }
             }
 
@@ -401,6 +398,7 @@
             // Last, load the page with the updated search params
             //
             if (query_url_param && query_url_param.length){
+                console.log("query_url_param: " + query_url_param);
                 window.location = query_url_param;
             }
         });

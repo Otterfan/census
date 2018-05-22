@@ -364,14 +364,15 @@ class Public::SearchController < ApplicationController
 
       if @search_type == "adv"
         # process_adv_search method can raise ArgumentError.
-        # process_adv_search method returns two array, one for Elasticsearch "must",
-        # and another for "must_not". The former only applies to keyword search with a NOT bool operator
         begin
           @results = process_adv_search
           @query_array = @results
         rescue ArgumentError => e
-          puts "Caught error: " + e.message
-          return nil
+          puts "\nCaught error: #{e.message}"
+          puts "Setting @new_search = true\n\n"
+          @new_search = true
+          @texts = []
+          return
         end
       else
         # add the keyword hash to @query_string_array
@@ -507,6 +508,11 @@ class Public::SearchController < ApplicationController
     @combined_query_hash = {}
     @combined_query_hash[:query_string] = {}
 
+    # we allow empty adv search queries
+    if !params[:bq].present?
+      params[:bq] = ""
+    end
+
     # example of raw combined bool search query string
     # bq=(title+cats paw)++OR++(people+jack)++NOT++(component_title+fish)
     #
@@ -515,7 +521,7 @@ class Public::SearchController < ApplicationController
 
     # simple sanity checking
     # check that the first and last characters in the search string are parentheses
-    if params[:bq][0] != "(" or params[:bq][-1] != ")"
+    if params[:bq].present? and (params[:bq][0] != "(" or params[:bq][-1] != ")")
       raise ArgumentError.new("The advanced search query is malformed.")
     end
 
@@ -538,8 +544,8 @@ class Public::SearchController < ApplicationController
     end
 
     # simple sanity checking
-    # we always expect an odd number of tokens
-    if tokens.length.even?
+    # we always expect an odd number or zero number of tokens
+    if tokens.length != 0 and tokens.length.even?
       raise ArgumentError.new("The advanced search query has an unexpected number of tokens: " + tokens.length.to_s)
     end
 
