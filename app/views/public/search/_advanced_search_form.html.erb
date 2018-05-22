@@ -336,22 +336,25 @@
 
             //
             // Second, check on filters that append to query_str.
-            // Only append filter string to query_str if it already has a value
+            // We allow for empty search queries that have filters
             //
-            if (query_str && query_str.length){
-                $(".facets-container .filter-panel :input").each(function () {
-                    var $this = $(this);
-                    var field_val = $this.val();
+            $(".facets-container .filter-panel :input").each(function () {
+                var $this = $(this);
+                var field_val = $this.val();
 
-                    // if value is selected of changed then add to query_str
-                    if (field_val && field_val.length) {
-                        var field_name = $this.attr("id");
-                        console.log("found: " + field_name + ": " + field_val);
-                        query_str += "--AND--" + "(" + field_name + "::" + field_val + ")"
+                // if value is selected of changed then add to query_str
+                if (field_val && field_val.length) {
+                    var field_name = $this.attr("id");
+                    console.log("found: " + field_name + ": " + field_val);
+
+                    // If query_str has a value then append AND bool operator to string
+                    if (query_str && query_str.length) {
+                        query_str += "--AND--"
                     }
-                    console.log("updated query_str: " + query_str);
-                });
-            }
+                    query_str += "(" + field_name + "::" + field_val + ")"
+                }
+                console.log("updated query_str: " + query_str);
+            });
 
             //
             // Third, update the URL parameters
