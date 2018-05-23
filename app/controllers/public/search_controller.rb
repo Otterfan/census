@@ -352,6 +352,13 @@ class Public::SearchController < ApplicationController
       if field_s == "text_type"
         mapped_uniq_vals = uniq_vals.map {|v| [format_label(v), v]}
         @unique_values[field_s] = mapped_uniq_vals
+      elsif field_s == "genre"
+        # genre is a combination of top-level Text and components
+        unique_component_vals = Component.get_unique_values(field_s)
+
+        # merge the two genre lists and find all unique values between the two
+        all_unique_vals = (uniq_vals + unique_component_vals).uniq
+        @unique_values[field_s] = all_unique_vals.sort
       else
         @unique_values[field_s] = uniq_vals
       end
@@ -596,7 +603,7 @@ class Public::SearchController < ApplicationController
               when "material_type"
                 add_field_adv_search(['material_type.exact'], wrap_in_quotes(clean_search_string), @current_bool_op)
               when "genre"
-                add_field_adv_search(['genre.exact', 'component.genre.exact'], wrap_in_quotes(clean_search_string), @current_bool_op)
+                add_field_adv_search(['genre.exact', 'components.genre.exact'], wrap_in_quotes(clean_search_string), @current_bool_op)
               when "journal_title"
                 add_field_adv_search(['journal.title', 'journal.title.en_folded', 'journal.title.el_folded', 'journal.sort_title', 'journal.sort_title.en_folded', 'journal.sort_title.el_folded'], clean_search_string, @current_bool_op)
               when "original_greek_title"
