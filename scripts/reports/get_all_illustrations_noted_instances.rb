@@ -1,7 +1,7 @@
 # Get a list of all Text records that have a specific illustrations_noted value.
 #
 # Run this script from a rails console:
-# load './scripts/get_all_illustrations_noted_instances.rb'
+# load './scripts/reports/get_all_illustrations_noted_instances.rb'
 
 time_stamp_start = Time.now
 time_stamp_file_name = time_stamp_start.strftime('%Y%m%d-%H%M%S')
@@ -12,7 +12,10 @@ site_url = "https://www.lontracanadensis.net/texts/"
 
 field_name = "illustrations_noted"
 
-file_name = Rails.root.join('scripts', 'reports', 'output', "greek-census_#{field_name}-#{time_stamp_file_name}.html")
+file_path = Rails.root.join('scripts', 'reports', 'output')
+FileUtils.mkdir_p(file_path) unless File.directory?(file_path)
+
+file_name = file_path.to_s + "/greek-census_#{field_name}-#{time_stamp_file_name}.html"
 
 illustrations_notes =  Text.pluck(:illustrations_noted).uniq
 illustrations_notes_sorted = illustrations_notes.sort { |a,b| a && b ? a <=> b : a ? -1 : 1 }

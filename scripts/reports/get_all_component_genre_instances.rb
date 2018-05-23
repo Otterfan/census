@@ -1,7 +1,7 @@
 # Get a list of all Component records that have a specific genre value.
 #
 # Run this script from a rails console:
-# load './scripts/get_all_component_genre_instances.rb'
+# load './scripts/reports/get_all_component_genre_instances.rb'
 
 time_stamp_start = Time.now
 time_stamp_file_name = time_stamp_start.strftime('%Y%m%d-%H%M%S')
@@ -12,7 +12,10 @@ site_url = "https://www.lontracanadensis.net/texts/"
 
 field_name = "genre"
 
-file_name = Rails.root.join('scripts', 'reports', 'output', "greek-census_component_#{field_name}-#{time_stamp_file_name}.html")
+file_path = Rails.root.join('scripts', 'reports', 'output')
+FileUtils.mkdir_p(file_path) unless File.directory?(file_path)
+
+file_name = file_path.to_s + "/greek-census_component_#{field_name}-#{time_stamp_file_name}.html"
 
 genres =  Component.pluck(:genre).uniq
 genres_sorted = genres.sort { |a,b| a && b ? a <=> b : a ? -1 : 1 }

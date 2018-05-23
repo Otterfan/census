@@ -1,7 +1,7 @@
 # Get a list of all Text records that have a specific is_bilingual value.
 #
 # Run this script from a rails console:
-# load './scripts/get_all_is_bilingual_instances.rb'
+# load './scripts/reports/get_all_is_bilingual_instances.rb'
 
 time_stamp_start = Time.now
 time_stamp_file_name = time_stamp_start.strftime('%Y%m%d-%H%M%S')
@@ -12,7 +12,10 @@ site_url = "https://www.lontracanadensis.net/texts/"
 
 field_name = "is_bilingual"
 
-file_name = Rails.root.join('scripts', 'reports', 'output', "greek-census_#{field_name}-#{time_stamp_file_name}.html")
+file_path = Rails.root.join('scripts', 'reports', 'output')
+FileUtils.mkdir_p(file_path) unless File.directory?(file_path)
+
+file_name = file_path.to_s + "/greek-census_#{field_name}-#{time_stamp_file_name}.html"
 
 is_bilingual =  Text.pluck(:is_bilingual).uniq
 is_bilingual_sorted = is_bilingual.sort { |a,b| a && b ? a <=> b : a ? -1 : 1 }
