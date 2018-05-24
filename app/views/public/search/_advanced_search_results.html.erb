@@ -9,7 +9,18 @@
           <%= label_tag(:text_type, "Text Type") %>
         </div>
         <div class="panel-body">
-          <%= select_tag(:text_type, options_for_select(@unique_values["text_type"]), {include_blank: '---', class: 'form-control select_text_type select_field'}) %>
+          <p>Select one or more Text Types</p>
+          <%# sample repeatable drop downs #%>
+          <% if false %>
+            <%= select_tag(:text_type, options_for_select(@unique_values["text_type"]), {include_blank: '---', class: 'form-control select_text_type select_field', "data-count": "1"}) %>
+            <%= select_tag(:text_type, options_for_select(@unique_values["text_type"]), {include_blank: '---', class: 'form-control select_text_type select_field', "data-count": "2"}) %>
+          <% end %>
+          <% @unique_values["text_type"].each do |tt| %>
+            <div class="filter-checkboxes">
+              <%= check_box_tag(tt[1], "", false, {"data-field": tt[1]}) %>
+              <%= label_tag(tt[1], tt[0]) %>
+            </div>
+          <% end %>
         </div>
       </div>
 
@@ -18,7 +29,18 @@
           <%= label_tag(:material_type, "Material Type") %>
         </div>
         <div class="panel-body">
-          <%= select_tag(:material_type, options_for_select(@unique_values["material_type"]), {include_blank: '---', class: 'form-control select_material_type select_field'}) %>
+          <p>Select one or more Material Types</p>
+          <%# sample repeatable drop downs #%>
+          <% if false %>
+            <%= select_tag(:material_type, options_for_select(@unique_values["material_type"]), {include_blank: '---', class: 'form-control select_material_type select_field', "data-count": "1"}) %>
+            <%= select_tag(:material_type, options_for_select(@unique_values["material_type"]), {include_blank: '---', class: 'form-control select_material_type select_field', "data-count": "2"}) %>
+          <% end %>
+          <% @unique_values["material_type"].each do |mat| %>
+            <div class="filter-checkboxes">
+              <%= check_box_tag(mat, "", false, {"data-field": mat}) %>
+              <%= label_tag(mat, mat) %>
+            </div>
+          <% end %>
         </div>
       </div>
 
@@ -27,7 +49,18 @@
           <%= label_tag(:genre, "Genre") %>
         </div>
         <div class="panel-body">
-          <%= select_tag(:genre, options_for_select(@unique_values["genre"]), {include_blank: '---', class: 'form-control select_genre select_field'}) %>
+          <p>Select one or more Genres</p>
+          <%# sample repeatable drop downs #%>
+          <% if false %>
+            <%= select_tag(:genre, options_for_select(@unique_values["genre"]), {include_blank: '---', class: 'form-control select_genre select_field', "data-count": "1"}) %>
+            <%= select_tag(:genre, options_for_select(@unique_values["genre"]), {include_blank: '---', class: 'form-control select_genre select_field', "data-count": "2"}) %>
+          <% end %>
+          <% @unique_values["genre"].each do |genre| %>
+            <div class="filter-checkboxes">
+              <%= check_box_tag(genre, "", false, {"data-field": genre}) %>
+              <%= label_tag(genre, genre) %>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>

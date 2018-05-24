@@ -128,7 +128,7 @@
             console.log("bq: " + bq);
 
             // example bool query
-            // (title::cats)--AND--(journal::dogs)
+            // (title::cats)--AND--(genre::poetry::essay)
 
             var split_tokens = bq.split("--");
 
@@ -142,28 +142,20 @@
             //  ...
 
             var row_num = 1;
-            $.each(split_tokens, function(i,tok){
+            var this_row = "";
+            var target_row = "";
+            $.each(split_tokens, function(idx,tok){
                 console.log("looking at token: " + tok);
                 // determine the field ids
                 var my_search_row = $("#search-row-" + row_num);
-                console.log("currently on row: " + row_num);
+                console.log("  row: " + row_num);
 
-                // add a new search row if we need more than the default 3
-                if (row_num >= 4){
-                    var this_row = "#search-row-group-" + (row_num - 1);
-                    var target_row = "#search-row-group-" + row_num;
-                    add_search_row(this_row, target_row);
-                }
-
-                row_num = parseInt(i / 2) + 2;
-
-                if (i % 2 === 0) { // get even tokens
-
+                if (idx % 2 === 0) { // get even tokens
                     // (field_name::search_string)
 
                     // skip if empty value
                     if (tok === ""){
-                        console.log("token is empty, skipping to next token");
+                        console.log("  token is empty, skipping to next token");
                         return true;
                     }
 
@@ -171,28 +163,59 @@
                     var clean_tok = tok.replace(/^\(/g, "").replace(/\)$/g, "").replace("+", " ");
                     var split_toks = clean_tok.split("::");
 
-                    console.log("split tokens: ");
-                    console.log(split_toks);
+                    console.log("  split tokens: ");
+                    for (var i = 0; i < split_toks.length; i++) {
+                        console.log("    " + split_toks[i]);
+                    }
 
                     // check if we have two tokens
                     // need to be careful for search terms that contain a "::"
-                    if (split_toks.length !== 2){
-                        console.log("split token has an unexpected number of components! expecting 2, found " + split_toks.length);
+                    if (split_toks && split_toks.length < 2){
+                        console.log("  split token has an unexpected number of components! expecting at least 2, found " + split_toks.length);
                         return true;
                     }
 
                     var field_name = split_toks[0];
-                    var search_string = split_toks[1].trim();
+                    var search_string = "";
 
-                    console.log("field_name: " + field_name);
-                    console.log("search_string: " + search_string);
+                    console.log("  field_name: " + field_name);
 
                     // check if this file_name is a filter
                     if ($.inArray(field_name, FILTER_FIELDS) >= 0) {
-                        console.log("this field is a filter: " + field_name);
-                        var my_field = $(".facets-container .filter-panel #" + field_name);
-                        my_field.val(search_string).attr('selected','selected');
+                        console.log("  this field is a filter: " + field_name);
+
+                        var my_filter_panel = $(".facets-container #panel-" + field_name + ".filter-panel");
+                        var my_filter_panel_input = my_filter_panel.find(":input").filter(':visible:first');
+                        search_string = "";
+
+                        // process possible multiple filter terms
+                        for (var j = 1; j < split_toks.length; j++) {
+                            search_string = split_toks[j].trim();
+                            console.log("  looking at token: " + search_string);
+
+                            // handle different types of input fields: checkbox, select, input
+                            if (my_filter_panel_input.is(":checkbox")){
+                                console.log("  this is a checkbox field");
+                                my_filter_panel.find("input[data-field='" + search_string + "']").prop('checked', true);
+                            } else if (my_filter_panel_input.is("select")) {
+                                console.log("  this is a select field");
+                                my_filter_panel.find("select[data-count='" + i + "']").val(search_string).attr('selected','selected');
+                            } else {
+                                // regular input field
+                                console.log("  this is a text input field");
+                                my_filter_panel.find("input[data-count='" + i + "']").val(search_string);
+                            }
+                        }
                     } else { // regular search field
+                        // the next split_tok is our search_string
+                        search_string = split_toks[1].trim();
+
+                        // add a new search row
+                        this_row = "#search-row-group-" + (row_num - 1);
+                        target_row = "#search-row-group-" + row_num;
+                        add_search_row(this_row, target_row);
+                        row_num = parseInt(idx / 2) + 2;
+
                         // update the search field name drop down
                         var my_field_name_list = my_search_row.find(".field_name ul li a");
                         my_field_name_list.each(function () {
@@ -212,13 +235,13 @@
                 } else { // odd token
                     // BOOLEAN
 
-                    console.log("bool: " + tok);
+                    console.log("  bool: " + tok);
 
                     // update the boolean drop down
                     var my_field_bool_list = my_search_row.find(".boolean ul li a");
                     my_field_bool_list.each(function () {
-                        $this_item = $(this);
-                        $this_data_name = $this_item.attr("data-name");
+                        var $this_item = $(this);
+                        var $this_data_name = $this_item.attr("data-name");
                         if ($this_data_name === tok) {
                             $this_item.click();
                         }
@@ -286,7 +309,7 @@
             //
             var query_str = "";
             $('.adv-search-row').each(function(){
-               var $this = $(this);
+                var $this = $(this);
 
                 // get boolean value
                 var boolean_val = "";
@@ -338,23 +361,23 @@
             // Second, check on filters that append to query_str.
             // We allow for empty search queries that have filters
             //
-            $(".facets-container .filter-panel :input").each(function () {
-                var $this = $(this);
-                var field_val = $this.val();
+            $.each(FILTER_FIELDS, function(k,filter_name){
+                var output = parse_filter_panel(filter_name);
+                var this_filter_string = "";
 
-                // if value is selected of changed then add to query_str
-                if (field_val && field_val.length) {
-                    var field_name = $this.attr("id");
-                    console.log("found: " + field_name + ": " + field_val);
+                if (output && output.length > 0) {
+                    this_filter_string = "(" + filter_name + output + ")";
 
                     // If query_str has a value then append AND bool operator to string
                     if (query_str && query_str.length) {
                         query_str += "--AND--"
                     }
-                    query_str += "(" + field_name + "::" + field_val + ")"
+                    query_str += this_filter_string;
                 }
-                console.log("updated query_str: " + query_str);
+
+                console.log("this_filter_string: " + this_filter_string);
             });
+            console.log("query_str: " + query_str);
 
             //
             // Third, update the URL parameters
@@ -398,10 +421,49 @@
             // Last, load the page with the updated search params
             //
             if (query_url_param && query_url_param.length){
-                console.log("query_url_param: " + query_url_param);
+                console.log("final query_url_param: " + query_url_param);
                 window.location = query_url_param;
             }
         });
+
+        // function to parse filter input fields
+        function parse_filter_panel(id){
+            var output = "";
+
+            // parse call input fields
+            $("#panel-" + id).find(":input").each(function(){
+                var $this = $(this);
+                var field_name = "";
+                var field_val = "";
+
+                if ($this.is(":checkbox")) {
+                    var field_checked = $this.prop('checked');
+
+                    // if value is checked then add to output
+                    if (field_checked) {
+                        var my_label = $this.attr("data-field");
+                        output += "::" + my_label;
+                    }
+                } else if ($this.is("select")) {
+                    console.log("found a select");
+                    field_val = $this.val();
+                    if (field_val && field_val.length > 0) {
+                        field_name = $this.attr("id");
+                        console.log("found: " + field_name + ": " + field_val);
+                        output += "::" + field_val;
+                    }
+                } else {
+                    field_val = $this.val();
+                    if (field_val && field_val.length > 0) {
+                        field_name = $this.attr("id");
+                        console.log("found: " + field_name + ": " + field_val);
+                        output += "::" + field_val;
+                    }
+                }
+            });
+
+            return output;
+        }
 
         // function to add a new search row
         function add_search_row(this_row, target_row){
