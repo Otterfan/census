@@ -7,11 +7,11 @@ Reporting is built using the [Blazer](https://github.com/ankane/blazer) Rails ge
 Installation instructions can be found on the [Blazer project repo](https://github.com/ankane/blazer#installation).
 
 ### Rails install
-Be sure to install and run migrations the first time you install this gem.
+Be sure to install and run migrations the first time you install this gem. (Don't override `blazer.yml` when prompted!)
 
 ```
 rails g blazer:install
-rake db:migrate
+bin/rails db:migrate RAILS_ENV=development
 ```
 
 ### Postgres configuration
@@ -45,7 +45,7 @@ The report interface is accessible to signed in users at [http://localhost:9200/
 Here are a few sample queries to try in the reporting app.
 
 * List all Text genres
- -      SELECT census_id,title,genre FROM Texts ORDER BY census_id;
+  -      SELECT census_id,title,genre FROM Texts ORDER BY census_id;
 
-* List all Text genres by genre name. This uses "Smart Variables" custom defined in the app's `blazer.yml` config.
- -      SELECT census_id, title, genre, id as "Record link" FROM Texts WHERE genre = {genres} ORDER BY genre, census_id;
+* List all Text genres by genre name. This uses "Smart Variables" custom defined in the app's [blazer.yml](config/blazer.yml) config.
+  -      SELECT census_id, title, genre, id as "Record link" FROM Texts WHERE genre = {genres} ORDER BY genre, census_id;
