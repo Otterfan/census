@@ -126,6 +126,10 @@ class Public::SearchController < ApplicationController
       :not
   ]
 
+  BOOL_AND = "AND"
+  BOOL_OR = "OR"
+  BOOL_NOT = "NOT"
+
   KEYWORD_FIELDS = %w{
     census_id.exact
     text_type.exact^5
@@ -521,10 +525,7 @@ class Public::SearchController < ApplicationController
     end
 
     # example of raw combined bool search query string
-    # bq=(title+cats paw)++OR++(people+jack)++NOT++(component_title+fish)
-    #
-    # Rails will sanitize string by replacing all "+" symbols into spaces
-    # bq=(title cats paw)  OR  (people jack)  NOT  (component_title fish)
+    # bq=(title::complete poems)--OR--(author_heading::cavafy)--AND--(genre::poetry::essay)
 
     # simple sanity checking
     # check that the first and last characters in the search string are parentheses
@@ -532,12 +533,12 @@ class Public::SearchController < ApplicationController
       raise ArgumentError.new("The advanced search query is malformed.")
     end
 
-    # First, split query string by double spaces to get tokens like:
-    # [0] (title cats paw)
+    # First, split query string by double dashes to get tokens like:
+    # [0] (title::complete poems)
     # [1] OR
-    # [2] (people jack)
-    # [3] NOT
-    # [4] (component_title fish)
+    # [2] (author_heading::cavafy)
+    # [3] AND
+    # [4] (genre::poetry::essay)
     #
     # NB There is a pattern where boolean operators are on odd-numbered indices
     #    and the fields & values are on even-numbered indices. There will always
@@ -569,7 +570,7 @@ class Public::SearchController < ApplicationController
 
         field_tokens = match_re.match(tok)
 
-        # we know that we should only match two elements with our regex: a field name and search string
+        # we know that we should only match two or more elements with our regex: a field name and search string(s)
         if field_tokens
           if field_tokens.length >= 2
             field_name = field_tokens[1]
@@ -582,7 +583,7 @@ class Public::SearchController < ApplicationController
             trimmed_search_string = search_string.strip
             clean_search_string = sanitize_query(trimmed_search_string)
 
-            puts "  cleaned search string: " + clean_search_string
+            # puts "  cleaned search string: " + clean_search_string
 
             # make sure we're only processing advanced search fields we know.
             # query strings will be added to @combined_query_list list object
@@ -599,11 +600,14 @@ class Public::SearchController < ApplicationController
               when "entry_number"
                 add_field_adv_search(['census_id.exact'], clean_search_string, @current_bool_op)
               when "text_type"
-                add_field_adv_search(['text_type.exact', 'component.text_type.exact'], wrap_in_quotes(clean_search_string), @current_bool_op)
+                # process this field type as a advanced search filter
+                add_field_adv_search_filter(['text_type.exact', 'component.text_type.exact'], trimmed_search_string, @current_bool_op)
               when "material_type"
-                add_field_adv_search(['material_type.exact'], wrap_in_quotes(clean_search_string), @current_bool_op)
+                # process this field type as a advanced search filter
+                add_field_adv_search_filter(['material_type.exact'], trimmed_search_string, @current_bool_op)
               when "genre"
-                add_field_adv_search(['genre.exact', 'components.genre.exact'], wrap_in_quotes(clean_search_string), @current_bool_op)
+                # process this field type as a advanced search filter
+                add_field_adv_search_filter(['genre.exact', 'components.genre.exact'], trimmed_search_string, @current_bool_op)
               when "journal_title"
                 add_field_adv_search(['journal.title', 'journal.title.en_folded', 'journal.title.el_folded', 'journal.sort_title', 'journal.sort_title.en_folded', 'journal.sort_title.el_folded'], clean_search_string, @current_bool_op)
               when "original_greek_title"
@@ -770,15 +774,15 @@ class Public::SearchController < ApplicationController
 
   # Advanced search. Add a search on a specific field to the string array
   def add_field_adv_search(fields, field_val, bool_op = "AND")
-    # loop through fields list and create field_name:search_term pair string, and add them to @combined_fields_list list
+    # loop through fields array and create field_name:search_term pair string, and add them to @combined_fields_list array
     @combined_fields_list = []
 
-    # handle field_vals that are multiple words
+    # Handle field_vals that are multiple words
     # A search on Title with terms `cavafy cafe` will produce a grouping similar to: (title:cavafy AND title:cafe)
     fields.each do |field_str|
       @combined_field_parts_list = []
 
-      # check if field_val is wrapped in quotes
+      # Check if field_val is wrapped in quotes:
       # if true, treat the entire field_val as a single item
       # else, split field_val by whitespace and treat each item as a separate search term
       if /^\".*\"$/.match?(field_val)
@@ -789,70 +793,112 @@ class Public::SearchController < ApplicationController
           @combined_field_parts_list << "#{field_str}:#{field_val_part}"
         end
       end
-      @combined_fields_list << "(#{@combined_field_parts_list.join(" AND ")})"
+      @combined_fields_list << create_combined_field_group(@combined_field_parts_list, bool_op)
     end
 
-    # each term in @combined_fields_list list will be OR'ed together and grouped by parentheses, and saved as a string
-    # @fields_list      = [D, E, F]
-    # combo_field_group = (D OR E OR F)
-    combo_field_group = "(#{@combined_fields_list.join(" OR ")})"
+    # Each term in @combined_fields_list array will be OR'ed together and grouped by parentheses, and saved as a string
+    #   @fields_list      = [D, E, F]
+    #   combo_field_group = (D OR E OR F)
+    combo_field_group = create_combined_field_group(@combined_fields_list, BOOL_OR)
 
-    # create a combo_query string to include the combo_field_group, the bool operator and fields_list,
-    # and then group by parentheses
-    #
-    # EX:
-    #     wrapping parentheses   = (                               )
-    #     @combined_query_string = | (A AND B)                     |
-    #     bool_op                = |  |         AND                |
-    #     combo_field_group      = |  |         |    (D OR E OR F) |
-    #                              |  |         |     |            |
-    #                              v  v         v     v            v
-    #     combo_query            = ( (A AND B)  AND  (D OR E OR F) )
-    #
-    if bool_op and @combined_query_string.length > 0
-      combo_field = "(#{@combined_query_string} #{bool_op} #{combo_field_group})"
-    else
-      combo_field = combo_field_group
-    end
-
-    puts "  current query_string : #{combo_field_group}"
-    puts "  updated query_string : #{combo_field}"
-
-    # finally, save as the @combined_query_string
-    @combined_query_string = combo_field
+    # Finally, return the @combined_query_string using combo_field_group and bool_op
+    @combined_query_string = update_combined_query_string(@combined_query_string, combo_field_group, bool_op)
   end
 
-  def add_field_adv_search_keyword(keyword_fields, field_val, bool_op = "AND")
+  # Add a specialized advanced search filter query string
+  def add_field_adv_search_filter(fields, field_val, bool_op="AND")
+    # We can expect method parameters like:
+    #  fields    = ["genre", "components.genre"]
+    #  field_val = "poetry::essay"
 
-    # create a combo_query string to include the combo_field_group, the bool operator and fields_list,
-    # and then group by parentheses
-    #
-    # EX:
-    #     wrapping parentheses   = (                               )
-    #     @combined_query_string = | (A AND B)                     |
-    #     bool_op                = |  |         AND                |
-    #     combo_field_group      = |  |         |    (D OR E OR F) |
-    #                              |  |         |     |            |
-    #                              v  v         v     v            v
-    #     combo_query            = ( (A AND B)  AND  (D OR E OR F) )
-    #
-    if bool_op and @combined_query_string.length > 0
-      combo_field = "(#{@combined_query_string} #{bool_op} #{field_val})"
-    else
-      combo_field = field_val
+    # Loop through each element in fields array and handle multiple field_vals terms
+    @combined_fields_list = []
+    fields.each do |field_str|
+      @combined_field_parts_list = []
+      @split_tokens_list = []
+
+      # Tokenize field_val into separate values
+      #   "poetry::essay".split("::")
+      # returns
+      #   ["poetry", "essay"]
+      vals = field_val.split("::")
+
+      vals.each do |val|
+        # Be sure to add double quotes around the val for this filter query
+        @split_tokens_list << "#{field_str}:\"#{val}\""
+      end
+
+      # The first loop will have a have a @split_tokens_list array that looks like:
+      #   ["genre:poetry", "genre:essay"]
+
+      # Join all the @split_tokens_list strings with "OR" and then add the result into @combined_fields_list array
+      @combined_fields_list << create_combined_field_group(@split_tokens_list, BOOL_OR)
+
+      # The first loop will have a have a @combined_fields_list array that looks like:
+      #   ["genre:poetry OR genre:essay"]
     end
 
-    puts "  adding keyword search string : #{field_val}"
-    puts "  updated query_string : #{combo_field}"
+    # By now, we should have a @combined_fields_list array that looks like:
+    #   ["genre:poetry OR genre:essay", "components.genre:poetry OR components.genre:essay"]
 
+    # Next, each term in @combined_fields_list array will be OR'ed together and grouped by parentheses, and saved as a string
+    #   @combined_fields_list = [D:X, E:Y, F:Z]
+    #   combo_field_group     = ((D:X) OR (E:Y) OR (F:Z))
+    combo_field_group = create_combined_field_group(@combined_fields_list, BOOL_OR)
+
+    # Finally, return the @combined_query_string using combo_field_group and bool_op
+    @combined_query_string = update_combined_query_string(@combined_query_string, combo_field_group, bool_op)
+  end
+
+  # Add an advanced search keyword/all fields search query
+  def add_field_adv_search_keyword(keyword_fields, field_val, bool_op="AND")
     # add query_string params unique to keyword search
     @combined_query_hash[:query_string][:fields] = keyword_fields
     @combined_query_hash[:query_string][:lenient] = true
     @combined_query_hash[:query_string][:type] = "most_fields"
     @combined_query_hash[:query_string][:default_operator] = "and"
 
-    # finally, save as the @combined_query_string
-    @combined_query_string = combo_field
+    # Finally, return the @combined_query_string using field_val and bool_op
+    @combined_query_string = update_combined_query_string(@combined_query_string, field_val, bool_op)
+  end
+
+  # Create a new query string by joining terms in field_group array with bool_op
+  def create_combined_field_group(field_group, bool_op)
+    # check how many elements are in the field_group array
+    if field_group.length > 1
+      # wrap the array elements in parenthesis and join each array element with the bool_op
+      "(#{field_group.join(" #{bool_op} ")})"
+    else
+      # if there is only one term in the array then return it as a string without parenthesis
+      field_group.join("")
+    end
+  end
+
+  # Combine all the query groups into a central query string
+  def update_combined_query_string(combined_query, field_group, bool_op="AND")
+    puts "combined_query: #{combined_query}, field_group: #{field_group}, bool_op: #{bool_op}"
+    # create a combo_query string to include the field_group, the bool operator and combined_query,
+    # and then group by parentheses
+    #
+    # EX:
+    #     wrapping parentheses  = (                               )
+    #     combined_query        = | (A AND B)                     |
+    #     bool_op               = |  |         AND                |
+    #     field_group           = |  |         |    (D OR E OR F) |
+    #                             |  |         |     |            |
+    #                             v  v         v     v            v
+    #     combo_query           = ( (A AND B)  AND  (D OR E OR F) )
+    #
+    if bool_op and combined_query.length > 0
+      combo_query = "(#{combined_query} #{bool_op} #{field_group})"
+    else
+      combo_query = field_group
+    end
+
+    puts "  adding keyword search string: #{field_group}"
+    puts "  updated query_string: #{combo_query}"
+
+    combo_query
   end
 
   # Add a date range search
