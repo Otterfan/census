@@ -24,3 +24,20 @@
     </div>
   </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        // toggle more/less facets
+        $("li.toggle-link button").on('click', function(){
+            var $this = $(this);
+
+            $this.parents("ul.facet-list-group").find("li.toggle-element").each(function () {
+                $(this).toggle();
+            });
+
+            $this.parents("ul.facet-list-group").find("li.toggle-link button").each(function(){
+                $(this).toggle();
+            });
+        });
+    });
+</script>

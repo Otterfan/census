@@ -7,14 +7,21 @@
           <div class="facet-label"><%= format_label(@facets[facet_name.to_sym]) %> <%= link_to '&nbsp;<i class="fas fa-times"></i>'.html_safe, reset_facet_path(request.fullpath, facet_name.to_sym), :class =>"facet-control facet-remove", "data-control" => facet_name.to_sym %></div>
           <div class="facet-value"></div>
         <% else %>
-          <% @aggregations[facet_name].buckets.each do |facet| %>
+          <% @aggregations[facet_name].buckets.each_with_index do |facet, index| %>
+            <% if index == 10 %>
+              <li class="facet-list-group-item toggle-link"><button type="button" class="btn btn-sm btn-default toggle-more">Show all</button></li>
+            <% end %>
             <% if facet["key"].present? %>
-              <li class="facet-list-group-item">
+              <li
+                class="facet-list-group-item <% if index >= 10 %>toggle-element<% end %>"
+                style="<% if index >= 10 %>display:none;<% end %>"
+              >
                 <div class="facet-label"><%= link_to format_label(facet["key"]), update_facet_path(request.fullpath, facet_name, facet["key"]) %></div>
                 <div class="facet-value"><%= facet.doc_count %></div>
               </li>
             <% end %>
           <% end %>
+          <li class="toggle-link"><button type="button" class="btn btn-sm btn-default toggle-less" style="display:none;">Show less</button></li>
         <% end %>
       </ul>
     </div>
