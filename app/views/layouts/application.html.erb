@@ -28,6 +28,7 @@
         <li class="<%= 'active' if in_current_path? 'journal' %>"><a href="/journals">Journals<span class="sr-only">(current)</span></a></li>
         <li class="<%= 'active' if in_current_path? 'changes' %>"><a href="/changes">All edits<span class="sr-only">(current)</span></a></li>
         <li class="<%= 'active' if in_current_path? 'comments' %>"><a href="/comments">All comments<span class="sr-only">(current)</span></a></li>
+        <li class="<%= 'active' if in_current_path? 'reports' %>"><a href="/reports" target="_blank">Reports<span class="sr-only">(current)</span></a></li>
       </ul>
       <p class="navbar-text navbar-right">
         <% if user_signed_in? %>
