@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   resources :people, :path => 'authors'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
+  mount Blazer::Engine, at: "reports"
+
   namespace :public do
     root :to => "search#search"
     resources :search, :only => [:index], to: "search#search"
