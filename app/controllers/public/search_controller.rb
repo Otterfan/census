@@ -92,12 +92,21 @@ class Public::SearchController < ApplicationController
       text_citations.name
       text_citations.name.en_folded
       text_citations.name.el_folded
+      text_citations.name.controlled_name
+      text_citations.name.controlled_name.en_folded
+      text_citations.name.controlled_name.el_folded
       components.component_citations.name
       components.component_citations.name.en_folded
       components.component_citations.name.el_folded
       components.component_citations.controlled_name
       components.component_citations.controlled_name.en_folded
       components.component_citations.controlled_name.el_folded
+      volume.volume_citations.name
+      volume.volume_citations.name.en_folded
+      volume.volume_citations.name.el_folded
+      volume.volume_citations.controlled_name
+      volume.volume_citations.controlled_name.en_folded
+      volume.volume_citations.controlled_name.el_folded
       issue_editor
       issue_editor.en_folded
       issue_editor.el_folded
@@ -153,6 +162,13 @@ class Public::SearchController < ApplicationController
     issue_editor.en_folded
     issue_editor.el_folded
 
+    volume.volume_citations.name
+    volume.volume_citations.name.en_folded
+    volume.volume_citations.name.el_folded
+    volume.volume_citations.controlled_name
+    volume.volume_citations.controlled_name.en_folded
+    volume.volume_citations.controlled_name.el_folded
+
     title^10
     title.en_folded^10
     title.el_folded^10
@@ -163,6 +179,9 @@ class Public::SearchController < ApplicationController
     text_citations.name^10
     text_citations.name.en_folded^10
     text_citations.name.el_folded^10
+    text_citations.controlled_name^10
+    text_citations.controlled_name.en_folded^10
+    text_citations.controlled_name.el_folded^10
     text_citations.role.exact^5
     volume.title^5
     volume.title.en_folded^5
@@ -623,7 +642,7 @@ class Public::SearchController < ApplicationController
               when "sponsoring_organization"
                 add_field_adv_search(['sponsoring_organization', 'sponsoring_organization.en_folded', 'sponsoring_organization.el_folded'], clean_search_string, @current_bool_op)
               when "issn"
-                add_field_adv_search(['standard_numbers.value.exact'], clean_search_string, @current_bool_op)
+                add_field_adv_search(['journal.issn.exact'], clean_search_string, @current_bool_op)
               when "isbn"
                 add_field_adv_search(['standard_numbers.value.exact'], clean_search_string, @current_bool_op)
               when "dai"
