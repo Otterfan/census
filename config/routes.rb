@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     root :to => "search#search"
     resources :search, :only => [:index], to: "search#search"
     # get "search", to: "search#search"
+    get 'recent-searches', to: "recent_search#index"
     resources :texts, :only => [:index, :show], :id => /[\d\.]+/
     resources :volumes, :only => [:index, :show]
     resources :journals, :only => [:index, :show]

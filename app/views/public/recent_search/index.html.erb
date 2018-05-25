@@ -1,0 +1,6 @@
+<h2>Recent Searches</h2>
+<ul>
+  <% @searches.each do |search| %>
+  <li><%= link_to(search[:display], public_search_index_path(search[:query])) %></li>
+  <% end %>
+</ul>
