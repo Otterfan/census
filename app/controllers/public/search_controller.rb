@@ -623,7 +623,7 @@ class Public::SearchController < ApplicationController
               when "sponsoring_organization"
                 add_field_adv_search(['sponsoring_organization', 'sponsoring_organization.en_folded', 'sponsoring_organization.el_folded'], clean_search_string, @current_bool_op)
               when "issn"
-                add_field_adv_search(['standard_numbers.value.exact'], clean_search_string, @current_bool_op)
+                add_field_adv_search(['journal.issn.exact'], clean_search_string, @current_bool_op)
               when "isbn"
                 add_field_adv_search(['standard_numbers.value.exact'], clean_search_string, @current_bool_op)
               when "dai"
