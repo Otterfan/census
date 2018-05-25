@@ -394,11 +394,7 @@ class Public::SearchController < ApplicationController
       @query_string_array = []
       @facets = {}
 
-      if session[:recent_searches]
-        session[:recent_searches] << search_params
-      else
-        session[:recent_searches] = [search_params]
-      end
+      add_recent_search(search_params)
 
       if @search_type == "adv"
         # process_adv_search method can raise ArgumentError.
@@ -533,6 +529,22 @@ class Public::SearchController < ApplicationController
   end
 
   private
+
+  # Add a search to the recent search array
+  def add_recent_search(search_params)
+    now = Time.new.to_datetime
+    recent_search = {
+        params: search_params,
+        timestamp: now
+    }
+
+    if session[:recent_searches]
+      session[:recent_searches] << recent_search
+    else
+      session[:recent_searches] = [recent_search]
+      session[:v1_session] = true
+    end
+  end
 
   # processes raw boolean search query string
   def process_adv_search

@@ -1,6 +1,6 @@
 <h2>Advanced Search</h2>
-<p>Try the <%= link_to 'Keyword search', public_search_index_path(:type => "kw") %></p>
-
+<div class="search-chooser">Try the <%= link_to 'Keyword search', public_search_index_path(:type => "kw") %></div>
+<div class="search-history"><%= link_to 'Search history', public_recent_searches_path %></div>
 <!--pre><%= @all_search.to_json %></pre-->
 <%= form_tag(public_search_index_path, method: :get, id: "search_form") do %>
   <div class="panel panel-default">

@@ -1,6 +1,17 @@
 <h2>Recent Searches</h2>
-<ul>
+<table class="table table-striped table-hover">
+  <thead>
+  <th></th>
+  <th class="query-header">Query</th>
+  <th>Type</th>
+  <th>Date</th>
+  </thead>
   <% @searches.each do |search| %>
-  <li><%= link_to(search[:display], public_search_index_path(search[:query])) %></li>
+    <tr>
+      <td><%= search[:num] %></td>
+      <td><%= link_to(search[:display], public_search_index_path(search[:query])) %></td>
+      <td><%= search[:type] %></td>
+      <td><%= search[:time] %></td>
+    </tr>
   <% end %>
-</ul>
+</table>
