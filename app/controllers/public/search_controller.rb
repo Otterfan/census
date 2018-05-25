@@ -77,9 +77,9 @@ class Public::SearchController < ApplicationController
       collection_clean
       collection_clean.en_folded
       collection_clean.el_folded
-      component.collection_clean
-      component.collection_clean.en_folded
-      component.collection_clean.el_folded
+      components.collection_clean
+      components.collection_clean.en_folded
+      components.collection_clean.el_folded
   }
 
   UNIFIED_PERSONS_CITED_FIELDS = %w{
