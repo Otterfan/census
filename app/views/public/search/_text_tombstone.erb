@@ -1,5 +1,5 @@
 <div class="result-title">
-  <%= link_to (text.title.blank? ? "[No title]" : @results_formatter.format(text.title)), public_text_path(text.id) %>
+  <%= link_to (text.title.blank? ? "[No title]" : @results_formatter.format(text.title)), public_text_path(text.id, hl: params[:keyword]) %>
   <span class="title-date">(<%= text.date %>)</span>
 </div>
 <div class="result-author">
