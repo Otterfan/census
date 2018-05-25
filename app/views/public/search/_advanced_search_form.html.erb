@@ -92,11 +92,13 @@
 <% end %>
 <script>
     $(document).ready(function() {
-        // list of fields that are drop down filters and not free text
+        // list of filter fields
         var FILTER_FIELDS = [
             "text_type",
             "material_type",
-            "genre"
+            "genre",
+            "is_bilingual",
+            "illustrations_noted"
         ];
 
         // https://stackoverflow.com/a/21903119
@@ -445,7 +447,6 @@
                         output += "::" + my_label;
                     }
                 } else if ($this.is("select")) {
-                    console.log("found a select");
                     field_val = $this.val();
                     if (field_val && field_val.length > 0) {
                         field_name = $this.attr("id");

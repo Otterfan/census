@@ -64,6 +64,35 @@
         </div>
       </div>
     </div>
+
+    <div class="input-group-lg">
+      <div class="panel panel-default filter-panel" id="panel-is_bilingual">
+        <div class="panel-heading">
+          <%= label_tag(:is_bilingual, "Is Bilingual") %>
+        </div>
+        <div class="panel-body">
+          <div class="filter-checkboxes">
+            <input type="checkbox" name="is_bilingual" id="is_bilingual" value="" data-field="true">
+            <label for="is_bilingual">Show only bilingual records</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="input-group-lg">
+      <div class="panel panel-default filter-panel" id="panel-illustrations_noted">
+        <div class="panel-heading">
+          <%= label_tag(:illustrations_noted, "Illustrations Noted") %>
+        </div>
+        <div class="panel-body">
+          <div class="filter-checkboxes">
+            <input type="checkbox" name="illustrations_noted" id="illustrations_noted" value="" data-field="true">
+            <label for="illustrations_noted">Show only records with noted illustrations</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <%= render 'facet_container_dates', facet_name: "publication_dates" %>
   </div>
 </div>

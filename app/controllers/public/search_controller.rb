@@ -32,7 +32,9 @@ class Public::SearchController < ApplicationController
       :sponsoring_organization,
       :isbn,
       :issn,
-      :dai
+      :dai,
+      :is_bilingual,
+      :illustrations_noted
   ]
 
   SEARCH_PARAMS = KEYWORD_SEARCH_PARAMS + ADVANCED_SEARCH_PARAMS
@@ -626,6 +628,10 @@ class Public::SearchController < ApplicationController
                 add_field_adv_search(['standard_numbers.value.exact'], clean_search_string, @current_bool_op)
               when "dai"
                 add_field_adv_search(['dai.exact'], clean_search_string, @current_bool_op)
+              when "is_bilingual"
+                add_field_adv_search(['is_bilingual', 'components.is_bilingual'], clean_search_string, @current_bool_op)
+              when "illustrations_noted"
+                add_field_adv_search(['illustrations_noted'], clean_search_string, @current_bool_op)
 
               # when "component_title"
               #   add_field_adv_search(['components.sort_title', 'components.sort_title.en_folded', 'components.sort_title.el_folded'], clean_search_string, @current_bool_op)

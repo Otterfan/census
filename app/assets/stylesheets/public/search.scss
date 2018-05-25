@@ -108,6 +108,18 @@ ul.facet-list-group li.facet-list-group-item {
 
 .filter-checkboxes {
   margin: 0 .5rem 0 0;
+  display: table;
+}
+
+.filter-checkboxes input[type="checkbox"] {
+  display: table-cell;
+  vertical-align: middle;
+  margin: 0 0 .5rem 0;
+}
+
+.filter-checkboxes label {
+  display: table-cell;
+  padding: 0 0 .5rem .5rem;
 }
 
 .public #search-results {
