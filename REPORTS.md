@@ -14,19 +14,25 @@ rails g blazer:install
 bin/rails db:migrate RAILS_ENV=development
 ```
 
-### Postgres configuration
+### PostgreSQL configuration
 
 For best practices, use a read-only Postgres user account with this gem.
 
 [Instructions:](https://github.com/ankane/blazer#postgresql)
 
-Run the following postgres commands to create a read-only `blazer` user account:
+Log into PostgreSQL
 
-```
+`psql -U postgres -h localhost -d census_development`
+
+Then run the following postgres commands to create a read-only `blazer` user account:
+
+
+```sql
 CREATE ROLE blazer LOGIN PASSWORD 'somepassword';
-GRANT CONNECT ON DATABASE database_name TO blazer;
+GRANT CONNECT ON DATABASE census_development TO blazer;
 GRANT USAGE ON SCHEMA public TO blazer;
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO blazer;
+GRANT SELECT ON ALL SEQUENCES IN SCHEMA public TO blazer;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO blazer;
 ```
 
