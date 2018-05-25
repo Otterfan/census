@@ -179,9 +179,9 @@ class Public::SearchController < ApplicationController
     text_citations.name^10
     text_citations.name.en_folded^10
     text_citations.name.el_folded^10
-    text_citations.name.controlled_name^10
-    text_citations.name.controlled_name.en_folded^10
-    text_citations.name.controlled_name.el_folded^10
+    text_citations.controlled_name^10
+    text_citations.controlled_name.en_folded^10
+    text_citations.controlled_name.el_folded^10
     text_citations.role.exact^5
     volume.title^5
     volume.title.en_folded^5
