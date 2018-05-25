@@ -44,7 +44,7 @@ Next, create an environmental variable for the system user account that runs thi
 
 ## Run
 
-The report interface is accessible to signed in users at [http://localhost:9200/reports](http://localhost:9200/reports)
+The report interface is accessible to signed in users at [http://localhost:3000/reports](http://localhost:3000/reports)
 
 ## Sample queries
 
