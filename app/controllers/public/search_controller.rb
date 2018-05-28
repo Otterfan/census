@@ -539,10 +539,11 @@ class Public::SearchController < ApplicationController
     }
 
     if session[:recent_searches]
-      session[:recent_searches] << recent_search
+      session.delete(:recent_searches)
+      #session[:recent_searches] << recent_search
     else
-      session[:recent_searches] = [recent_search]
-      session[:v1_session] = true
+      #session[:recent_searches] = [recent_search]
+      #session[:v1_session] = true
     end
   end
 
