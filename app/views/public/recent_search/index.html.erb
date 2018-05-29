@@ -1,17 +1,24 @@
 <h2>Recent Searches</h2>
+<div class="row">
+  <div class="pagination-stuff col-md-10">
+    <%= paginate @searches %>
+  </div>
+</div>
 <table class="table table-striped table-hover">
   <thead>
-  <th></th>
+  <th class="num-header"></th>
   <th class="query-header">Query</th>
-  <th>Type</th>
-  <th>Date</th>
+  <th class="type-header">Type</th>
+  <th class="date-header">Last performed</th>
   </thead>
+  <% i = (@searches.current_page - 1) * @searches.limit_value + 1 %>
   <% @searches.each do |search| %>
     <tr>
-      <td><%= search[:num] %></td>
-      <td><%= link_to(search[:display], public_search_index_path(search[:query])) %></td>
-      <td><%= search[:type] %></td>
-      <td><%= search[:time] %></td>
+      <td><%= i  %></td>
+      <td><%= link_to(search.display, public_search_index_path(search.query_string)) %></td>
+      <td><%= search.type %></td>
+      <td><%= search.time %> UTC</td>
     </tr>
+    <% i = i + 1 %>
   <% end %>
 </table>

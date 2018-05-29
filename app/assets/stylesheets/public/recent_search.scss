@@ -1,6 +1,18 @@
 // Place all the styles related to the public/recent_search controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.num-header {
+  width: 10%;
+}
+
 .query-header {
-  width: 50%;
+  width: 60%;
+}
+
+.type-header {
+  width: 10%;
+}
+
+.date-header {
+  width: 20%;
 }

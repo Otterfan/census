@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180525162716) do
+ActiveRecord::Schema.define(version: 20180529153331) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -194,6 +194,14 @@ ActiveRecord::Schema.define(version: 20180525162716) do
     t.boolean "primary"
     t.index ["place_id", "text_id"], name: "index_publication_places_on_place_id_and_text_id"
     t.index ["text_id", "place_id"], name: "index_publication_places_on_text_id_and_place_id"
+  end
+
+  create_table "recent_searches", force: :cascade do |t|
+    t.text "parameters"
+    t.text "session_id"
+    t.text "type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "roles", force: :cascade do |t|
