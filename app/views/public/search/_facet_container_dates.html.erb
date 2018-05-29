@@ -116,7 +116,7 @@
         <div class="input-group">
           <%= label_tag(:publication_date_earliest, "Earliest date for filtering", class: 'sr-only') %>
           <%= text_field_tag :publication_date_earliest, params[:publication_date_earliest], :class => 'form-control left-rounded-corners', :id => 'publication-date-earliest-value' %>
-          <span class="input-group-btn">
+          <span class="input-group-btn" tabindex="-1">
             <button class=" btn btn-secondary disabled" disabled="disabled">-</button>
           </span>
           <%= label_tag(:publication_date_latest, "Latest date for filtering", class: 'sr-only') %>

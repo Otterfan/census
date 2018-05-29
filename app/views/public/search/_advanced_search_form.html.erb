@@ -8,82 +8,120 @@
       <div class="adv-search-fields row">
         <%= hidden_field_tag :type, @search_type %>
 
-        <div class="row" id="new-form">
-          <div class="col-lg-8 col-md-8 col-sm-8">
-            <!-- first search field group -->
+        <!-- first search field group -->
+        <div class="row" id="new-form" aria-label="Search row 1">
+          <div class="col-lg-10 col-md-10 col-sm-8">
             <%= render partial: 'advanced_search_form_group', locals: {num: 1} %>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-4"></div>
+        </div>
 
-            <!-- second search field group -->
+        <!-- second search field group -->
+        <div class="row" id="new-form" aria-label="Search row 2">
+          <div class="col-lg-10 col-md-10 col-sm-8">
             <%= render partial: 'advanced_search_form_group', locals: {num: 2} %>
           </div>
-          <div class="col-lg-4 col-md-4 col-sm-4">
-            <div class="adv-search-row-buttons">
-              <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="input-group input-group-lg">
-                  <%= submit_tag 'Search', name: nil, :class => 'btn btn-lg btn-success', :id => 'adv-search-submit' %>
-                </div>
-              </div>
-            </div>
-            <div class="adv-search-row-buttons">
-              <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="input-group input-group-lg">
-                  <%= link_to 'Clear', public_search_index_path(type: @search_type), :class => 'btn btn-lg btn-success' %>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div class="col-lg-2 col-md-2 col-sm-4"></div>
         </div>
 
         <!-- third search field group -->
-        <div class="row search-row" id="search-row-group-3" >
-          <div class="col-lg-8 col-md-8 col-sm-8">
+        <div class="row search-row" id="search-row-group-3" aria-label="Search row 3">
+          <div class="col-lg-10 col-md-10 col-sm-8">
             <%= render partial: 'advanced_search_form_group', locals: {num: 3} %>
           </div>
-          <div class="col-lg-4 col-md-4 col-sm-4 add-buttons">
+          <div class="col-lg-2 col-md-2 col-sm-4 add-buttons">
             <div class="col-lg-12 col-md-12 col-sm-12">
-              <a href="#" class="add" data-next="#search-row-group-4"><i class="fas fa-2x fa-fw fa-plus-circle"></i></a>
+              <a href="#"
+                 aria-label="Expand search row 4"
+                 class="add"
+                 data-next="#search-row-group-4"
+                 role="button"
+                 aria-expanded="false"
+                 aria-controls="search-row-group-4"
+              ><i class="fas fa-2x fa-fw fa-plus-circle"></i></a>
               <i class="fas fa-2x fa-fw fa-minus-circle disabled"></i>
             </div>
           </div>
         </div>
 
         <!-- fourth search field group -->
-        <div class="row search-row" id="search-row-group-4" style="display:none;">
-          <div class="col-lg-8 col-md-8 col-sm-8">
+        <div class="row search-row" id="search-row-group-4" aria-label="Search row 4" style="display:none;">
+          <div class="col-lg-10 col-md-10 col-sm-8">
             <%= render partial: 'advanced_search_form_group', locals: {num: 4} %>
           </div>
-          <div class="col-lg-4 col-md-4 col-sm-4 add-buttons">
+          <div class="col-lg-2 col-md-2 col-sm-4 add-buttons">
             <div class="col-lg-12 col-md-12 col-sm-12">
-              <a href="#" class="add" data-next="#search-row-group-5"><i class="fas fa-2x fa-fw fa-plus-circle"></i></a>
-              <a href="#" class="remove" data-previous="#search-row-group-3"><i class="fas fa-2x fa-fw fa-minus-circle"></i></a>
+              <a href="#"
+                 aria-label="Expand search row 5"
+                 class="add"
+                 data-next="#search-row-group-5"
+                 role="button"
+                 aria-expanded="false"
+                 aria-controls="search-row-group-5"
+              ><i class="fas fa-2x fa-fw fa-plus-circle"></i></a>
+              <a href="#"
+                 aria-label="Collapse search row 4"
+                 class="remove"
+                 data-previous="#search-row-group-3"
+                 role="button"
+                 aria-expanded="false"
+                 aria-controls="search-row-group-4"
+              ><i class="fas fa-2x fa-fw fa-minus-circle"></i></a>
             </div>
           </div>
         </div>
 
         <!-- fifth search field group -->
-        <div class="row search-row" id="search-row-group-5" style="display:none;">
-          <div class="col-lg-8 col-md-8 col-sm-8">
+        <div class="row search-row" id="search-row-group-5" aria-label="Search row 5" style="display:none;">
+          <div class="col-lg-10 col-md-10 col-sm-8">
             <%= render partial: 'advanced_search_form_group', locals: {num: 5} %>
           </div>
-          <div class="col-lg-4 col-md-4 col-sm-4 add-buttons">
+          <div class="col-lg-2 col-md-2 col-sm-4 add-buttons">
             <div class="col-lg-12 col-md-12 col-sm-12">
-              <a href="#" class="add" data-next="#search-row-group-6"><i class="fas fa-2x fa-fw fa-plus-circle"></i></a>
-              <a href="#" class="remove" data-previous="#search-row-group-4"><i class="fas fa-2x fa-fw fa-minus-circle"></i></a>
+              <a href="#"
+                 aria-label="Expand search row 6"
+                 class="add"
+                 data-next="#search-row-group-6"
+                 role="button"
+                 aria-expanded="false"
+                 aria-controls="search-row-group-6"
+              ><i class="fas fa-2x fa-fw fa-plus-circle"></i></a>
+              <a href="#"
+                 aria-label="Collapse search row 5"
+                 class="remove"
+                 data-previous="#search-row-group-4"
+                 role="button"
+                 aria-expanded="false"
+                 aria-controls="search-row-group-5"
+              ><i class="fas fa-2x fa-fw fa-minus-circle"></i></a>
             </div>
           </div>
         </div>
 
         <!-- sixth search field group -->
-        <div class="row search-row" id="search-row-group-6" style="display:none;">
-          <div class="col-lg-8 col-md-8 col-sm-8">
+        <div class="row search-row" id="search-row-group-6" aria-label="Search row 6" style="display:none;">
+          <div class="col-lg-10 col-md-10 col-sm-8">
             <%= render partial: 'advanced_search_form_group', locals: {num: 6} %>
           </div>
-          <div class="col-lg-4 col-md-4 col-sm-4 add-buttons">
+          <div class="col-lg-2 col-md-2 col-sm-4 add-buttons">
             <div class="col-lg-12 col-md-12 col-sm-12">
               <i class="fas fa-2x fa-fw fa-plus-circle disabled"></i>
-              <a href="#" class="remove" data-previous="#search-row-group-5"><i class="fas fa-2x fa-fw fa-minus-circle"></i></a>
+              <a href="#"
+                 aria-label="Collapse search row 6"
+                 class="remove"
+                 data-previous="#search-row-group-5"
+                 role="button"
+                 aria-expanded="false"
+                 aria-controls="search-row-group-6"
+              ><i class="fas fa-2x fa-fw fa-minus-circle"></i></a>
             </div>
           </div>
+        </div>
+
+        <!-- form submit and clear -->
+        <div class="adv-search-row-buttons">
+          <%= submit_tag 'Search', name: nil, :class => 'btn btn-lg btn-success', :id => 'adv-search-submit' %>
+          <%= link_to 'Clear', public_search_index_path(type: @search_type), :class => 'btn btn-lg btn-success' %>
         </div>
       </div>
 
@@ -303,7 +341,7 @@
         });
 
         // trigger on form submission
-        $("#new-form #adv-search-submit").click(function(e){
+        $("#adv-search-submit").click(function(e){
             e.preventDefault();
 
             //
@@ -471,6 +509,15 @@
             // show the next row of fields
             $(target_row).show();
 
+            // set the focus on the target_row's input field
+            $(target_row).find("input.input-field").focus();
+
+            // set target_row's remove button to aria-expanded=true
+            $(target_row).find(".add-buttons a.remove").attr("aria-expanded", "true");
+
+            // set this_row's add button to aria-expanded=true
+            $(this_row).find(".add-buttons a.add").attr("aria-expanded", "true");
+
             // hide this set of add/remove buttons
             $(this_row).find(".add-buttons").hide();
         }
@@ -491,8 +538,17 @@
             // hide this row of fields
             $(this_row).hide();
 
+            // set this_row's remove button to aria-expanded=false
+            $(this_row).find(".add-buttons a.remove").attr("aria-expanded", "false");
+
             // show the previous row of add/remove buttons
             $(target_row).find(".add-buttons").show();
+
+            // set target_row's add button to aria-expanded=false
+            $(target_row).find(".add-buttons a.add").attr("aria-expanded", "false");
+
+            // set the focus on the target_row's input field
+            $(target_row).find("input.input-field").focus();
         }
 
         // trigger when add/remove buttons are clicked

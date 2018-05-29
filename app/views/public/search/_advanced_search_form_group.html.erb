@@ -3,7 +3,7 @@
     <div class="input-group input-group-lg">
       <% if num > 1 %>
       <div class="input-group-btn boolean">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">AND
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="The boolean operator for search input field <%= num %>. Default is 'AND'."> AND
           <span class="caret"></span></button>
         <ul class="dropdown-menu dropdown-menu-left">
           <li class="selected"><a href="#" data-name="AND">AND</a></li>
@@ -22,10 +22,10 @@
       </div>
       <% end %>
 
-      <label for="v_<%= num %>" class="sr-only">Advanced search field <%= num %></label>
-      <input type="text" name="v_<%= num %>" id="v_<%= num %>" class="form-control <% if num == 1 %>left-rounded-corners<% end %>">
+      <label for="v_<%= num %>" class="sr-only">Search input field <%= num %></label>
+      <input type="text" name="v_<%= num %>" id="v_<%= num %>" class="form-control input-field <% if num == 1 %>left-rounded-corners<% end %>">
       <div class="input-group-btn fields_dropdown field_name">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Select which field will be used with search input field <%= num %>. Default is all fields.">Select
           a field (optional)
           <span class="caret"></span></button>
         <ul class="dropdown-menu dropdown-menu-right">
