@@ -1,17 +1,6 @@
 // Place all the styles related to the public/search controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
-label.hidden,
-.aria-hidden {
-  position:absolute;
-  left:-10000px;
-  top:auto;
-  width:1px;
-  height:1px;
-  overflow:hidden;
-}
-
 ul.facet-list-group {
   list-style: none;
   margin-bottom: 0;

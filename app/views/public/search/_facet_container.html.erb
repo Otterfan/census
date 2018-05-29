@@ -1,6 +1,6 @@
 <% if @aggregations[facet_name].buckets.present? %>
   <div class="panel panel-default">
-    <div class="panel-heading"><h4><span class="aria-hidden">Limit by</span><%= format_label(facet_name) %></h4></div>
+    <div class="panel-heading"><h4><span class="sr-only">Limit by </span><%= format_label(facet_name) %></h4></div>
     <div class="panel-body">
       <ul class="facet-list-group">
         <% if @facets.key?(facet_name.to_sym) %>
@@ -9,7 +9,7 @@
         <% else %>
           <% @aggregations[facet_name].buckets.each_with_index do |facet, index| %>
             <% if index == 10 %>
-              <li class="facet-list-group-item toggle-link"><button type="button" class="btn btn-sm btn-default toggle-more">Show all <span class="aria-hidden"><%= format_label(facet_name) %></span></button></li>
+              <li class="facet-list-group-item toggle-link"><button type="button" class="btn btn-sm btn-default toggle-more">Show all <span class="sr-only"><%= format_label(facet_name) %></span></button></li>
             <% end %>
             <% if facet["key"].present? %>
               <li

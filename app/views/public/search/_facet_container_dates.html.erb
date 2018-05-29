@@ -107,19 +107,19 @@
 </script>
 
 <div class="panel panel-default" id="publication-dates-panel">
-  <div class="panel-heading"><h4><span class="aria-hidden">Filter by</span> <%= format_label(facet_name) %></h4></div>
+  <div class="panel-heading"><h4><span class="sr-only">Filter by</span> <%= format_label(facet_name) %></h4></div>
   <div class="panel-body">
     <div id="histogramSlider"></div>
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12">
         <div id="publication-dates-messages"></div>
         <div class="input-group">
-          <%= label_tag(:publication_date_earliest, "Earliest", class: 'hidden') %>
+          <%= label_tag(:publication_date_earliest, "Earliest date for filtering", class: 'sr-only') %>
           <%= text_field_tag :publication_date_earliest, params[:publication_date_earliest], :class => 'form-control left-rounded-corners', :id => 'publication-date-earliest-value' %>
           <span class="input-group-btn">
             <button class=" btn btn-secondary disabled" disabled="disabled">-</button>
           </span>
-          <%= label_tag(:publication_date_latest, "Latest", class: 'hidden') %>
+          <%= label_tag(:publication_date_latest, "Latest date for filtering", class: 'sr-only') %>
           <%= text_field_tag :publication_date_latest, params[:publication_date_latest], :class => 'form-control', :id => 'publication-date-latest-value' %>
           <span class="input-group-btn" id="date-range-change-group">
               <button type="button" class="btn btn-primary" id="date-range-apply">Apply</button>
