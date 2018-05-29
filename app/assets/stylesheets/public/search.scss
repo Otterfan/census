@@ -16,6 +16,10 @@ ul.facet-list-group li.facet-list-group-item {
   width: 100%;
 }
 
+ul.facet-list-group li.facet-list-group-item button {
+  margin-top: 1rem;
+}
+
 .facet-label,
 .facet-value {
   display: table-cell;
