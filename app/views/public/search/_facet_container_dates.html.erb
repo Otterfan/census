@@ -62,7 +62,7 @@
         } else {
             if (data_new_search){
                 //$("#date-range-change-group").hide();
-                $("#publication-dates-messages").html("<p>Enter a date range in <code>YYYY</code> format.</p>");
+                $("#publication-dates-messages").html("<p>Enter dates using <code>YYYY</code> format.</p>");
             } else {
                 $("#publication-dates-panel .panel-body").html("<p>No dates found</p>");
             }
@@ -107,19 +107,19 @@
 </script>
 
 <div class="panel panel-default" id="publication-dates-panel">
-  <div class="panel-heading"><%= format_label(facet_name) %></div>
+  <div class="panel-heading"><h4><span class="aria-hidden">Filter by</span> <%= format_label(facet_name) %></h4></div>
   <div class="panel-body">
     <div id="histogramSlider"></div>
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12">
         <div id="publication-dates-messages"></div>
         <div class="input-group">
-          <!--<%= label_tag(:publication_date_earliest, "Earliest") %> -->
-          <%= text_field_tag :publication_date_earliest, params[:publication_date_earliest], :class => 'form-control', :id => 'publication-date-earliest-value' %>
+          <%= label_tag(:publication_date_earliest, "Earliest", class: 'hidden') %>
+          <%= text_field_tag :publication_date_earliest, params[:publication_date_earliest], :class => 'form-control left-rounded-corners', :id => 'publication-date-earliest-value' %>
           <span class="input-group-btn">
             <button class=" btn btn-secondary disabled" disabled="disabled">-</button>
           </span>
-          <!--<%= label_tag(:publication_date_latest, "Latest") %> -->
+          <%= label_tag(:publication_date_latest, "Latest", class: 'hidden') %>
           <%= text_field_tag :publication_date_latest, params[:publication_date_latest], :class => 'form-control', :id => 'publication-date-latest-value' %>
           <span class="input-group-btn" id="date-range-change-group">
               <button type="button" class="btn btn-primary" id="date-range-apply">Apply</button>

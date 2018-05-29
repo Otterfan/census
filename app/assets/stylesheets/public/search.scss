@@ -2,6 +2,16 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+label.hidden,
+.aria-hidden {
+  position:absolute;
+  left:-10000px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+
 ul.facet-list-group {
   list-style: none;
   margin-bottom: 0;
@@ -56,6 +66,10 @@ ul.facet-list-group li.facet-list-group-item button {
   font-weight: bold;
 }
 
+.panel-heading h4 {
+  margin: .5rem;
+}
+
 .adv-search-fields input {
   /*margin-bottom: 1.25rem;*/
 }
@@ -106,8 +120,8 @@ ul.facet-list-group li.facet-list-group-item button {
   margin: 0;
 }
 
-#search-row-1 input#v_1 {
-  border-radius: 6px 0 0 6px;
+.left-rounded-corners {
+  border-radius: 6px 0 0 6px !important;
 }
 
 .filter-checkboxes {
@@ -124,6 +138,7 @@ ul.facet-list-group li.facet-list-group-item button {
 .filter-checkboxes label {
   display: table-cell;
   padding: 0 0 .5rem .5rem;
+  font-weight: normal;
 }
 
 .public #search-results {

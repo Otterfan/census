@@ -7,7 +7,7 @@
         <%= paginate @texts %>
       </div>
       <div class="col-md-5 sort_box">
-        <label for="select_sort_order">sort</label>
+        <label for="select_sort_order">Sort <span class="aria-hidden">all results</span> by</label>
         <%= select_tag 'select_sort_order', options_for_select(@sort_options, params[:sort]) %>
       </div>
     </div>

@@ -22,7 +22,8 @@
       </div>
       <% end %>
 
-      <input type="text" name="v_<%= num %>" id="v_<%= num %>" class="form-control">
+      <label for="v_<%= num %>" class="hidden">Advanced search field <%= num %></label>
+      <input type="text" name="v_<%= num %>" id="v_<%= num %>" class="form-control <% if num == 1 %>left-rounded-corners<% end %>">
       <div class="input-group-btn fields_dropdown field_name">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select
           a field (optional)
