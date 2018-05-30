@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/BCDigSchol/alphabetical_paginate
-  revision: 197ebcf5523755cef03a6a75b22dbf22c9f8c3cd
+  revision: f0ca698fd36bedaa920ce775e8b8d185fcef3113
   specs:
     alphabetical_paginate (2.3.3)
 
