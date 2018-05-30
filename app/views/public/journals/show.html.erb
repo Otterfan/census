@@ -39,7 +39,7 @@
 
       <% if @referenced_texts.present? %>
         <div class="field">
-          <div class="field-label">Appears in the following Texts:</div>
+          <div class="field-label">Appears in the following entries:</div>
           <ul class="list-group">
           <% @referenced_texts.each do |text| %>
             <li class="list-group-item"><% if text.census_id.present? %>(<%= text.census_id %>) <% end %> <%= link_to (text.title.blank? ? "[No title]" : text.title), public_text_path(text) %></li>
