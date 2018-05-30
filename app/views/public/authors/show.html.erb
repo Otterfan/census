@@ -10,9 +10,11 @@
           <%= paginate @texts %>
         </div>
       </div>
-      <ul class="list-group">
+      <ul class="list-group" id="search-results">
         <% @texts.order(:sort_census_id).each do |text| %>
-          <%= render 'shared/text_tombstone', text: text %>
+          <li class="list-group-item">
+            <%= render 'shared/text_tombstone', text: text %>
+          </li>
         <% end %>
       </ul>
     </div>

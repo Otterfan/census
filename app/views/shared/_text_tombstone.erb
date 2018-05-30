@@ -4,22 +4,22 @@
      source = text
    end
 %>
+<% if (defined? show_topic_author) && show_topic_author == true %>
+  <div class="topic-author">
+    <span class="topic-author-english"><%= text.topic_author.full_name %></span>
+    <% unless text.topic_author.greek_full_name.blank? %>
+      / <span class="topic-author-greek"><%= text.topic_author.greek_full_name %></span>
+    <% end %>
+  </div>
+<% end %>
 <div class="result-title">
+  <span class="title-census-id"><%= text.census_id %></span>
   <%= link_to (text.title.blank? ? "[No title]" : @results_formatter.format(text.title)), public_text_path(text.id, hl: params[:keyword]) %>
   <span class="title-date">(<%= text.date %>)</span>
 </div>
 <div class="result-author">
-  Topic author: <span class="topic-author-english"><%= text.topic_author.full_name %></span>
-  <span class="topic-author-greek"><%= text.topic_author.greek_full_name %></span>
-</div>
-<div class="result-author">
   <%= source.authors_names %>
 </div>
-<% if source.census_id %>
-  <div>
-    Entry Number: <%= text.census_id %>
-  </div>
-<% end %>
 <% if source.volume %>
   <div>
     In <cite><%= link_to_volume_from_search source.volume %></cite>  <%= formatted_journal_issue(text) %>

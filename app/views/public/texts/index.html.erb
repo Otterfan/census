@@ -6,12 +6,14 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-12" id="search-results">
     <% texts_by_author(@texts).each do |author| %>
       <h3><%= author[:author] %></h3>
       <ul class="list-group">
         <% author[:texts].each do |text| %>
-          <%= render 'brief_result', text: text %>
+          <li class="list-group-item">
+            <%= render 'shared/text_tombstone', text: text %>
+          </li>
         <% end %>
       </ul>
     <% end %>

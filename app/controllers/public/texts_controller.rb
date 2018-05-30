@@ -5,6 +5,7 @@ class Public::TextsController < ApplicationController
 
   # GET /public/texts
   def index
+    @results_formatter = BriefResultFormatter.new([],[],[])
     @texts = Text.order(:sort_id).page(params[:page])
 
     if params[:sort] == "author"

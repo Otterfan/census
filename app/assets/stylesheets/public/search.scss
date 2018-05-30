@@ -52,7 +52,7 @@ ul.facet-list-group li.facet-list-group-item button {
 
 .constraints-container .btn-group .disabled {
   color: #000;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .panel-heading h4 {
@@ -84,12 +84,12 @@ ul.facet-list-group li.facet-list-group-item button {
 }
 
 .adv-search-row .input-group,
-.adv-search-row-buttons .input-group{
+.adv-search-row-buttons .input-group {
   margin: 1rem 0;
 }
 
 .adv-search-row-buttons {
-  margin: 3rem 0 1rem 0;
+  margin: 45px 0 0 15px;
 }
 
 .add-buttons {
@@ -145,7 +145,7 @@ ul.facet-list-group li.facet-list-group-item button {
   }
 
   mark, .mark {
-    font-weight: bold;
+    font-weight: 600;
     color: inherit;
     padding: 0;
   }
@@ -155,14 +155,25 @@ ul.facet-list-group li.facet-list-group-item button {
     padding: 1em 1em 2em 0;
     font-size: 14px;
 
-
     &:first-child {
       border-top: none;
       padding-top: 0
     }
 
+    .topic-author {
+      font-weight: 600;
+      color: #737574;
+    }
+
     .result-title {
       font-size: 18px;
+      font-weight: 600;
+
+      .title-census-id {
+        font-size: 90%;
+        margin-right: .4em;
+        font-weight: normal;
+      }
     }
 
     .result-author {
@@ -171,12 +182,6 @@ ul.facet-list-group li.facet-list-group-item button {
 
     .title-date {
       font-size: 16px;
-    }
-
-    .topic-author-greek {
-      display: block;
-      left: 92px;
-      position: relative;
     }
   }
 }
