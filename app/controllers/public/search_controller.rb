@@ -148,7 +148,7 @@ class Public::SearchController < ApplicationController
   BOOL_NOT = "NOT"
 
   KEYWORD_FIELDS = %w{
-    census_id.exact
+    census_id
     text_type.exact^5
     component.text_type.exact^5
     material_type.exact
@@ -453,12 +453,18 @@ class Public::SearchController < ApplicationController
                           type: :fvh
                       }
                   }, {
-                    "original": {
-                        matched_fields: ["original", "original.en_folded", "original.el_folded"],
-                        force_source: :true,
-                        type: :fvh
-                    }
-                }
+                      "original": {
+                          matched_fields: ["original", "original.en_folded", "original.el_folded"],
+                          force_source: :true,
+                          type: :fvh
+                      }
+                  }, {
+                      "census_id": {
+                          matched_fields: ["census_id"],
+                          force_source: :true,
+                          type: :unified
+                      }
+                  }
               ]
           },
           aggs: {
@@ -631,7 +637,7 @@ class Public::SearchController < ApplicationController
               when "persons_cited"
                 add_field_adv_search(UNIFIED_PERSONS_CITED_FIELDS, clean_search_string, @current_bool_op)
               when "entry_number"
-                add_field_adv_search(['census_id.exact'], clean_search_string, @current_bool_op)
+                add_field_adv_search(['census_id'], clean_search_string, @current_bool_op)
               when "text_type"
                 # process this field type as a advanced search filter
                 add_field_adv_search_filter(['text_type.exact', 'component.text_type.exact'], trimmed_search_string, @current_bool_op)

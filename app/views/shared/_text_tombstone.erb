@@ -10,7 +10,13 @@
   </div>
 <% end %>
 <div class="result-title">
-  <span class="title-census-id"><%= text.census_id %></span>
+  <span class="title-census-id">
+    <% if text.has_key? 'highlight' and text.highlight.census_id %>
+        <%= text.highlight.census_id.first.html_safe %>
+    <% else %>
+      <%= text.census_id %>
+    <% end %>
+  </span>
   <%= link_to (text.title.blank? ? "[No title]" : @results_formatter.format(text.title)), public_text_path(text.id, hl: params[:keyword]) %>
   <span class="title-date">(<%= text.date %>)</span>
 </div>
