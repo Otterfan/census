@@ -242,7 +242,8 @@ class Text < ApplicationRecord
                 except: [:created_at, :updated_at]
             },
             topic_author: {
-                except: [:created_at, :updated_at]
+                except: [:created_at, :updated_at],
+                methods: [:alternate_name_clean],
             },
             status: {
                 except: [:created_at, :updated_at]

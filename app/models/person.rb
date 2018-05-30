@@ -1,4 +1,6 @@
 class Person < ApplicationRecord
+  include SharedMethods
+
   has_many :components, through: :component_citations
 
   has_many :texts, foreign_key: 'topic_author_id'
@@ -111,5 +113,17 @@ class Person < ApplicationRecord
       end
     end
     countries
+  end
+
+  def alternate_name_clean
+    if alternate_name
+      # duplicate the original field for our transformations
+      @cleaned_alternate_name = alternate_name.dup
+
+      # apply clean_field method
+      clean_field(@cleaned_alternate_name, true)
+    else
+      nil
+    end
   end
 end
