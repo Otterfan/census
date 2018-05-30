@@ -2,7 +2,8 @@
      data='<%= @publication_dates %>'
      data-publication-date-earliest='<%= @publication_date_range_earliest %>'
      data-publication-date-latest='<%= @publication_date_range_latest %>'
-     data-new-search='<% if @new_search %>true<% else %>false<% end %>'>
+     data-new-search='<% if @new_search %>true<% else %>false<% end %>'
+     data-has-changed='false'>
 </div>
 
 <script>
@@ -75,6 +76,12 @@
             return cleaned;
         }
 
+        // whenever we detect a change in the date range fields either from the slider or manual entry
+        // then change the date-input-field attribute to true
+        $(".date-input-field").change(function(){
+            $("#publication_dates_data").attr("data-has-changed", "true");
+        });
+
         $("#date-range-reset").click(function(e){
             e.preventDefault();
 
@@ -115,12 +122,12 @@
         <div id="publication-dates-messages"></div>
         <div class="input-group">
           <%= label_tag(:publication_date_earliest, "Earliest date for filtering", class: 'sr-only') %>
-          <%= text_field_tag :publication_date_earliest, params[:publication_date_earliest], :class => 'form-control left-rounded-corners', :id => 'publication-date-earliest-value' %>
+          <%= text_field_tag :publication_date_earliest, params[:publication_date_earliest], :class => 'form-control left-rounded-corners date-input-field', :id => 'publication-date-earliest-value' %>
           <span class="input-group-btn" tabindex="-1">
             <button class=" btn btn-secondary disabled" disabled="disabled">-</button>
           </span>
           <%= label_tag(:publication_date_latest, "Latest date for filtering", class: 'sr-only') %>
-          <%= text_field_tag :publication_date_latest, params[:publication_date_latest], :class => 'form-control', :id => 'publication-date-latest-value' %>
+          <%= text_field_tag :publication_date_latest, params[:publication_date_latest], :class => 'form-control date-input-field', :id => 'publication-date-latest-value' %>
           <span class="input-group-btn" id="date-range-change-group">
               <button type="button" class="btn btn-primary" id="date-range-apply">Apply</button>
               <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

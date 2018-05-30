@@ -12,11 +12,11 @@
         $("#" + sliderName + "-value").html(leftValue + " - " + rightValue);
 
         if (options.earliestFieldId){
-            $("#" + options.earliestFieldId).val(leftValue);
+            $("#" + options.earliestFieldId).val(leftValue).change();
         }
 
         if (options.latestFieldId){
-            $("#" + options.latestFieldId).val(rightValue);
+            $("#" + options.latestFieldId).val(rightValue).change();
         }
 
         // set opacity per bin based on the slider values

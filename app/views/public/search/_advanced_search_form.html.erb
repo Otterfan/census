@@ -424,20 +424,24 @@
             //
             // Fourth, check on the date range slider filter
             //
-            // check if this is a new search
-            var new_search = $("#publication_dates_data").attr("data-new-search");
+            // check if the date range values have changed
+            var data_has_changed = $("#publication_dates_data").attr("data-has-changed");
 
             // get the faceted years from attribute
             var date_range_earliest_from_facet = $("#publication_dates_data").attr("data-publication-date-earliest");
             var date_range_latest_from_facet = $("#publication_dates_data").attr("data-publication-date-latest");
 
-            // only apply date range filter if this is a new search or
-            // the faceted years from attribute contains a value, which means that the filter was already applied
-            if (new_search === "true" || (date_range_latest_from_facet && date_range_earliest_from_facet)) {
+            // console.log("date_range_earliest_from_facet: " + date_range_earliest_from_facet);
+            // console.log("date_range_latest_from_facet: " + date_range_latest_from_facet);
 
+            // only apply date range filter if date range has changed or if there are saved date range values from the app
+            if (data_has_changed === "true" || date_range_earliest_from_facet || date_range_latest_from_facet) {
                 // get the value from the date range sliders
                 var date_range_earliest = $("input#publication-date-earliest-value").val();
                 var date_range_latest = $("input#publication-date-latest-value").val();
+
+                // console.log("date_range_earliest: " + date_range_earliest);
+                // console.log("date_range_latest: " + date_range_latest);
 
                 if (date_range_earliest || date_range_latest) {
                     var publication_date_range_param = "";
