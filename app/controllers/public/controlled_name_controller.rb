@@ -14,7 +14,7 @@ class Public::ControlledNameController < ApplicationController
     }
 
     @names, @alpha_params = ControlledName.order(:controlled_name)
-                                .alpha_paginate(@letter, @alpha_params_options) {|name| name.controlled_name}
+                                .alpha_paginate(@letter, @alpha_params_options) {|name| name.controlled_name.downcase}
   end
 
   def show

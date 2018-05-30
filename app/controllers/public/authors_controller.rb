@@ -25,7 +25,7 @@ class Public::AuthorsController < ApplicationController
                                   .joins(:texts) # only show authors with texts
                                   .group('people.id')
                                   .order(:full_name)
-                                  .alpha_paginate(@letter, @alpha_params_options) {|person| person.full_name}
+                                  .alpha_paginate(@letter, @alpha_params_options) {|person| person.full_name.downcase}
   end
 
   def show
