@@ -167,7 +167,7 @@ module Public::TextsHelper
         highlighted_items << match
       end
 
-      if idx+1 == len and back_ellipsis
+      if idx + 1 == len and back_ellipsis
         highlighted_items << ""
       end
     end
@@ -175,4 +175,24 @@ module Public::TextsHelper
     highlighted_items.join("  &hellip;  ").strip
   end
 
+  # Packages a list of components into a list of collections.
+  def components_by_collection(components)
+    collections = []
+    collection = {
+        title: nil,
+        components: []
+    }
+    components.each do |component|
+      if component.collection != collection[:title] && collection[:components].count > 0
+        collections << collection
+        collection = {
+            title: component.collection,
+            components: [component]
+        }
+      else
+        collection[:components] << component
+      end
+    end
+    collections << collection
+  end
 end

@@ -1,23 +1,25 @@
-<h3>Browse all Texts</h3>
+<div class="browse-all-texts">
+  <h2>Browse all Texts</h2>
 
-<div class="row">
-  <div class="pagination-stuff col-md-10">
-    <%= paginate @texts %>
+  <div class="row">
+    <div class="pagination-stuff col-md-10">
+      <%= paginate @texts %>
+    </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-md-12" id="search-results">
-    <% texts_by_author(@texts).each do |author| %>
-      <h3><%= author[:author] %></h3>
-      <ul class="list-group">
-        <% author[:texts].each do |text| %>
-          <li class="list-group-item">
-            <%= render 'shared/text_tombstone', text: text %>
-          </li>
-        <% end %>
-      </ul>
-    <% end %>
+  <div class="row">
+    <div class="col-md-12" id="search-results">
+      <% texts_by_author(@texts).each do |author| %>
+        <h3><%= render 'shared/topic_author', text: author[:texts][0] %></h3>
+        <ul class="list-group">
+          <% author[:texts].each do |text| %>
+            <li class="list-group-item">
+              <%= render 'shared/text_tombstone', text: text %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
 
-    <%= paginate @texts %>
+      <%= paginate @texts %>
+    </div>
   </div>
 </div>

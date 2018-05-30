@@ -11,7 +11,7 @@
 <% end %>
 <div class="result-title">
   <span class="title-census-id">
-    <% if text.has_key? 'highlight' and text.highlight.census_id %>
+    <% if text.is_a?(Hash) and text.has_key? 'highlight' and text.highlight.census_id %>
         <%= text.highlight.census_id.first.html_safe %>
     <% else %>
       <%= text.census_id %>

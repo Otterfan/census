@@ -1,19 +1,16 @@
-<% if @text.poems && @text.poems.count > 0 %>
-    <dt>Contains poems</dt>
-    <% @text.poems.each do |component| %>
-        <%= render 'single_component', component: component %>
+<% current_collection = '' %>
+<% if @text.components && text.components.count > 0 %>
+  <dt>Contains</dt>
+  <dd>
+    <% components_by_collection(@text.components).each do |collection| %>
+      <div class="component-collection">
+        <% if collection[:title] && !collection[:title].blank? %>
+          <div class="component-collection-title">From <cite><%= collection[:title].gsub('_', ' ') %></cite></div>
+        <% end %>
+        <% collection[:components].each do |component| %>
+          <%= render 'single_component', component: component, current_collection: current_collection %>
+        <% end %>
+      </div>
     <% end %>
-<% end %>
-
-<% if @text.stories && @text.stories.count > 0 %>
-    <dt>Contains stories</dt>
-    <dd>
-    </dd>
-<% end %>
-
-<% if @text.other_components && @text.other_components.count > 0 %>
-    <dt>Contains other components</dt>
-    <% @text.other_components.each do |component| %>
-        <%= render 'single_component', component: component %>
-    <% end %>
+  </dd>
 <% end %>

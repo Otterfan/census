@@ -1,8 +1,9 @@
-<dd>
-  <%= convert_underscores component.title %>
-  <% if component.translators && component.translators.count > 0 %>
-      <div class="component-translators">tr:
-        <%= component.translators.to_sentence.html_safe %>
-      </div>
+<div class="component">
+  <% if component.authors %>
+    <div class="author"><%= component.authors.map(&:name).join ('; ') %></div>
   <% end %>
-</dd>
+  <%= convert_underscores component.title %>
+  <% component.translators.each do |translator| %>
+    <div class="translator"><%= translator.name %> (tr.)</div>
+  <% end %>
+</div>

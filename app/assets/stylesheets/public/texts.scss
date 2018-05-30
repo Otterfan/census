@@ -5,6 +5,23 @@
 
 $metadata-spacing: .25em;
 
+.public-show-text {
+  h2 {
+    font-size: 24px;
+  }
+
+  h3 {
+    font-weight: 600;
+    font-size: 30px;
+    margin-bottom: 1em;
+
+    .census-id {
+      font-weight: normal;
+      font-size: 20px;
+      margin-right: .4em;
+    }
+  }
+}
 
 // The original box should render on the right of the show
 // item page but on the top for small screens.
@@ -53,6 +70,19 @@ $metadata-spacing: .25em;
     .journal-title {
       font-style: italic;
     }
+
+    .component-collection {
+      margin-bottom: 1.25em;
+
+      .component-collection-title {
+        font-weight: 600;
+        margin-bottom: .5em;
+      }
+
+      .component {
+        margin-bottom: .5em;
+      }
+    }
   }
 }
 
@@ -71,4 +101,13 @@ $metadata-spacing: .25em;
     border: none;
   }
 
+}
+
+.browse-all-texts h2 {
+  font-size: 24px;
+}
+
+.browse-all-texts h3 {
+  font-size: 20px;
+  font-weight: 600;
 }

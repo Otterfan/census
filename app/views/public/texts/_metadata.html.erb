@@ -4,65 +4,78 @@
   <dd><%= convert_underscores(@text.title) %></dd>
 
   <% if @text.authors %>
-      <dt><%= "Author".pluralize(@text.authors.count) %></dt>
-      <% @text.authors.each do |citation| %>
-          <dd><%= citation.name %></dd>
-      <% end %>
+    <dt><%= "Author".pluralize(@text.authors.count) %></dt>
+    <% @text.authors.each do |citation| %>
+      <dd><%= citation.name %></dd>
+    <% end %>
   <% end %>
 
   <% if @text.translators && @text.translators.count > 0 %>
-      <dt><%= "Translator".pluralize(@text.translators.count) %></dt>
-      <% @text.translators.each do |citation| %>
-          <dd><%= citation.name %></dd>
-      <% end %>
+    <dt><%= "Translator".pluralize(@text.translators.count) %></dt>
+    <% @text.translators.each do |citation| %>
+      <dd><%= citation.name %></dd>
+    <% end %>
   <% end %>
 
   <% if @text.other_contributors && @text.other_contributors.count > 0 %>
-      <dt>Other <%= "contributor".pluralize(@text.other_contributors.count) %></dt>
-      <% @text.other_contributors.each do |citation| %>
-          <dd><%= citation.name %> <span class="role">(<%= citation.role %>)</span></dd>
-      <% end %>
+    <dt>Other <%= "contributor".pluralize(@text.other_contributors.count) %></dt>
+    <% @text.other_contributors.each do |citation| %>
+      <dd><%= citation.name %> <span class="role">(<%= citation.role %>)</span></dd>
+    <% end %>
   <% end %>
   <% if @text.journal && @text.journal.title != '' %>
-      <dt>From</dt>
-      <dd>
+    <dt>In</dt>
+    <dd>
         <span class="journal-title">
           <%= @text.journal.title %>
       </span>
-        <%= formatted_journal_issue @text %>
-      </dd>
-      <%= metadata_row 'Page span', @text.page_span %>
+      <%= formatted_journal_issue @text %>
+    </dd>
+    <%= metadata_row 'Page span', @text.page_span.sub('pp. ', '') %>
+  <% elsif @text.volume && @text.volume.title != '' %>
+    <dt>In</dt>
+    <dd>
+          <span class="journal-title">
+            <%= @text.volume.title %>
+        </span>
+      <%= formatted_journal_issue @text %>
+    </dd>
+    <%= metadata_row 'Page span', @text.page_span.sub('pp. ', '') %>
   <% else %>
-      <%= metadata_row 'Date of publication', @text.date %>
-      <%= metadata_row 'Page count', @text.page_span %>
+    <%= metadata_row 'Page count', @text.page_span.sub('pp. ', '') %>
   <% end %>
 
+  <%= metadata_row 'Place of publication', @text.place_of_publication %>
 
   <%= metadata_row 'Publisher', @text.publisher %>
 
-  <%= metadata_row 'Place of publication', @text.place_of_publication %>
+  <%= metadata_row 'Date of publication', @text.date %>
+
+  <%= metadata_row 'Editorial note', @text.editorial_annotation %>
+
+  <%= metadata_row 'Physical description', @text.physical_description %>
 
   <%= metadata_row 'Other note', @text.note %>
 
   <% if @text.is_bilingual %>
-      <dt>Text is bilingual?</dt>
-      <dd>Yes</dd>
+    <dt>Text is bilingual?</dt>
+    <dd>Yes</dd>
   <% end %>
 
   <% if @text.illustrations_noted %>
-      <dt>Illustrations noted?</dt>
-      <dd>Yes</dd>
+    <dt>Illustrations noted?</dt>
+    <dd>Yes</dd>
   <% end %>
 
   <% if @text.components && @text.components.count > 0 %>
-      <%= render 'components', text: @text %>
+    <%= render 'components', text: @text %>
   <% end %>
 
   <% if @text.isbns && @text.isbns.count > 0 %>
-      <dt><%= "ISBN".pluralize(@text.isbns.count) %></dt>
-      <% @text.isbns.each do |isbn| %>
-          <dd><%= isbn.value %></dd>
-      <% end %>
+    <dt><%= "ISBN".pluralize(@text.isbns.count) %></dt>
+    <% @text.isbns.each do |isbn| %>
+      <dd><%= isbn.value %></dd>
+    <% end %>
   <% end %>
 
   <% if @text.census_id %>
