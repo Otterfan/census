@@ -16,7 +16,14 @@
   <ul class="list-group">
     <% @texts.each do |text| %>
       <li class="list-group-item">
-        <%= render 'text_tombstone', text: text %>
+        <%= render 'shared/text_tombstone', text: text %>
+        <% if text.has_key? 'highlight' %>
+          <% if text.highlight.original_clean %>
+            <div class="original-highlighted" data-field="original_cleaned"><%= ellipses_for_highlights(text.highlight.original_clean, text.original_clean).html_safe %></div>
+          <% elsif text.highlight.original %>
+            <div class="original-highlighted" data-field="original"><%= ellipses_for_highlights(text.highlight.original, text.original).html_safe %></div>
+          <% end %>
+        <% end %>
       </li>
     <% end %>
   </ul>

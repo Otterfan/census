@@ -12,7 +12,7 @@
       </div>
       <ul class="list-group">
         <% @texts.order(:sort_census_id).each do |text| %>
-          <%= render 'text_brief_result', text: text %>
+          <%= render 'shared/text_tombstone', text: text %>
         <% end %>
       </ul>
     </div>
