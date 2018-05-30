@@ -4,6 +4,13 @@
   <div class="form-inputs">
     <%= f.input :title, as: :string %>
   </div>
+  <div class="form-inputs">
+    <% if @journal.new_record? %>
+      <%= f.input :sort_title, as: :string, label: "Title used for sorting (Available to edit after this record has been created)", :disabled => true %>
+    <% else %>
+      <%= f.input :sort_title, as: :string, label: "Title used for sorting (required)", :disabled => false %>
+    <% end %>
+  </div>
     <div class="form-inputs">
       <%= f.input :issn, as: :string, label: "ISSN" %>
     </div>
