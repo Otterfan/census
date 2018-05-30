@@ -20,7 +20,7 @@
   <% if @text.other_contributors && @text.other_contributors.count > 0 %>
       <dt>Other <%= "contributor".pluralize(@text.other_contributors.count) %></dt>
       <% @text.other_contributors.each do |citation| %>
-          <dd><%= citation.name %> <span class="role"><%= citation.role %></span></dd>
+          <dd><%= citation.name %> <span class="role">(<%= citation.role %>)</span></dd>
       <% end %>
   <% end %>
   <% if @text.journal && @text.journal.title != '' %>

@@ -329,7 +329,7 @@ class Text < ApplicationRecord
     end
 
     authors_names = @authors.map.map(&:name)
-    translators_names = @translators.map {|person| person.name + ' (tr)'}
+    translators_names = @translators.map {|person| person.name + ' (tr.)'}
     named_contributors = authors_names + translators_names
     named_contributors.join('; ')
   end
