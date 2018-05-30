@@ -81,7 +81,7 @@ class VolumesController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def volume_params
     params.require(:volume).permit(
-        :title, :author, :location_id, :date,
+        :title, :sort_title, :author, :location_id, :date,
         # @TODO fix the from_language_id_id problem
         volume_citations_attributes: [:id, :role, :last_name, :first_name, :controlled_name, :from_language_id_id, :to_language_id_id, :source_edition, :_destroy],
     )

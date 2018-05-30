@@ -3,6 +3,13 @@
 
     <div class="form-inputs">
       <%= f.input :title, as: :string %>
+
+      <% if @volume.new_record? %>
+        <%= f.input :sort_title, as: :string, label: "Title used for sorting (Available to edit after this record has been created)", :disabled => true %>
+      <% else %>
+        <%= f.input :sort_title, as: :string, label: "Title used for sorting (required)", :disabled => false %>
+      <% end %>
+
       <%= f.input :author, as: :string %>
       <%= f.input :date %>
       <div>
