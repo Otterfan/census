@@ -250,8 +250,9 @@ class Public::SearchController < ApplicationController
     collection_clean.en_folded
     collection_clean.el_folded
 
-    standard_numbers.value.exact
-    dai.exact
+    standard_numbers.value
+    journal.issn
+    dai
 
     components.component_citations.name^10
     components.component_citations.name.en_folded^10
@@ -653,11 +654,11 @@ class Public::SearchController < ApplicationController
               when "sponsoring_organization"
                 add_field_adv_search(['sponsoring_organization', 'sponsoring_organization.en_folded', 'sponsoring_organization.el_folded'], clean_search_string, @current_bool_op)
               when "issn"
-                add_field_adv_search(['journal.issn.exact'], clean_search_string, @current_bool_op)
+                add_field_adv_search(['journal.issn'], clean_search_string, @current_bool_op)
               when "isbn"
-                add_field_adv_search(['standard_numbers.value.exact'], clean_search_string, @current_bool_op)
+                add_field_adv_search(['standard_numbers.value'], clean_search_string, @current_bool_op)
               when "dai"
-                add_field_adv_search(['dai.exact'], clean_search_string, @current_bool_op)
+                add_field_adv_search(['dai'], clean_search_string, @current_bool_op)
               when "is_bilingual"
                 add_field_adv_search(['is_bilingual', 'components.is_bilingual'], clean_search_string, @current_bool_op)
               when "illustrations_noted"
