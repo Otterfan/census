@@ -27,17 +27,21 @@
 
 <script>
     $(document).ready(function() {
-        // toggle more/less facets
+        // toggle more/fewer facets
         $("li.toggle-link button").on('click', function(){
             var $this = $(this);
 
-            $this.parents("ul.facet-list-group").find("li.toggle-element").each(function () {
-                $(this).toggle();
-            });
+            var aria_expanded = $this.attr('aria-expanded');
 
-            $this.parents("ul.facet-list-group").find("li.toggle-link button").each(function(){
-                $(this).toggle();
-            });
+            if (aria_expanded === "false") {
+                $this.attr('aria-expanded', "true");
+                $this.find(".toggle-label").text("fewer");
+            } else {
+                $this.attr('aria-expanded', "false");
+                $this.find(".toggle-label").text("all");
+            }
+
+            $this.parents("ul.facet-list-group").find("ul.toggle-ul").slideToggle();
         });
     });
 </script>
