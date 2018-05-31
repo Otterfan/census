@@ -13,11 +13,7 @@
 <% end %>
 <div class="result-title">
   <span class="title-census-id">
-    <% if is_search and text.has_key? 'highlight' and text.highlight.census_id %>
-        <%= text.highlight.census_id.first.html_safe %>
-    <% else %>
-      <%= text.census_id %>
-    <% end %>
+    <%= title_census_id text %>
   </span>
   <%= tombstone_title_link(text, @results_formatter, params[:keyword]) %>
   <span class="title-date">(<%= text.date %>)</span>

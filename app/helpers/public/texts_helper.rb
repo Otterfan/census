@@ -208,7 +208,17 @@ module Public::TextsHelper
     link_to(title_string, title_path)
   end
 
+  # Returns true if the text is from a search result.
   def is_search_result?(text)
     text.is_a? Elasticsearch::Model::Response::Result
+  end
+
+  # Return the census id as it should appear in the page title
+  def title_census_id(text)
+    if is_search_result?(text) && text.has_key?('highlight') && text.highlight.census_id
+      text.highlight.census_id.first.html_safe
+    else
+      text.census_id
+    end
   end
 end
