@@ -195,4 +195,20 @@ module Public::TextsHelper
     end
     collections << collection
   end
+
+  # Formatted link to title as used in tombstones
+  def tombstone_title_link(text, formatter, hilight)
+    title_path = public_text_path(text.id, hl: hilight)
+    title_string = text.title.blank? ? "[No title]" : formatter.format(text.title)
+    unless is_search_result?(text) or text.text_type.include?('translation')
+      authors_names = text.authors.map.map(&:name).join('; ')
+      title_string = "#{authors_names}. #{title_string}"
+      puts text
+    end
+    link_to(title_string, title_path)
+  end
+
+  def is_search_result?(text)
+    text.is_a? Elasticsearch::Model::Response::Result
+  end
 end

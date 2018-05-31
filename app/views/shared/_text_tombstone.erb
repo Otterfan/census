@@ -3,6 +3,8 @@
    else
      source = text
    end
+
+  is_search = is_search_result?(text)
 %>
 <% if (defined? show_topic_author) && show_topic_author == true %>
   <div class="topic-author">
@@ -11,18 +13,20 @@
 <% end %>
 <div class="result-title">
   <span class="title-census-id">
-    <% if text.is_a?(Hash) and text.has_key? 'highlight' and text.highlight.census_id %>
+    <% if is_search and text.has_key? 'highlight' and text.highlight.census_id %>
         <%= text.highlight.census_id.first.html_safe %>
     <% else %>
       <%= text.census_id %>
     <% end %>
   </span>
-  <%= link_to (text.title.blank? ? "[No title]" : @results_formatter.format(text.title)), public_text_path(text.id, hl: params[:keyword]) %>
+  <%= tombstone_title_link(text, @results_formatter, params[:keyword]) %>
   <span class="title-date">(<%= text.date %>)</span>
 </div>
-<div class="result-author">
-  <%= source.authors_names %>
-</div>
+<% if is_search or text.text_type.include?('translation') %>
+  <div class="result-author">
+    <%= source.authors_names %>
+  </div>
+<% end %>
 <% if source.volume %>
   <div>
     In <cite><%= link_to_volume_from_search source.volume %></cite><%= formatted_journal_issue(text) %>
