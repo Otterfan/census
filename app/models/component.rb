@@ -27,7 +27,7 @@ class Component < ApplicationRecord
     component_citations.each do |citation|
       if citation.role == 'translator'
         @translators << citation
-      elsif citation.role == 'author'
+      elsif citation.role.include? 'author'
         @authors << citation
       end
     end
