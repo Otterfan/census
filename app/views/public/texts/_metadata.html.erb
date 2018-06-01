@@ -78,6 +78,10 @@
     <% end %>
   <% end %>
 
+  <%= metadata_row 'Original Greek text', @text.original_greek_citation %>
+
+  <%= metadata_row 'Original Greek collection', @text.original_greek_collection %>
+
   <% if @text.census_id %>
     <dt>Entry Number</dt>
     <dd><%= @text.census_id %></dd>

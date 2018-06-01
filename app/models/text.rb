@@ -506,6 +506,18 @@ class Text < ApplicationRecord
       self.publication_places << pub_place
     end
   end
+
+  def original_greek_citation
+    citation = nil
+    if original_greek_title
+      citation = original_greek_title
+
+      if original_greek_publisher && original_greek_place_of_publication && original_greek_date
+        citation = "#{citation} (#{original_greek_place_of_publication}: #{original_greek_publisher}, #{original_greek_date})"
+      end
+    end
+    citation
+  end
 end
 
 #Text.import(force: true) # for auto sync model with elastic search
