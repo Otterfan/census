@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   devise_for :users
   root to: 'pages#index'
   resources :roles
-  resources :texts do
+  resources :texts, :id => /[^\/]+/  do
     resources :components
     post 'original', on: :member, to: 'texts#update_original'
   end

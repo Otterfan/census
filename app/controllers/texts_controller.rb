@@ -13,6 +13,7 @@ class TextsController < ApplicationController
   # GET /texts/1
   # GET /texts/1.json
   def show
+    @text = Text.find_by_census_id(params[:id])
     redirect_to edit_text_path(@text)
   end
 
@@ -23,7 +24,7 @@ class TextsController < ApplicationController
 
   # GET /texts/1/edit
   def edit
-    puts params[:id]
+    @text = Text.find_by_census_id(params[:id])
 
     @comment = Comment.new
     @comment.text = @text
@@ -65,6 +66,8 @@ class TextsController < ApplicationController
     respond_to do |format|
       @comment = Comment.new
       @comment.text = @text
+
+      @text = Text.find_by_census_id(params[:id])
 
       @user = current_user
 

@@ -6,7 +6,7 @@ class Public::TextsController < ApplicationController
   # GET /public/texts
   def index
     @results_formatter = BriefResultFormatter.new([],[],[])
-    @texts = Text.order(:sort_id).page(params[:page])
+    @texts = Text.order(:sort_census_id).page(params[:page])
 
     if params[:sort] == "author"
       @sorted = "author"
@@ -17,6 +17,6 @@ class Public::TextsController < ApplicationController
 
   # GET /public/texts/1
   def show
-    @text = Text.find(params[:id])
+    @text = Text.find_by_census_id(params[:id])
   end
 end

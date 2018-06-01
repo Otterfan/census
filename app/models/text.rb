@@ -32,7 +32,11 @@ class Text < ApplicationRecord
 
   before_save :default_values
 
-  after_touch() {
+  def to_param
+    census_id
+  end
+
+  after_touch {
     puts "Text record '#{self.id}' was touched. Will now update."
     #__elasticsearch__.index_document
   }

@@ -5,7 +5,7 @@
     <% @comments.each do |comment| %>
       <li class="comment list-group-item">
         <div class="the-title">
-          <strong><%= comment.text.census_id %></strong> <%= link_to comment.text.title, edit_text_path(comment.text.id) %>
+          <strong><%= comment.text.census_id %></strong> <%= link_to comment.text.title, edit_text_path(comment.text) %>
         </div>
         <div class="the-text"><%= comment.value %></div>
         <div class="comment-metadata">
