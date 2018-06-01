@@ -15,6 +15,7 @@
 </head>
 
 <body class="<%= body_class() %>">
+<a class="skip" href="#main" data-turbolinks="false">Skip to main content</a>
 <nav class="navbar navbar-default">
   <div class="container">
     <div class="navbar-header">
@@ -41,7 +42,7 @@
 <% if alert %>
   <p class="alert alert-danger"><%= alert %></p>
 <% end %>
-<main class="container">
+<main class="container" id="main">
   <%= yield %>
 </main>
 </body>
