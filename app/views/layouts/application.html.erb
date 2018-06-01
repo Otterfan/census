@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Census</title>
+  <title>
+    <%= if content_for?(:title) then
+          yield(:title) + ' | '
+        end %>
+    Census of Modern Greek Literature
+  </title>
   <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= javascript_include_tag '/tinymce/js/tinymce/tinymce.min.js' %>
@@ -21,38 +26,46 @@
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="<%= 'active' if in_current_path? 'text' %>"><a href="/texts">Texts <span class="sr-only">(current)</span></a></li>
-        <li class="<%= 'active' if in_current_path? 'author' %>"><a href="/authors">Authors <span class="sr-only">(current)</span></a></li>
-        <li class="<%= 'active' if in_current_path? 'place' %>"><a href="/places">Places <span class="sr-only">(current)</span></a></li>
-        <li class="<%= 'active' if in_current_path? 'volume' %>"><a href="/volumes">Volumes<span class="sr-only">(current)</span></a></li>
-        <li class="<%= 'active' if in_current_path? 'journal' %>"><a href="/journals">Journals<span class="sr-only">(current)</span></a></li>
-        <li class="<%= 'active' if in_current_path? 'changes' %>"><a href="/changes">All edits<span class="sr-only">(current)</span></a></li>
-        <li class="<%= 'active' if in_current_path? 'comments' %>"><a href="/comments">All comments<span class="sr-only">(current)</span></a></li>
-        <li class="<%= 'active' if in_current_path? 'reports' %>"><a href="/reports" target="_blank">Reports<span class="sr-only">(current)</span></a></li>
+        <li class="<%= 'active' if in_current_path? 'text' %>">
+          <a href="/texts">Texts <span class="sr-only">(current)</span></a></li>
+        <li class="<%= 'active' if in_current_path? 'author' %>">
+          <a href="/authors">Authors <span class="sr-only">(current)</span></a></li>
+        <li class="<%= 'active' if in_current_path? 'place' %>">
+          <a href="/places">Places <span class="sr-only">(current)</span></a></li>
+        <li class="<%= 'active' if in_current_path? 'volume' %>">
+          <a href="/volumes">Volumes<span class="sr-only">(current)</span></a></li>
+        <li class="<%= 'active' if in_current_path? 'journal' %>">
+          <a href="/journals">Journals<span class="sr-only">(current)</span></a></li>
+        <li class="<%= 'active' if in_current_path? 'changes' %>">
+          <a href="/changes">All edits<span class="sr-only">(current)</span></a></li>
+        <li class="<%= 'active' if in_current_path? 'comments' %>">
+          <a href="/comments">All comments<span class="sr-only">(current)</span></a></li>
+        <li class="<%= 'active' if in_current_path? 'reports' %>">
+          <a href="/reports" target="_blank">Reports<span class="sr-only">(current)</span></a></li>
       </ul>
       <p class="navbar-text navbar-right">
         <% if user_signed_in? %>
-           <%= current_user.email %>
-            <%= link_to('logout', destroy_user_session_path, method: :delete, :class => 'logout-link navbar-link') %>
+          <%= current_user.email %>
+          <%= link_to('logout', destroy_user_session_path, method: :delete, :class => 'logout-link navbar-link') %>
 
-      <% end %>
+        <% end %>
       </p>
     </div>
   </div>
 </nav>
 <% if notice %>
-    <p class="alert alert-success"><%= notice %></p>
+  <p class="alert alert-success"><%= notice %></p>
 <% end %>
 <% if alert %>
-    <p class="alert alert-danger"><%= alert %></p>
+  <p class="alert alert-danger"><%= alert %></p>
 <% end %>
 <% if user_signed_in? %>
-    <li>
-    </li>
+  <li>
+  </li>
 <% else %>
-    <li>
-      <%= link_to('Login', new_user_session_path) %>
-    </li>
+  <li>
+    <%= link_to('Login', new_user_session_path) %>
+  </li>
 <% end %>
 <main class="container">
   <%= yield %>

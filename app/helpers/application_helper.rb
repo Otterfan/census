@@ -85,4 +85,8 @@ module ApplicationHelper
       'unknown item'
     end
   end
+
+  def page_title(text)
+    content_for :title, text
+  end
 end

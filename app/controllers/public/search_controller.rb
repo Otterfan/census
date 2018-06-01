@@ -310,7 +310,7 @@ class Public::SearchController < ApplicationController
     original_clean.el_folded
     original_clean.en_folded
   }
-  
+
   FACET_HITS_SIZE = 100
 
   # https://stackoverflow.com/questions/16205341/symbols-in-query-string-for-elasticsearch
@@ -538,10 +538,11 @@ class Public::SearchController < ApplicationController
     end
     @sort_options = [
         ['Relevance', 'score'],
-        ['Title','sort-title'],
+        ['Title', 'sort-title'],
         ['Date (oldest first)', 'date-oldest-first'],
         ['Date (newest first)', 'date-newest-first']
     ]
+    @page_title = page_title
   end
 
   private
@@ -586,7 +587,7 @@ class Public::SearchController < ApplicationController
     tokens = params[:bq].split("--")
 
     puts "\nList of tokens in ADVANCED search:"
-    tokens.each_with_index  do |t,i|
+    tokens.each_with_index do |t, i|
       puts "  [#{i}] #{t}"
     end
 
@@ -670,32 +671,32 @@ class Public::SearchController < ApplicationController
               when "illustrations_noted"
                 add_field_adv_search(['illustrations_noted'], clean_search_string, @current_bool_op)
 
-              # when "component_title"
-              #   add_field_adv_search(['components.sort_title', 'components.sort_title.en_folded', 'components.sort_title.el_folded'], clean_search_string, @current_bool_op)
-              # when "people"
-              #   add_field_adv_search(PEOPLE_FIELDS, clean_search_string, @current_bool_op)
-              # when "component_citation_name"
-              #  add_field_adv_search(['components.component_citations.name', 'components.component_citations.name.en_folded', 'components.component_citations.name.el_folded'], clean_search_string, @current_bool_op)
-              # when "volume"
-              #   add_field_adv_search(['volume.title', 'volume.title.en_folded', 'volume.title.el_folded', 'volume.sort_title', 'volume.sort_title.en_folded', 'volume.sort_title.el_folded'], clean_search_string, @current_bool_op)
-              # when "original_greek_place_of_publication"
-              #   add_field_adv_search(['original_greek_place_of_publication', 'original_greek_place_of_publication.el_folded'], clean_search_string, @current_bool_op)
-              # when "original_greek_publisher"
-              #   add_field_adv_search(['original_greek_publisher', 'original_greek_publisher.el_folded'], clean_search_string, @current_bool_op)
-              # when "original_greek_collection"
-              #   add_field_adv_search(['original_greek_collection', 'original_greek_collection.el_folded'], clean_search_string, @current_bool_op)
-              # when "source"
-              #   add_field_adv_search(['source', 'source.en_folded', 'source.el_folded'], clean_search_string, @current_bool_op)
-              # when "issue_title"
-              #   add_field_adv_search(['issue_title', 'issue_title.el_folded', 'issue_title.en_folded'], clean_search_string, @current_bool_op)
-              # when "issue_editor"
-              #   add_field_adv_search(['issue_editor', 'issue_editor.el_folded', 'issue_editor.en_folded'], clean_search_string, @current_bool_op)
-              # when "authors_name_from_source"
-              #   add_field_adv_search(['authors_name_from_source', 'authors_name_from_source.en_folded', 'authors_name_from_source.el_folded'], clean_search_string, @current_bool_op)
-              # when "standard_numbers"
-              #   add_field_adv_search(['standard_numbers.value.exact'], clean_search_string, @current_bool_op)
-              # when "collection"
-              #   add_field_adv_search(['collection', 'collection.en_folded', 'collection.el_folded'], clean_search_string, @current_bool_op)
+                # when "component_title"
+                #   add_field_adv_search(['components.sort_title', 'components.sort_title.en_folded', 'components.sort_title.el_folded'], clean_search_string, @current_bool_op)
+                # when "people"
+                #   add_field_adv_search(PEOPLE_FIELDS, clean_search_string, @current_bool_op)
+                # when "component_citation_name"
+                #  add_field_adv_search(['components.component_citations.name', 'components.component_citations.name.en_folded', 'components.component_citations.name.el_folded'], clean_search_string, @current_bool_op)
+                # when "volume"
+                #   add_field_adv_search(['volume.title', 'volume.title.en_folded', 'volume.title.el_folded', 'volume.sort_title', 'volume.sort_title.en_folded', 'volume.sort_title.el_folded'], clean_search_string, @current_bool_op)
+                # when "original_greek_place_of_publication"
+                #   add_field_adv_search(['original_greek_place_of_publication', 'original_greek_place_of_publication.el_folded'], clean_search_string, @current_bool_op)
+                # when "original_greek_publisher"
+                #   add_field_adv_search(['original_greek_publisher', 'original_greek_publisher.el_folded'], clean_search_string, @current_bool_op)
+                # when "original_greek_collection"
+                #   add_field_adv_search(['original_greek_collection', 'original_greek_collection.el_folded'], clean_search_string, @current_bool_op)
+                # when "source"
+                #   add_field_adv_search(['source', 'source.en_folded', 'source.el_folded'], clean_search_string, @current_bool_op)
+                # when "issue_title"
+                #   add_field_adv_search(['issue_title', 'issue_title.el_folded', 'issue_title.en_folded'], clean_search_string, @current_bool_op)
+                # when "issue_editor"
+                #   add_field_adv_search(['issue_editor', 'issue_editor.el_folded', 'issue_editor.en_folded'], clean_search_string, @current_bool_op)
+                # when "authors_name_from_source"
+                #   add_field_adv_search(['authors_name_from_source', 'authors_name_from_source.en_folded', 'authors_name_from_source.el_folded'], clean_search_string, @current_bool_op)
+                # when "standard_numbers"
+                #   add_field_adv_search(['standard_numbers.value.exact'], clean_search_string, @current_bool_op)
+                # when "collection"
+                #   add_field_adv_search(['collection', 'collection.en_folded', 'collection.el_folded'], clean_search_string, @current_bool_op)
               else
 
               end
@@ -796,7 +797,7 @@ class Public::SearchController < ApplicationController
     add_field_search(fields, param, true)
   end
 
-  def add_facet_search_date_range(field, param, as_adv_filter=false)
+  def add_facet_search_date_range(field, param, as_adv_filter = false)
     add_field_search_date_range(field, param, as_adv_filter, true)
   end
 
@@ -849,7 +850,7 @@ class Public::SearchController < ApplicationController
   end
 
   # Add a specialized advanced search filter query string
-  def add_field_adv_search_filter(fields, field_val, bool_op="AND")
+  def add_field_adv_search_filter(fields, field_val, bool_op = "AND")
     # We can expect method parameters like:
     #  fields    = ["genre", "components.genre"]
     #  field_val = "poetry::essay"
@@ -894,7 +895,7 @@ class Public::SearchController < ApplicationController
   end
 
   # Add an advanced search keyword/all fields search query
-  def add_field_adv_search_keyword(keyword_fields, field_val, bool_op="AND")
+  def add_field_adv_search_keyword(keyword_fields, field_val, bool_op = "AND")
     # add query_string params unique to keyword search
     @combined_query_hash[:query_string][:fields] = keyword_fields
     @combined_query_hash[:query_string][:lenient] = true
@@ -918,7 +919,7 @@ class Public::SearchController < ApplicationController
   end
 
   # Combine all the query groups into a central query string
-  def update_combined_query_string(combined_query, field_group, bool_op="AND")
+  def update_combined_query_string(combined_query, field_group, bool_op = "AND")
     puts "combined_query: #{combined_query}, field_group: #{field_group}, bool_op: #{bool_op}"
     # create a combo_query string to include the field_group, the bool operator and combined_query,
     # and then group by parentheses
@@ -945,7 +946,7 @@ class Public::SearchController < ApplicationController
   end
 
   # Add a date range search
-  def add_field_search_date_range(field, param, as_adv_filter, is_facet=false)
+  def add_field_search_date_range(field, param, as_adv_filter, is_facet = false)
     if params[param].present?
       # check that we have a four-digit year, a dash, and a four-digit year for date range param
       check_year_regex = /^\d{4}-\d{4}$/
@@ -1000,6 +1001,16 @@ class Public::SearchController < ApplicationController
       [{'sort_title.keyword' => {order: 'asc'}}, '_score']
     else
       ['_score']
+    end
+  end
+
+  def page_title
+    if params[:type] == "adv"
+      'Advanced search'
+    elsif ! is_search?
+      'New search'
+    else
+      "#{params[:keyword]} - search"
     end
   end
 end

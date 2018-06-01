@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Census</title>
+  <title><%= if content_for?(:title) then
+               yield(:title) + ' | '
+             end %>
+    Census of Modern Greek Literature
+  </title>
   <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
   <% if in_current_path? 'public' %>
-      <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400i,700|Source+Sans+Pro:300,400,400i,600,600i,700&amp;subset=greek,greek-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400i,700|Source+Sans+Pro:300,400,400i,600,600i,700&amp;subset=greek,greek-ext" rel="stylesheet">
   <% else %>
-      <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400i,700|Source+Sans+Pro:300,400,400i,600,700&amp;subset=greek,greek-ext,latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400i,700|Source+Sans+Pro:300,400,400i,600,700&amp;subset=greek,greek-ext,latin-ext" rel="stylesheet">
   <% end %>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js"></script>
   <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
@@ -22,7 +26,7 @@
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
       </button>
-      <%= link_to 'Home', public_search_index_path, :class => "navbar-brand"%>
+      <%= link_to 'Home', public_search_index_path, :class => "navbar-brand" %>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
