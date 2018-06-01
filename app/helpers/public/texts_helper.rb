@@ -198,7 +198,11 @@ module Public::TextsHelper
 
   # Formatted link to title as used in tombstones
   def tombstone_title_link(text, formatter, hilight)
-    title_path = public_text_path(text.id, hl: hilight)
+    if is_search_result? text
+      text = Text.find(text.id)
+    end
+
+    title_path = public_text_path(text, hl: hilight)
     title_string = text.title.blank? ? "[No title]" : formatter.format(text.title)
     unless is_search_result?(text) or text.text_type.include?('translation')
       authors_names = text.authors.map.map(&:name).join('; ')
