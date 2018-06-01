@@ -86,12 +86,12 @@ class Public::SearchController < ApplicationController
       topic_author.full_name
       topic_author.full_name.en_folded
       topic_author.full_name.el_folded
-      topic_author.alternate_name^10
-      topic_author.alternate_name.en_folded^10
-      topic_author.alternate_name.el_folded^10
-      topic_author.alternate_name_clean^10
-      topic_author.alternate_name_clean.en_folded^10
-      topic_author.alternate_name_clean.el_folded^10
+      topic_author.alternate_name
+      topic_author.alternate_name.en_folded
+      topic_author.alternate_name.el_folded
+      topic_author.alternate_name_clean
+      topic_author.alternate_name_clean.en_folded
+      topic_author.alternate_name_clean.el_folded
       authors_name_from_source
       authors_name_from_source.el_folded
       authors_name_from_source.en_folded
