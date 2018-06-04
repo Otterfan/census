@@ -34,7 +34,7 @@ class TextsController < ApplicationController
 
   # POST /texts/1/original
   def update_original
-    text = Text.find(params[:id])
+    text = Text.find_by_census_id(params[:id])
     text.original = params[:original]
     text.save
   end
@@ -99,7 +99,7 @@ class TextsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_text
-    @text = Text.find(params[:id])
+    @text = Text.find_by_census_id(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
