@@ -2,15 +2,25 @@
 <div class="container public-show-name" id="search-results">
   <div class="row">
     <h2><%= @name.controlled_name %></h2>
-    <% @name.roles.each do |role| %>
-      <h3>Appears as <%= role %> in</h3>
-      <ul class="list-group">
-        <% @name.texts(role).each do |text| %>
-          <li class="list-group-item">
-            <%= render 'shared/text_tombstone', text: text, show_topic_author: true %>
-          </li>
-        <% end %>
-      </ul>
+
+    <% if @name.roles.include? 'author' %>
+      <%= render 'appears_as', role: 'author', name: @name %>
+    <% end %>
+
+    <% if @name.roles.include? 'intro/front matter author' %>
+      <%= render 'appears_as', role: 'intro/front matter author', name: @name %>
+    <% end %>
+
+    <% if @name.roles.include? 'translator' %>
+      <%= render 'appears_as', role: 'translator', name: @name %>
+    <% end %>
+
+    <% if @name.roles.include? 'illustrator' %>
+      <%= render 'appears_as', role: 'illustrator', name: @name %>
+    <% end %>
+
+    <% if @name.roles.include? 'editor' %>
+      <%= render 'appears_as', role: 'editor', name: @name %>
     <% end %>
   </div>
 </div>
