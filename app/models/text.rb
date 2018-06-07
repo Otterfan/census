@@ -509,13 +509,26 @@ class Text < ApplicationRecord
 
   def original_greek_citation
     citation = nil
-    if original_greek_title
-      citation = original_greek_title
 
-      if original_greek_publisher && original_greek_place_of_publication && original_greek_date
-        citation = "#{citation} (#{original_greek_place_of_publication}: #{original_greek_publisher}, #{original_greek_date})"
-      end
+    has_title = !original_greek_title.nil? && !original_greek_title.empty?
+    has_publisher = !original_greek_publisher.nil? && !original_greek_publisher.empty?
+    has_date = !original_greek_date.nil? && !original_greek_date.empty?
+    has_place = !original_greek_place_of_publication.nil? && !original_greek_place_of_publication.empty?
+
+    if has_title && has_publisher && has_place && has_date
+      citation = "#{original_greek_title} (#{original_greek_place_of_publication}: #{original_greek_publisher}, #{original_greek_date})"
+    elsif has_title && has_publisher && has_date
+      citation = "#{original_greek_title} (#{original_greek_publisher}, #{original_greek_date})"
+    elsif has_title && has_publisher
+      citation = "#{original_greek_title} (#{original_greek_publisher})"
+    elsif has_title && has_date
+      citation = "#{original_greek_title} (#{original_greek_date})"
+    elsif has_title && has_place
+      citation = "#{original_greek_title} (#{original_greek_place_of_publication})"
+    elsif has_title
+      citation = original_greek_title
     end
+
     citation
   end
 end
