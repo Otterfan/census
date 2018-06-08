@@ -203,13 +203,10 @@ module Public::TextsHelper
     end
 
     title_path = public_text_path(text, hl: hilight)
-    title_string = text.title.blank? ? "[No title]" : formatter.format(text.title)
-    unless is_search_result?(text) or text.text_type.include?('translation')
-      authors_names = text.authors.map.map(&:name).join('; ')
-      title_string = "#{authors_names}. #{title_string}"
-      puts text
-    end
-    link_to(title_string, title_path)
+    title_string = text.title.blank? ? "[No title]" : text.title
+    authors_names = text.authors.map.map(&:name).join('; ').strip.chomp('.')
+    title_string = "#{authors_names}. #{title_string}"
+    link_to(formatter.format(title_string), title_path)
   end
 
   # Returns true if the text is from a search result.
