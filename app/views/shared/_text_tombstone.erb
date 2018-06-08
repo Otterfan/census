@@ -18,11 +18,9 @@
   <%= tombstone_title_link(text, @results_formatter, params[:keyword]) %>
   <span class="title-date">(<%= text.date %>)</span>
 </div>
-<% if is_search or text.text_type.include?('translation') %>
   <div class="result-author">
-    <%= source.authors_names %>
+    <%= source.translators_names %>
   </div>
-<% end %>
 <% if source.volume %>
   <div>
     In <cite><%= link_to_volume_from_search source.volume %></cite><%= formatted_journal_issue(text) %>

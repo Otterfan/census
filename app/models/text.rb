@@ -347,6 +347,11 @@ class Text < ApplicationRecord
     @translators
   end
 
+  def translators_names
+    translators_names = self.translators.map {|person| person.name + ' (tr.)'}
+    translators_names.join('; ')
+  end
+
   def other_contributors
     unless @other_contributors
       get_contributors
