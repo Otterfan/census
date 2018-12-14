@@ -233,12 +233,7 @@ class Text < ApplicationRecord
                 except: [:text_id],
                 include: {
                     place: {
-                        except: [:id, :country_id, :created_at, :updated_at],
-                        include: {
-                            country: {
-                                except: [:id, :created_at, :updated_at]
-                            }
-                        }
+                        except: [:id, :country_id, :created_at, :updated_at]
                     }
                 }
             },
