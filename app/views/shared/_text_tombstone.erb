@@ -1,10 +1,10 @@
 <% if text['_source']
-     source = text['_source']
+       source = text['_source']
    else
-     source = text
+       source = text
    end
 
-  is_search = is_search_result?(text)
+   is_search = is_search_result?(text)
 %>
 <% if (defined? show_topic_author) && show_topic_author == true %>
   <div class="topic-author">
@@ -18,9 +18,9 @@
   <%= tombstone_title_link(text, @results_formatter, params[:keyword]) %>
   <span class="title-date">(<%= text.date %>)</span>
 </div>
-  <div class="result-author">
-    <%= source.translators_names %>
-  </div>
+<div class="result-author">
+  <%= source.translators_names %>
+</div>
 <% if source.volume %>
   <div>
     In <cite><%= link_to_volume_from_search source.volume %></cite><%= formatted_journal_issue(text) %>
@@ -32,3 +32,10 @@
     <cite><%= link_to_journal_from_search source.journal %></cite> <%= formatted_journal_issue(text) %>
   </div>
 <% end %>
+<div>
+  <% if text.genre %>
+    <span class="genre"><%= text.genre %></span>
+  <% else %>
+    Study
+  <% end %>
+</div>

@@ -45,6 +45,10 @@
     <%= metadata_row 'Page count', @text.page_span.sub('pp. ', '') %>
   <% end %>
 
+  <%= metadata_row 'Genre', @text.genre %>
+
+  <%= metadata_row 'Material type', @text.material_type %>
+
   <%= metadata_row 'Place of publication', @text.place_of_publication %>
 
   <%= metadata_row 'Publisher', @text.publisher %>

@@ -1,9 +1,12 @@
 <div class="component">
-  <% if component.authors %>
-    <div class="author"><%= component.authors.map(&:name).join ('; ') %></div>
-  <% end %>
   <%= convert_underscores component.title %>
-  <% component.translators.each do |translator| %>
-    <div class="translator"><%= translator.name %> (tr.)</div>
+  <% if component.genre != '' %> <span class="component-genre"><%= component.genre %></span>
+  <% end %>
+  <% if component.authors & component.authors != [] %>
+    <div class="author">
+      <strong style="font-size: 13px">Author(s):</strong> <%= component.authors.map(&:name).join ('; ') %></div>
+  <% end %>
+  <% if component.translators && component.translators != [] %>
+    <div class="author"><strong  style="font-size: 13px">Translators(s):</strong> <%= component.translators.map(&:name).join ('; ') %></div>
   <% end %>
 </div>

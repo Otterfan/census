@@ -6,6 +6,10 @@ $danger-color: #d9534f;
 $warning-color: #f0ad4e;
 $safe-color: #5cb85c;
 
+main {
+  padding-bottom: 2em;
+}
+
 .admin {
   body {
     font-family: $main-font-stack;
