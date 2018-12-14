@@ -51,7 +51,7 @@ audit: true
 # user_name: name
 
 # optional auth method to use as a before_action (default: nil)
-before_action: :authenticate_user!
+before_action_method: :authenticate_user!
 
 # email to send checks from
 # from_email: blazer@example.org
