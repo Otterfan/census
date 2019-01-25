@@ -1,12 +1,20 @@
-<div class="component">
-  <%= convert_underscores component.title %>
-  <% if component.genre != '' %> <span class="component-genre"><%= component.genre %></span>
-  <% end %>
-  <% if component.authors & component.authors != [] %>
-    <div class="author">
-      <strong style="font-size: 13px">Author(s):</strong> <%= component.authors.map(&:name).join ('; ') %></div>
+<div class="component container">
+  <div class="component-field component-title">
+    <span class="component-heading">Title</span>
+    <%= convert_underscores component.title %>
+    <% if component.pages %>
+      (<%= component.pages %>)
+    <% end %>
+  </div>
+  <% if component.authors && component.authors != [] %>
+    <% author_names = component.authors.map(&:name).join ('; ') %>
+    <%= render 'component_field', :heading => 'Author(s)', :value => author_names %>
   <% end %>
   <% if component.translators && component.translators != [] %>
-    <div class="author"><strong  style="font-size: 13px">Translators(s):</strong> <%= component.translators.map(&:name).join ('; ') %></div>
+    <% translator_names = component.translators.map(&:name).join ('; ') %>
+    <%= render 'component_field', :heading => 'Translator(s)', :value => translator_names %>
+  <% end %>
+  <% if component.genre != '' %>
+    <%= render 'component_field', :heading => 'Genre', :value => component.genre %>
   <% end %>
 </div>

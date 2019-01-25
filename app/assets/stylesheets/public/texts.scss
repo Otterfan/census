@@ -80,7 +80,18 @@ $metadata-spacing: .25em;
       }
 
       .component {
-        margin-bottom: .5em;
+        margin-bottom: 2em;
+
+          .component-field {
+              @include make-row();
+          }
+
+          .component-heading {
+              font-weight: 600;
+              float: left;
+              margin-right: 15px;
+              color: #647686;
+          }
       }
     }
   }
@@ -110,11 +121,4 @@ $metadata-spacing: .25em;
 .browse-all-texts h3 {
   font-size: 20px;
   font-weight: 600;
-}
-
-.component-genre {
-  font-size: 13px;
-  font-weight: 600;
-  color: #555;
-  padding-left: 1em;
 }
