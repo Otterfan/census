@@ -303,11 +303,11 @@ class Text < ApplicationRecord
   end
 
   def next
-    Text.where(["sort_id > ?", sort_id]).order(sort_id: :asc).first
+    Text.where(["sort_census_id > ?", sort_census_id]).order(sort_census_id: :asc).first
   end
 
   def previous
-    Text.where(["sort_id < ?", sort_id]).order(sort_id: :desc).first
+    Text.where(["sort_census_id < ?", sort_census_id]).order(sort_census_id: :desc).first
   end
 
   def authors
