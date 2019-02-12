@@ -77,10 +77,6 @@
     <dd>Yes</dd>
   <% end %>
 
-  <% if @text.components && @text.components.count > 0 %>
-    <%= render 'components', text: @text %>
-  <% end %>
-
   <% if @text.isbns && @text.isbns.count > 0 %>
     <dt><%= "ISBN".pluralize(@text.isbns.count) %></dt>
     <% @text.isbns.each do |isbn| %>
@@ -96,5 +92,4 @@
     <dt>Entry Number</dt>
     <dd><%= @text.census_id %></dd>
   <% end %>
-
 </div>

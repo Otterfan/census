@@ -1,20 +1,28 @@
-<div class="component container">
-  <div class="component-field component-title">
-    <span class="component-heading">Title</span>
-    <%= convert_underscores component.title %>
-    <% if component.pages %>
-      (<%= component.pages %>)
-    <% end %>
-  </div>
+<div class="component">
+  <dt>Title</dt>
+  <dd><%= convert_underscores component.title %></dd>
+  <% if component.pages %>
+    <dt>Pages</dt>
+    <dd><%= component.pages %></dd>
+  <% end %>
   <% if component.authors && component.authors != [] %>
-    <% author_names = component.authors.map(&:name).join ('; ') %>
-    <%= render 'component_field', :heading => 'Author(s)', :value => author_names %>
+    <dt>Author(s)</dt>
+    <dd>
+      <% author_names = component.authors.map(&:name).join ('; ') %>
+      <%= author_names %>
+    </dd>
   <% end %>
   <% if component.translators && component.translators != [] %>
-    <% translator_names = component.translators.map(&:name).join ('; ') %>
-    <%= render 'component_field', :heading => 'Translator(s)', :value => translator_names %>
+    <dt>Translator(s)</dt>
+    <dd>
+      <% translator_names = component.translators.map(&:name).join ('; ') %>
+      <%= translator_names %>
+    </dd>
   <% end %>
   <% if component.genre != '' %>
-    <%= render 'component_field', :heading => 'Genre', :value => component.genre %>
+    <dt>Genre</dt>
+    <dd><%= component.genre %></dd>
   <% end %>
+  <div style="clear: both;"></div>
 </div>
+<hr>
