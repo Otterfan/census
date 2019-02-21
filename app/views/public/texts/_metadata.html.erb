@@ -3,11 +3,19 @@
   <dt>Title</dt>
   <dd><%= convert_underscores(@text.title) %></dd>
 
+  <% if @text.text_type == 'study_book' || @text.text_type == 'study_part' %>
+    <%= metadata_row 'Subject\'s name as appears in text', @text.authors_name_from_source %>
+  <% end %>
+
   <% if @text.authors %>
     <dt><%= "Author".pluralize(@text.authors.count) %></dt>
     <% @text.authors.each do |citation| %>
       <dd><%= citation.name %></dd>
     <% end %>
+  <% end %>
+
+  <% if @text.text_type == 'translation_book' || @text.text_type == 'translation_part' %>
+    <%= metadata_row 'Author\'s name as appears in text', @text.authors_name_from_source %>
   <% end %>
 
   <% if @text.translators && @text.translators.count > 0 %>
