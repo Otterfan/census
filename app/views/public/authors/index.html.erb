@@ -12,7 +12,13 @@
     <ul class="list-group">
       <% @authors.each do |author| %>
         <li class="list-group-item">
-          <%= link_to author.full_name, public_author_path(author) %>
+          <a href="<%= public_author_path(author) %>">
+            <span class="topic-author-english"><%= author.full_name %></span>
+            <% unless author.greek_full_name.blank? %>
+              / <span class="topic-author-greek"><%= author.greek_full_name %></span>
+            <% end %>
+            <%= display_dates author %>
+          </a>
         </li>
       <% end %>
     </ul>
