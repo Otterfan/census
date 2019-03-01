@@ -7,15 +7,16 @@
     <%= metadata_row 'Subject\'s name as appears in text', @text.authors_name_from_source %>
   <% end %>
 
-  <% if @text.authors %>
+  <% if @text.authors && @text.authors.count > 1 %>
     <dt><%= "Author".pluralize(@text.authors.count) %></dt>
     <% @text.authors.each do |citation| %>
       <dd><%= citation.name %></dd>
     <% end %>
-  <% end %>
-
-  <% if @text.text_type == 'translation_book' || @text.text_type == 'translation_part' %>
-    <%= metadata_row 'Author\'s name as appears in text', @text.authors_name_from_source %>
+  <% elsif @text.authors && @text.authors.count == 1 %>
+    <dt>Author</dt>
+    <% @text.authors.each do |citation| %>
+      <dd><%= @text.authors_name_from_source %> (<%= citation.name %>)</dd>
+    <% end %>
   <% end %>
 
   <% if @text.translators && @text.translators.count > 0 %>
@@ -65,9 +66,15 @@
 
   <%= metadata_row 'Place of publication', @text.place_of_publication %>
 
+  <%= metadata_row 'Original Greek place of publication', @text.original_greek_place_of_publication %>
+
   <%= metadata_row 'Publisher', @text.publisher %>
 
+  <%= metadata_row 'Original Greek publisher', @text.original_greek_publisher %>
+
   <%= metadata_row 'Date of publication', @text.date %>
+
+  <%= metadata_row 'Original Greek date of publication', @text.original_greek_date %>
 
   <%= metadata_row 'Editorial note', @text.editorial_annotation %>
 
