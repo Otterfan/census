@@ -45,19 +45,24 @@ class Public::SearchController < ApplicationController
   ]
 
   UNIFIED_TITLE_FIELDS = %w{
-      title
+      title.en
+      title.el
       title.en_folded
       title.el_folded
       sort_title
       sort_title.en_folded
       sort_title.el_folded
       components.title
+      components.title.en
+      components.title.el
       components.title.en_folded
       components.title.el_folded
       components.sort_title
       components.sort_title.en_folded
       components.sort_title.el_folded
       journal.title
+      journal.title.en
+      journal.title.el
       journal.title.en_folded
       journal.title.el_folded
       journal.sort_title
@@ -179,6 +184,8 @@ class Public::SearchController < ApplicationController
     volume.volume_citations.controlled_name.el_folded
 
     title^10
+    title.en^10
+    title.el^10
     title.en_folded^10
     title.el_folded^10
     sort_title^10
@@ -186,23 +193,33 @@ class Public::SearchController < ApplicationController
     sort_title.el_folded^10
 
     text_citations.name^10
+    text_citations.name.en^10
+    text_citations.name.el^10
     text_citations.name.en_folded^10
     text_citations.name.el_folded^10
     text_citations.controlled_name^10
+    text_citations.controlled_name.en^10
+    text_citations.controlled_name.el^10
     text_citations.controlled_name.en_folded^10
     text_citations.controlled_name.el_folded^10
     text_citations.role.exact^5
     volume.title^5
+    volume.title.en
+    volume.title.el
     volume.title.en_folded^5
     volume.title.el_folded^5
     volume.sort_title^5
     volume.sort_title.en_folded^5
     volume.sort_title.el_folded^5
     series
+    series.en
+    series.el
     series.en_folded
     series.el_folded
 
     publication_places.place.name
+    publication_places.place.name.en
+    publication_places.place.name.el
     publication_places.place.name.en_folded
     publication_places.place.name.el_folded
     publication_places.place.subdivision
@@ -306,7 +323,8 @@ class Public::SearchController < ApplicationController
     cross_references.census_id.exact
 
     original
-    original_clean
+    original_clean.en
+    original_clean.el
     original_clean.el_folded
     original_clean.en_folded
   }
