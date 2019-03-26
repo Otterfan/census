@@ -347,6 +347,18 @@ class Text < ApplicationRecord
     translators_names.join('; ')
   end
 
+  def editors
+      unless @editors
+          get_contributors
+      end
+      @editors
+  end
+
+  def editors_names
+      editors_names = self.editors.map {|person| person.name + ' (ed.)'}
+      editors_names.join('; ')
+  end
+
   def other_contributors
     unless @other_contributors
       get_contributors
@@ -355,12 +367,14 @@ class Text < ApplicationRecord
   end
 
   def get_contributors
-    @authors, @translators, @other_contributors = [], [], []
+    @authors, @translators, @editors, @other_contributors = [], [], [], []
     text_citations.each do |citation|
       if citation.role == 'translator'
         @translators << citation
       elsif citation.role == 'author'
         @authors << citation
+      elsif citation.role == 'editor'
+          @editors << citation
       else
         @other_contributors << citation
       end

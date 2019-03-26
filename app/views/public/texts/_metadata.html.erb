@@ -35,6 +35,13 @@
     <% end %>
   <% end %>
 
+  <% if @text.editors && @text.editors.count > 0 %>
+    <dt><%= "Editor".pluralize(@text.editors.count) %></dt>
+    <% @text.editors.each do |citation| %>
+      <dd><%= citation.name %></dd>
+    <% end %>
+  <% end %>
+
   <% if @text.other_contributors && @text.other_contributors.count > 0 %>
     <dt>Other <%= "contributor".pluralize(@text.other_contributors.count) %></dt>
     <% @text.other_contributors.each do |citation| %>
