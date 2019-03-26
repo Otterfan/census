@@ -1,7 +1,7 @@
 <% current_collection = '' %>
 <% if @text.components && text.components.count > 0 %>
   <div class="components">
-    <h4>Components</h4>
+    <h4>Items</h4>
     <% components_by_collection(@text.components).each do |collection| %>
       <div class="component-collection">
         <% if collection[:title] && !collection[:title].blank? %>
