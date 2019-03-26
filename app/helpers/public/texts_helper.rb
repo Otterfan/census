@@ -182,7 +182,7 @@ module Public::TextsHelper
         title: nil,
         components: []
     }
-    components.each do |component|
+    components.order(:ordinal, :pages, :id).each do |component|
       if component.collection != collection[:title] && collection[:components].count > 0
         collections << collection
         collection = {
