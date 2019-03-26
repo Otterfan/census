@@ -72,6 +72,11 @@
 
   <%= metadata_row 'Title of issue', @text.issue_title %>
 
+  <% if @text.url %>
+    <dt>URL</dt>
+    <dd><a href="<%= @text.url %>"><%= @text.url %></a></dd>
+  <% end %>
+
   <%= metadata_row 'Genre', @text.genre %>
 
   <% if @text.text_type.include? "study" %>
