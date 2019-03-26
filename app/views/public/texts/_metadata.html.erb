@@ -70,6 +70,8 @@
     <%= metadata_row 'Page count', @text.page_span.sub('pp. ', '') %>
   <% end %>
 
+  <%= metadata_row 'Title of issue', @text.issue_title %>
+
   <%= metadata_row 'Genre', @text.genre %>
 
   <% if @text.text_type.include? "study" %>
