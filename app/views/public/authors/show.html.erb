@@ -1,11 +1,15 @@
 <% page_title(@author.full_name) %>
 <div class="container">
   <div class="row">
+    <div class="back-link"><%= link_to '◀ Browse all authors', public_authors_path %></div>
+  </div>
+
+  <div class="row">
     <h1 class="col-md-12"><%= @author.full_name %></h1>
   </div>
 
   <div class="row">
-    <div class="col-md-7">
+    <div class="col-md-6 authors-texts">
       <div class="row">
         <div class="pagination-stuff col-md-10">
           <%= paginate @texts %>
@@ -19,19 +23,26 @@
         <% end %>
       </ul>
     </div>
-    <div class="col-md-5">
-      <h3>Alternate names</h3>
-      <ul>
-        <% alt_name_list(@author).each do |name| %>
+    <div class="col-md-5 col-md-offset-1 authors-names">
+      <h3>Appears as</h3>
+      <ul class="appears-as-list">
+        <% @author.names_in_source.each do |name| %>
           <li>
-            <%= name %>
+            <a href="/public/search?type=adv&bq=(authors_name_from_source::<%= name %>)"><%= name %></a>
           </li>
         <% end %>
       </ul>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="back-link"><%= link_to 'Return to Browse All Authors', public_authors_path %></div>
+      <% if @author.names_not_in_source.any? %>
+        <h3 class="other-names">Other names</h3>
+        <ul class="appears-as-list">
+          <% @author.names_not_in_source.each do |name| %>
+            <li>
+              <%= name %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
   </div>
 </div>

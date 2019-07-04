@@ -34,7 +34,8 @@ class Public::SearchController < ApplicationController
       :issn,
       :dai,
       :is_bilingual,
-      :illustrations_noted
+      :illustrations_noted,
+      :authors_name_from_source
   ]
 
   SEARCH_PARAMS = KEYWORD_SEARCH_PARAMS + ADVANCED_SEARCH_PARAMS
@@ -709,8 +710,8 @@ class Public::SearchController < ApplicationController
                 #   add_field_adv_search(['issue_title', 'issue_title.el_folded', 'issue_title.en_folded'], clean_search_string, @current_bool_op)
                 # when "issue_editor"
                 #   add_field_adv_search(['issue_editor', 'issue_editor.el_folded', 'issue_editor.en_folded'], clean_search_string, @current_bool_op)
-                # when "authors_name_from_source"
-                #   add_field_adv_search(['authors_name_from_source', 'authors_name_from_source.en_folded', 'authors_name_from_source.el_folded'], clean_search_string, @current_bool_op)
+              when "authors_name_from_source"
+                add_field_adv_search(['authors_name_from_source'], clean_search_string, @current_bool_op)
                 # when "standard_numbers"
                 #   add_field_adv_search(['standard_numbers.value.exact'], clean_search_string, @current_bool_op)
                 # when "collection"
@@ -1025,7 +1026,7 @@ class Public::SearchController < ApplicationController
   def page_title
     if params[:type] == "adv"
       'Advanced search'
-    elsif ! is_search?
+    elsif !is_search?
       'New search'
     else
       "#{params[:keyword]} - search"

@@ -126,4 +126,22 @@ class Person < ApplicationRecord
       nil
     end
   end
+
+  def names_in_source
+    unless @names_in_source
+      @names_in_source = []
+      texts.each do |text|
+        if text.authors_name_from_source.count('a-zA-Z') > 0
+          @names_in_source << text.authors_name_from_source.strip
+        end
+      end
+      @names_in_source.sort!.uniq!
+    end
+    @names_in_source
+  end
+
+  def names_not_in_source
+    alt_names = alternate_name.split("\r\n").collect(&:strip)
+    alt_names - names_in_source
+  end
 end
