@@ -31,6 +31,6 @@ class Public::JournalsController < ApplicationController
   def show
     #redirect_to journals_path(@journals)
     @journal = Journal.find(params[:id])
-    @referenced_texts = Text.where(:journal_id => @journal.id)
+    @referenced_texts = Text.where(:journal_id => @journal.id).order(census_id: :desc)
   end
 end

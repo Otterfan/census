@@ -52,7 +52,7 @@
     <dt>In</dt>
     <dd>
         <span class="journal-title">
-          <%= @text.journal.title %>
+          <%= link_to (@text.journal.title.blank? ? "[No title]" : convert_underscores(@text.journal.title)), public_journal_path(@text.journal) %>
       </span>
       <%= formatted_journal_issue @text %>
     </dd>
@@ -61,7 +61,7 @@
     <dt>In</dt>
     <dd>
           <span class="journal-title">
-            <%= @text.volume.title %>
+          <%= link_to (@text.volume.title.blank? ? "[No title]" : convert_underscores(@text.volume.title)), public_volume_path(@text.volume) %>
         </span>
       <%= formatted_journal_issue @text %>
     </dd>

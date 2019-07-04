@@ -1,57 +1,65 @@
 <% page_title @journal.title %>
 <div class="container">
+
   <div class="row">
-    <h3>Record View</h3>
+    <div class="back-link"><%= link_to '◀ Browse all journals', public_journals_path %></div>
+  </div>
 
-    <div class="col-lg-6 col-md-8 col-sm-12">
+  <div class="row">
+    <h3>
+      <% if @journal.title.present? %><cite><%= @journal.title %></cite>
+      <% else %>[No title]
+      <% end %></h3>
 
-      <div class="field">
-        <div class="field-label">Title:</div>
-        <% if @journal.title.present? %><%= @journal.title %><% else %>[No title]<% end %>
+    <div class="col-md-12">
+
+      <div class="col-md-8">
+        <div class="metadata">
+          <dl>
+            <% if @journal.issn.present? %>
+              <dt>ISSN</dt>
+              <dd><%= @journal.issn %></dd>
+            <% end %>
+
+            <% if @journal.place.present? %>
+              <dt class="field-label">Published</dt>
+              <dd><%= @journal.place.name %></dd>
+            <% end %>
+
+
+            <% if @journal.sponsoring_organization.present? %>
+              <dt>Sponsoring organization</dt>
+              <dd><%= @journal.sponsoring_organization %></dd>
+            <% end %>
+
+            <% if @journal.indexed_range.present? %>
+              <dt class="field-label">Indexed range</dt>
+              <dd><%= @journal.indexed_range %></dd>
+            <% end %>
+
+
+            <% if @referenced_texts.present? %>
+              <dt class="field-label">Appears in entries</dt>
+              <dd>
+                <ul class="list-group">
+                  <% @referenced_texts.each do |text| %>
+                    <li class="list-group-item referenced-record">
+                      <%= link_to (text.title.blank? ? "[No title]" : convert_underscores(text.title)), public_text_path(text) %>
+                      <% text.authors.each do |citation| %>
+                        <div class="referenced-record-author">
+                          <%= citation.name %>
+                        </div>
+                      <% end %>
+                    </li>
+                  <% end %>
+                </ul>
+              </dd>
+            <% end %>
+          </dl>
+        </div>
       </div>
-
-      <% if @journal.issn.present? %>
-        <div class="field">
-          <div class="field-label">ISSN:</div>
-          <%= @journal.issn %>
-        </div>
-      <% end %>
-
-      <% if @journal.place.present? %>
-        <div class="field">
-          <div class="field-label">Place:</div>
-          <% if @journal.place.name.present? %><%= @journal.place.name %><% end %>
-        </div>
-      <% end %>
-
-      <% if @journal.sponsoring_organization.present? %>
-        <div class="field">
-          <div class="field-label">Sponsoring organization:</div>
-          <%= @journal.sponsoring_organization %>
-        </div>
-      <% end %>
-
-      <% if @journal.indexed_range.present? %>
-        <div class="field">
-          <div class="field-label">Indexed range:</div>
-          <%= @journal.indexed_range %>
-        </div>
-      <% end %>
-
-      <% if @referenced_texts.present? %>
-        <div class="field">
-          <div class="field-label">Appears in the following entries:</div>
-          <ul class="list-group">
-          <% @referenced_texts.each do |text| %>
-            <li class="list-group-item"><% if text.census_id.present? %>(<%= text.census_id %>) <% end %> <%= link_to (text.title.blank? ? "[No title]" : text.title), public_text_path(text) %></li>
-          <% end %>
-          </ul>
-        </div>
-      <% end %>
     </div>
   </div>
 
-  <div class="row">
-    <div class="back-link"><%= link_to 'Return to Browse All Journals', public_journals_path %></div>
-  </div>
+
 </div>
