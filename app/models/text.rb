@@ -42,8 +42,13 @@ class Text < ApplicationRecord
   }
 
   after_commit {
-    puts "Text record '#{self.id}' was updated. Will now reindex."
-    __elasticsearch__.index_document
+      if status.id == 2
+          puts "Text record '#{self.id}' was updated. Will now reindex."
+          __elasticsearch__.index_document
+      else
+          puts "Not updating unpublished record"
+      end
+
   }
 
   paginates_per 60
