@@ -15,12 +15,15 @@ class ControlledName < ApplicationRecord
 
   def texts(role)
     texts = Text.includes(:text_citations)
+                .order(sort_census_id: :asc)
                 .where('text_citations.controlled_name' => self.controlled_name)
                 .where('text_citations.role' => role)
     comp_texts = Text.joins(components: :component_citations)
+                     .order(sort_census_id: :asc)
                      .where('component_citations.controlled_name' => self.controlled_name)
                      .where('component_citations.role' => role)
     vol_texts = Text.joins(volume: :volume_citations)
+                    .order(sort_census_id: :asc)
                     .where('volume_citations.controlled_name' => self.controlled_name)
                     .where('volume_citations.role' => role)
     (texts + comp_texts + vol_texts).uniq
