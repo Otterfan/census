@@ -204,7 +204,7 @@ module Public::TextsHelper
 
     title_path = public_text_path(text, hl: hilight)
     title_string = text.title.blank? ? "[No title]" : text.title
-    authors_names = text.authors.map.map(&:name).join('; ').strip.chomp('.')
+    authors_names = text.authors_name_from_source.strip.chomp('.')
     title_string = "#{authors_names}. #{title_string}"
     link_to(formatter.format(title_string), title_path)
   end
