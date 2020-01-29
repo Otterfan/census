@@ -47,10 +47,10 @@ Text.where('created_at > ?', '2020-01-01').each do |text|
         end
         fix_name citation
         citation.save
-        sleep 0.2
+        sleep 1
     end
 
     text.authors_name_from_source = ''
     text.save
-    sleep 0.2
+    sleep 1
 end
