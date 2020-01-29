@@ -1,6 +1,6 @@
 <h3>Appears as <%= role %> in</h3>
 <ul class="list-group">
-  <% name.texts(role).each do |text| %>
+  <% name.texts(role).sort_by(&:sort_census_id).each do |text| %>
     <li class="list-group-item">
       <%= render 'shared/text_tombstone', text: text, show_topic_author: true %>
     </li>
