@@ -555,11 +555,11 @@ class Text < ApplicationRecord
       if text_type === 'translation_part'
           'Translation (part)'
       elsif text_type === 'translation_book'
-          'Translation (book)'
+          'Translation (volume)'
       elsif text_type === 'study_part'
           'Study (part)'
       else
-          'Study (book)'
+          'Study (volume)'
       end
   end
 end
