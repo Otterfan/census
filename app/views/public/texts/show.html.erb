@@ -4,9 +4,10 @@
     <a class="back-link" href="javascript:history.back();">◀ Result list</a>
   </div>
   <div class="row">
-    <div>
+    <div class="text-heading">
       <h2><%= render "shared/topic_author", text: @text %></h2>
       <h3><span class="census-id"><%= @text.census_id %></span> <%= convert_underscores @text.title %></h3>
+      <div class="text-type"><%= @text.display_text_type %></div>
     </div>
   </div>
   <div class="row">

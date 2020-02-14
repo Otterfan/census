@@ -6,19 +6,29 @@
 $metadata-spacing: .25em;
 
 .public-show-text {
-    h2 {
-        font-size: 24px;
-    }
 
-    h3 {
-        font-weight: 600;
-        font-size: 30px;
-        margin-bottom: 1em;
+    .text-heading {
 
-        .census-id {
-            font-weight: normal;
+        margin-bottom: 2em;
+
+        .text-type {
+            font-family: 'Noto Serif', serif;
             font-size: 20px;
-            margin-right: .4em;
+        }
+
+        h2 {
+            font-size: 24px;
+        }
+
+        h3 {
+            font-weight: 600;
+            font-size: 30px;
+
+            .census-id {
+                font-weight: normal;
+                font-size: 20px;
+                margin-right: .4em;
+            }
         }
     }
 }

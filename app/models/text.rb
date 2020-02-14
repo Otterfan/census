@@ -550,6 +550,18 @@ class Text < ApplicationRecord
 
     citation
   end
+
+  def display_text_type
+      if text_type === 'translation_part'
+          'Translation (part)'
+      elsif text_type === 'translation_book'
+          'Translation (book)'
+      elsif text_type === 'study_part'
+          'Study (part)'
+      else
+          'Study (book)'
+      end
+  end
 end
 
 #Text.import(force: true) # for auto sync model with elastic search
