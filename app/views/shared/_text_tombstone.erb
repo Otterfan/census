@@ -33,7 +33,8 @@
   </div>
 <% end %>
 <div>
-  <% if text.genre %>
+  <% if text.type.include? 'study' %>
+  <% elsif text.genre %>
     <span class="genre"><%= text.genre %></span>
   <% else %>
     Study

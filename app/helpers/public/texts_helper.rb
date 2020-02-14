@@ -204,8 +204,17 @@ module Public::TextsHelper
 
     title_path = public_text_path(text, hl: hilight)
     title_string = text.title.blank? ? "[No title]" : text.title
-    authors_names = text.authors_name_from_source.strip.chomp('.')
-    title_string = "#{authors_names}. #{title_string}"
+
+    if (text.text_type == 'translation_book' || text.text_type == 'translation_part')
+      authors_names = text.authors_name_from_source.strip.chomp('.')
+    else
+      authors_names = text.authors.map.map(&:name).join('; ').strip.chomp('.')
+    end
+
+    connector = authors_names != '' ? '.' : ''
+
+
+    title_string = "#{authors_names}#{connector} #{title_string}"
     link_to(formatter.format(title_string), title_path)
   end
 
