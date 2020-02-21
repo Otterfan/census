@@ -259,6 +259,7 @@ class Public::SearchController < ApplicationController
     journal.sort_title^5
     journal.sort_title.en_folded^5
     journal.sort_title.el_folded^5
+    searchable_is_special_issue^5000
 
     sponsoring_organization
     sponsoring_organization.en_folded

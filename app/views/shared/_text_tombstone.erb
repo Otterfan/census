@@ -17,6 +17,9 @@
   </span>
   <%= tombstone_title_link(text, @results_formatter, params[:keyword]) %>
   <span class="title-date">(<%= text.date %>)</span>
+  <% if text.is_special_issue %>
+    <span class="special-issue">Special issue</span>
+  <% end %>
 </div>
 <div class="result-author">
   <%= source.translators_names %>

@@ -112,7 +112,7 @@ class TextsController < ApplicationController
                                  :is_bilingual, :illustrations_noted, :format, :text_type, :material_type, :page_count,
                                  :series, :journal_title, :collection, :genre, :page_span,
                                  :url, :sponsoring_organization, :seen_in_person,
-                                 :issue_title, :issue_editor, :abstract, :dai,
+                                 :issue_title, :issue_editor, :abstract, :dai, :is_special_issue,
                                  :authors_name_from_source, :editorial_annotation,
                                  :physical_description, :original_greek_collection,
                                  :special_location_of_item, :special_source_of_info,

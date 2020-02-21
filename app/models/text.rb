@@ -204,7 +204,7 @@ class Text < ApplicationRecord
             :status_id, :section_id, :country_id,
             :journal_id, :volume_id, :sort_id
         ],
-        methods: [:authors_names, :sort_title, :original_clean, :collection_clean, :editorial_annotation_clean, :abstract_clean, :physical_description_clean, :note_clean],
+        methods: [:authors_names, :sort_title, :original_clean, :collection_clean, :editorial_annotation_clean, :abstract_clean, :physical_description_clean, :note_clean, :searchable_is_special_issue],
         include: {
             text_citations: {
                 except: [:created_at, :updated_at, :from_language_id, :to_language_id],
@@ -562,6 +562,11 @@ class Text < ApplicationRecord
           'Study (volume)'
       end
   end
+
+  def searchable_is_special_issue
+      is_special_issue ? 'special issue' : ''
+  end
+
 end
 
 #Text.import(force: true) # for auto sync model with elastic search

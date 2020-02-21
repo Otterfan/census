@@ -118,6 +118,9 @@
         Journal
       </legend>
       <div>
+        <%= f.input :is_special_issue, label: 'Special Issue?' %>
+      </div>
+      <div>
         <%= f.association :journal, :collection => Journal.order('sort_title asc') %>
       </div>
       <div>
