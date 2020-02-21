@@ -172,3 +172,13 @@ $metadata-spacing: .25em;
     font-size: 20px;
     font-weight: 600;
 }
+
+.modal-dialog.modal-lg {
+    position: absolute;
+    right: 0;
+    width: 500px;
+}
+
+.public .modal-backdrop.in {
+    opacity: 0.25;
+}

@@ -2,6 +2,8 @@ Text.where('created_at > ?', '2010-01-01').each do |text|
     next if text.title.include? '"'
     next if text.title.include? '_'
 
+    n = 1
+
     last_original_part = 1
 
     if text.original
@@ -23,9 +25,12 @@ Text.where('created_at > ?', '2010-01-01').each do |text|
 
         if new_title.size > 8
             text.title = new_title
-            text.save
-            puts "New title is #{new_title}"
+            #text.save
+            #puts "New title is #{new_title}"
             sleep(1)
         end
+
+        puts n
+        n = n + 1
     end
 end
