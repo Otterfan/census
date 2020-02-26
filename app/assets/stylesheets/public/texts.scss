@@ -182,3 +182,7 @@ $metadata-spacing: .25em;
 .public .modal-backdrop.in {
     opacity: 0.25;
 }
+
+body.public.modal-open {
+    overflow: scroll;
+}
