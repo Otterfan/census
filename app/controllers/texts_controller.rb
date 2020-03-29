@@ -7,7 +7,11 @@ class TextsController < ApplicationController
   # GET /texts
   # GET /texts.json
   def index
-    @texts = Text.order(:sort_census_id).page(params[:page])
+    if current_user.user_type != 'viewer'
+      @texts = Text.order(:sort_census_id).page(params[:page])
+    else
+      @texts = Text.where.not('is_hidden').order(:sort_census_id).page(params[:page])
+    end
   end
 
   # GET /texts/1

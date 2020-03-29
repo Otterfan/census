@@ -41,39 +41,50 @@ def main
 end
 
 def read_file
-    contents = File.read('/home/rails/apps/census/shared/data/d-i.json')
+    contents = File.read('/Users/benjaminflorin/RubymineProjects/census/data/authors-k-v1.json')
     JSON.parse(contents)
 end
 
 def add_text_citation(full_name, role, ordinal)
-    name_parts = full_name.split(' ')
+
+    puts "\t\tAdding text citation #{full_name}"
 
     citation = TextCitation.create()
 
-    if name_parts.length == 2
-
-        if name_parts[0].end_with?(',')
-            citation.last_name = name_parts[0].chomp(",")
-            citation.first_name = name_parts[1].chomp(",")
+    if full_name
+        if full_name.include?(', ')
+            name_parts = full_name.split(', ')
+            citation.last_name = name_parts.first
+            citation.first_name = name_parts.last
         else
-            citation.last_name = name_parts[1].chomp(",")
-            citation.first_name = name_parts[0].chomp(",")
+            name_parts = full_name.split(' ')
+            citation.last_name = name_parts.last
+            if citation.last_name
+                citation.first_name = full_name.gsub(citation.last_name, '')
+            end
         end
-
+        citation.name = "#{citation.last_name}, #{citation.first_name}"
+    else
+        puts "\tNo full name!"
     end
 
-    citation.name = full_name
+
     citation.role = role
     citation.ordinal = ordinal
+    citation.controlled_name = citation.name
 
     citation
 end
 
 def add_text(entry, needs_review_status)
+
+    puts "Adding text #{entry['id']}"
     citation_ordinal = 0
 
-
     text = Text.create()
+
+    text.is_hidden = true
+
     text.status = needs_review_status
 
     text.note = entry['notes'][0] if entry['notes']
@@ -86,7 +97,15 @@ def add_text(entry, needs_review_status)
     text.date = entry['date'] || ''
     text.text_type = entry['entry_type']
 
-    text.genre = entry['genre'] || ''
+    puts "\tAdding text type..."
+
+    if text.text_type.include?('study')
+        text.text_type = 'Study'
+    elsif entry['genre']
+        text.genre = entry['genre'] || ''
+    else
+        text.title.include?('')
+    end
 
     text.page_span = entry['page_count'] || ''
 
@@ -101,23 +120,33 @@ def add_text(entry, needs_review_status)
         end
     end
 
+    puts "\tAdding components..."
+
     entry['components'].each do |component_entry|
         text.components << add_component(component_entry, text)
     end
+
+    puts "\tAdding authors names..."
 
     text.authors_name_from_source = entry['responsibility']
 
     text.text_citations << add_text_citation(entry['responsibility'], 'author', citation_ordinal)
     citation_ordinal = citation_ordinal + 1
 
+    puts "\tAdding translator..."
+
     if entry['translator']
         text.text_citations << add_text_citation(entry['translator'], 'translator', citation_ordinal)
         citation_ordinal = citation_ordinal + 1
     end
 
+    puts "\tAdding contributors..."
+
     entry['contributors'].each do |contributor|
-        text.text_citations << add_text_citation(contributor['name'], contributor['role'], citation_ordinal)
-        citation_ordinal = citation_ordinal + 1
+        if contributor['role'] != 'author'
+            text.text_citations << add_text_citation(contributor['name'], contributor['role'], citation_ordinal)
+            citation_ordinal = citation_ordinal + 1
+        end
     end
 
     if entry['journal_title']
@@ -132,6 +161,9 @@ def add_text(entry, needs_review_status)
 end
 
 def add_component(component_entry, text)
+
+    puts "\t\tAdding component #{component_entry['title']}"
+
     component = Component.create
     component.title = component_entry['title'] || ''
 
@@ -140,10 +172,40 @@ def add_component(component_entry, text)
 
     component.text_type = component_entry['type'] || ''
 
+    component.collection = component_entry['from'] || ''
+
+    if component_entry['author']
+        author = build_component_citation(component_entry['author'], 'author')
+        component.component_citations << author
+    end
+
+    if component_entry['translator']
+        author = build_component_citation(component_entry['translator'], 'translator')
+        component.component_citations << author
+    end
+
     component
 end
 
+def build_component_citation(name, role)
+
+    puts "\t\tAdding component citation #{name}"
+
+    citation = ComponentCitation.new
+    citation.name = name
+    name_parts = name.split(', ')
+    citation.last_name = name_parts[0]
+    if (name_parts[1])
+        citation.first_name = name_parts[1]
+    end
+    citation.role = role
+    citation
+end
+
 def add_topic_author(entry, topic_author_full)
+
+    puts "\t\tAdding topic author #{topic_author_full}"
+
     topic_author_greek = entry['topic_author']['full_name']
     topic_author = Person.create()
     topic_author.full_name = topic_author_full
@@ -159,6 +221,8 @@ end
 
 def add_journal(entry, text)
 
+    puts "\t\tAdding journal #{entry['journal_title']}"
+
     text.journal_title = entry['journal_title']
 
     journal = Journal.find_by(title: entry['journal_title'])
@@ -167,7 +231,6 @@ def add_journal(entry, text)
     if entry['journal_issue']
         text.issue_volume = entry['journal_issue']
     end
-
 end
 
 # Run main code
