@@ -41,7 +41,7 @@ def main
 end
 
 def read_file
-    contents = File.read('/Users/benjaminflorin/RubymineProjects/census/data/authors-k-v1.json')
+    contents = File.read('/Users/benjaminflorin/RubymineProjects/census/data/authors-l-o-final.json')
     JSON.parse(contents)
 end
 
