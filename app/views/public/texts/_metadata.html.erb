@@ -130,4 +130,11 @@
     <dt>Entry Number</dt>
     <dd><%= @text.census_id %></dd>
   <% end %>
+
+  <% unless @text.cross_references.empty? %>
+    <dt>References entries</dt>
+    <% @text.cross_references.each do |reference| %>
+      <dd><a href="/public/texts/<%= reference.census_id %>"><%= reference.census_id %></a></dd>
+    <% end %>
+  <% end %>
 </div>

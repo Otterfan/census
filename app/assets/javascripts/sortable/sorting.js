@@ -67,6 +67,8 @@ BCSorter = (function () {
         $('#collapse-components span').toggle();
         $('#components .component-fields').addClass('collapsed-li');
         $('.component-collapsable').collapse('hide');
+        $('#collapse-components .collapse-command').hide();
+        $('#collapse-components .open-command').show();
     }
 
     function openComponents(event) {
@@ -74,6 +76,8 @@ BCSorter = (function () {
         $('#collapse-components span').toggle();
         $('#components .component-fields').removeClass('collapsed-li');
         $('.component-collapsable').collapse('show');
+        $('#collapse-components .open-command').hide();
+        $('#collapse-components .collapse-command').show();
     }
 
     function collapseCitations(event) {
@@ -83,6 +87,8 @@ BCSorter = (function () {
         $('#collapse-citations span').toggle();
         $('#citations .citation-fields').addClass('collapsed-li');
         $('.citation-collapsable').collapse('hide');
+        $('#collapse-citations .collapse-command').hide();
+        $('#collapse-citations .open-command').show();
     }
 
     function openCitations(event) {
@@ -90,6 +96,8 @@ BCSorter = (function () {
         $('#collapse-citations span').toggle();
         $('#citations .citation-fields').removeClass('collapsed-li');
         $('.citation-collapsable').collapse('show');
+        $('#collapse-citations .open-command').hide();
+        $('#collapse-citations .collapse-command').show();
     }
 
     addSort = function () {

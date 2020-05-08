@@ -1,4 +1,5 @@
 <li class='component-fields nested-fields list-group-item row sortable-item'>
+  <%= link_to_remove_association "x", f, {:class => 'remove-link'} %>
   <div class="show-when-collapsed">
     <div class="col-sm-1 handle collapsed-handle"></div>
     <div class="col-sm-11 collapsed-display">
@@ -25,5 +26,4 @@
       </div>
     </div>
   </div>
-  <%= link_to_remove_association "x", f, {:class => 'remove-link'} %>
 </li>
