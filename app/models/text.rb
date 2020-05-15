@@ -7,8 +7,8 @@ class Text < ApplicationRecord
   include SharedMethods
 
   belongs_to :language, optional: true
-  belongs_to :topic_author, class_name: 'Person', optional: false
-  belongs_to :status
+  belongs_to :topic_author, class_name: 'Person', optional: true
+  belongs_to :status, optional: true
   belongs_to :volume, optional: true
   belongs_to :section, optional: true
   belongs_to :journal, optional: true
@@ -31,6 +31,7 @@ class Text < ApplicationRecord
   accepts_nested_attributes_for :components, reject_if: :all_blank, :allow_destroy => true
 
   before_save :default_values
+  before_save :calculate_sort_census_id
 
   def to_param
     census_id
@@ -535,6 +536,13 @@ class Text < ApplicationRecord
       pub_place.text = self
       self.publication_places << pub_place
     end
+  end
+
+  def calculate_sort_census_id
+    census_id_parts = self.census_id.split('.')
+    major = census_id_parts[0].to_s.rjust(2,"0")
+    minor = census_id_parts[1].to_s.rjust(6,"0")
+    self.sort_census_id = major + minor
   end
 
   def original_greek_citation

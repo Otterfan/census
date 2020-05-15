@@ -6,7 +6,7 @@
 
    is_search = is_search_result?(text)
 %>
-<% if (defined? show_topic_author) && show_topic_author == true %>
+<% if (defined? show_topic_author) && show_topic_author == true && defined?(text.topic_author) %>
   <div class="topic-author">
     <%= render 'shared/topic_author', text: text %>
   </div>

@@ -1,13 +1,13 @@
-<% page_title "#{@text.census_id} #{@text.title.gsub('_','')} - #{@text.authors_names}" %>
+<% page_title "#{@text.census_id} #{@text.title.gsub('_', '')} - #{@text.authors_names}" %>
 <div class="row prev-next-row-top">
   <div class="col-sm-6">
     <% if @text.previous %>
-        <%= link_to "<< #{@text.previous.census_id}", @text.previous %>
+      <%= link_to "<< #{@text.previous.census_id}", @text.previous %>
     <% end %>
   </div>
   <div class="col-sm-6 next-record-col">
     <% if @text.next %>
-        <%= link_to "#{@text.next.census_id} >>", @text.next %>
+      <%= link_to "#{@text.next.census_id} >>", @text.next %>
     <% end %>
   </div>
 </div>
@@ -23,10 +23,12 @@
       </span>
       <div id="original" class="collapse in original-box">
         <div class="topic-author">
-          <%= @text.topic_author.full_name %>
+          <% if @text.topic_author %>
+            <%= @text.topic_author.full_name %>
+          <% end %>
         </div>
         <% if @text.census_id %>
-            <div class="census-id"><%= @text.census_id %></div>
+          <div class="census-id"><%= @text.census_id %></div>
         <% else %>
         <% end %>
         <textarea>
@@ -37,23 +39,23 @@
     <div class="comments-section">
       <h3>Comments</h3>
       <%= form_for(@comment, :html => {:id => "new-comment-form", :multipart => true, :remote => true}) do |f| %>
-          <%= f.text_area :value, autofocus: true, class: 'title-field' %>
-          <%= hidden_field_tag 'comment[user_id]', @user.id %>
-          <%= hidden_field_tag 'comment[text_id]', @text.id %>
-          <input type="hidden"
-                 value="<%= form_authenticity_token() %>"
-                 name="authenticity_token" id="comment_auth_token"/>
-          <%= f.submit 'Submit comment', class: 'btn home-add without-entry' %>
+        <%= f.text_area :value, autofocus: true, class: 'title-field' %>
+        <%= hidden_field_tag 'comment[user_id]', @user.id %>
+        <%= hidden_field_tag 'comment[text_id]', @text.id %>
+        <input type="hidden"
+               value="<%= form_authenticity_token() %>"
+               name="authenticity_token" id="comment_auth_token"/>
+        <%= f.submit 'Submit comment', class: 'btn home-add without-entry' %>
       <% end %>
       <ul class="list-group text-comments">
         <% @text.comments.reverse.each do |comment| %>
-            <li class="list-group-item comment">
-              <div class="the-text"><%= comment.value %></div>
-              <div class="comment-metadata">
-                <span class="the-user"><%= comment.user.email %></span>
-                <span class="the-date"><%= comment.created_at %></span>
-              </div>
-            </li>
+          <li class="list-group-item comment">
+            <div class="the-text"><%= comment.value %></div>
+            <div class="comment-metadata">
+              <span class="the-user"><%= comment.user.email %></span>
+              <span class="the-date"><%= comment.created_at %></span>
+            </div>
+          </li>
         <% end %>
       </ul>
     </div>
@@ -63,12 +65,12 @@
 <div class="row prev-next-row-bottom">
   <div class="col-sm-6">
     <% if @text.previous %>
-        <%= link_to "<< #{@text.previous.census_id}", @text.previous %>
+      <%= link_to "<< #{@text.previous.census_id}", @text.previous %>
     <% end %>
   </div>
   <div class="col-sm-6 next-record-col">
     <% if @text.next %>
-        <%= link_to "#{@text.next.census_id} >>", @text.next %>
+      <%= link_to "#{@text.next.census_id} >>", @text.next %>
     <% end %>
   </div>
 </div>

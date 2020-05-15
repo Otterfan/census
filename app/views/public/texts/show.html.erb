@@ -5,7 +5,9 @@
   </div>
   <div class="row">
     <div class="text-heading">
-      <h2><%= render "shared/topic_author", text: @text %></h2>
+      <% if @text.topic_author %>
+        <h2><%= render "shared/topic_author", text: @text %></h2>
+      <% end %>
       <h3><span class="census-id"><%= @text.census_id %></span> <%= convert_underscores @text.title %></h3>
       <div class="text-type"><%= @text.display_text_type %></div>
     </div>
@@ -26,7 +28,7 @@
             <li>Export</li>
             <li>Cite</li>
             <% if user_signed_in? %>
-            <%= link_to 'Edit', "/texts/#{@text.census_id}" %>
+              <%= link_to 'Edit', "/texts/#{@text.census_id}" %>
             <% end %>
           </ul>
         </div>
