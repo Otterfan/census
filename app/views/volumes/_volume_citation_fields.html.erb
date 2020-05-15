@@ -4,7 +4,9 @@
   <%= f.input :first_name, as: :string %>
   <%= f.input :controlled_name, as: :string %>
   <%= f.label :role %>
-  <%= f.select(:role, [['author', 'author'], ['translator', 'translator'], ['editor', 'editor'], ['illustrator', 'illustrator']],
+  <%= f.select(:role, [['author', 'author'], ['translator', 'translator'],
+                       ['editor', 'editor'], ['illustrator', 'illustrator'],
+                       ['intro/front matter author', 'intro/front matter author'], ['back matter author', 'back matter author']],
                {}, :onChange => 'showForTranslator(this)') %>
   <div class="translator-only" style="margin-top: 1em;display: <%= f.object.role === 'translator' ? 'block' : 'none' %>">
     <div class="form-group">
