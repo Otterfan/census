@@ -41,7 +41,8 @@ main {
 
   .edit-form, .edit_volume {
 
-    label {
+    .checkbox label {
+        font-weight: bold;
     }
 
     .input {

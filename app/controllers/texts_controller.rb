@@ -55,11 +55,11 @@ class TextsController < ApplicationController
 
     respond_to do |format|
       if @text.save
-        format.html {redirect_to @text, notice: 'Text was successfully created.'}
-        format.json {render :show, status: :created, location: @text}
+        format.html { redirect_to @text, notice: 'Text was successfully created.' }
+        format.json { render :show, status: :created, location: @text }
       else
-        format.html {render :new}
-        format.json {render json: @text.errors, status: :unprocessable_entity}
+        format.html { render :new }
+        format.json { render json: @text.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -76,11 +76,11 @@ class TextsController < ApplicationController
       @user = current_user
 
       if @text.update(text_params)
-        format.html {redirect_to edit_text_path(@text), notice: 'Text was successfully updated.'}
-        format.json {render :show, status: :ok, location: @text}
+        format.html { redirect_to edit_text_path(@text), notice: 'Text was successfully updated.' }
+        format.json { render :show, status: :ok, location: @text }
       else
-        format.html {redirect_to edit_text_path(@text), notice: @text.errors}
-        format.json {render json: @text.errors, status: :unprocessable_entity}
+        format.html { redirect_to edit_text_path(@text), notice: @text.errors }
+        format.json { render json: @text.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -90,8 +90,8 @@ class TextsController < ApplicationController
   def destroy
     @text.destroy
     respond_to do |format|
-      format.html {redirect_to texts_url, notice: 'Text was successfully destroyed.'}
-      format.json {head :no_content}
+      format.html { redirect_to texts_url, notice: 'Text was successfully destroyed.' }
+      format.json { head :no_content }
     end
   end
 
@@ -116,7 +116,7 @@ class TextsController < ApplicationController
                                  :is_bilingual, :illustrations_noted, :format, :text_type, :material_type, :page_count,
                                  :series, :journal_title, :collection, :genre, :page_span,
                                  :url, :sponsoring_organization, :seen_in_person,
-                                 :issue_title, :issue_editor, :abstract, :dai, :is_special_issue,
+                                 :issue_title, :issue_editor, :abstract, :dai, :is_special_issue, :is_collected_volume,
                                  :authors_name_from_source, :editorial_annotation,
                                  :physical_description, :original_greek_collection,
                                  :special_location_of_item, :special_source_of_info,

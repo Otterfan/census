@@ -260,6 +260,7 @@ class Public::SearchController < ApplicationController
     journal.sort_title.en_folded^5
     journal.sort_title.el_folded^5
     searchable_is_special_issue^5000
+    searchable_is_collected_volume^5000
 
     sponsoring_organization
     sponsoring_organization.en_folded
@@ -369,6 +370,7 @@ class Public::SearchController < ApplicationController
     # complex associated models use dot notation, e.g., publication_places.place.name
     @kw_query_string_hash = {}
     if kw_param.present?
+      puts "in here"
       @kw_query_string_hash = {
           query_string: {
               fields: KEYWORD_FIELDS,

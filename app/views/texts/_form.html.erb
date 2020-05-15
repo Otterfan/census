@@ -35,6 +35,10 @@
     </div>
 
     <div>
+      <%= f.input :is_collected_volume, label: 'Collected volume?' %>
+    </div>
+
+    <div>
       <a id="collapse-citations">
         <button class="collapse-command" type="button">re-order citations</button>
         <button class="open-command active" type="button">finish</button>
@@ -118,7 +122,7 @@
         Journal
       </legend>
       <div>
-        <%= f.input :is_special_issue, label: 'Special Issue?' %>
+        <%= f.input :is_special_issue, label: 'Special issue?' %>
       </div>
       <div>
         <%= f.association :journal, :collection => Journal.order('sort_title asc') %>
