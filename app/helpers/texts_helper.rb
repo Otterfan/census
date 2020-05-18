@@ -1,16 +1,25 @@
 module TextsHelper
   def texts_by_author(texts)
+    if texts[0].topic_author
+      heading = texts[0].topic_author.full_name
+    else
+      heading = 'Literary Histories'
+    end
+
     authors = []
     author_group = {
-        :author => texts[0].topic_author.full_name,
+        :author => heading,
         :texts => []
     }
 
     texts.each do |text|
-      unless text.topic_author.full_name == author_group[:author]
+      heading = text.topic_author.nil? ? 'Literary Histories' : text.topic_author.full_name
+
+      unless heading == author_group[:author]
+        puts text.topic_author
         authors.push(author_group)
         author_group = {
-            :author => text.topic_author.full_name,
+            :author => heading,
             :texts => []
         }
       end

@@ -5,7 +5,7 @@
         </div>
     <% else %>
         <div>
-          <%= f.input :census_id, as: :string, required: true %>
+          <%= f.input :census_id, as: :string, label: 'Census ID', required: true %>
         </div>
     <% end %>
     <div>
@@ -31,7 +31,7 @@
     <!-- Author’s name as it appears in this source -->
 
     <div>
-      <%= f.input :title, as: :string %>
+      <%= f.input :title, as: :string, required: true %>
     </div>
 
     <div>
