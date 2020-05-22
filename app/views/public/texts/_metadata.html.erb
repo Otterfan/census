@@ -134,7 +134,7 @@
   <% unless @text.cross_references.empty? %>
     <dt>References entries</dt>
     <% @text.cross_references.each do |reference| %>
-      <dd><a href="/public/texts/<%= reference.census_id %>"><%= reference.census_id %></a></dd>
+      <dd><%= crossreference_link(reference.census_id) %></dd>
     <% end %>
   <% end %>
 </div>

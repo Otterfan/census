@@ -9,7 +9,9 @@ module Public::TextsHelper
     dt = "<dt>#{label}</dt>"
     dd = ""
     Array(value).each do |val|
-      dd = dd + "<dd>#{convert_underscores(val)}</dd>"
+      converted = convert_underscores(val)
+      linked = link_records(converted)
+      dd = dd + "<dd>#{linked}</dd>"
     end
 
     full = dt + dd
@@ -81,7 +83,7 @@ module Public::TextsHelper
 
     # TODO tighten up these regex commands - match string up through next '&' char or end of string
     new_path = path.gsub(/#{facet_name}=.*?(&|$)/, '')
-                   .gsub(/&$/, '')
+                 .gsub(/&$/, '')
 
     reset_page_number_in_path(new_path)
   end
@@ -139,7 +141,7 @@ module Public::TextsHelper
     # http://www.concept47.com/austin_web_developer_blog/craftsmanship/showing-better-highlighted-search-result-fragments-with-elasticsearch/
     highlighted_items = []
 
-    if not params_highlight
+    unless params_highlight
       return ""
     end
 
@@ -179,15 +181,15 @@ module Public::TextsHelper
   def components_by_collection(components)
     collections = []
     collection = {
-        title: nil,
-        components: []
+      title: nil,
+      components: []
     }
     components.order(:ordinal, :pages, :id).each do |component|
       if component.collection != collection[:title] && collection[:components].count > 0
         collections << collection
         collection = {
-            title: component.collection,
-            components: [component]
+          title: component.collection,
+          components: [component]
         }
       else
         collection[:components] << component
@@ -230,5 +232,34 @@ module Public::TextsHelper
     else
       text.census_id
     end
+  end
+
+  def link_records(string_value)
+    referenced_census_ids = string_value.scan(/\{\d\.\d+\}/)
+    to_match = []
+
+    referenced_census_ids.each do |id|
+      id_without_braces = id[1...-1]
+      if Text.find_by_census_id(id[1...-1])
+        to_match.push(id_without_braces)
+      end
+    end
+
+    to_match.each do |found_id|
+      to_replace = '{' + found_id + '}'
+      replacement = "<a href=\"/public/texts/#{found_id}\">{#{found_id}}</a>"
+      string_value.gsub!(to_replace, replacement)
+    end
+
+    string_value
+  end
+
+  def crossreference_link(census_id)
+
+    unless Text.find_by_census_id(census_id)
+      return census_id
+    end
+
+    "<a href=\"/public/texts/#{census_id}\">#{census_id}</a>".html_safe
   end
 end
