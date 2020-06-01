@@ -1,7 +1,7 @@
 <% if text['_source']
-       source = text['_source']
+     source = text['_source']
    else
-       source = text
+     source = text
    end
 
    is_search = is_search_result?(text)
@@ -22,7 +22,11 @@
   <% end %>
 </div>
 <div class="result-author">
-  <%= source.translators_names %>
+  <% if source.translators_names %>
+    <%= source.translators_names %>
+  <% else %>
+    <%= additional_responsibilities_from_search(source.text_citations) %>
+  <% end %>
 </div>
 <% if source.volume %>
   <div>
