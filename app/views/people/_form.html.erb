@@ -14,9 +14,10 @@
 
         <%= f.input :domicile, as: :string %>
 
-        <%= f.input :loc, label: 'Library of Congress' %>
+        <%= f.input :loc, label: 'Library of Congress URI' %>
+        <%= f.input :loc_name, label: 'Library of Congress Authority Name' %>
         <%= f.input :greek_authority, label: 'Greek authority name' %>
-        <%= f.input :viaf, label: 'VIAF' %>
+        <%= f.input :viaf, label: 'VIAF URI' %>
         <%= f.input :alternate_name, as: :text %>
 
         <%= f.button :submit %>

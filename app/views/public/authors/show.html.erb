@@ -5,11 +5,11 @@
   </div>
 
   <div class="row">
-    <h1 class="col-md-12"><%= @author.full_name %></h1>
-  </div>
-
-  <div class="row">
     <div class="col-md-6 authors-texts">
+      <div class="row">
+        <h1 class="col-md-12"><%= @author.full_name %></h1>
+      </div>
+      <h2>Texts</h2>
       <div class="row">
         <div class="pagination-stuff col-md-10">
           <%= paginate @texts %>
@@ -23,26 +23,34 @@
         <% end %>
       </ul>
     </div>
-    <div class="col-md-5 col-md-offset-1 authors-names">
-      <h3>Appears as</h3>
-      <ul class="appears-as-list">
-        <% @author.names_in_source.each do |name| %>
-          <li>
-            <a href="/public/search?type=adv&bq=(authors_name_from_source::<%= name %>)"><%= name %></a>
-          </li>
-        <% end %>
-      </ul>
-
-      <% if @author.names_not_in_source.any? %>
-        <h3 class="other-names">Other names</h3>
+    <div class="col-md-5 col-md-offset-1">
+      <% if @author.loc_name || @author.greek_authority %>
+        <h2>Authority names</h2>
+        <div class="auth-names">
+          <% if @author.loc_name %>
+            <div class="auth-name row">
+              <div class="auth-name__heading col-md-12">Library of Congress</div>
+              <div class="auth-name__value col-md-12"><%= @author.loc_name %></div>
+            </div>
+          <% end %>
+          <% if @author.greek_authority %>
+            <div class="auth-name row">
+              <span class="auth-name__heading col-md-12">National Library of Greece</span>
+              <span class="auth-name__value col-md-12"><%= @author.greek_authority %></span>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+      <div class="authors-names">
+        <h3>Appears in CENSUS as</h3>
         <ul class="appears-as-list">
-          <% @author.names_not_in_source.each do |name| %>
+          <% @author.names_in_source.each do |name| %>
             <li>
-              <%= name %>
+              <a href="/public/search?type=adv&bq=(authors_name_from_source::<%= name %>)"><%= name %></a>
             </li>
           <% end %>
         </ul>
-      <% end %>
+      </div>
     </div>
   </div>
 </div>
