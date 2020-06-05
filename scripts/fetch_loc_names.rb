@@ -2,8 +2,7 @@ require 'net/http'
 require 'json'
 
 def main
-  puts 'Beginning'
-  authors = Person.where(:topic_flag => true).where.not(:loc => nil).where.not(:loc => '').where(:loc_name => nil).where("loc LIKE '%authorities%'")
+  authors = Person.where(:topic_flag => true).where.not(:loc => nil).where.not(:loc => '').where("loc LIKE '%authorities%'")
   authors.each do |author|
     process_author author
   end
@@ -29,45 +28,36 @@ def process_author(author)
   author.save
 end
 
-# @param [String] uri_string
-FULL_NAME_ELEMENT_ID = 'http://www.loc.gov/mads/rdf/v1#FullNameElement'
-
-ELEMENT_VALUE_ID = 'http://www.loc.gov/mads/rdf/v1#elementValue'
+AUTHORITATIVE_LABEL_URI = 'http://www.loc.gov/mads/rdf/v1#authoritativeLabel'
+PERSONAL_NAME_URI = 'http://www.loc.gov/mads/rdf/v1#PersonalName'
+AUTHORITY_URI = 'http://www.loc.gov/mads/rdf/v1#Authority'
 
 def fetch_loc_auth_name(uri_string)
-  #uri_string.gsub!('http:', 'https:')
-  #uri_string = uri_string + '/'
-
   uri_string = uri_string + '.madsrdf.json'
-
   puts uri_string
-
   uri = URI(uri_string)
-
   req = Net::HTTP::Get.new(uri)
-
   req['Accept'] = 'application/json'
-
   res = Net::HTTP.start(uri.hostname, uri.port, :use_ssl => false) { |http|
     http.request(req)
   }
 
   object = JSON.parse(res.body)
-
   loc_auth_name = nil
 
   if object.kind_of?(Array)
     object.each do |entry|
-      if entry['@type'][0] == FULL_NAME_ELEMENT_ID
-        loc_auth_name = entry[ELEMENT_VALUE_ID][0]['@value']
-      end
+      next unless auth_name?(entry['@type'])
+      next unless entry.key?(AUTHORITATIVE_LABEL_URI)
+      loc_auth_name = entry[AUTHORITATIVE_LABEL_URI][0]['@value']
     end
   end
-
   sleep 1
-
   loc_auth_name
+end
 
+def auth_name?(type)
+  type.include?(PERSONAL_NAME_URI) && type.include?(AUTHORITY_URI)
 end
 
 main

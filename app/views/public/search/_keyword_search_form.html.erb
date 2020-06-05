@@ -13,6 +13,9 @@
       <%= label_tag(:keyword, "Keyword") %>
       <div class="input-group">
         <%= text_field_tag :keyword, params[:keyword], :class => 'form-control input-lg' %>
+        <% if params[:sort] %>
+          <%= hidden_field_tag 'sort', params[:sort] %>
+        <% end %>
         <span class="input-group-btn">
           <%= submit_tag 'Search', name: nil, :class => 'btn btn-success btn-lg' %>
         </span>
