@@ -5,6 +5,9 @@ if (el) {
             sort_param = 'sort=' + sort_val,
             new_search = '';
 
+        var sort_input = document.querySelector('input#sort');
+        sort_input.value = sort_val;
+
         if (location.search.includes('sort=')) {
             new_search = location.search.replace(/sort=[^&$]*/i, sort_param);
         } else {

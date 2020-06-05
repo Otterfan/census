@@ -16,7 +16,9 @@
     <%= title_census_id text %>
   </span>
   <%= tombstone_title_link(text, @results_formatter, params[:keyword]) %>
-  <span class="title-date">(<%= text.date %>)</span>
+  <% if text.date && text.date != '' %>
+    <span class="title-date">(<%= text.date %>)</span>
+  <% end %>
   <% if text.is_special_issue %>
     <span class="special-issue">Special issue</span>
   <% end %>
