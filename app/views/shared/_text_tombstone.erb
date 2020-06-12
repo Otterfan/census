@@ -22,6 +22,9 @@
   <% if text.is_special_issue %>
     <span class="special-issue">Special issue</span>
   <% end %>
+  <% if source.url && text.url != '' %>
+    <a class="available-online-notice" href="<%= source.url %>"><span class="badge badge-primary">available online</span></a>
+  <% end %>
 </div>
 <div class="result-author">
   <% if source.translators_names %>
