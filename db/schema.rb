@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_29_180710) do
+ActiveRecord::Schema.define(version: 2020_06_12_135237) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(version: 2020_05_29_180710) do
     t.bigint "to_language_id"
     t.string "first_name"
     t.string "last_name"
-    t.text "controlled_name"
+    t.text "controlled_name", collation: "fr_FR.UTF-8"
     t.index ["component_id"], name: "index_component_citations_on_component_id"
     t.index ["from_language_id"], name: "index_component_citations_on_from_language_id"
     t.index ["to_language_id"], name: "index_component_citations_on_to_language_id"
@@ -107,6 +107,8 @@ ActiveRecord::Schema.define(version: 2020_05_29_180710) do
     t.text "note"
     t.boolean "is_bilingual"
     t.text "collection"
+    t.text "section"
+    t.text "subsection"
     t.index ["text_id"], name: "index_components_on_text_id"
   end
 
@@ -158,7 +160,7 @@ ActiveRecord::Schema.define(version: 2020_05_29_180710) do
   end
 
   create_table "people", force: :cascade do |t|
-    t.text "full_name"
+    t.text "full_name", collation: "fr_FR.UTF-8"
     t.text "greek_full_name"
     t.text "first_name"
     t.text "last_name"
@@ -247,7 +249,7 @@ ActiveRecord::Schema.define(version: 2020_05_29_180710) do
     t.string "first_name"
     t.string "last_name"
     t.integer "ordinal", default: 0
-    t.text "controlled_name"
+    t.text "controlled_name", collation: "fr_FR.UTF-8"
     t.index ["from_language_id"], name: "index_text_citations_on_from_language_id"
     t.index ["ordinal"], name: "index_text_citations_on_ordinal"
     t.index ["text_id"], name: "index_text_citations_on_text_id"
@@ -360,7 +362,7 @@ ActiveRecord::Schema.define(version: 2020_05_29_180710) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "name"
-    t.text "controlled_name"
+    t.text "controlled_name", collation: "fr_FR.UTF-8"
     t.index ["from_language_id_id"], name: "index_volume_citations_on_from_language_id_id"
     t.index ["to_language_id_id"], name: "index_volume_citations_on_to_language_id_id"
     t.index ["volume_id"], name: "index_volume_citations_on_volume_id"
