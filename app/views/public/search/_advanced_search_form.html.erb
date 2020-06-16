@@ -3,8 +3,8 @@
 <div class="search-history"><%= link_to 'Search history', public_recent_searches_path %></div>
 <!--pre><%= @all_search.to_json %></pre-->
 <%= form_tag(public_search_index_path, method: :get, id: "search_form") do %>
-  <div class="panel panel-default">
-    <div class="panel-body">
+  <div class="">
+    <div class="">
       <div class="adv-search-fields row">
         <%= hidden_field_tag :type, @search_type %>
 
@@ -38,8 +38,8 @@
                  role="button"
                  aria-expanded="false"
                  aria-controls="search-row-group-4"
-              ><i class="fas fa-2x fa-fw fa-plus-circle"></i></a>
-              <i class="fas fa-2x fa-fw fa-minus-circle disabled"></i>
+              ><i class="fas fa-fw fa-plus-circle"></i></a>
+              <i class="fas fa-fw fa-minus-circle disabled"></i>
             </div>
           </div>
         </div>
@@ -58,7 +58,7 @@
                  role="button"
                  aria-expanded="false"
                  aria-controls="search-row-group-5"
-              ><i class="fas fa-2x fa-fw fa-plus-circle"></i></a>
+              ><i class="fas fa-fw fa-plus-circle"></i></a>
               <a href="#"
                  aria-label="Collapse search row 4"
                  class="remove"
@@ -66,7 +66,7 @@
                  role="button"
                  aria-expanded="false"
                  aria-controls="search-row-group-4"
-              ><i class="fas fa-2x fa-fw fa-minus-circle"></i></a>
+              ><i class="fas fa-fw fa-minus-circle"></i></a>
             </div>
           </div>
         </div>
@@ -85,7 +85,7 @@
                  role="button"
                  aria-expanded="false"
                  aria-controls="search-row-group-6"
-              ><i class="fas fa-2x fa-fw fa-plus-circle"></i></a>
+              ><i class="fas fa-fw fa-plus-circle"></i></a>
               <a href="#"
                  aria-label="Collapse search row 5"
                  class="remove"
@@ -93,7 +93,7 @@
                  role="button"
                  aria-expanded="false"
                  aria-controls="search-row-group-5"
-              ><i class="fas fa-2x fa-fw fa-minus-circle"></i></a>
+              ><i class="fas fa-fw fa-minus-circle"></i></a>
             </div>
           </div>
         </div>
@@ -105,7 +105,7 @@
           </div>
           <div class="col-lg-2 col-md-2 col-sm-4 add-buttons">
             <div class="col-lg-12 col-md-12 col-sm-12">
-              <i class="fas fa-2x fa-fw fa-plus-circle disabled"></i>
+              <i class="fas fa-fw fa-plus-circle disabled"></i>
               <a href="#"
                  aria-label="Collapse search row 6"
                  class="remove"
@@ -113,14 +113,15 @@
                  role="button"
                  aria-expanded="false"
                  aria-controls="search-row-group-6"
-              ><i class="fas fa-2x fa-fw fa-minus-circle"></i></a>
+              ><i class="fas fa-fw fa-minus-circle"></i></a>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <%= render 'advanced_search_form_filters' %>
   </div>
-  <%= render 'advanced_search_form_submit' %>
 <% end %>
 <script>
     $(document).ready(function() {
@@ -151,6 +152,20 @@
 
         // pull out advanced search params from URL and fit them back into the search fields
         function load_field_vals(){
+            // look for date input
+            var date_range = getUrlParameter("publication_date_range");
+
+            if (date_range) {
+                var date_parts = date_range.split("-");
+                if (date_parts[0] > 1000) {
+                    $('#pub-date-from').val(date_parts[0]);
+                }
+                if (date_parts[1] < 9999) {
+                    $('#pub-date-to').val(date_parts[1]);
+                }
+            }
+
+
             // get the query param
             var bq = getUrlParameter("bq");
 
@@ -218,7 +233,7 @@
                     if ($.inArray(field_name, FILTER_FIELDS) >= 0) {
                         console.log("  this field is a filter: " + field_name);
 
-                        var my_filter_panel = $(".facets-container #panel-" + field_name + ".filter-panel");
+                        var my_filter_panel = $(".facets-container #panel-" + field_name);
                         var my_filter_panel_input = my_filter_panel.find(":input").filter(':visible:first');
                         search_string = "";
 
@@ -233,7 +248,7 @@
                                 my_filter_panel.find("input[data-field='" + search_string + "']").prop('checked', true);
                             } else if (my_filter_panel_input.is("select")) {
                                 console.log("  this is a select field");
-                                my_filter_panel.find("select[data-count='" + i + "']").val(search_string).attr('selected','selected');
+                                my_filter_panel.find("[value="+ search_string+"]").val(search_string).attr('selected','selected');
                             } else {
                                 // regular input field
                                 console.log("  this is a text input field");
@@ -411,6 +426,10 @@
 
                 console.log("this_filter_string: " + this_filter_string);
             });
+
+            // Parse dates
+
+
             console.log("query_str: " + query_str);
 
             //
@@ -455,6 +474,8 @@
                 }
             }
 
+            query_url_param += build_date_input();
+
             //
             // Last, load the page with the updated search params
             //
@@ -463,6 +484,18 @@
                 window.location = query_url_param;
             }
         });
+
+        function build_date_input() {
+            var from_value = $('#pub-date-from').val();
+            var to_value = $('#pub-date-to').val();
+
+            if (! from_value && ! to_value) {
+                return '';
+            }
+            from_value = from_value ? from_value : 1000;
+            to_value = to_value ? to_value : 9999;
+            return '&publication_date_range=' + from_value + '-' + to_value;
+        }
 
         // function to parse filter input fields
         function parse_filter_panel(id){
@@ -486,14 +519,14 @@
                     field_val = $this.val();
                     if (field_val && field_val.length > 0) {
                         field_name = $this.attr("id");
-                        console.log("found: " + field_name + ": " + field_val);
-                        output += "::" + field_val;
+                        console.log("found in select: " + field_name + ": " + field_val);
+                        output += "::" + field_val.toString().split(',').join('::');
                     }
                 } else {
                     field_val = $this.val();
                     if (field_val && field_val.length > 0) {
                         field_name = $this.attr("id");
-                        console.log("found: " + field_name + ": " + field_val);
+                        console.log("found in else: " + field_name + ": " + field_val);
                         output += "::" + field_val;
                     }
                 }

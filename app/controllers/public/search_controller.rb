@@ -426,7 +426,7 @@ class Public::SearchController < ApplicationController
       @query_string_array = []
       @facets = {}
 
-      RecentSearch::add(session.id, search_params)
+      RecentSearch::add(session.id&.public_id, search_params)
 
       if @search_type == "adv"
         # process_adv_search method can raise ArgumentError.

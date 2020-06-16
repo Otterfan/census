@@ -1,0 +1,51 @@
+<div class="col-lg-12 col-md-12 col-sm-12 adv-search-filter-row">
+
+  <div class="row adv-search-date-row">
+    <div class="col-md-12">
+      <span class="date-row-meta-label">Publication date</span>
+
+      <label for="pub-date-from">from</label>
+      <%= text_field_tag 'pub-date-from' %>
+
+      <label for="pub-date-to">to</label>
+      <%= text_field_tag 'pub-date-to' %>
+    </div>
+  </div>
+
+  <div class="adv-search-select-row row">
+    <div class="adv-search-filter col-md-4 col-sm-6" id="panel-text_type">
+      <%= label_tag 'text-type-select', 'Text Type' %>
+      <%= select_tag(:text_type, options_for_select(@unique_values["text_type"]), {include_blank: '---', class: 'form-control select_text_type select_field', "data-count": "1", multiple: true, id: 'text-type-select'}) %>
+    </div>
+
+    <div class="adv-search-filter col-md-4 col-sm-6" id="panel-material_type">
+      <%= label_tag 'material-type-select', 'Material Type' %>
+      <%= select_tag(:text_type, options_for_select(@unique_values["material_type"]), {include_blank: '---', class: 'form-control select_text_type select_field', "data-count": "1", multiple: true, id: 'material_type-select'}) %>
+    </div>
+
+    <div class="adv-search-filter col-md-4 col-sm-6" id="panel-genre">
+      <%= label_tag 'genre-select', 'Genre' %>
+      <%= select_tag(:text_type, options_for_select(@unique_values["genre"]), {include_blank: '---', class: 'form-control select_text_type select_field', "data-count": "1", multiple: true, id: 'genre-select'}) %>
+    </div>
+
+  </div>
+
+  <div class="row adv-search-boolean-row">
+
+    <div id="panel-is_bilingual">
+      <div class="adv-search-filter col-md-4 col-sm-6">
+        <input type="checkbox" name="is_bilingual" id="is_bilingual" value="" data-field="true">
+        <label for="is_bilingual">Show only bilingual records</label>
+      </div>
+
+      <div class="adv-search-filter col-md-4 col-sm-6" id="panel-illustrations_noted">
+        <input type="checkbox" name="illustrations_noted" id="illustrations_noted" value="" data-field="true">
+        <label for="illustrations_noted">Show only records with noted illustrations</label>
+      </div>
+    </div>
+  </div>
+
+
+
+  <%= render 'advanced_search_form_submit' %>
+</div>

@@ -5,7 +5,7 @@ if (el) {
             sort_param = 'sort=' + sort_val,
             new_search = '';
 
-        var sort_input = document.querySelector('#sort');
+        var sort_input = document.querySelector('#select_sort_order');
         sort_input.value = sort_val;
 
         if (location.search.includes('sort=')) {

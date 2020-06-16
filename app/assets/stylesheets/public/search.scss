@@ -208,3 +208,23 @@ ul.facet-list-group li.facet-list-group-item button {
 .badge.badge-primary {
     background: #337ab7;
 }
+
+#panel-text_type {
+    padding-left: 0;
+}
+
+.adv-search-filter-row .row div:first-child {
+    padding-left: 0;
+}
+
+.adv-search-date-row, .adv-search-select-row,    {
+    margin: 1em 0;
+}
+
+.adv-search-boolean-row {
+    margin-top: 2em;
+}
+
+.adv-search-date-row input {
+    border: 1px solid #CCC;
+}
