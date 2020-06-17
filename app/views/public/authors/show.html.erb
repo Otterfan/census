@@ -1,4 +1,4 @@
-<%= javascript_include_tag 'https://cdn.plot.ly/plotly-1.2.0.min.js' %>
+<%= javascript_include_tag 'https://cdn.plot.ly/plotly-1.54.1.min.js' %>
 <% page_title(@author.full_name) %>
 <div class="container">
   <div class="row">
@@ -52,53 +52,101 @@
           <% end %>
         </ul>
       </div>
-      <div>
-        <h3 style="margin-bottom: 1em">Places of publication</h3>
+      <div class="places-map">
+        <h3>Places of publication</h3>
         <div id="map-contents" style=""></div>
       </div>
+      <% if @author.translations_years.length > 2 %>
+        <div class="dates-histogram">
+          <h3>Dates of publication</h3>
+          <div id="histogram-contents" style=""></div>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
 
-<% @author.get_text_countries(@texts).each do |country| %>
-  <%= country %>
-<% end %>
-
 <script>
+    draw_map();
 
-    var data = [{
-        type: 'choropleth',
-        locations: [<%= country_code_list(@author) %>],
-        z: <%= country_count_list(@author) %>,
-        text: [<%= country_code_list(@author) %>],
-        showscale: false,
-        colorscale: [
-            [0, 'rgb(242,240,247)'], [0.2, 'rgb(218,218,235)'],
-            [0.4, 'rgb(188,189,220)'], [0.6, 'rgb(158,154,200)'],
-            [0.8, 'rgb(117,107,177)'], [1, 'rgb(84,39,143)']
-        ]
-    }];
+    <% if @author.translations_years.length > 2 %>
+    draw_histogram();
+    <% end %>
 
-    var layout = {
-        dragmode: false,
-        title: null,
-        showscale: false,
-        showlegend: false,
-        height: 200,
-        margin: {
-            l: 0,
-            r: 50,
-            b: 0,
-            t: 0,
-            pad: 4
-        },
-        geo: {
-            scope: 'world',
-            projection: {
-                type: 'robinson'
+    function draw_histogram() {
+        var x = [<%= years_list(@author) %>];
+
+        var bins = Math.max(...x) - Math.min(...x);
+        console.log('Will have '+ 20 + 'bins');
+        console.log(x);
+
+        var trace = {
+            x: x,
+            xbins: {
+                start: 0,
+                end: 4000,
+                size: 1,
             },
-            showscale: false
-        }
-    };
-    Plotly.plot('map-contents', data, layout, {showLink: false, displayModeBar: false});
+            type: 'histogram',
+            marker: {
+                color: "rgba(117, 107, 177, 0.7)",
+                line: {
+                    color: "rgba(188,189,220, .04)",
+                    width: 1
+                },
+            }
+        };
+        var data = [trace];
+        var layout = {
+            margin: {
+                l: 40,
+                r: 40,
+                b: 40,
+                t: 20,
+                pad: 4
+            },
+            height: 300,
+            dragmode: false,
+            bargroupgap: .1
+        };
+        Plotly.newPlot('histogram-contents', data, layout, {displayModeBar: false});
+    }
+
+    function draw_map() {
+        var data = [{
+            type: 'choropleth',
+            locations: [<%= country_code_list(@author) %>],
+            z: <%= country_count_list(@author) %>,
+            text: [<%= country_code_list(@author) %>],
+            showscale: false,
+            colorscale: [
+                [0, 'rgb(242,240,247)'], [0.4, 'rgb(218,218,235)'],
+                [0.6, 'rgb(188,189,220)'], [0.8, 'rgb(158,154,200)'],
+                [0.8, 'rgb(117,107,177)'], [1, 'rgb(84,39,143)']
+            ]
+        }];
+
+        var layout = {
+            dragmode: false,
+            title: null,
+            showscale: false,
+            showlegend: false,
+            height: 200,
+            margin: {
+                l: 0,
+                r: 50,
+                b: 0,
+                t: 0,
+                pad: 4
+            },
+            geo: {
+                scope: 'world',
+                projection: {
+                    type: 'robinson'
+                },
+                showscale: false
+            }
+        };
+        Plotly.plot('map-contents', data, layout, {showLink: false, displayModeBar: false});
+    }
 </script>

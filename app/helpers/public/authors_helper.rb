@@ -1,6 +1,6 @@
 module Public::AuthorsHelper
   def years_list(author)
-    author.translations_years.join ', '
+    author.translations_years.sort.join ', '
   end
 
   def earliest_translation(author)
@@ -9,6 +9,15 @@ module Public::AuthorsHelper
 
   def latest_translation(author)
     author.translations_years.max.to_i + 1
+  end
+
+  def translation_dates_x_axis(author)
+    earliest_year = author.translations_years.min.to_i
+    latest_year = author.translations_years.min.to_i
+  end
+
+  def translation_dates_y_axis(author)
+
   end
 
   def country_code_list(author)
