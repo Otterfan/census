@@ -582,6 +582,18 @@ class Text < ApplicationRecord
       end
   end
 
+  def plural_display_text_type
+    if text_type === 'translation_part'
+      'Translations (part)'
+    elsif text_type === 'translation_book'
+      'Translations (volume)'
+    elsif text_type === 'study_part'
+      'Studies (part)'
+    else
+      'Studies (volume)'
+    end
+  end
+
   def searchable_is_special_issue
       is_special_issue ? 'special issue' : ''
   end

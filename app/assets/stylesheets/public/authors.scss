@@ -34,3 +34,26 @@
     margin-bottom: 2.5em;
 }
 
+.authors-texts {
+
+    .topic-author-greek, .display-dates, .domicile {
+        color: #556;
+    }
+
+    .topic-author-greek, .display-dates {
+        font-size: 28px;
+        margin: .25em 0;
+    }
+    h3.text-type {
+        font-size: 18px;
+        font-weight: 600;
+    }
+    .domicile {
+        font-size: 20px;
+        font-style: italic;
+        font-weight: bold;
+    }
+}
+
+
+
