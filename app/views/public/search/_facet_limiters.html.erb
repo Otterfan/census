@@ -2,6 +2,14 @@
   <% if @aggregations.present? %>
     <h3>Limit your search</h3>
 
+    <% if @aggregations.available_online.buckets.present? %>
+      <% @aggregations.available_online.buckets.each_with_index do |facet, index| %>
+        <% if facet["key"].present? %>
+          <%= render 'facet_container', facet_name: "available_online" %>
+        <% end %>
+      <% end %>
+    <% end %>
+
     <% if @aggregations.genre.buckets.present? %>
       <%= render 'facet_container', facet_name: "genre" %>
     <% end %>

@@ -215,7 +215,8 @@ class Text < ApplicationRecord
             :physical_description_clean,
             :note_clean,
             :searchable_is_special_issue,
-            :searchable_is_collected_volume
+            :searchable_is_collected_volume,
+            :available_online
         ],
         include: {
             text_citations: {
@@ -605,6 +606,13 @@ class Text < ApplicationRecord
 
   def searchable_is_collected_volume
     is_collected_volume ? 'collected volume' : ''
+  end
+
+  def available_online
+    if url.nil?
+      return ''
+    end
+    url.include?('http') ? 'available online' : ''
   end
 
 end

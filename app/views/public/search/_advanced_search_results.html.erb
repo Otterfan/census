@@ -6,7 +6,12 @@
   <% if @new_search %>
     <h3>Enter a search query</h3>
   <% else %>
-    <%= render 'search_results_list' %>
+    <div class="col-lg-3 col-md-3 col-sm-6">
+      <%= render 'facet_limiters' %>
+    </div>
+    <div class="col-lg-9 col-md-9 col-sm-6">
+      <%= render 'search_results_list' %>
+    </div>
   <% end %>
 </div>
 <!-- END search results -->
