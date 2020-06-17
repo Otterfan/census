@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_12_135237) do
+ActiveRecord::Schema.define(version: 2020_06_17_195309) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,6 +109,8 @@ ActiveRecord::Schema.define(version: 2020_06_12_135237) do
     t.text "collection"
     t.text "section"
     t.text "subsection"
+    t.integer "sort_pages"
+    t.index ["sort_pages"], name: "index_components_on_sort_pages"
     t.index ["text_id"], name: "index_components_on_text_id"
   end
 
@@ -311,12 +313,14 @@ ActiveRecord::Schema.define(version: 2020_06_12_135237) do
     t.boolean "is_special_issue"
     t.boolean "is_hidden", default: false
     t.boolean "is_collected_volume"
+    t.integer "sort_page_span"
     t.index ["country_id"], name: "index_texts_on_country_id"
     t.index ["journal_id"], name: "index_texts_on_journal_id"
     t.index ["language_id"], name: "index_texts_on_language_id"
     t.index ["original_greek_title"], name: "index_texts_on_original_greek_title"
     t.index ["section_id"], name: "index_texts_on_section_id"
     t.index ["sort_id"], name: "index_texts_on_sort_id"
+    t.index ["sort_page_span"], name: "index_texts_on_sort_page_span"
     t.index ["status_id"], name: "index_texts_on_status_id"
     t.index ["topic_author_id"], name: "index_texts_on_topic_author_id"
     t.index ["volume_id"], name: "index_texts_on_volume_id"

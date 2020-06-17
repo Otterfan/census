@@ -43,12 +43,12 @@ class Text < ApplicationRecord
   }
 
   after_commit {
-      if status.id == 2
-          puts "Text record '#{self.id}' was updated. Will now reindex."
-          __elasticsearch__.index_document
-      else
-          puts "Not updating unpublished record"
-      end
+    if status.id == 2
+      puts "Text record '#{self.id}' was updated. Will now reindex."
+      __elasticsearch__.index_document
+    else
+      puts "Not updating unpublished record"
+    end
 
   }
 
@@ -206,16 +206,16 @@ class Text < ApplicationRecord
             :journal_id, :volume_id, :sort_id
         ],
         methods: [
-          :authors_names,
-          :sort_title,
-          :original_clean,
-          :collection_clean,
-          :editorial_annotation_clean,
-          :abstract_clean,
-          :physical_description_clean,
-          :note_clean,
-          :searchable_is_special_issue,
-          :searchable_is_collected_volume
+            :authors_names,
+            :sort_title,
+            :original_clean,
+            :collection_clean,
+            :editorial_annotation_clean,
+            :abstract_clean,
+            :physical_description_clean,
+            :note_clean,
+            :searchable_is_special_issue,
+            :searchable_is_collected_volume
         ],
         include: {
             text_citations: {
@@ -347,7 +347,7 @@ class Text < ApplicationRecord
     end
 
     authors_names = @authors.map.map(&:name)
-    translators_names = @translators.map {|person| person.name + ' (tr.)'}
+    translators_names = @translators.map { |person| person.name + ' (tr.)' }
     named_contributors = authors_names + translators_names
     named_contributors.join('; ')
   end
@@ -360,20 +360,20 @@ class Text < ApplicationRecord
   end
 
   def translators_names
-    translators_names = self.translators.map {|person| person.name + ' (tr.)'}
+    translators_names = self.translators.map { |person| person.name + ' (tr.)' }
     translators_names.join('; ')
   end
 
   def editors
-      unless @editors
-          get_contributors
-      end
-      @editors
+    unless @editors
+      get_contributors
+    end
+    @editors
   end
 
   def editors_names
-      editors_names = self.editors.map {|person| person.name + ' (ed.)'}
-      editors_names.join('; ')
+    editors_names = self.editors.map { |person| person.name + ' (ed.)' }
+    editors_names.join('; ')
   end
 
   def other_contributors
@@ -391,7 +391,7 @@ class Text < ApplicationRecord
       elsif citation.role == 'author'
         @authors << citation
       elsif citation.role == 'editor'
-          @editors << citation
+        @editors << citation
       else
         @other_contributors << citation
       end
@@ -414,7 +414,7 @@ class Text < ApplicationRecord
   end
 
   def isbns
-    @isbns ||= standard_numbers.select {|n| n.numtype = 'ISBN'}
+    @isbns ||= standard_numbers.select { |n| n.numtype = 'ISBN' }
   end
 
   def other_components
@@ -540,8 +540,8 @@ class Text < ApplicationRecord
 
   def calculate_sort_census_id
     census_id_parts = self.census_id.split('.')
-    major = census_id_parts[0].to_s.rjust(2,"0")
-    minor = census_id_parts[1].to_s.rjust(6,"0")
+    major = census_id_parts[0].to_s.rjust(2, "0")
+    minor = census_id_parts[1].to_s.rjust(6, "0")
     self.sort_census_id = major + minor
   end
 
@@ -571,15 +571,15 @@ class Text < ApplicationRecord
   end
 
   def display_text_type
-      if text_type === 'translation_part'
-          'Translation (part)'
-      elsif text_type === 'translation_book'
-          'Translation (volume)'
-      elsif text_type === 'study_part'
-          'Study (part)'
-      else
-          'Study (volume)'
-      end
+    if text_type === 'translation_part'
+      'Translation (part)'
+    elsif text_type === 'translation_book'
+      'Translation (volume)'
+    elsif text_type === 'study_part'
+      'Study (part)'
+    else
+      'Study (volume)'
+    end
   end
 
   def plural_display_text_type
@@ -594,8 +594,13 @@ class Text < ApplicationRecord
     end
   end
 
+  def display_page_span
+    page_mark = page_span.include?('-') || page_span.include?(',') ? 'pp' : 'p'
+    page_mark + '. ' + page_span
+  end
+
   def searchable_is_special_issue
-      is_special_issue ? 'special issue' : ''
+    is_special_issue ? 'special issue' : ''
   end
 
   def searchable_is_collected_volume

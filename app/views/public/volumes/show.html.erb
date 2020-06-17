@@ -56,7 +56,7 @@
               <ul class="list-group">
                 <% @referenced_texts.each do |text| %>
                   <li class="list-group-item referenced-record">
-                    <%= link_to (text.title.blank? ? "[No title]" : convert_underscores(text.title)), public_text_path(text) %>
+                    <span class="page-span"><%= text.display_page_span %></span> <%= link_to (text.title.blank? ? "[No title]" : convert_underscores(text.title)), public_text_path(text) %>
                     <div>
                       <% text.authors.each do |citation| %>
                         <%= citation.name %>

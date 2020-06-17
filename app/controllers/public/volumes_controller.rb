@@ -32,6 +32,6 @@ class Public::VolumesController < ApplicationController
     #redirect_to volumes_path(@volumes)
     @volume = Volume.find(params[:id])
     @citations = VolumeCitation.where(:volume_id => @volume.id)
-    @referenced_texts = Text.where(:volume_id => @volume.id).order(census_id: :desc)
+    @referenced_texts = Text.where(:volume_id => @volume.id).order(sort_page_span: :asc)
   end
 end
