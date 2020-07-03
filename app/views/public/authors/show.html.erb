@@ -72,7 +72,7 @@
           <% if @author.viaf %>
             <div class="auth-name row">
               <span class="auth-name__heading col-md-12">VIAF</span>
-              <span class="auth-name__value col-md-12"><%= link_to @author.viaf %></span>
+              <span class="auth-name__value col-md-12"><a href="<%= @author.viaf %>"><%= @author.viaf %></span>
             </div>
           <% end %>
         </div>
