@@ -128,9 +128,9 @@ class TextsController < ApplicationController
                                  standard_numbers_attributes: [:id, :value, :_destroy],
                                  components_attributes: [:id, :title, :pages, :note, :ordinal, :text_type,
                                                          :genre, :is_bilingual, :collection, :_destroy,
-                                                         component_citations_attributes: [:id, :name, :role, :first_name, :last_name, :controlled_name, :from_language_id, :to_language_id]
+                                                         component_citations_attributes: [:id, :name, :role, :first_name, :last_name, :controlled_name, :from_language_id, :to_language_id, :_destroy, :destroy]
                                  ],
-                                 component_citations_attributes: [:id, :name, :role, :first_name, :last_name, :_destroy, :controlled_name],
+                                 component_citations_attributes: [:id, :name, :role, :first_name, :last_name, :destroy, :controlled_name, :_destroy],
                                  other_text_languages_attributes: [:id, :language_id, :destroy],
                                  cross_references_attributes: [:id, :census_id, :destroy]
 

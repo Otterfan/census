@@ -42,7 +42,7 @@ main {
   .edit-form, .edit_volume {
 
     .checkbox label {
-        font-weight: bold;
+      font-weight: bold;
     }
 
     .input {
@@ -51,6 +51,10 @@ main {
 
     input[type=text], textarea {
       font-family: $main-font-stack;
+    }
+
+    .nested-fields .citation-fields {
+      clear: both;
     }
 
     .remove-link {
@@ -71,6 +75,13 @@ main {
       line-height: 16px;
     }
 
+   .remove-button {
+      float: right;
+     border: 1px groove gray;
+     background: #fff;
+      padding: .5em;
+    }
+
     textarea {
       height: 10em;
     }
@@ -84,6 +95,7 @@ main {
       margin-bottom: 1em;
       padding: 1em;
       margin-right: 1em;
+      margin-top: 2em;
 
       &.collapsed-li {
         margin-bottom: 0;
@@ -108,6 +120,7 @@ main {
         color: #cccccc;
         text-shadow: 1px 0 1px black;
       }
+
       .handle::after {
         content: '.. .. .. ..';
       }
@@ -120,6 +133,7 @@ main {
     .isbn-fields {
       background: #f1eef1;
     }
+
     .component-fields {
       cursor: move;
       background: #e1dedc;
@@ -203,9 +217,9 @@ main {
   fieldset.journal-fields {
     background: #f3f8a7;
 
-      label.boolean.optional {
-          font-weight: bold;
-      }
+    label.boolean.optional {
+      font-weight: bold;
+    }
   }
 
   fieldset.volume-fields {
@@ -294,6 +308,7 @@ main {
   .field {
     padding: .2rem;
   }
+
   .field-label {
     font-weight: bold;
     display: inline-block;
@@ -330,6 +345,7 @@ main {
     display: none;
   }
 }
+
 .public {
   .back-link {
     padding-top: 2rem;
@@ -357,5 +373,5 @@ a.skip:hover {
   background-color: #fff;
   padding: 8px 8px;
   color: #000;
-  z-index:1000;
+  z-index: 1000;
 }
