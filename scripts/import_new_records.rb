@@ -41,7 +41,7 @@ def main
 end
 
 def read_file
-    contents = File.read('/Users/benjaminflorin/RubymineProjects/census/data/authors-l-o-final.json')
+    contents = File.read('/Users/benjaminflorin/RubymineProjects/census/data/authors-p.json')
     JSON.parse(contents)
 end
 
@@ -49,7 +49,7 @@ def add_text_citation(full_name, role, ordinal)
 
     puts "\t\tAdding text citation #{full_name}"
 
-    citation = TextCitation.create()
+    citation = TextCitation.new
 
     if full_name
         if full_name.include?(', ')
@@ -81,9 +81,9 @@ def add_text(entry, needs_review_status)
     puts "Adding text #{entry['id']}"
     citation_ordinal = 0
 
-    text = Text.create()
+    text = Text.new
 
-    text.is_hidden = true
+    text.is_hidden = false
 
     text.status = needs_review_status
 
@@ -100,7 +100,7 @@ def add_text(entry, needs_review_status)
     puts "\tAdding text type..."
 
     if text.text_type.include?('study')
-        text.text_type = 'Study'
+        text.genre = nil
     elsif entry['genre']
         text.genre = entry['genre'] || ''
     else
@@ -113,7 +113,7 @@ def add_text(entry, needs_review_status)
 
     if entry['isbns']
         entry['isbns'].each do |isbn|
-            stdnum = StandardNumber.create
+            stdnum = StandardNumber.new
             stdnum.value = isbn
             stdnum.text = text
             stdnum.numtype = 'ISBN'
@@ -128,7 +128,9 @@ def add_text(entry, needs_review_status)
 
     puts "\tAdding authors names..."
 
-    text.authors_name_from_source = entry['responsibility']
+    if text.text_type.include?('translation')
+        text.authors_name_from_source = entry['responsibility']
+    end
 
     text.text_citations << add_text_citation(entry['responsibility'], 'author', citation_ordinal)
     citation_ordinal = citation_ordinal + 1
@@ -157,6 +159,9 @@ def add_text(entry, needs_review_status)
 
     text.sort_census_id = "04" + "%06d" % census_id_parts[1]
 
+    assign_material_type(text)
+    assign_genre(text)
+
     text
 end
 
@@ -164,7 +169,7 @@ def add_component(component_entry, text)
 
     puts "\t\tAdding component #{component_entry['title']}"
 
-    component = Component.create
+    component = Component.new
     component.title = component_entry['title'] || ''
 
     component.pages = component_entry['pages'] || ''
@@ -207,7 +212,7 @@ def add_topic_author(entry, topic_author_full)
     puts "\t\tAdding topic author #{topic_author_full}"
 
     topic_author_greek = entry['topic_author']['full_name']
-    topic_author = Person.create()
+    topic_author = Person.new
     topic_author.full_name = topic_author_full
     topic_author.greek_full_name = topic_author_greek
 
@@ -231,6 +236,50 @@ def add_journal(entry, text)
     if entry['journal_issue']
         text.issue_volume = entry['journal_issue']
     end
+end
+
+# @param [Text] text
+def assign_material_type(text)
+    downcased_original = text.original
+    if downcased_original.include?('thesis') || downcased_original.include?('dissertation')
+        text.material_type = 'Thesis/dissertation'
+    elsif downcased_original.include?('proceedings')
+        text.material_type = 'Conference proceedings'
+    elsif downcased_original.include?('online')
+        text.material_type = 'Online'
+    elsif downcased_original.include?('isbn')
+        text.material_type = 'Book'
+    elsif text.text_type.include?('book')
+        text.material_type = 'Book'
+    elsif text.text_type.include?('part')
+        text.material_type = 'Journal'
+    end
+end
+
+# @param [Text] text
+def assign_genre(text)
+
+    # Study? no genre
+    if text.text_type.include?('study')
+        text.genre = nil
+        return
+    end
+
+    # Already a genre? Go with it
+    return if text.genre
+
+    # Look in text for clues
+    downcased_original = text.original
+    if downcased_original.include?('poetry') || downcased_original.include?('poem')
+        text.genre = 'Poetry'
+    elsif downcased_original.include?('essay')
+        text.genre = 'Essay'
+    elsif downcased_original.include?('novel')
+        text.genre = 'Novel'
+    elsif downcased_original.include? ('short stor') || downcased_original.include?('stories')
+        text.genre = 'Short story'
+    end
+
 end
 
 # Run main code
