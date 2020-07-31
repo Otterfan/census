@@ -74,7 +74,7 @@
 
   <% if @text.url %>
     <dt>URL</dt>
-    <dd><a href="<%= @text.url %>"><%= @text.url %></a></dd>
+    <dd><a href="<%= @text.url %>" target="_blank" rel="noopener"><%= @text.url %></a></dd>
   <% end %>
 
   <%= metadata_row 'Genre', @text.genre %>
