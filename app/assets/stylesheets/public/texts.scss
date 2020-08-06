@@ -146,6 +146,16 @@ $metadata-spacing: .25em;
             }
         }
     }
+
+  .fa-external-link-alt {
+    font-size: .8em;
+    opacity: .8;
+    margin-left: .3em;
+  }
+
+  a.available-online-notice {
+    text-decoration: none;
+  }
 }
 
 .back-link, .back-link:active, .back-link:hover {
