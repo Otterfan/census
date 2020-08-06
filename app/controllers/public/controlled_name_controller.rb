@@ -13,8 +13,8 @@ class Public::ControlledNameController < ApplicationController
         js: false
     }
 
-    @names, @alpha_params = ControlledName.order(:controlled_name)
-                                .alpha_paginate(@letter, @alpha_params_options) {|name| name.controlled_name.downcase}
+    @names, @alpha_params = ControlledName.where.not(controlled_name: [nil, ""]).order(:sort_name)
+                                .alpha_paginate(@letter, @alpha_params_options) {|name| name.sort_name.downcase}
   end
 
   def show
