@@ -1,7 +1,7 @@
 require 'json'
 require 'pathname'
 
-TO_IMPORT = %w(4.368 4.374)
+TO_IMPORT = %w(4.371)
 
 def main
   TO_IMPORT.each do |census_id|
@@ -42,6 +42,7 @@ def build_component(json_record)
   component.title = json_record['title']
   component.pages = json_record['page_span']
   component.section = json_record['section']
+  component.collection = json_record['section']
   component.subsection = json_record['subsection']
   component.genre = json_record['genre']
   component.text_type = json_record['type']

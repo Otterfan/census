@@ -120,11 +120,6 @@ def add_text(entry, needs_review_status)
         end
     end
 
-    puts "\tAdding components..."
-
-    entry['components'].each do |component_entry|
-        text.components << add_component(component_entry, text)
-    end
 
     puts "\tAdding authors names..."
 
@@ -188,6 +183,8 @@ def add_component(component_entry, text)
         author = build_component_citation(component_entry['translator'], 'translator')
         component.component_citations << author
     end
+
+    component.is_bilingual = component_entry['is_bilingual']
 
     component
 end
