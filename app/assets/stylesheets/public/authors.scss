@@ -12,6 +12,34 @@
   }
 }
 
+.authors-nav__letter-list {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1em;
+  font-size: 24px;
+  color: #555;
+}
+
+.authors-nav__letter--selected {
+  font-weight: 800;
+}
+
+.authors-nav__letter a:hover {
+  text-decoration: none;
+}
+
+.authors-nav {
+  padding-top: 20px;
+}
+
+.authors-nav__author {
+  margin-bottom: 1em;
+}
+
+.authors-nav__author.foo.authors-nav__author--selected {
+  font-weight: bold;
+}
+
 .other-names {
   padding-top: 2em;
 }
@@ -48,12 +76,18 @@
         font-size: 18px;
         font-weight: 600;
     }
-    .domicile {
-        font-size: 20px;
-        font-style: italic;
-        font-weight: bold;
-    }
 }
 
+.author_heading {
+  margin-bottom: 1em;
+}
 
+.author-heading__dates, .author-heading__domicile {
+  font-size: 20px;
+}
+
+.author-heading__greek-name {
+  font-size: 28px;
+  color: #558;
+}
 

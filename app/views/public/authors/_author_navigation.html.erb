@@ -1,0 +1,15 @@
+<%# Left-hand navigation menu for authors page. %>
+<div class="authors-nav">
+
+  <%# List each author and link. %>
+  <% @nav_authors.each do |nav_author| %>
+    <div class="authors-nav__author foo <%= 'authors-nav__author--selected' if nav_author.id == @author.id %>">
+      <a href="<%= public_author_path nav_author %>">
+        <div class="authors-nav__full_name"><%= nav_author.full_name %></div>
+        <div class="authors-nav__greek_full_name"><%= nav_author.greek_full_name %></div>
+        <div class="authors-nav__dates"><%= display_dates nav_author %></div>
+      </a>
+    </div>
+  <% end %>
+
+</div>

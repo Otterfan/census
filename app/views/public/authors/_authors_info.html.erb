@@ -1,0 +1,45 @@
+<div class="authors-info">
+  <% if @author.loc_name || @author.greek_authority %>
+    <h2>Authority names</h2>
+    <div class="auth-names">
+      <% if @author.loc_name %>
+        <div class="auth-name row">
+          <div class="auth-name__heading col-md-12">Library of Congress</div>
+          <div class="auth-name__value col-md-12"><%= link_to @author.loc_name, @author.loc %></div>
+        </div>
+      <% end %>
+      <% if @author.greek_authority %>
+        <div class="auth-name row">
+          <span class="auth-name__heading col-md-12">National Library of Greece</span>
+          <span class="auth-name__value col-md-12"><%= @author.greek_authority %></span>
+        </div>
+      <% end %>
+      <% if @author.viaf %>
+        <div class="auth-name row">
+          <span class="auth-name__heading col-md-12">VIAF</span>
+          <span class="auth-name__value col-md-12"><a href="<%= @author.viaf %>"><%= @author.viaf %></span>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="authors-names">
+    <h3>Appears in CENSUS as</h3>
+    <ul class="appears-as-list">
+      <% @author.names_in_source.each do |name| %>
+        <li>
+          <a href="/public/search?type=adv&bq=(authors_name_from_source::<%= name %>)"><%= name %></a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="places-map">
+    <h3>Places of publication</h3>
+    <div id="map-contents" style=""></div>
+  </div>
+  <% if @author.translations_years.length > 2 %>
+    <div class="dates-histogram">
+      <h3>Dates of publication</h3>
+      <div id="histogram-contents" style=""></div>
+    </div>
+  <% end %>
+</div>

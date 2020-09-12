@@ -28,5 +28,7 @@ Rails.application.routes.draw do
     resources :journals, :only => [:index, :show]
     resources :authors, :only => [:index, :show]
     resources :controlled_name, :only => [:index, :show], :id => /.*/, :path => 'people'
+
+    get 'authors/letter(/:first_letter)', to: 'authors#letter'
   end
 end

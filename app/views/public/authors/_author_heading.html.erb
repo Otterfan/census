@@ -1,0 +1,14 @@
+<h1 class="col-md-12 author_heading">
+  <span class="author-heading__english-name"><%= @author.full_name %></span>
+
+  <span class="author-heading__dates"><%= display_dates @author %></span>
+
+  <% if @author.domicile %>
+    <span class="author-heading__domicile"><%= @author.domicile %></span>
+  <% end %>
+
+  <% unless @author.greek_full_name.blank? %>
+    <div class="author-heading__greek-name"><%= @author.greek_full_name %></div>
+  <% end %>
+
+</h1>
