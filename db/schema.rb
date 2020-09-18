@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_06_003620) do
+ActiveRecord::Schema.define(version: 2020_09_18_180158) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -318,6 +318,8 @@ ActiveRecord::Schema.define(version: 2020_08_06_003620) do
     t.boolean "is_hidden", default: false
     t.boolean "is_collected_volume"
     t.integer "sort_page_span"
+    t.date "greek_sort_date"
+    t.date "accessed_on"
     t.index ["country_id"], name: "index_texts_on_country_id"
     t.index ["journal_id"], name: "index_texts_on_journal_id"
     t.index ["language_id"], name: "index_texts_on_language_id"

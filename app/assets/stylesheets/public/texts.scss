@@ -156,6 +156,11 @@ $metadata-spacing: .25em;
   a.available-online-notice {
     text-decoration: none;
   }
+
+  .last-accessed-note {
+    font-size: .9em;
+    font-style: italic;
+  }
 }
 
 .back-link, .back-link:active, .back-link:hover {

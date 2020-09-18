@@ -72,9 +72,12 @@
 
   <%= metadata_row 'Title of issue', @text.issue_title %>
 
-  <% if @text.url %>
+  <% if @text.url && ! @text.url.empty? %>
     <dt>URL</dt>
-    <dd><a href="<%= @text.url %>" target="_blank" rel="noopener"><%= @text.url %> <i class="fas fa-external-link-alt"></i></a></dd>
+    <dd>
+      <a href="<%= @text.url %>" target="_blank" rel="noopener"><%= @text.url %> <i class="fas fa-external-link-alt"></i></a>
+      <% if @text.accessed_on %><div class="last-accessed-note">Last accessed <%= @text.accessed_on.strftime('%B %d, %Y') %></div><% end %>
+    </dd>
   <% end %>
 
   <%= metadata_row 'Genre', @text.genre %>

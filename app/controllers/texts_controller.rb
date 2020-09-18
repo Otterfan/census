@@ -115,7 +115,7 @@ class TextsController < ApplicationController
                                  :original_greek_edition, :original_greek_place_of_publication,
                                  :is_bilingual, :illustrations_noted, :format, :text_type, :material_type, :page_count,
                                  :series, :journal_title, :collection, :genre, :page_span,
-                                 :url, :sponsoring_organization, :seen_in_person,
+                                 :url, :accessed_on, :sponsoring_organization, :seen_in_person,
                                  :issue_title, :issue_editor, :abstract, :dai, :is_special_issue, :is_collected_volume,
                                  :authors_name_from_source, :editorial_annotation,
                                  :physical_description, :original_greek_collection,

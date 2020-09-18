@@ -1,283 +1,291 @@
 <%= simple_form_for @text do |f| %>
-    <% if text.census_id %>
-        <div class="census-id"><span class="census-id-label">Census ID</span>
-          <%= @text.census_id %>
-        </div>
-    <% else %>
-        <div>
-          <%= f.input :census_id, as: :string, label: 'Census ID', required: true %>
-        </div>
-    <% end %>
-    <div>
-      <%= f.association :section %>
+  <% if text.census_id %>
+    <div class="census-id"><span class="census-id-label">Census ID</span>
+      <%= @text.census_id %>
     </div>
-
+  <% else %>
     <div>
-      <%= f.input :text_type, :collection => [['(a) translation book', 'translation_book'], ['(b) translation part', 'translation_part'], ['(c) study book', 'study_book'], ['(d) study part', 'study_part']] %>
+      <%= f.input :census_id, as: :string, label: 'Census ID', required: true %>
     </div>
+  <% end %>
+  <div>
+    <%= f.association :section %>
+  </div>
 
-    <div>
-      <%= f.input :material_type, :collection => [['Book', 'Book'], ['Journal', 'Journal'], ['Online', 'Online'], ['Conference proceedings', 'Conference proceedings'], ['Thesis/dissertation', 'Thesis/dissertation'], ['Other', 'Other']] %>
-    </div>
+  <div>
+    <%= f.input :text_type, :collection => [['(a) translation book', 'translation_book'], ['(b) translation part', 'translation_part'], ['(c) study book', 'study_book'], ['(d) study part', 'study_part']] %>
+  </div>
 
-    <div>
-      <%= f.association :topic_author, :collection => topic_authors %>
-    </div>
+  <div>
+    <%= f.input :material_type, :collection => [['Book', 'Book'], ['Journal', 'Journal'], ['Online', 'Online'], ['Conference proceedings', 'Conference proceedings'], ['Thesis/dissertation', 'Thesis/dissertation'], ['Other', 'Other']] %>
+  </div>
 
-    <div>
-      <%= f.input :authors_name_from_source, label: 'Author\'s name as spelled in source' %>
-    </div>
+  <div>
+    <%= f.association :topic_author, :collection => topic_authors %>
+  </div>
 
-    <!-- Author’s name as it appears in this source -->
+  <div>
+    <%= f.input :authors_name_from_source, label: 'Author\'s name as spelled in source' %>
+  </div>
 
-    <div>
-      <%= f.input :title, as: :string, required: true %>
-    </div>
+  <!-- Author’s name as it appears in this source -->
 
-    <div>
-      <%= f.input :is_collected_volume, label: 'Collected volume?' %>
-    </div>
+  <div>
+    <%= f.input :title, as: :string, required: true %>
+  </div>
 
-    <div>
-      <a id="collapse-citations">
-        <button class="collapse-command" type="button">re-order citations</button>
-        <button class="open-command active" type="button">finish</button>
-      </a>
-      <h2>Citations</h2>
-    </div>
-    <div>
-      <div id='citations'>
-        <%= f.simple_fields_for :text_citations do |citation| %>
-            <%= render 'text_citation_fields', :f => citation %>
-        <% end %>
-        <div class='links'>
-          <%= link_to_add_association 'add citation', f, :text_citations %>
-        </div>
-      </div>
-    </div>
+  <div>
+    <%= f.input :is_collected_volume, label: 'Collected volume?' %>
+  </div>
 
-    <fieldset class="volume-fields">
-      <legend>
-        Volume
-      </legend>
-      <div>
-        <%= f.association :volume, :collection => Volume.order('sort_title asc') %>
-      </div>
-    </fieldset>
-
-    <div>
-      <%= f.input :series, as: :string %>
-    </div>
-
-    <!-- Sponsoring organization -->
-
-    <div>
-      <h2>Places of publication</h2>
-    </div>
-    <div>
-      <div id='publication_places'>
-        <%= f.simple_fields_for :publication_places do |place| %>
-            <%= render 'publication_place_fields', :f => place %>
-        <% end %>
-      </div>
+  <div>
+    <a id="collapse-citations">
+      <button class="collapse-command" type="button">re-order citations</button>
+      <button class="open-command active" type="button">finish</button>
+    </a>
+    <h2>Citations</h2>
+  </div>
+  <div>
+    <div id='citations'>
+      <%= f.simple_fields_for :text_citations do |citation| %>
+        <%= render 'text_citation_fields', :f => citation %>
+      <% end %>
       <div class='links'>
-        <%= link_to_add_association 'add place', f, :publication_places, :class => 'row', :data => {'association-insertion-node' => '#publication_places', 'association-insertion-method' => 'append'} %>
+        <%= link_to_add_association 'add citation', f, :text_citations %>
       </div>
     </div>
+  </div>
 
+  <fieldset class="volume-fields">
+    <legend>
+      Volume
+    </legend>
     <div>
-      <%= f.input :publisher, as: :string %>
+      <%= f.association :volume, :collection => Volume.order('sort_title asc') %>
     </div>
+  </fieldset>
 
-    <div>
-      <%= f.input :date, as: :string %>
-    </div>
+  <div>
+    <%= f.input :series, as: :string %>
+  </div>
 
-    <div>
-      <%= f.input :page_count, as: :string %>
-    </div>
+  <!-- Sponsoring organization -->
 
-    <div>
-      <%= f.input :page_span, as: :string %>
-    </div>
-
-    <div>
-      <%= f.input :is_bilingual, :collection => [['Yes', true], ['No', false]], label: 'Text is bilingual?' %>
-    </div>
-
-    <div>
-      <%= f.input :genre, as: :string %>
-    </div>
-
-    <div>
-      <%= f.input :illustrations_noted, :collection => [['Yes', true], ['No', false]], label: 'Illustrations noted?' %>
-    </div>
-
-    <div>
-      <%= f.input :url, as: :string, label: 'URL' %>
-    </div>
-
-    <fieldset class="journal-fields">
-      <legend>
-        Journal
-      </legend>
-      <div>
-        <%= f.input :is_special_issue, label: 'Special issue?' %>
-      </div>
-      <div>
-        <%= f.association :journal, :collection => Journal.order('sort_title asc') %>
-      </div>
-      <div>
-        <%= f.input :issue_volume, label: 'Volume' %>
-      </div>
-      <div>
-        <%= f.input :issue_number, label: 'Issue' %>
-      </div>
-      <div>
-        <%= f.input :issue_season_month, label: 'Season/month' %>
-      </div>
-      <div>
-        <%= f.input :issue_title, label: 'Special issue title' %>
-      </div>
-      <div>
-        <%= f.input :issue_editor, label: 'Special issue editor' %>
-      </div>
-    </fieldset>
-
-    <div>
-      <%= f.input :sponsoring_organization, as: :string %>
-    </div>
-
-    <div>
-      <%= f.input :collection %>
-    </div>
-
-    <div>
-      <h2>Standardized numbers</h2>
-    </div>
-    <div>
-      <div id='isbns'>
-        <%= f.simple_fields_for :standard_numbers do |number| %>
-            <%= render 'standard_number_fields', :f => number %>
-        <% end %>
-        <div class='links'>
-          <%= link_to_add_association 'add ISBN', f, :standard_numbers %>
-        </div>
-      </div>
-    </div>
-    <div>
-      <%= f.input :dai, label: 'DAI' %>
-    </div>
-
-    <div>
-      <a id="collapse-components">
-        <button class="collapse-command" type="button">change order</button>
-        <button class="open-command" type="button">finish</button>
-      </a>
-      <h2>Components</h2>
-    </div>
-    <div>
-      <ul id="components" class="list-group sortable-item">
-        <%= f.simple_fields_for :components do |component| %>
-            <%= render 'component_fields', :f => component %>
-        <% end %>
-      </ul>
-      <div class='links'>
-        <%= link_to_add_association 'add component', f, :components, :class => 'row', :data => {'association-insertion-node' => '#components', 'association-insertion-method' => 'append'} %>
-      </div>
-    </div>
-
-    <div>
-      <%= f.input :abstract %>
-    </div>
-
-    <div>
-      <%= f.input :editorial_annotation %>
-    </div>
-
-    <div>
-      <%= f.input :physical_description, label: '(Physical) description' %>
-    </div>
-
-    <div>
-      <%= f.input :note, label: 'Other notes' %>
-    </div>
-
-    <div>
-      <h2>Original Greek text</h2>
-    </div>
-    <div>
-      <%= f.input :source %>
-    </div>
-    <div>
-      <%= f.input :original_greek_title, label: 'Original Greek title' %>
-    </div>
-
-    <div>
-      <%= f.input :original_greek_collection, label: 'Original Greek collection' %>
-    </div>
-
-    <div>
-      <%= f.input :original_greek_place_of_publication, label: 'Place of publication of Greek original' %>
-    </div>
-    <div>
-      <%= f.input :original_greek_publisher, label: 'Original Greek publisher' %>
-    </div>
-    <div>
-      <%= f.input :original_greek_date, label: 'Original Greek date' %>
-    </div>
-
-    <div>
-      <h2>Other languages in text</h2>
-    </div>
-
-    <div id='other_text_languages'>
-      <%= f.simple_fields_for :other_text_languages do |language| %>
-          <%= render 'other_text_language_fields', :f => language %>
+  <div>
+    <h2>Places of publication</h2>
+  </div>
+  <div>
+    <div id='publication_places'>
+      <%= f.simple_fields_for :publication_places do |place| %>
+        <%= render 'publication_place_fields', :f => place %>
       <% end %>
     </div>
     <div class='links'>
-      <%= link_to_add_association 'add language', f, :other_text_languages, :class => 'row', :data => {'association-insertion-node' => '#other_text_languages', 'association-insertion-method' => 'append'} %>
+      <%= link_to_add_association 'add place', f, :publication_places, :class => 'row', :data => {'association-insertion-node' => '#publication_places', 'association-insertion-method' => 'append'} %>
     </div>
+  </div>
 
-    <div>
-      <h2>Special</h2>
-    </div>
-    <div>
-      <%= f.input :special_location_of_item %>
-    </div>
-    <div>
-      <%= f.input :special_source_of_info %>
-    </div>
+  <div>
+    <%= f.input :publisher, as: :string %>
+  </div>
 
+  <div>
+    <%= f.input :date, as: :string %>
+  </div>
+
+  <div>
+    <%= f.input :page_count, as: :string %>
+  </div>
+
+  <div>
+    <%= f.input :page_span, as: :string %>
+  </div>
+
+  <div>
+    <%= f.input :is_bilingual, :collection => [['Yes', true], ['No', false]], label: 'Text is bilingual?' %>
+  </div>
+
+  <div>
+    <%= f.input :genre, as: :string %>
+  </div>
+
+  <div>
+    <%= f.input :illustrations_noted, :collection => [['Yes', true], ['No', false]], label: 'Illustrations noted?' %>
+  </div>
+
+  <fieldset class="url-fields">
+    <legend>
+      URL
+    </legend>
     <div>
-      <h2>Cross References</h2>
+      <%= f.input :url, as: :string, label: 'URL' %>
     </div>
     <div>
-      <div id='cross_references'>
-        <%= f.simple_fields_for :cross_references do |cross_reference| %>
-            <%= render 'cross_reference_fields', :f => cross_reference %>
-        <% end %>
-      </div>
+      <%= f.input :accessed_on, label: 'Accessed on' %>
+    </div>
+  </fieldset>
+
+  <fieldset class="journal-fields">
+    <legend>
+      Journal
+    </legend>
+    <div>
+      <%= f.input :is_special_issue, label: 'Special issue?' %>
+    </div>
+    <div>
+      <%= f.association :journal, :collection => Journal.order('sort_title asc') %>
+    </div>
+    <div>
+      <%= f.input :issue_volume, label: 'Volume' %>
+    </div>
+    <div>
+      <%= f.input :issue_number, label: 'Issue' %>
+    </div>
+    <div>
+      <%= f.input :issue_season_month, label: 'Season/month' %>
+    </div>
+    <div>
+      <%= f.input :issue_title, label: 'Special issue title' %>
+    </div>
+    <div>
+      <%= f.input :issue_editor, label: 'Special issue editor' %>
+    </div>
+  </fieldset>
+
+  <div>
+    <%= f.input :sponsoring_organization, as: :string %>
+  </div>
+
+  <div>
+    <%= f.input :collection %>
+  </div>
+
+  <div>
+    <h2>Standardized numbers</h2>
+  </div>
+  <div>
+    <div id='isbns'>
+      <%= f.simple_fields_for :standard_numbers do |number| %>
+        <%= render 'standard_number_fields', :f => number %>
+      <% end %>
       <div class='links'>
-        <%= link_to_add_association 'add cross reference', f, :cross_references, :class => 'row', :data => {'association-insertion-node' => '#cross_references', 'association-insertion-method' => 'append'} %>
+        <%= link_to_add_association 'add ISBN', f, :standard_numbers %>
       </div>
     </div>
+  </div>
+  <div>
+    <%= f.input :dai, label: 'DAI' %>
+  </div>
 
-
-    <div>
-      <%= f.input :seen_in_person %>
+  <div>
+    <a id="collapse-components">
+      <button class="collapse-command" type="button">change order</button>
+      <button class="open-command" type="button">finish</button>
+    </a>
+    <h2>Components</h2>
+  </div>
+  <div>
+    <ul id="components" class="list-group sortable-item">
+      <%= f.simple_fields_for :components do |component| %>
+        <%= render 'component_fields', :f => component %>
+      <% end %>
+    </ul>
+    <div class='links'>
+      <%= link_to_add_association 'add component', f, :components, :class => 'row', :data => {'association-insertion-node' => '#components', 'association-insertion-method' => 'append'} %>
     </div>
+  </div>
 
-    <div>
-      <%= f.association :status %>
+  <div>
+    <%= f.input :abstract %>
+  </div>
+
+  <div>
+    <%= f.input :editorial_annotation %>
+  </div>
+
+  <div>
+    <%= f.input :physical_description, label: '(Physical) description' %>
+  </div>
+
+  <div>
+    <%= f.input :note, label: 'Other notes' %>
+  </div>
+
+  <div>
+    <h2>Original Greek text</h2>
+  </div>
+  <div>
+    <%= f.input :source %>
+  </div>
+  <div>
+    <%= f.input :original_greek_title, label: 'Original Greek title' %>
+  </div>
+
+  <div>
+    <%= f.input :original_greek_collection, label: 'Original Greek collection' %>
+  </div>
+
+  <div>
+    <%= f.input :original_greek_place_of_publication, label: 'Place of publication of Greek original' %>
+  </div>
+  <div>
+    <%= f.input :original_greek_publisher, label: 'Original Greek publisher' %>
+  </div>
+  <div>
+    <%= f.input :original_greek_date, label: 'Original Greek date' %>
+  </div>
+
+  <div>
+    <h2>Other languages in text</h2>
+  </div>
+
+  <div id='other_text_languages'>
+    <%= f.simple_fields_for :other_text_languages do |language| %>
+      <%= render 'other_text_language_fields', :f => language %>
+    <% end %>
+  </div>
+  <div class='links'>
+    <%= link_to_add_association 'add language', f, :other_text_languages, :class => 'row', :data => {'association-insertion-node' => '#other_text_languages', 'association-insertion-method' => 'append'} %>
+  </div>
+
+  <div>
+    <h2>Special</h2>
+  </div>
+  <div>
+    <%= f.input :special_location_of_item %>
+  </div>
+  <div>
+    <%= f.input :special_source_of_info %>
+  </div>
+
+  <div>
+    <h2>Cross References</h2>
+  </div>
+  <div>
+    <div id='cross_references'>
+      <%= f.simple_fields_for :cross_references do |cross_reference| %>
+        <%= render 'cross_reference_fields', :f => cross_reference %>
+      <% end %>
     </div>
+    <div class='links'>
+      <%= link_to_add_association 'add cross reference', f, :cross_references, :class => 'row', :data => {'association-insertion-node' => '#cross_references', 'association-insertion-method' => 'append'} %>
+    </div>
+  </div>
 
-    <%= f.button :submit %>
 
-    <script>
-        $('#show-handles').change(function () {
-            $('.handle').toggle();
-        });
-    </script>
+  <div>
+    <%= f.input :seen_in_person %>
+  </div>
+
+  <div>
+    <%= f.association :status %>
+  </div>
+
+  <%= f.button :submit %>
+
+  <script>
+      $('#show-handles').change(function () {
+          $('.handle').toggle();
+      });
+  </script>
 <% end %>
