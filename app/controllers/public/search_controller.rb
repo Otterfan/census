@@ -568,6 +568,7 @@ class Public::SearchController < ApplicationController
     @sort_options = [
         ['Relevance', 'score'],
         ['Title', 'sort-title'],
+        ['Author', 'author'],
         ['Date (oldest first)', 'date-oldest-first'],
         ['Date (newest first)', 'date-newest-first']
     ]
@@ -1028,6 +1029,8 @@ class Public::SearchController < ApplicationController
       [{sort_date: {order: 'desc'}}, '_score']
     when 'sort-title'
       [{'sort_title.keyword' => {order: 'asc'}}, '_score']
+    when 'author'
+      [{'authors_names.keyword' => {order: 'asc'}}, '_score']
     else
       ['_score']
     end
