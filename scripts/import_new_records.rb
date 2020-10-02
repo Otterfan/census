@@ -5,32 +5,15 @@ require 'pathname'
 def main
     entries = read_file
 
-    topic_author_full = ''
-
-    topic_author = nil
-
-    needs_review_status = Status.find(1)
-
-    section = Section.find(1)
-
     entries.each do |entry|
-        if entry['topic_author']['full_name'] != topic_author_full
-            topic_author_full = entry['topic_author']['full_name']
-            #topic_author = add_topic_author(entry, topic_author_full)
 
-            topic_author_just_name = topic_author_full[/[^(]+/].strip
+        text = Text.find_by_census_id(entry['id'])
 
-            topic_author = Person.find_by(topic_flag: true, full_name: topic_author_just_name)
-            unless topic_author
-                topic_author = Person.new
-                topic_author_full = topic_author_just_name
-            end
+        puts "\tAdding components..."
+
+        entry['components'].each do |component_entry|
+            text.components << add_component(component_entry, text)
         end
-
-        text = add_text(entry, needs_review_status)
-        text.topic_author = topic_author || nil
-
-        text.section = section
 
         unless text.save()
             puts.text.errors.messages
@@ -41,7 +24,7 @@ def main
 end
 
 def read_file
-    contents = File.read('/Users/benjaminflorin/RubymineProjects/census/data/authors-p.json')
+    contents = File.read('/Users/benjaminflorin/RubymineProjects/census/data/authors-s.json')
     JSON.parse(contents)
 end
 
@@ -120,6 +103,11 @@ def add_text(entry, needs_review_status)
         end
     end
 
+    puts "\tAdding components..."
+
+    entry['components'].each do |component_entry|
+        text.components << add_component(component_entry, text)
+    end
 
     puts "\tAdding authors names..."
 
@@ -178,6 +166,8 @@ def add_component(component_entry, text)
         author = build_component_citation(component_entry['author'], 'author')
         component.component_citations << author
     end
+
+    component.is_bilingual = component_entry['is_bilingual']
 
     if component_entry['translator']
         author = build_component_citation(component_entry['translator'], 'translator')
