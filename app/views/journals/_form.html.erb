@@ -4,6 +4,7 @@
   <div class="form-inputs">
     <%= f.input :title, as: :string %>
   </div>
+
   <div class="form-inputs">
     <% if @journal.new_record? %>
       <%= f.input :sort_title, as: :string, label: "Title used for sorting (Available to edit after this record has been created)", :disabled => true %>
@@ -11,20 +12,55 @@
       <%= f.input :sort_title, as: :string, label: "Title used for sorting (required)", :disabled => false %>
     <% end %>
   </div>
+
+  <div class="issn-list">
     <div class="form-inputs">
-      <%= f.input :issn, as: :string, label: "ISSN" %>
+      <%= f.input :issn, as: :string, label: "ISSNs" %>
     </div>
+
     <div class="form-inputs">
-      <%= f.association :place %>
+      <%= f.input :issn_1, as: :string, label: '&nbsp;'.html_safe %>
     </div>
+
     <div class="form-inputs">
-      <%= f.input :sponsoring_organization, label: "Sponsoring organization" %>
+      <%= f.input :issn_2, as: :string, label: '&nbsp;'.html_safe %>
     </div>
+
     <div class="form-inputs">
-      <%= f.input :indexed_range, label: "Range of volumes/issues indexed" %>
+      <%= f.input :issn_2, as: :string, label: '&nbsp;'.html_safe %>
     </div>
+  </div>
+
+  <div class="form-inputs">
+    <%= f.input :eissn, as: :string, label: 'EISSN' %>
+  </div>
+
+  <div class="form-inputs">
+    <%= f.association :place %>
+  </div>
+
+  <div class="form-inputs">
+    <%= f.input :sponsoring_organization, label: "Sponsoring organization" %>
+  </div>
+
+  <div class="form-inputs">
+    <%= f.input :indexed_range, label: "Range of volumes/issues indexed" %>
+  </div>
+
+  <div class="form-inputs">
+    <%= f.input :first_published, label: "Year of first publication" %>
+  </div>
+
+  <div class="form-inputs">
+    <%= f.input :url, label: "URL" %>
+  </div>
+
+  <div class="form-inputs">
+    <%= f.input :notes %>
+  </div>
 
   <div class="form-actions">
     <%= f.button :submit %>
   </div>
+
 <% end %>

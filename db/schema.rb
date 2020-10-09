@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_18_180158) do
+ActiveRecord::Schema.define(version: 2020_10_09_151013) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -144,6 +144,13 @@ ActiveRecord::Schema.define(version: 2020_09_18_180158) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "sponsoring_organization"
+    t.string "eissn"
+    t.string "issn_1"
+    t.string "issn_2"
+    t.string "issn_3"
+    t.string "url"
+    t.string "first_published"
+    t.text "notes"
     t.index ["place_id"], name: "index_journals_on_place_id"
   end
 

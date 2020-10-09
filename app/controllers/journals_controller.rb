@@ -71,13 +71,17 @@ class JournalsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_journal
-      @journal = Journal.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def journal_params
-      params.require(:journal).permit(:title, :sort_title, :place_id, :issn, :indexed_range, :sponsoring_organization)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_journal
+    @journal = Journal.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def journal_params
+    params.require(:journal)
+        .permit(:title, :sort_title, :place_id, :issn, :indexed_range,
+                :sponsoring_organization, :issn_1, :issn_2, :issn_3, :eissn,
+                :url, :first_published, :notes)
+  end
 end
