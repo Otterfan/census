@@ -1,65 +1,39 @@
 <% page_title @journal.title %>
 <div class="container">
 
+  <%# Letters at top of page for navigating %>
   <div class="row">
-    <div class="back-link"><%= link_to '◀ Browse all journals', public_journals_path %></div>
+    <div class="col-md-8">
+      <%= render 'journal_letter_list' %>
+    </div>
   </div>
-
   <div class="row">
-    <h3>
-      <% if @journal.title.present? %><cite><%= @journal.title %></cite>
-      <% else %>[No title]
-      <% end %></h3>
 
-    <div class="col-md-12">
+    <%# List of authors names in left navigation %>
+    <div class="col-md-3">
+<%# Left-hand navigation menu for authors page. %>
+      <%= render 'journal_navigation' %>
+    </div>
 
-      <div class="col-md-8">
-        <div class="metadata">
-          <dl>
-            <% if @journal.issn.present? %>
-              <dt>ISSN</dt>
-              <dd><%= @journal.issn %></dd>
-            <% end %>
+    <%# Main content block %>
+    <div class="col-md-9">
 
-            <% if @journal.place.present? %>
-              <dt class="field-label">Published</dt>
-              <dd><%= @journal.place.name %></dd>
-            <% end %>
+      <div class="row">
+        <h1 class="col-md-12 author_heading">
+          <span class="author-heading__english-name"><%= @journal.title %></span>
+        </h1>
+      </div>
 
+      <div class="row">
 
-            <% if @journal.sponsoring_organization.present? %>
-              <dt>Sponsoring organization</dt>
-              <dd><%= @journal.sponsoring_organization %></dd>
-            <% end %>
+        <div class="col-md-12">
 
-            <% if @journal.indexed_range.present? %>
-              <dt class="field-label">Indexed range</dt>
-              <dd><%= @journal.indexed_range %></dd>
-            <% end %>
-
-
-            <% if @referenced_texts.present? %>
-              <dt class="field-label">Appears in entries</dt>
-              <dd>
-                <ul class="list-group">
-                  <% @referenced_texts.each do |text| %>
-                    <li class="list-group-item referenced-record">
-                      <%= link_to (text.title.blank? ? "[No title]" : convert_underscores(text.title)), public_text_path(text) %>
-                      <% text.authors.each do |citation| %>
-                        <div class="referenced-record-author">
-                          <%= citation.name %>
-                        </div>
-                      <% end %>
-                    </li>
-                  <% end %>
-                </ul>
-              </dd>
-            <% end %>
-          </dl>
+          <div class="col-md-8">
+            <%= render 'journal_metadata' %>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
 
 </div>

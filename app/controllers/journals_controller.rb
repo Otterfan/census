@@ -27,7 +27,7 @@ class JournalsController < ApplicationController
   # POST /journals.json
   def create
     @journal = Journal.new(journal_params)
-    @journal.sort_title = journal_params[:title].sub(/^The +/, '').sub(/^An +/, '').sub(/^A +/, '')
+    @journal.sort_title = journal_params[:title].sub(/^The +/, '').sub(/^An +/, '').sub(/^A +/, '').sub(/^Το /, '')
 
     respond_to do |format|
       if @journal.save

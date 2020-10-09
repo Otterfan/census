@@ -1,0 +1,17 @@
+<div class="authors-nav__letter-list">
+
+  <%# Display all letters in the navigation list %>
+  <% all_letters = ('A'..'Z').to_a %>
+  <% all_letters.each do |letter| %>
+          <span class="authors-nav__letter <%= 'authors-nav__letter--selected' if letter == @navigation_list.first_letter %>">
+
+            <%# Only show links for letters that have content. Otherwise show normal text. %>
+            <% if @navigation_list.letters.include?(letter) %>
+              <a href="/public/journals/letter/<%= letter %>"><%= letter %></a>
+            <% else %>
+              <%= letter %>
+            <% end %>
+
+          </span>
+  <% end %>
+</div>

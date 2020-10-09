@@ -30,5 +30,7 @@ Rails.application.routes.draw do
     resources :controlled_name, :only => [:index, :show], :id => /.*/, :path => 'people'
 
     get 'authors/letter(/:first_letter)', to: 'authors#letter'
+    get 'journals/letter(/:first_letter)', to: 'journals#letter'
+
   end
 end

@@ -7,23 +7,7 @@ class Public::JournalsController < ApplicationController
 
   # GET /public/journals
   def index
-    default_letter = "A"
-    @letter = sanitize_letter(params[:letter], default_letter)
-
-    @alpha_params_options = {
-        bootstrap3: true,
-        include_all: false,
-        js: false
-    }
-
-    # @journals = Journal.order(:title).page(params[:page])
-
-    # the alpha_paginate gem has a bug where it fail if the field contains an empty or blank value.
-    # be sure to filter out empty field values!
-    @journals, @alpha_params = Journal
-                                   .where.not(title: [nil, ''])
-                                   .order(:title)
-                                   .alpha_paginate(@letter, @alpha_params_options){|journal| journal.sort_title.downcase}
+    redirect_to('/public/journals/letter/A')
   end
 
   # GET /public/journals/1
@@ -32,5 +16,22 @@ class Public::JournalsController < ApplicationController
     #redirect_to journals_path(@journals)
     @journal = Journal.find(params[:id])
     @referenced_texts = Text.where(:journal_id => @journal.id).order(census_id: :desc)
+
+    # First letter of author's last name
+    @first_letter = @journal.sort_title[0, 1]
+
+    @navigation_list = NavigationList.new(Journal, :title, @first_letter)
   end
+
+  # Go to the first author whose last name starts with
+  # first_letter
+  def letter
+    first_journal = Journal.where.not(title: [nil, '']) # filter out nils and blanks
+                       .where("sort_title LIKE ?", "#{params[:first_letter]}%")
+                       .order(:sort_title)
+                       .first
+
+    redirect_to(public_journal_path(first_journal))
+  end
+
 end
