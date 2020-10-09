@@ -19,18 +19,11 @@ class Public::AuthorsController < ApplicationController
     @translations = @author.texts
                  .where("text_type LIKE ?", "translation%")
                  .order(:sort_census_id)
-                 .page(params[:translations_page])
 
     # All studies about author
     @studies = @author.texts
                         .where("text_type LIKE ?", "study%")
                         .order(:sort_census_id)
-                        .page(params[:studies_page])
-
-    # All texts
-    @texts = @author.texts
-                   .order(:sort_census_id)
-                   .page(params[:texts_page])
 
     # First letter of author's last name
     @first_letter = @author.full_name[0, 1]

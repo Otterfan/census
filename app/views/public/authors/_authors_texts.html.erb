@@ -1,31 +1,7 @@
 <div class="authors-texts">
-  <div class="row">
-    <div class="pagination-stuff col-md-10">
-      <%= paginate texts, :param_name => pages_param %>
-    </div>
-  </div>
   <ul class="list-group" id="search-results">
 
-    <%# TODO retain text types from page to page %>
-    <% current_text_type = '' %>
-
-    <%# If this isn't the first page, it's probably the
-    continuation of a text type. %>
-    <% if texts.current_page != 1 %>
-      <% continued_notice = ' continued' %>
-    <% else %>
-      <% continued_notice = '' %>
-    <% end %>
-
     <% texts.order(:sort_census_id).each do |text| %>
-
-      <%# If the text type has changed, show a label for the new
-      type. %>
-      <% if current_text_type != text.text_type %>
-        <h3 class="text-type"><%= text.plural_display_text_type %><%= continued_notice %></h3>
-        <% continued_notice = '' %>
-      <% end %>
-      <% current_text_type = text.text_type %>
 
       <li class="list-group-item">
         <%= render 'shared/text_tombstone', text: text %>
@@ -33,9 +9,4 @@
 
     <% end %>
   </ul>
-  <div class="row">
-    <div class="pagination-stuff col-md-10">
-      <%= paginate texts, :param_name => pages_param %>
-    </div>
-  </div>
 </div>

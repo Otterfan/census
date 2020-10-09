@@ -25,9 +25,18 @@
 
       <%# Tab navigation %>
       <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active">
-          <a href="#texts" aria-controls="texts" role="tab" data-toggle="tab">Texts</a>
-        </li>
+
+        <% unless @translations.empty? %>
+          <li role="presentation" class="active">
+            <a href="#translations" aria-controls="texts" role="tab" data-toggle="tab">Translations</a>
+          </li>
+        <% end %>
+
+        <% unless @studies.empty? %>
+          <li role="presentation">
+            <a href="#studies" aria-controls="texts" role="tab" data-toggle="tab">Studies</a>
+          </li>
+        <% end %>
 
         <li role="presentation">
           <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a>
@@ -38,9 +47,17 @@
       <%# Tab content %>
       <div class="tab-content">
 
-        <div role="tabpanel" class="tab-pane active" id="texts">
-          <%= render partial: 'authors_texts', locals: {texts: @texts, pages_param: 'texts_page'} %>
-        </div>
+        <% unless @translations.empty? %>
+          <div role="tabpanel" class="tab-pane active" id="translations">
+            <%= render partial: 'authors_texts', locals: {texts: @translations} %>
+          </div>
+        <% end %>
+
+        <% unless @studies.empty? %>
+          <div role="tabpanel" class="tab-pane" id="studies">
+            <%= render partial: 'authors_texts', locals: {texts: @studies} %>
+          </div>
+        <% end %>
 
         <div role="tabpanel" class="tab-pane" id="profile">
           <%= render 'authors_info' %>
