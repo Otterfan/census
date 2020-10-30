@@ -5,15 +5,32 @@ require 'pathname'
 def main
     entries = read_file
 
+    topic_author_full = ''
+
+    topic_author = nil
+
+    needs_review_status = Status.find(1)
+
+    section = Section.find(1)
+
     entries.each do |entry|
+        if entry['topic_author']['full_name'] != topic_author_full
+            topic_author_full = entry['topic_author']['full_name']
+            #topic_author = add_topic_author(entry, topic_author_full)
 
-        text = Text.find_by_census_id(entry['id'])
+            topic_author_just_name = topic_author_full[/[^(]+/].strip
 
-        puts "\tAdding components..."
-
-        entry['components'].each do |component_entry|
-            text.components << add_component(component_entry, text)
+            topic_author = Person.find_by(topic_flag: true, full_name: topic_author_just_name)
+            unless topic_author
+                topic_author = Person.new
+                topic_author_full = topic_author_just_name
+            end
         end
+
+        text = add_text(entry, needs_review_status)
+        text.topic_author = topic_author || nil
+
+        text.section = section
 
         unless text.save()
             puts.text.errors.messages
@@ -24,7 +41,7 @@ def main
 end
 
 def read_file
-    contents = File.read('/Users/benjaminflorin/RubymineProjects/census/data/authors-s.json')
+    contents = File.read('/Users/benjaminflorin/RubymineProjects/census/data/authors-t-fixed.json')
     JSON.parse(contents)
 end
 

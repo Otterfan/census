@@ -72,11 +72,14 @@
 
   <%= metadata_row 'Title of issue', @text.issue_title %>
 
-  <% if @text.url && ! @text.url.empty? %>
+  <% if @text.url && !@text.url.empty? %>
     <dt>URL</dt>
     <dd>
-      <a href="<%= @text.url %>" target="_blank" rel="noopener"><%= @text.url %> <i class="fas fa-external-link-alt"></i></a>
-      <% if @text.accessed_on %><div class="last-accessed-note">Last accessed <%= @text.accessed_on.strftime('%B %d, %Y') %></div><% end %>
+      <a href="<%= @text.url %>" target="_blank" rel="noopener"><%= @text.url %>
+        <i class="fas fa-external-link-alt"></i></a>
+      <% if @text.accessed_on %>
+        <div class="last-accessed-note">Last accessed <%= @text.accessed_on.strftime('%B %d, %Y') %></div>
+      <% end %>
     </dd>
   <% end %>
 
@@ -102,9 +105,9 @@
 
   <%= metadata_row 'Original Greek date of publication', @text.original_greek_date %>
 
-  <%= metadata_row 'Editorial note', @text.editorial_annotation %>
+  <%= metadata_row 'Editorial note', convert_underscores @text.editorial_annotation %>
 
-  <%= metadata_row 'Physical description', @text.physical_description %>
+  <%= metadata_row 'Physical description', convert_underscores @text.physical_description %>
 
   <%= metadata_row 'Other note', @text.note %>
 
