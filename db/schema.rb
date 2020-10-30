@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_09_151013) do
+ActiveRecord::Schema.define(version: 2020_10_30_182338) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -140,7 +140,7 @@ ActiveRecord::Schema.define(version: 2020_10_09_151013) do
     t.string "issn"
     t.text "indexed_range"
     t.bigint "place_id"
-    t.text "sort_title"
+    t.text "sort_title", collation: "C"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "sponsoring_organization"
@@ -327,6 +327,7 @@ ActiveRecord::Schema.define(version: 2020_10_09_151013) do
     t.integer "sort_page_span"
     t.date "greek_sort_date"
     t.date "accessed_on"
+    t.string "proquest_num"
     t.index ["country_id"], name: "index_texts_on_country_id"
     t.index ["journal_id"], name: "index_texts_on_journal_id"
     t.index ["language_id"], name: "index_texts_on_language_id"

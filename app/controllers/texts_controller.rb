@@ -117,7 +117,7 @@ class TextsController < ApplicationController
                                  :series, :journal_title, :collection, :genre, :page_span,
                                  :url, :accessed_on, :sponsoring_organization, :seen_in_person,
                                  :issue_title, :issue_editor, :abstract, :dai, :is_special_issue, :is_collected_volume,
-                                 :authors_name_from_source, :editorial_annotation,
+                                 :authors_name_from_source, :editorial_annotation, :proquest_num,
                                  :physical_description, :original_greek_collection,
                                  :special_location_of_item, :special_source_of_info,
                                  :section_id, :status_id, :topic_author_id, :original,
