@@ -131,7 +131,7 @@ class Person < ApplicationRecord
     unless @names_in_source
       @names_in_source = []
       texts.each do |text|
-        if text.authors_name_from_source.count('a-zA-Z') > 0
+        if text.authors_name_from_source && text.authors_name_from_source.count('a-zA-Z') > 0
           @names_in_source << text.authors_name_from_source.strip
         end
       end
