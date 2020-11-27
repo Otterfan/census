@@ -610,6 +610,13 @@ class Text < ApplicationRecord
     url.include?('http') ? 'available online' : ''
   end
 
+  # Returns a message if the Census ID is invalid
+  def census_id_evaluation
+    if /\A\d\./.match(census_id).nil?
+      "Census ID must start with a digit"
+    end
+  end
+
 end
 
 #Text.import(force: true) # for auto sync model with elastic search

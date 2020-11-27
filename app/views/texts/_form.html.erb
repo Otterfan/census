@@ -1,13 +1,12 @@
 <%= simple_form_for @text do |f| %>
-  <% if text.census_id %>
-    <div class="census-id"><span class="census-id-label">Census ID</span>
-      <%= @text.census_id %>
-    </div>
-  <% else %>
-    <div>
-      <%= f.input :census_id, as: :string, label: 'Census ID', required: true %>
-    </div>
-  <% end %>
+
+  <div>
+    <%= f.input :census_id, as: :string, label: 'Census ID', required: true %>
+    <% if @text.census_id_evaluation %>
+    <div class="census-id-warning"><%= @text.census_id_evaluation %></div>
+    <% end %>
+  </div>
+
   <div>
     <%= f.association :section %>
   </div>
