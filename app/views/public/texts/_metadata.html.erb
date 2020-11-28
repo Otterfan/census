@@ -105,9 +105,9 @@
 
   <%= metadata_row 'Original Greek date of publication', @text.original_greek_date %>
 
-  <%= metadata_row 'Editorial note', convert_underscores @text.editorial_annotation %>
+  <%= metadata_row 'Editorial note', convert_underscores(@text.editorial_annotation) %>
 
-  <%= metadata_row 'Physical description', convert_underscores @text.physical_description %>
+  <%= metadata_row 'Physical description', convert_underscores(@text.physical_description) %>
 
   <%= metadata_row 'Other note', @text.note %>
 
