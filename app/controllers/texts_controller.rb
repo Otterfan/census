@@ -7,10 +7,26 @@ class TextsController < ApplicationController
   # GET /texts
   # GET /texts.json
   def index
-    if current_user.user_type != 'viewer'
-      @texts = Text.order(:sort_census_id).page(params[:page])
+
+    # Sort order
+    if params['sort'] === 'newest'
+      sort_order = 'created_at DESC'
+      @sort = :newest
+    elsif params['sort'] === 'oldest'
+      sort_order = 'created_at ASC'
+      @sort = :oldest
+    elsif params['sort'] === 'last-modified'
+      @sort = :last_modified
+      sort_order = 'updated_at DESC'
     else
-      @texts = Text.where.not('is_hidden').order(:sort_census_id).page(params[:page])
+      @sort = :census_id
+      sort_order = :sort_census_id
+    end
+
+    if current_user.user_type != 'viewer'
+      @texts = Text.order(sort_order).page(params[:page])
+    else
+      @texts = Text.where.not('is_hidden').order(sort_order).page(params[:page])
     end
   end
 

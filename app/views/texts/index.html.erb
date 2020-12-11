@@ -1,26 +1,62 @@
 <div class="row">
-  <div class="pagination-stuff col-md-10">
+  <div class="pagination-stuff col-md-8">
     <%= paginate @texts %>
   </div>
+  <div class="sort-selector col-md-2">
+    <form class="form-horizontal">
+      <label for="text-sorter">Sort</label>
+      <select id="select_sort_order" class="form-control" name="order">
+        <option <%= 'selected="true"' if @sort == :census_id %>  >census id</option>
+        <option <%= 'selected="true"' if @sort == :newest %> >newest</option>
+        <option <%= 'selected="true"' if @sort == :oldest %> >oldest</option>
+        <option value="last-modified" <%= 'selected="true"' if @sort == :last_modified %> >last modified</option>
+      </select>
+    </form>
+  </div>
   <div class="new-thing col-md-2">
-    <%= link_to  '<button class="btn btn-defaul btn-success">+ Add a new text</button>'.html_safe, new_text_path %>
+    <%= link_to '<button class="btn btn-defaul btn-success">+ Add a new text</button>'.html_safe, new_text_path %>
   </div>
 </div>
 <div class="row">
   <div class="col-md-12">
     <% texts_by_author(@texts).each do |author| %>
-        <h3><%= author[:author] %></h3>
-        <ul class="list-group">
-          <% author[:texts].each do |text| %>
-              <li class="<%= text.status.code %> list-group-item">
-                <span class="census-id"><%= text.census_id %></span>
-                <%= link_to text.title, edit_text_path(text) %>
-                <span class="<%= text.status.name %> badge"><%= text.status.name %></span>
-              </li>
-          <% end %>
-        </ul>
+      <h3><%= author[:author] %></h3>
+      <ul class="list-group">
+        <% author[:texts].each do |text| %>
+          <li class="<%= text.status.code %> list-group-item">
+            <span class="census-id"><%= text.census_id %></span>
+            <%= link_to text.title, edit_text_path(text) %>
+            <span class="<%= text.status.name %> badge"><%= text.status.name %></span>
+          </li>
+        <% end %>
+      </ul>
     <% end %>
 
     <%= paginate @texts %>
   </div>
 </div>
+<script>
+    var el = document.querySelector('#select_sort_order');
+    if (el) {
+        el.addEventListener("change", function () {
+            var sort_val = document.querySelector('#select_sort_order').value,
+                sort_param = 'sort=' + sort_val,
+                new_search = '';
+
+            var sort_input = document.querySelector('#select_sort_order');
+            sort_input.value = sort_val;
+
+            if (location.search.includes('sort=')) {
+                new_search = location.search.replace(/sort=[^&$]*/i, sort_param);
+            } else {
+                new_search = location.search.concat('&', sort_param)
+            }
+
+            if (new_search.includes('page=')) {
+                new_search = location.search.replace(/page=[^&$]*&?/i, '');
+            }
+
+            location.search = new_search
+        });
+    }
+</script>

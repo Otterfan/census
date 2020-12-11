@@ -535,10 +535,17 @@ class Text < ApplicationRecord
   end
 
   def calculate_sort_census_id
-    census_id_parts = self.census_id.split('.')
-    major = census_id_parts[0].to_s.rjust(2, "0")
-    minor = census_id_parts[1].to_s.rjust(6, "0")
-    self.sort_census_id = major + minor
+    section_id, text_id = self.census_id.split('.')
+
+    text_major, text_minor = text_id.split('-')
+
+    text_minor ||= 0
+
+    major = section_id.to_s.rjust(2, "0")
+    text_major = text_major.to_s.rjust(6, "0")
+    text_minor = text_minor.to_s.rjust(6, "0")
+
+    self.sort_census_id = major + text_major + text_minor
   end
 
   def original_greek_citation

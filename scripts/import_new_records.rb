@@ -41,7 +41,7 @@ def main
 end
 
 def read_file
-    contents = File.read('/Users/benjaminflorin/RubymineProjects/census/data/authors-t-fixed.json')
+    contents = File.read('/Users/benjaminflorin/RubymineProjects/census/data/authors-add-1-fixed.json')
     JSON.parse(contents)
 end
 
@@ -154,10 +154,6 @@ def add_text(entry, needs_review_status)
     if entry['journal_title']
         add_journal(entry, text)
     end
-
-    census_id_parts = text.census_id.split('.')
-
-    text.sort_census_id = "04" + "%06d" % census_id_parts[1]
 
     assign_material_type(text)
     assign_genre(text)

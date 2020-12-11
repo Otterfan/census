@@ -30,6 +30,14 @@ namespace :census do
 
         puts "All done now!"
     end
+
+    desc "Touch all records"
+    task save_all_records: :environment do
+      Text.find_each do |text|
+        text.save
+        sleep(0.1)
+      end
+    end
 end
 
 def extract_sort_page(page_span)
