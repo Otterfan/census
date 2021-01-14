@@ -23,10 +23,9 @@
       <h3><%= author[:author] %></h3>
       <ul class="list-group">
         <% author[:texts].each do |text| %>
-          <li class="<%= text.status.code %> list-group-item">
+          <li class="list-group-item">
             <span class="census-id"><%= text.census_id %></span>
             <%= link_to text.title, edit_text_path(text) %>
-            <span class="<%= text.status.name %> badge"><%= text.status.name %></span>
           </li>
         <% end %>
       </ul>
