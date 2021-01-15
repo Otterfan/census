@@ -23,6 +23,8 @@ class TextsController < ApplicationController
       sort_order = :sort_census_id
     end
 
+    @user = current_user
+
     if current_user.user_type != 'viewer'
       @texts = Text.order(sort_order).page(params[:page])
     else
@@ -104,6 +106,8 @@ class TextsController < ApplicationController
   # DELETE /texts/1
   # DELETE /texts/1.json
   def destroy
+    return if current_user.user_type === 'viewer'
+    @text = Text.find(params[:id])
     @text.destroy
     respond_to do |format|
       format.html { redirect_to texts_url, notice: 'Text was successfully destroyed.' }

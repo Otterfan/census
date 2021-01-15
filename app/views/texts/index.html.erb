@@ -26,7 +26,10 @@
           <li class="list-group-item">
             <span class="census-id"><%= text.census_id %></span>
             <%= link_to text.title, edit_text_path(text) %>
-          </li>
+            <% if @user.user_type != 'viewer' %>
+              <%= link_to 'Delete', text_path(text.id),
+                          data: {:confirm => 'Are you sure?'}, :method => :delete, :class => 'delete_button' %></li>
+            <% end %>
         <% end %>
       </ul>
     <% end %>
