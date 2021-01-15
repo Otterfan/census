@@ -26,15 +26,27 @@
       <%# Tab navigation %>
       <ul class="nav nav-tabs" role="tablist">
 
-        <% unless @translations.empty? %>
-          <li role="presentation" class="active">
-            <a href="#translations" aria-controls="texts" role="tab" data-toggle="tab">Translations</a>
+        <% unless @translations_book.empty? %>
+          <li role="presentation" class="<%= 'active' if @active_list == :translations_book %>">
+            <a href="#translations_book" aria-controls="texts" role="tab" data-toggle="tab">Translations (books)</a>
           </li>
         <% end %>
 
-        <% unless @studies.empty? %>
-          <li role="presentation">
-            <a href="#studies" aria-controls="texts" role="tab" data-toggle="tab">Studies</a>
+        <% unless @translations_part.empty? %>
+          <li role="presentation" class="<%= 'active' if @active_list == :translations_part %>">
+            <a href="#translations_part" aria-controls="texts" role="tab" data-toggle="tab">Translations (articles)</a>
+          </li>
+        <% end %>
+
+        <% unless @studies_book.empty? %>
+          <li role="presentation" class="<%= 'active' if @active_list == :studies_book %>">
+            <a href="#studies_book" aria-controls="texts" role="tab" data-toggle="tab">Studies (books)</a>
+          </li>
+        <% end %>
+
+        <% unless @studies_part.empty? %>
+          <li role="presentation" class="<%= 'active' if @active_list == :studies_part %>">
+            <a href="#studies_part" aria-controls="texts" role="tab" data-toggle="tab">Studies (articles)</a>
           </li>
         <% end %>
 
@@ -47,15 +59,31 @@
       <%# Tab content %>
       <div class="tab-content">
 
-        <% unless @translations.empty? %>
-          <div role="tabpanel" class="tab-pane active" id="translations">
-            <%= render partial: 'authors_texts', locals: {texts: @translations} %>
+        <% unless @translations_book.empty? %>
+          <div role="tabpanel" class="tab-pane <%= 'active' if @active_list == :translations_book %>" id="translations_book">
+            <h2 class="text-list-heading">Translations (books)</h2>
+            <%= render partial: 'authors_texts', locals: {texts: @translations_book} %>
           </div>
         <% end %>
 
-        <% unless @studies.empty? %>
-          <div role="tabpanel" class="tab-pane" id="studies">
-            <%= render partial: 'authors_texts', locals: {texts: @studies} %>
+        <% unless @translations_part.empty? %>
+          <div role="tabpanel" class="tab-pane <%= 'active' if @active_list == :translations_part %>" id="translations_part">
+            <h2 class="text-list-heading">Translations (articles)</h2>
+            <%= render partial: 'authors_texts', locals: {texts: @translations_part} %>
+          </div>
+        <% end %>
+
+        <% unless @studies_book.empty? %>
+          <div role="tabpanel" class="tab-pane <%= 'active' if @active_list == :studies_book %>" id="studies_book">
+            <h2 class="text-list-heading">Studies (books)</h2>
+            <%= render partial: 'authors_texts', locals: {texts: @studies_book} %>
+          </div>
+        <% end %>
+
+        <% unless @studies_part.empty? %>
+          <div role="tabpanel" class="tab-pane <%= 'active' if @active_list == :studies_part %>" id="studies_part">
+            <h2 class="text-list-heading">Studies (articles)</h2>
+            <%= render partial: 'authors_texts', locals: {texts: @studies_part} %>
           </div>
         <% end %>
 

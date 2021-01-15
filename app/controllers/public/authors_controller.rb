@@ -15,15 +15,35 @@ class Public::AuthorsController < ApplicationController
     @results_formatter = BriefResultFormatter.new([], [], [])
     @author = Person.find(params[:id])
 
-    # All translations by author
-    @translations = @author.texts
-                 .where("text_type LIKE ?", "translation%")
-                 .order(:sort_census_id)
+    @translations_book = @author.texts
+                             .where('text_type = ?', 'translation_book')
+                             .order(:sort_census_id)
 
-    # All studies about author
-    @studies = @author.texts
-                        .where("text_type LIKE ?", "study%")
+    @translations_part = @author.texts
+                             .where('text_type = ?', 'translation_part')
+                             .order(:sort_census_id)
+
+    @studies_book = @author.texts
+                        .where('text_type = ?', 'study_book')
                         .order(:sort_census_id)
+
+    @studies_part = @author.texts
+                        .where('text_type = ?', 'study_part')
+                        .order(:sort_census_id)
+
+
+    # Determine which list to show as active by deault.
+    @active_list = :profile
+    if !@translations_book.empty?
+      @active_list = :translations_book
+    elsif !@translations_part.empty?
+      @active_list = :translations_part
+    elsif !@studies_book.empty?
+      @active_list = :studies_book
+    elsif !@studies_part.empty?
+      @active_list = :studies_part
+    end
+
 
     # First letter of author's last name
     @first_letter = @author.full_name[0, 1]
