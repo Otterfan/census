@@ -1,9 +1,15 @@
 <%= simple_form_for @text do |f| %>
 
+  <div class="row">
+    <div class="col-sm-4 system-id">
+      <strong class="system-id__value">System ID:</strong>
+      <span class="system-id__value"><%= @text.id %></span>
+    </div>
+  </div>
+
   <div>
     <%= f.input :census_id, as: :string, label: 'Census ID', required: true %>
     <% if @text.census_id_evaluation %>
-    <div class="census-id-warning"><%= @text.census_id_evaluation %></div>
     <% end %>
   </div>
 

@@ -24,7 +24,7 @@
       <ul class="list-group">
         <% author[:texts].each do |text| %>
           <li class="list-group-item">
-            <span class="census-id"><%= text.census_id %></span>
+            <span class="census-id"><%= text.id %><% unless text.census_id.blank? %> (<%= text.census_id %>)<% end %> </span>
             <%= link_to text.title, edit_text_path(text) %>
             <% if @user.user_type != 'viewer' %>
               <%= link_to 'Delete', text_path(text.id),
