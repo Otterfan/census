@@ -35,7 +35,7 @@ class TextsController < ApplicationController
   # GET /texts/1
   # GET /texts/1.json
   def show
-    @text = Text.find_by_census_id(params[:id])
+    @text = Text.find(params[:id])
     redirect_to edit_text_path(@text)
   end
 
@@ -46,7 +46,7 @@ class TextsController < ApplicationController
 
   # GET /texts/1/edit
   def edit
-    @text = Text.find_by_census_id(params[:id])
+    @text = Text.find(params[:id])
 
     @comment = Comment.new
     @comment.text = @text
@@ -56,7 +56,7 @@ class TextsController < ApplicationController
 
   # POST /texts/1/original
   def update_original
-    text = Text.find_by_census_id(params[:id])
+    text = Text.find(params[:id])
     text.original = params[:original]
     text.save
   end
@@ -89,7 +89,7 @@ class TextsController < ApplicationController
       @comment = Comment.new
       @comment.text = @text
 
-      @text = Text.find_by_census_id(params[:id])
+      @text = Text.find(params[:id])
 
       @user = current_user
 
@@ -123,7 +123,7 @@ class TextsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_text
-    @text = Text.find_by_census_id(params[:id])
+    @text = Text.find(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

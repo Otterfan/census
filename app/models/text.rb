@@ -33,10 +33,6 @@ class Text < ApplicationRecord
   before_save :default_values
   before_save :calculate_sort_census_id
 
-  def to_param
-    census_id
-  end
-
   after_touch {
     puts "Text record '#{self.id}' was touched."
     #__elasticsearch__.index_document
@@ -535,6 +531,11 @@ class Text < ApplicationRecord
   end
 
   def calculate_sort_census_id
+    if self.census_id.blank?
+      self.sort_census_id = ''
+      return
+    end
+
     section_id, text_id = self.census_id.split('.')
 
     text_major, text_minor = text_id.split('-')

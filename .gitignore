@@ -23,3 +23,5 @@
 /scripts/reports/output/*
 
 /data
+
+import-data.json

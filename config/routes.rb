@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   get 'robots/show'
+  get 'texts/:id', to: 'texts#edit', constraints: { id: /\d\.\d+/ }
+
   resources :versions, :path => '/changes', :only => [:index, :show]
   resources :comments
   resources :volumes
@@ -23,7 +25,9 @@ Rails.application.routes.draw do
     resources :search, :only => [:index], to: "search#search"
     # get "search", to: "search#search"
     get 'recent-searches', to: "recent_search#index"
-    resources :texts, :only => [:index, :show], :id => /[\d\.\|\-]+/
+    get 'texts/:id', to: 'texts#show', constraints: { id: /\d\.\d+/ }
+
+    resources :texts, :only => [:index, :show]
     resources :volumes, :only => [:index, :show]
     resources :journals, :only => [:index, :show]
     resources :authors, :only => [:index, :show]
