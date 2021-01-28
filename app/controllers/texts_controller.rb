@@ -46,7 +46,11 @@ class TextsController < ApplicationController
 
   # GET /texts/1/edit
   def edit
-    @text = Text.find(params[:id])
+    if params[:census_id]
+      @text = Text.find_by_census_id(params[:census_id])
+    else
+      @text = Text.find(params[:id])
+    end
 
     @comment = Comment.new
     @comment.text = @text
@@ -123,7 +127,11 @@ class TextsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_text
-    @text = Text.find(params[:id])
+    if params[:census_id]
+      @text = Text.find_by_census_id(params[:census_id])
+    else
+      @text = Text.find(params[:id])
+    end
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

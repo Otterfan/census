@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get 'robots/show'
-  get 'texts/:id', to: 'texts#edit', constraints: { id: /\d\.\d+/ }
+  get 'texts/:census_id', to: 'texts#edit', constraints: { census_id: /\d\.\d+-?\d+/ }
+  get 'texts/:census_id/edit', to: 'texts#edit', constraints: { census_id: /\d\.\d+-?\d+/ }
 
   resources :versions, :path => '/changes', :only => [:index, :show]
   resources :comments
