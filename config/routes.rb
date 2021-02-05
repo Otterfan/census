@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'robots/show'
   get 'texts/:census_id', to: 'texts#edit', constraints: { census_id: /\d\.\d+-?\d+/ }
   get 'texts/:census_id/edit', to: 'texts#edit', constraints: { census_id: /\d\.\d+-?\d+/ }
+  get 'public/texts/:census_id', to: 'public/texts#show', constraints: { census_id: /\d\.\d+-?\d+/ }
 
   resources :versions, :path => '/changes', :only => [:index, :show]
   resources :comments
@@ -26,7 +27,7 @@ Rails.application.routes.draw do
     resources :search, :only => [:index], to: "search#search"
     # get "search", to: "search#search"
     get 'recent-searches', to: "recent_search#index"
-    get 'texts/:id', to: 'texts#show', constraints: { id: /\d\.\d+/ }
+    get 'texts/:id', to: 'texts#show'
 
     resources :texts, :only => [:index, :show]
     resources :volumes, :only => [:index, :show]

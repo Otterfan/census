@@ -312,11 +312,19 @@ class Text < ApplicationRecord
   end
 
   def next
-    Text.where(["sort_census_id > ?", sort_census_id]).order(sort_census_id: :asc).first
+    if sort_census_id.empty?
+      Text.where(["id > ?", id]).order(id: :asc).first
+    else
+      Text.where(["sort_census_id > ?", sort_census_id]).order(sort_census_id: :asc).first
+    end
   end
 
   def previous
-    Text.where(["sort_census_id < ?", sort_census_id]).order(sort_census_id: :desc).first
+    if sort_census_id.empty?
+      Text.where(["id < ?", id]).order(id: :desc).first
+    else
+      Text.where(["sort_census_id < ?", sort_census_id]).order(sort_census_id: :desc).first
+    end
   end
 
   def authors

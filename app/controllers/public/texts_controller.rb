@@ -15,8 +15,13 @@ class Public::TextsController < ApplicationController
     end
   end
 
-  # GET /public/texts/1
+  # GET /public/texts/1 or
+  # GET /public/texts/4.1234
   def show
-    @text = Text.find_by_census_id(params[:id])
+    if params[:census_id]
+      @text = Text.find_by_census_id(params[:census_id])
+    else
+      @text = Text.find(params[:id])
+    end
   end
 end

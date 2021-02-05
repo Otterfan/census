@@ -2,12 +2,20 @@
 <div class="row prev-next-row-top">
   <div class="col-sm-6">
     <% if @text.previous %>
-      <%= link_to "<< #{@text.previous.census_id}", @text.previous %>
+      <% if @text.census_id.empty? %>
+        <%= link_to "<< #{@text.previous.id}", @text.previous %>
+      <% else %>
+        <%= link_to "<< #{@text.previous.census_id}", @text.previous %>
+      <% end %>
     <% end %>
   </div>
   <div class="col-sm-6 next-record-col">
     <% if @text.next %>
-      <%= link_to "#{@text.next.census_id} >>", @text.next %>
+      <% if @text.census_id.empty? %>
+        <%= link_to "#{@text.next.id} >>", @text.next %>
+      <% else %>
+        <%= link_to "#{@text.next.census_id} >>", @text.next %>
+      <% end %>
     <% end %>
   </div>
 </div>
