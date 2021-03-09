@@ -431,8 +431,25 @@ class Public::SearchController < ApplicationController
       if @search_type == "adv"
         # process_adv_search method can raise ArgumentError.
         begin
-          @results = process_adv_search
-          @query_array = @results
+          @query_string_array = process_adv_search
+
+
+          # facet filter fields
+          # the add_facet_search method will add in a query_string hash to the @query_string_array array
+          add_facet_search(['available_online'], :available_online)
+          add_facet_search(['genre'], :genre)
+          add_facet_search(['material_type'], :material_type)
+          add_facet_search(['text_type'], :text_type)
+          add_facet_search(['topic_author.full_name'], :topic_author)
+          add_facet_search(['publication_places.place.name'], :publication_places)
+          add_facet_search(['other_text_languages.language.name'], :other_text_languages)
+          add_facet_search_date_range('publication_date_range', :publication_date_range)
+
+          @query_array = @query_string_array
+
+          puts "query_array"
+          puts @query_array
+
         rescue ArgumentError => e
           puts "\nCaught error: #{e.message}"
           puts "Setting @new_search = true\n\n"
@@ -443,6 +460,9 @@ class Public::SearchController < ApplicationController
       else
         # add the keyword hash to @query_string_array
         @query_string_array << generate_keyword_search_array(params[:keyword])
+
+        puts "query_string array "
+        puts @query_string_array
 
         # facet filter fields
         # the add_facet_search method will add in a query_string hash to the @query_string_array array
@@ -773,6 +793,8 @@ class Public::SearchController < ApplicationController
       # add @combined_query_hash to our @adv_search_array array of search objects
       @adv_search_array << @combined_query_hash
     end
+
+    puts @adv_search_array
 
     @adv_search_array
   end
