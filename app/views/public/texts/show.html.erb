@@ -28,7 +28,7 @@
             <li>Export</li>
             <li>Cite</li>
             <% if user_signed_in? %>
-              <%= link_to 'Edit', "/texts/#{@text.census_id}" %>
+              <%= link_to 'Edit', "/texts/#{@text.id}" %>
             <% end %>
           </ul>
         </div>
