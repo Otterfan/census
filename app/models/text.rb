@@ -189,7 +189,7 @@ class Text < ApplicationRecord
 
 
   def as_indexed_json(options = {})
-    as_json(
+    json_to_index = as_json(
         #only: [:title, :original, :journal_title, :publisher, :place_of_publication, :authors_name_from_source, :census_id],
         except: [
             :language_id, :topic_author_id,
@@ -309,6 +309,13 @@ class Text < ApplicationRecord
 
         }
     )
+
+    # Split pipe delimited genres (e.g. "Poetry | Prose") into
+    # individual components.
+    if json_to_index.key?("genre") && !json_to_index["genre"].nil?
+      json_to_index["genre"] = json_to_index["genre"].split(" | ")
+    end
+    json_to_index
   end
 
   def next

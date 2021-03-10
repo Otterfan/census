@@ -411,11 +411,19 @@ class Public::SearchController < ApplicationController
         @unique_values[field_s] = mapped_uniq_vals
       elsif field_s == "genre"
         # genre is a combination of top-level Text and components
+        all_fields = []
         unique_component_vals = Component.get_unique_values(field_s)
+        unique_component_vals.each do |genre_entry|
+          genres = genre_entry.split(' | ')
+          all_fields = all_fields + genres
+        end
 
         # merge the two genre lists and find all unique values between the two
-        all_unique_vals = (uniq_vals + unique_component_vals).uniq
-        @unique_values[field_s] = all_unique_vals.sort
+        uniq_vals.each do |genre_entry|
+          genres = genre_entry.split(' | ')
+          all_fields = all_fields + genres
+        end
+        @unique_values[field_s] = all_fields.uniq.sort
       else
         @unique_values[field_s] = uniq_vals
       end
