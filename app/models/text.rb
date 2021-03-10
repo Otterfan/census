@@ -32,6 +32,7 @@ class Text < ApplicationRecord
 
   before_save :default_values
   before_save :calculate_sort_census_id
+  before_save :calculate_sort_page_span
 
   after_touch {
     puts "Text record '#{self.id}' was touched."
@@ -562,6 +563,15 @@ class Text < ApplicationRecord
     text_minor = text_minor.to_s.rjust(6, "0")
 
     self.sort_census_id = major + text_major + text_minor
+  end
+
+  def calculate_sort_page_span()
+    if self.page_span
+      matches = self.page_span.match /\D*(\d+)/
+      unless matches.nil?
+        self.sort_page_span = matches[1].to_i
+      end
+    end
   end
 
   def original_greek_citation
