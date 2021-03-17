@@ -3,9 +3,7 @@
 
 <!-- BEGIN search results -->
 <div class="col-lg-12 col-md-12 col-sm-12">
-  <% if @new_search %>
-    <h3>Enter a search query</h3>
-  <% else %>
+  <% unless @new_search %>
     <div class="col-lg-3 col-md-3 col-sm-6">
       <%= render 'facet_limiters' %>
     </div>
