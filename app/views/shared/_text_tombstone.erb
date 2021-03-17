@@ -6,11 +6,7 @@
 
    is_search = is_search_result?(text)
 %>
-<% if (defined? show_topic_author) && show_topic_author == true && defined?(text.topic_author) %>
-  <div class="topic-author">
-    <%= render 'shared/topic_author', text: text %>
-  </div>
-<% end %>
+
 <div class="result-title">
   <%= tombstone_title_link(text, @results_formatter, params[:keyword]) %>
   <% if text.date && text.date != '' %>
@@ -33,6 +29,11 @@
     <%= additional_responsibilities_from_search(source.text_citations) %>
   <% end %>
 </div>
+<% if (defined? show_topic_author) && show_topic_author == true %>
+  <div class="topic-author">
+    Topic author: <%= render 'shared/topic_author', text: text %>
+  </div>
+<% end %>
 <% if source.volume %>
   <div>
     In <cite><%= link_to_volume_from_search source.volume %></cite><%= formatted_journal_issue(text) %>
