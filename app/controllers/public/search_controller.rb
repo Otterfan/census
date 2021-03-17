@@ -25,6 +25,7 @@ class Public::SearchController < ApplicationController
       :material_type,
       :genre,
       :journal_title,
+      :volume_title,
       :original_greek_title,
       :publication_place,
       :publisher,
@@ -344,7 +345,7 @@ class Public::SearchController < ApplicationController
     # AND, OR and NOT are used by lucene as logical operators. We need
     # to escape them
     ['AND', 'OR', 'NOT'].each do |word|
-      escaped_word = word.split('').map {|char| "\\#{char}"}.join('')
+      escaped_word = word.split('').map { |char| "\\#{char}" }.join('')
       str = str.gsub(/\s*\b(#{word.upcase})\b\s*/, " #{escaped_word} ")
     end
 
@@ -407,7 +408,7 @@ class Public::SearchController < ApplicationController
 
       # text_type field requires some label editing
       if field_s == "text_type"
-        mapped_uniq_vals = uniq_vals.map {|v| [format_label(v), v]}
+        mapped_uniq_vals = uniq_vals.map { |v| [format_label(v), v] }
         @unique_values[field_s] = mapped_uniq_vals
       elsif field_s == "genre"
         # genre is a combination of top-level Text and components
@@ -708,6 +709,8 @@ class Public::SearchController < ApplicationController
                 add_field_adv_search_filter(['genre.exact', 'components.genre.exact'], trimmed_search_string, @current_bool_op)
               when "journal_title"
                 add_field_adv_search(['journal.title', 'journal.title.en_folded', 'journal.title.el_folded', 'journal.sort_title', 'journal.sort_title.en_folded', 'journal.sort_title.el_folded'], clean_search_string, @current_bool_op)
+              when "volume_title"
+                add_field_adv_search(['volume.title', 'volume.title.en_folded', 'volume.title.el_folded'], clean_search_string, @current_bool_op)
               when "original_greek_title"
                 add_field_adv_search(['original_greek_title', 'original_greek_title.el_folded'], clean_search_string, @current_bool_op)
               when "publication_place"
@@ -832,7 +835,7 @@ class Public::SearchController < ApplicationController
 
   # Return a list of all symbols of search parameters used in the current request
   def used_params
-    SEARCH_PARAMS.reject {|key| !params[key].present?}
+    SEARCH_PARAMS.reject { |key| !params[key].present? }
   end
 
   # Return true if this is a search request
@@ -848,7 +851,7 @@ class Public::SearchController < ApplicationController
   def highlight_fields
     fields_to_highlight = SEARCH_PARAMS - used_params
     fields_obj = {}
-    fields_to_highlight.each {|field| fields_obj[field] = {}}
+    fields_to_highlight.each { |field| fields_obj[field] = {} }
     fields_obj
   end
 
