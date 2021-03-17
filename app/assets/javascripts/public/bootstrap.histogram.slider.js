@@ -1,7 +1,7 @@
 /*
     Adapted from https://www.jqueryscript.net/chart-graph/Histogram-Slider-Plugin-jQuery.html
 */
-; (function ($, window, document, undefined) {
+;(function ($, window, document, undefined) {
     var pluginName = "histogramSlider",
         dataKey = "plugin_" + pluginName;
 
@@ -11,11 +11,11 @@
 
         $("#" + sliderName + "-value").html(leftValue + " - " + rightValue);
 
-        if (options.earliestFieldId){
+        if (options.earliestFieldId) {
             $("#" + options.earliestFieldId).val(leftValue).change();
         }
 
-        if (options.latestFieldId){
+        if (options.latestFieldId) {
             $("#" + options.latestFieldId).val(rightValue).change();
         }
 
@@ -47,14 +47,14 @@
         });
     };
 
-    var getBinRange = function(rangePerBin, index, sliderMin) {
+    var getBinRange = function (rangePerBin, index, sliderMin) {
         var min = sliderMin + (rangePerBin * index),
             max = sliderMin + rangePerBin * (index + 1) - 1;
 
         return [min, max];
     };
 
-    var setOpacity = function(bin, val) {
+    var setOpacity = function (bin, val) {
         $(bin).css("opacity", val);
     };
 
@@ -62,7 +62,7 @@
         return parseInt(5 * v + 1);
     };
 
-    var calculateHeightRatio = function(bins, histogramHeight) {
+    var calculateHeightRatio = function (bins, histogramHeight) {
         var updatedHistogramHeight = histogramHeight;
         var maxValue = Math.max.apply(null, bins);
         var height = convertToHeight(maxValue);
@@ -159,19 +159,15 @@
                 //var scaledValue = parseInt(bins[i] * heightRatio),
                 var scaledValue = parseInt(bins[i] * ((self.options.height - 10) / maxValue)),
                     //height = convertToHeight(scaledValue),
-                    height = scaledValue + 10,
+                    height = scaledValue + 1,
                     inRangeOffset = parseInt(self.options.height - height),
                     outRangeOffset = -parseInt(self.options.height - height * 2);
-
-                //console.log("  bin elements: " + bins[i]);
-                //console.log("  heightRatio: " + heightRatio);
-                //console.log("  scaledValue: " + scaledValue);
-                //console.log("  height: " + height);
+                var barColor = (height === 1) ? ';background-color: #FFFFFF' : '';
 
                 var binHtml = "<div class='tooltip-slider' style='float:left!important;width:" + widthPerBin + "%;'>" +
                     toolTipHtml +
-                    "<div class='bin in-range " + inRangeClass + "' style='height:" + height + "px;bottom:-" + inRangeOffset + "px;position: relative;'></div>" +
-                    "<div class='bin out-of-range " + outRangeClass + "' style='height:" + height + "px;bottom:" + outRangeOffset + "px;position: relative;'></div>" +
+                    "<div class='bin in-range " + inRangeClass + "' style='height:" + height + "px;bottom:-" + inRangeOffset + "px;position: relative" + barColor + "'></div>" +
+                    "<div class='bin out-of-range " + outRangeClass + "' style='height:" + height + "px;bottom:" + outRangeOffset + "px;position: relative" + barColor + "'></div>" +
                     "</div>";
 
                 $("#" + histogramName).append(binHtml);
@@ -183,21 +179,21 @@
                 max: self.options.sliderRange[1],
                 value: self.options.selectedRange,
                 tooltip: "hide"
-            }).on('slide', function(event){
+            }).on('slide', function (event) {
                 updateHistogram(event.value, self.options.sliderRange[0], rangePerBin, histogramName, sliderName, self.options);
-            }).on('slideStop', function(event){
+            }).on('slideStop', function (event) {
                 updateHistogram(event.value, self.options.sliderRange[0], rangePerBin, histogramName, sliderName, self.options);
             });
 
-            if (self.options.showSelectedRange){
+            if (self.options.showSelectedRange) {
                 $("#" + sliderName).after("<p id='" + sliderName + "-value' class='selected-range'></p>");
             }
 
-            if (self.options.earliestFieldId){
+            if (self.options.earliestFieldId) {
                 $("#" + self.options.earliestFieldId).val(self.options.sliderRange[0]);
             }
 
-            if (self.options.latestFieldId){
+            if (self.options.latestFieldId) {
                 $("#" + self.options.latestFieldId).val(self.options.sliderRange[1]);
             }
 
