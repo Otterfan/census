@@ -33,6 +33,7 @@ class Text < ApplicationRecord
   before_save :default_values
   before_save :calculate_sort_census_id
   before_save :calculate_sort_page_span
+  before_save :calculate_sort_date
 
   after_touch {
     puts "Text record '#{self.id}' was touched."
@@ -571,6 +572,13 @@ class Text < ApplicationRecord
       unless matches.nil?
         self.sort_page_span = matches[1].to_i
       end
+    end
+  end
+
+  def calculate_sort_date
+    unless self.date.nil?
+      sort_date = self.date[/\d\d\d\d/]
+      self.sort_date = "#{sort_date}-01-01"
     end
   end
 
