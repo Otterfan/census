@@ -2,8 +2,17 @@ require 'uri'
 
 module Public::TextsHelper
   def metadata_row(label, value)
+    if label=='Place of publication'
+      puts "CHECKING"
+      puts value
+    end
+
     unless value && value != ''
       return
+    end
+
+    if label=='Place of publication'
+      puts "MADE IT HERE"
     end
 
     dt = "<dt>#{label}</dt>"

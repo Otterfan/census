@@ -93,6 +93,13 @@
 
   <%= metadata_row 'Material type', @text.material_type %>
 
+  <% if @text.publication_places && @text.publication_places.count > 0 %>
+    <dt><%= "Place".pluralize(@text.publication_places.count) %>  of publication</dt>
+    <% @text.publication_places.each do |pub_place| %>
+      <dd><%= pub_place.place.name %></dd>
+    <% end %>
+  <% end %>
+
   <%= metadata_row 'Place of publication', @text.place_of_publication %>
 
   <%= metadata_row 'Place of publication of Greek original', @text.original_greek_place_of_publication %>
