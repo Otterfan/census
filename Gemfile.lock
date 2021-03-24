@@ -243,6 +243,7 @@ GEM
     seed_dump (3.3.1)
       activerecord (>= 4)
       activesupport (>= 4)
+    select2-rails (4.0.13)
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
@@ -319,6 +320,7 @@ DEPENDENCIES
   redcarpet (~> 3.4.0)
   sass-rails (~> 5.0)
   seed_dump
+  select2-rails
   selenium-webdriver
   simple_form
   spring

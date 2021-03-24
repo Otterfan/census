@@ -13,15 +13,6 @@
       </div><!-- /btn-group -->
       <% end %>
 
-      <%# ignore the following #%>
-      <% if false %>
-      <div class="input-group-lg">
-        <%= select_tag(:text_type, options_for_select(@unique_values["text_type"]), {include_blank: 'Select a Text Type', class: 'form-control select_text_type select_field hidden'}) %>
-        <%= select_tag(:material_type, options_for_select(@unique_values["material_type"]), {include_blank: 'Select a Material Type', class: 'form-control select_material_type select_field hidden'}) %>
-        <%= select_tag(:genre, options_for_select(@unique_values["genre"]), {include_blank: 'Select a Genre', class: 'form-control select_genre select_field hidden'}) %>
-      </div>
-      <% end %>
-
       <label for="v_<%= num %>" class="sr-only">Search input field <%= num %></label>
       <input type="text" name="v_<%= num %>" id="v_<%= num %>" class="form-control input-field <% if num == 1 %>left-rounded-corners<% end %>">
       <div class="input-group-btn fields_dropdown field_name">

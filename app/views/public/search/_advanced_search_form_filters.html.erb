@@ -15,17 +15,17 @@
   <div class="adv-search-select-row row">
     <div class="adv-search-filter col-md-4 col-sm-6" id="panel-text_type">
       <%= label_tag 'text-type-select', 'Text Type' %>
-      <%= select_tag(:text_type, options_for_select(@unique_values["text_type"]), {include_blank: '---', class: 'form-control select_text_type select_field', "data-count": "1", multiple: true, id: 'text-type-select'}) %>
+      <%= select_tag(:text_type, options_for_select(@unique_values["text_type"], @selected_text_types), {class: 'form-control select_text_type select_field', "data-count": "1", multiple: true, id: 'text-type-select'}) %>
     </div>
 
     <div class="adv-search-filter col-md-4 col-sm-6" id="panel-material_type">
       <%= label_tag 'material-type-select', 'Material Type' %>
-      <%= select_tag(:text_type, options_for_select(@unique_values["material_type"]), {include_blank: '---', class: 'form-control select_text_type select_field', "data-count": "1", multiple: true, id: 'material_type-select'}) %>
+      <%= select_tag(:text_type, options_for_select(@unique_values["material_type"], @selected_material_types), {class: 'form-control select_text_type select_field', "data-count": "1", multiple: true, id: 'material_type-select'}) %>
     </div>
 
     <div class="adv-search-filter col-md-4 col-sm-6" id="panel-genre">
       <%= label_tag 'genre-select', 'Genre' %>
-      <%= select_tag(:text_type, options_for_select(@unique_values["genre"]), {include_blank: '---', class: 'form-control select_text_type select_field', "data-count": "1", multiple: true, id: 'genre-select'}) %>
+      <%= select_tag(:text_type, options_for_select(@unique_values["genre"], @selected_genres), { class: 'form-control select_text_type select_field', "data-count": "1", multiple: true, id: 'genre-select'}) %>
     </div>
 
   </div>
@@ -48,4 +48,17 @@
 
 
   <%= render 'advanced_search_form_submit' %>
+  <script>
+      $( "#text-type-select" ).select2({
+          placeholder: "Select text types"
+      });
+
+      $( "#material_type-select" ).select2({
+          placeholder: "Select material types"
+      });
+
+      $( "#genre-select" ).select2({
+          placeholder: "Select genres"
+      });
+  </script>
 </div>

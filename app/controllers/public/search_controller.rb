@@ -442,6 +442,10 @@ class Public::SearchController < ApplicationController
         begin
           @query_string_array = process_adv_search
 
+          parsed_query = AdvancedSearchQuery.new(params[:bq])
+          @selected_text_types = parsed_query.text_type
+          @selected_material_types = parsed_query.material_type
+          @selected_genres = parsed_query.genre
 
           # facet filter fields
           # the add_facet_search method will add in a query_string hash to the @query_string_array array
@@ -455,9 +459,6 @@ class Public::SearchController < ApplicationController
           add_facet_search_date_range('publication_date_range', :publication_date_range)
 
           @query_array = @query_string_array
-
-          puts "query_array"
-          puts @query_array
 
         rescue ArgumentError => e
           puts "\nCaught error: #{e.message}"
@@ -731,33 +732,8 @@ class Public::SearchController < ApplicationController
                 add_field_adv_search(['is_bilingual', 'components.is_bilingual'], clean_search_string, @current_bool_op)
               when "illustrations_noted"
                 add_field_adv_search(['illustrations_noted'], clean_search_string, @current_bool_op)
-
-                # when "component_title"
-                #   add_field_adv_search(['components.sort_title', 'components.sort_title.en_folded', 'components.sort_title.el_folded'], clean_search_string, @current_bool_op)
-                # when "people"
-                #   add_field_adv_search(PEOPLE_FIELDS, clean_search_string, @current_bool_op)
-                # when "component_citation_name"
-                #  add_field_adv_search(['components.component_citations.name', 'components.component_citations.name.en_folded', 'components.component_citations.name.el_folded'], clean_search_string, @current_bool_op)
-                # when "volume"
-                #   add_field_adv_search(['volume.title', 'volume.title.en_folded', 'volume.title.el_folded', 'volume.sort_title', 'volume.sort_title.en_folded', 'volume.sort_title.el_folded'], clean_search_string, @current_bool_op)
-                # when "original_greek_place_of_publication"
-                #   add_field_adv_search(['original_greek_place_of_publication', 'original_greek_place_of_publication.el_folded'], clean_search_string, @current_bool_op)
-                # when "original_greek_publisher"
-                #   add_field_adv_search(['original_greek_publisher', 'original_greek_publisher.el_folded'], clean_search_string, @current_bool_op)
-                # when "original_greek_collection"
-                #   add_field_adv_search(['original_greek_collection', 'original_greek_collection.el_folded'], clean_search_string, @current_bool_op)
-                # when "source"
-                #   add_field_adv_search(['source', 'source.en_folded', 'source.el_folded'], clean_search_string, @current_bool_op)
-                # when "issue_title"
-                #   add_field_adv_search(['issue_title', 'issue_title.el_folded', 'issue_title.en_folded'], clean_search_string, @current_bool_op)
-                # when "issue_editor"
-                #   add_field_adv_search(['issue_editor', 'issue_editor.el_folded', 'issue_editor.en_folded'], clean_search_string, @current_bool_op)
               when "authors_name_from_source"
                 add_field_adv_search(['authors_name_from_source'], clean_search_string, @current_bool_op)
-                # when "standard_numbers"
-                #   add_field_adv_search(['standard_numbers.value.exact'], clean_search_string, @current_bool_op)
-                # when "collection"
-                #   add_field_adv_search(['collection', 'collection.en_folded', 'collection.el_folded'], clean_search_string, @current_bool_op)
               else
 
               end
@@ -1077,5 +1053,14 @@ class Public::SearchController < ApplicationController
     else
       "#{params[:keyword]} - search"
     end
+  end
+
+  def extract_values(field)
+    # we allow empty adv search queries
+    if !params[:bq].present?
+      params[:bq] = ""
+    end
+
+
   end
 end

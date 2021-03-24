@@ -1,5 +1,4 @@
-Text.where('date IS NOT NULL').each do |text|
-  sort_date = text.date[/\d\d\d\d/]
-  text.sort_date = "#{sort_date}-01-01"
+Text.where.not(date: [nil]).where(sort_date: [nil]).each do |text|
   text.save()
+  sleep 0.25
 end

@@ -78,3 +78,4 @@ gem 'alphabetical_paginate', :git => 'https://github.com/BCDigSchol/alphabetical
 gem 'htmlentities'
 gem 'faraday'
 gem 'blazer'
+gem 'select2-rails'
