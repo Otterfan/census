@@ -209,7 +209,9 @@ class Text < ApplicationRecord
             :note_clean,
             :searchable_is_special_issue,
             :searchable_is_collected_volume,
-            :available_online
+            :available_online,
+            :original_collections,
+            :original_source
         ],
         include: {
             text_citations: {
@@ -526,6 +528,28 @@ class Text < ApplicationRecord
     else
       nil
     end
+  end
+
+  def original_collections
+    unless @original_collections
+      @original_collections = []
+
+      components.each do |component|
+        next if component.collection.blank?
+        next if @original_collections.include?(component.collection)
+
+        title = component.collection.gsub(/^[Ff]rom /,'')
+        title = title.gsub(/[^a-z0-9\s]/i,'')
+
+        @original_collections << title
+      end
+    end
+
+    @original_collections
+  end
+
+  def original_source
+    @original_collections + [original_greek_collection, original_greek_title]
   end
 
   # Pull out all unique and non-empty values for a column.

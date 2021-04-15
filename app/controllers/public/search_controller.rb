@@ -26,6 +26,7 @@ class Public::SearchController < ApplicationController
       :genre,
       :journal_title,
       :volume_title,
+      :collection_title,
       :original_greek_title,
       :publication_place,
       :publisher,
@@ -456,6 +457,7 @@ class Public::SearchController < ApplicationController
           add_facet_search(['topic_author.full_name'], :topic_author)
           add_facet_search(['publication_places.place.name'], :publication_places)
           add_facet_search(['other_text_languages.language.name'], :other_text_languages)
+          add_facet_search(['components.collection'], :original_source)
           add_facet_search_date_range('publication_date_range', :publication_date_range)
 
           @query_array = @query_string_array
@@ -712,6 +714,8 @@ class Public::SearchController < ApplicationController
                 add_field_adv_search(['journal.title', 'journal.title.en_folded', 'journal.title.el_folded', 'journal.sort_title', 'journal.sort_title.en_folded', 'journal.sort_title.el_folded'], clean_search_string, @current_bool_op)
               when "volume_title"
                 add_field_adv_search(['volume.title', 'volume.title.en_folded', 'volume.title.el_folded'], clean_search_string, @current_bool_op)
+              when "collection_title"
+                add_field_adv_search(['original_greek_collection', 'original_source'], clean_search_string, @current_bool_op)
               when "original_greek_title"
                 add_field_adv_search(['original_greek_title', 'original_greek_title.el_folded'], clean_search_string, @current_bool_op)
               when "publication_place"
