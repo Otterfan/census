@@ -98,6 +98,9 @@
     <% @text.publication_places.each do |pub_place| %>
       <dd><%= pub_place.place.name %></dd>
     <% end %>
+  <% elsif @text.journal.place && @text.journal.place %>
+    <dt>Place of publication</dt>
+    <dd><%= @text.journal.place.name %></dd>
   <% end %>
 
   <%= metadata_row 'Place of publication', @text.place_of_publication %>
