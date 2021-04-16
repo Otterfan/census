@@ -543,8 +543,8 @@ class Text < ApplicationRecord
         next if component.collection.blank?
         next if @original_collections.include?(component.collection)
 
-        title = component.collection.gsub(/^[Ff]rom /,'')
-        title = title.gsub(/[^a-z0-9\s]/i,'')
+        title = component.collection.gsub(/^[Ff]rom /, '')
+        title = title.gsub(/[^a-z0-9\s]/i, '')
 
         @original_collections << title
       end

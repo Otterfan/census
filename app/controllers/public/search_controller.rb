@@ -37,6 +37,8 @@ class Public::SearchController < ApplicationController
       :dai,
       :is_bilingual,
       :illustrations_noted,
+      :is_special_issue,
+      :is_collected_volume,
       :authors_name_from_source
   ]
 
@@ -742,6 +744,10 @@ class Public::SearchController < ApplicationController
                 add_field_adv_search(['dai'], clean_search_string, @current_bool_op)
               when "is_bilingual"
                 add_field_adv_search(['is_bilingual', 'components.is_bilingual'], clean_search_string, @current_bool_op)
+              when "is_special_issue"
+                add_field_adv_search(['is_special_issue'], clean_search_string, @current_bool_op)
+              when "is_collected_volume"
+                add_field_adv_search(['is_collected_volume'], clean_search_string, @current_bool_op)
               when "illustrations_noted"
                 add_field_adv_search(['illustrations_noted'], clean_search_string, @current_bool_op)
               when "authors_name_from_source"
