@@ -26,6 +26,11 @@
       <%= render 'facet_container', facet_name: "topic_author" %>
     <% end %>
 
+    <% if @aggregations.topic_author.buckets.present? %>
+      <%= render 'facet_container', facet_name: "translators" %>
+    <% end %>
+
+
     <% if @aggregations.publication_places.buckets.present? %>
       <%= render 'facet_container', facet_name: "publication_places" %>
     <% end %>

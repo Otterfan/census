@@ -24,8 +24,8 @@
   <% end %>
 </div>
 <div class="result-author">
-  <% if source.translators_names %>
-    <%= source.translators_names %>
+  <% if source.translators_names_string %>
+    <%= source.translators_names_string %>
   <% else %>
     <%= additional_responsibilities_from_search(source.text_citations) %>
   <% end %>

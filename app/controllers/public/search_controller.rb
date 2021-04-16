@@ -459,6 +459,7 @@ class Public::SearchController < ApplicationController
           add_facet_search(['other_text_languages.language.name'], :other_text_languages)
           add_facet_search(['components.collection'], :original_source)
           add_facet_search_date_range('publication_date_range', :publication_date_range)
+          add_facet_search(['translators_names'], :translators)
 
           @query_array = @query_string_array
 
@@ -486,6 +487,7 @@ class Public::SearchController < ApplicationController
         add_facet_search(['publication_places.place.name'], :publication_places)
         add_facet_search(['other_text_languages.language.name'], :other_text_languages)
         add_facet_search_date_range('publication_date_range', :publication_date_range)
+        add_facet_search(['translators_names'], :translators)
 
         @query_array = @query_string_array
       end
@@ -550,6 +552,12 @@ class Public::SearchController < ApplicationController
               "topic_author": {
                   terms: {
                       field: "topic_author.full_name.keyword",
+                      size: FACET_HITS_SIZE
+                  }
+              },
+              "translators": {
+                  terms: {
+                      field: "translators_names.keyword",
                       size: FACET_HITS_SIZE
                   }
               },
