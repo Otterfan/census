@@ -29,10 +29,15 @@
   </div>
 <% end %>
 <div class="result-author">
-  <% if source.translators_names_string %>
-    <%= source.translators_names_string %>
-  <% else %>
-    <%= additional_responsibilities_from_search(source.text_citations) %>
+  <% editors = source.editors_names.empty? ? editors_from_search(source.text_citations) : source.editors_names %>
+  <% unless editors.empty? %>
+    <%= 'Editor'.pluralize(editors.length) %>: <%= editors.join('; ') %>
+  <% end %>
+</div>
+<div class="result-author">
+  <% translators = source.translators_names.empty? ? translators_from_search(source.text_citations) : source.translators_names %>
+  <% unless translators.empty? %>
+    <%= 'Translator'.pluralize(translators.length) %>: <%= translators.join('; ') %>
   <% end %>
 </div>
 <% if source.volume %>

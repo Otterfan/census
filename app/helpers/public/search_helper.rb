@@ -3,7 +3,7 @@ module Public::SearchHelper
     translators = []
     text_citations.each do |citation|
       if citation.role === 'translator'
-        translators.push(citation.controlled_name + ' (tr.)')
+        translators.push(citation.controlled_name)
       end
     end
     translators.join('; ')
@@ -13,7 +13,7 @@ module Public::SearchHelper
     editors = []
     text_citations.each do |citation|
       if citation.role === 'editor'
-        editors.push(citation.controlled_name + ' (ed.)')
+        editors.push(citation.controlled_name)
       end
     end
     editors.join('; ')
@@ -24,11 +24,11 @@ module Public::SearchHelper
     translators = []
     text_citations.each do |citation|
       if citation.role === 'translator'
-        translators.push(citation.controlled_name + ' (tr.)')
+        translators.push(citation.controlled_name + ' (translator)')
       end
 
       if citation.role === 'editor'
-        editors.push(citation.controlled_name + ' (ed.)')
+        editors.push(citation.controlled_name + ' (editor)')
       end
     end
     names = translators + editors

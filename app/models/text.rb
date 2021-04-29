@@ -212,7 +212,8 @@ class Text < ApplicationRecord
             :available_online,
             :original_collections,
             :original_source,
-            :translators_names
+            :translators_names,
+            :editors_names
         ],
         include: {
             text_citations: {
@@ -371,13 +372,8 @@ class Text < ApplicationRecord
     @translators
   end
 
-  def translators_names_string
-    translators_names = self.translators.map { |person| person.name + ' (tr.)' }
-    translators_names.join('; ')
-  end
-
   def translators_names
-    self.translators.map { |person| person.name }
+    self.translators.map { |person| person.name.strip }
   end
 
   def editors
@@ -388,8 +384,7 @@ class Text < ApplicationRecord
   end
 
   def editors_names
-    editors_names = self.editors.map { |person| person.name + ' (ed.)' }
-    editors_names.join('; ')
+    self.editors.map { |person| person.name.strip }
   end
 
   def other_contributors
