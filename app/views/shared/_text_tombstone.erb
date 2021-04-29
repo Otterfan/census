@@ -23,6 +23,11 @@
       <i class="fas fa-external-link-alt"></i></a>
   <% end %>
 </div>
+<% if (defined? show_topic_author) && show_topic_author == true %>
+  <div class="topic-author">
+    Topic author: <%= render 'shared/topic_author', text: text %>
+  </div>
+<% end %>
 <div class="result-author">
   <% if source.translators_names_string %>
     <%= source.translators_names_string %>
@@ -30,11 +35,6 @@
     <%= additional_responsibilities_from_search(source.text_citations) %>
   <% end %>
 </div>
-<% if (defined? show_topic_author) && show_topic_author == true %>
-  <div class="topic-author">
-    Topic author: <%= render 'shared/topic_author', text: text %>
-  </div>
-<% end %>
 <% if source.volume %>
   <div>
     In <cite><%= link_to_volume_from_search source.volume %></cite><%= formatted_journal_issue(text) %>
