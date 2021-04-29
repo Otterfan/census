@@ -50,7 +50,7 @@
   <% if text.text_type.include? 'study' %>
     Study
   <% elsif text.genre %>
-    <span class="genre"><%= text.genre %></span>
+    <span class="genre"><%= text.genre.join(', ') %></span>
   <% else %>
     Study
   <% end %>
