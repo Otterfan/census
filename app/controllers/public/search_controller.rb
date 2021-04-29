@@ -744,12 +744,16 @@ class Public::SearchController < ApplicationController
                 add_field_adv_search(['dai'], clean_search_string, @current_bool_op)
               when "is_bilingual"
                 add_field_adv_search(['is_bilingual', 'components.is_bilingual'], clean_search_string, @current_bool_op)
+                @is_bilingual = true
               when "is_special_issue"
                 add_field_adv_search(['is_special_issue'], clean_search_string, @current_bool_op)
+                @is_special_issue = true
               when "is_collected_volume"
                 add_field_adv_search(['is_collected_volume'], clean_search_string, @current_bool_op)
+                @is_collected_volume = true
               when "illustrations_noted"
                 add_field_adv_search(['illustrations_noted'], clean_search_string, @current_bool_op)
+                @illustrations_noted = true
               when "authors_name_from_source"
                 add_field_adv_search(['authors_name_from_source'], clean_search_string, @current_bool_op)
               else
