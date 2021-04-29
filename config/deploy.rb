@@ -4,7 +4,7 @@ lock "3.14.1"
 # Change these
 server '165.227.211.50', port: 22, roles: [:web, :app, :db], primary: true
 
-set :repo_url, 'git@github.com:BCDigSchol/census.git'
+set :repo_url, 'git@github.com:Otterfan/census.git'
 set :application, 'census'
 set :user, 'rails'
 set :puma_threads, [4, 16]
