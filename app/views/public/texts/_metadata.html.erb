@@ -72,7 +72,7 @@
 
   <%= metadata_row 'Title of issue', @text.issue_title %>
 
-  <% if @text.url && !@text.url.empty? %>
+  <% unless @text.urls.empty? %>
     <dt>URL</dt>
     <dd>
       <a href="<%= @text.url %>" target="_blank" rel="noopener"><%= @text.url %>
@@ -81,6 +81,19 @@
         <div class="last-accessed-note">Last accessed <%= @text.accessed_on.strftime('%B %d, %Y') %></div>
       <% end %>
     </dd>
+  <% end %>
+
+  <% unless @text.urls.empty? %>
+    <dt><%= "URL".pluralize(@text.urls.count) %></dt>
+    <% @text.urls.each do |url| %>
+      <dd>
+        <a href="<%= url.value %>" target="_blank" rel="noopener"><%= url.value %>
+          <i class="fas fa-external-link-alt"></i></a>
+        <% if url.accessed_on %>
+          <div class="last-accessed-note">Last accessed <%= url.accessed_on.strftime('%B %d, %Y') %></div>
+        <% end %>
+      </dd>
+    <% end %>
   <% end %>
 
   <%= metadata_row 'Genre', @text.genre %>
@@ -98,7 +111,7 @@
     <% @text.publication_places.each do |pub_place| %>
       <dd><%= pub_place.place.name %></dd>
     <% end %>
-  <% elsif @text.journal.place && @text.journal.place %>
+  <% elsif @text.journal && @text.journal.place %>
     <dt>Place of publication</dt>
     <dd><%= @text.journal.place.name %></dd>
   <% end %>

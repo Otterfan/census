@@ -118,17 +118,19 @@
     <%= f.input :illustrations_noted, :collection => [['Yes', true], ['No', false]], label: 'Illustrations noted?' %>
   </div>
 
-  <fieldset class="url-fields">
-    <legend>
-      URL
-    </legend>
-    <div>
-      <%= f.input :url, as: :string, label: 'URL' %>
+  <div>
+    <h2>URLs</h2>
+  </div>
+  <div>
+    <div id='urls'>
+      <%= f.simple_fields_for :urls do |url| %>
+        <%= render 'url_fields', :f => url %>
+      <% end %>
+      <div class='links'>
+        <%= link_to_add_association button_tag('add URL', type: "button", class: "add-item-button"), f, :urls %>
+      </div>
     </div>
-    <div>
-      <%= f.input :accessed_on, label: 'Accessed on', :include_blank => true %>
-    </div>
-  </fieldset>
+  </div>
 
   <fieldset class="journal-fields">
     <legend>
@@ -174,7 +176,7 @@
         <%= render 'standard_number_fields', :f => number %>
       <% end %>
       <div class='links'>
-        <%= link_to_add_association 'add ISBN', f, :standard_numbers %>
+        <%= link_to_add_association button_tag('add ISBN', type: "button", class: "add-item-button"), f, :standard_numbers %>
       </div>
     </div>
   </div>

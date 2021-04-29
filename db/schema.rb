@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_30_182338) do
+ActiveRecord::Schema.define(version: 2021_04_29_180644) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -140,7 +140,7 @@ ActiveRecord::Schema.define(version: 2020_10_30_182338) do
     t.string "issn"
     t.text "indexed_range"
     t.bigint "place_id"
-    t.text "sort_title", collation: "C"
+    t.text "sort_title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "sponsoring_organization"
@@ -325,7 +325,6 @@ ActiveRecord::Schema.define(version: 2020_10_30_182338) do
     t.boolean "is_hidden", default: false
     t.boolean "is_collected_volume"
     t.integer "sort_page_span"
-    t.date "greek_sort_date"
     t.date "accessed_on"
     t.string "proquest_num"
     t.index ["country_id"], name: "index_texts_on_country_id"
@@ -338,6 +337,17 @@ ActiveRecord::Schema.define(version: 2020_10_30_182338) do
     t.index ["status_id"], name: "index_texts_on_status_id"
     t.index ["topic_author_id"], name: "index_texts_on_topic_author_id"
     t.index ["volume_id"], name: "index_texts_on_volume_id"
+  end
+
+  create_table "urls", force: :cascade do |t|
+    t.text "value"
+    t.date "accessed_on"
+    t.text "wayback"
+    t.bigint "text_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["text_id", "value"], name: "index_urls_on_text_id_and_value", unique: true
+    t.index ["text_id"], name: "index_urls_on_text_id"
   end
 
   create_table "users", force: :cascade do |t|

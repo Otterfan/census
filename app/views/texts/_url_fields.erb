@@ -1,0 +1,5 @@
+<div class='url-fields nested-fields'>
+  <%= link_to_remove_association "x", f, {:class => 'remove-link'} %>
+  <%= f.input :value, label: 'URL' , as: :string %>
+  <%= f.input :accessed_on, label: 'Accessed on', :include_blank => true %>
+</div>

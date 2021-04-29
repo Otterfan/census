@@ -24,7 +24,9 @@ class Text < ApplicationRecord
   has_many :publication_places, inverse_of: :text, :dependent => :delete_all
   has_many :places, :through => :publication_places, :class_name => 'Place'
 
-  accepts_nested_attributes_for :text_citations, :standard_numbers, :components, reject_if: :all_blank, allow_destroy: true
+  has_many :urls, inverse_of: :text, :dependent => :delete_all
+
+  accepts_nested_attributes_for :text_citations, :standard_numbers, :components, :urls, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :other_text_languages, reject_if: :all_blank, :allow_destroy => true
   accepts_nested_attributes_for :publication_places, reject_if: :all_blank, :allow_destroy => true
   accepts_nested_attributes_for :cross_references, reject_if: :all_blank, :allow_destroy => true
@@ -253,6 +255,9 @@ class Text < ApplicationRecord
                 }
             },
             languages: {
+                except: [:created_at, :updated_at]
+            },
+            urls: {
                 except: [:created_at, :updated_at]
             },
             topic_author: {
@@ -669,10 +674,7 @@ class Text < ApplicationRecord
   end
 
   def available_online
-    if url.nil?
-      return ''
-    end
-    url.include?('http') ? 'available online' : ''
+    urls.any? { |u| u.value.include?('http') } ? 'available online' : ''
   end
 
   # Returns a message if the Census ID is invalid

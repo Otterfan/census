@@ -160,7 +160,8 @@ class TextsController < ApplicationController
                                  ],
                                  component_citations_attributes: [:id, :name, :role, :first_name, :last_name, :destroy, :controlled_name, :_destroy],
                                  other_text_languages_attributes: [:id, :language_id, :destroy],
-                                 cross_references_attributes: [:id, :census_id, :destroy]
+                                 cross_references_attributes: [:id, :census_id, :destroy],
+                                 urls_attributes: [:id, :value, :accessed_on,:_destroy]
 
     )
   end
