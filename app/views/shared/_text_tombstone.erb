@@ -56,9 +56,9 @@
 <div>
   <% if text.text_type.include? 'study' %>
     Study
-  <% elsif text.genre %>
+  <% elsif text.genre && text.genre.kind_of?(Array) %>
     <span class="genre"><%= text.genre.join(', ') %></span>
-  <% else %>
-    Study
-  <% end %>
+  <% elsif text.genre %>
+    <span class="genre"><%= text.genre %></span>
+<% end %>
 </div>

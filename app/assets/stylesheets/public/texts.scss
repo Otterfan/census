@@ -3,149 +3,118 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import "bootstrap";
 
-$metadata-spacing: .25em;
+$metadata-spacing: 0;
 
 .public-show-text {
 
-    .text-heading {
+  .text-heading {
 
-        margin-bottom: 2em;
+    margin-bottom: 2em;
 
-        .text-type {
-            font-family: 'Noto Serif', serif;
-            font-size: 20px;
-        }
-
-        h2 {
-            font-size: 24px;
-        }
-
-        h3 {
-            font-weight: 600;
-            font-size: 30px;
-
-            .census-id {
-                font-weight: normal;
-                font-size: 20px;
-                margin-right: .4em;
-            }
-        }
+    .text-type {
+      font-family: 'Noto Serif', serif;
+      font-size: 20px;
     }
+
+    h2 {
+      font-size: 24px;
+    }
+
+    h3 {
+      font-weight: 600;
+      font-size: 30px;
+
+      .census-id {
+        font-weight: normal;
+        font-size: 20px;
+        margin-right: .4em;
+      }
+    }
+  }
 }
 
 // The original box should render on the right of the show
 // item page but on the top for small screens.
 .public-show-text .controls {
-    @extend .col-sm-2;
-    margin-bottom: 1em;
+  @extend .col-sm-2;
+  margin-bottom: 1em;
 
-    .panel {
-        background-color: hsl(36, 63%, 96%);
-        border-radius: 2px;
-        font-weight: 600;
+  .panel {
+    background-color: hsl(36, 63%, 96%);
+    border-radius: 2px;
+    font-weight: 600;
+  }
+
+  ul {
+    padding-left: 20px;
+    list-style: none;
+
+    .original-launcher {
     }
 
-    ul {
-        padding-left: 20px;
-        list-style: none;
-
-        .original-launcher {
-        }
-
-        li {
-            cursor: pointer;
-            margin-bottom: .5em
-        }
+    li {
+      cursor: pointer;
+      margin-bottom: .5em
     }
+  }
 }
 
 .public-show-text .metadata-div, .public-show-text .components {
-    @extend .col-sm-8;
+  @extend .col-sm-8;
 }
 
 .public {
-    .original-entry {
-        background-color: hsl(36, 63%, 96%);
-        box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
-        padding: 1em 1em;
-        font-family: 'Noto Serif', serif;
-        line-height: 1.4;
+  .original-entry {
+    background-color: hsl(36, 63%, 96%);
+    box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
+    padding: 1em 1em;
+    font-family: 'Noto Serif', serif;
+    line-height: 1.4;
+  }
+
+  .component-collection-title {
+    font-weight: 600;
+    margin-bottom: .5em;
+  }
+
+  hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #eeeeee;
+    width: 40%;
+  }
+
+  h4 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-top: 2em;
+    margin-bottom: 1em;
+  }
+
+
+  .metadata, .component {
+    display: grid;
+    grid-template-columns: 33% 66%;
+
+    dt {
+      text-align: right;
+      grid-column: 1;
     }
 
-    .metadata, .components {
-        h4 {
-            font-size: 24px;
-            font-weight: 600;
-            margin-top: 2em;
-            margin-bottom: 1em;
-            width: 32%;
-            text-align: right;
-        }
-
-        dl {
-            margin: 20px auto;
-            overflow: hidden;
-            position: relative;
-        }
-        dt {
-            float: left;
-            width: 32%;
-            clear: both;
-            padding: $metadata-spacing 2% $metadata-spacing 0;
-            position: relative;
-            text-align: right;
-        }
-        dd {
-            float: right;
-            width: 66%;
-            padding: $metadata-spacing 0 $metadata-spacing 3%;
-        }
-
-        .journal-title {
-            font-style: italic;
-        }
-
-        .component-collection {
-            margin-bottom: 1.25em;
-
-            hr {
-                margin-bottom: 3em;
-                border-top: 1px solid #cdcdcd;
-                margin-top: 0;
-                width: 50%;
-            }
-
-            .component-collection-title {
-                font-weight: 600;
-                margin-bottom: .5em;
-            }
-
-            .component {
-                margin-bottom: 2em;
-
-                &::after {
-                    content: "";
-                    position: relative;
-                    left: -14px;
-                    bottom: -1em;
-                    height: 15px;
-                    width: 25%;
-                    border-bottom: 1px solid #cecdcc;
-                }
-
-                .component-field {
-                    @include make-row();
-                }
-
-                .component-heading {
-                    font-weight: 600;
-                    float: left;
-                    margin-right: 15px;
-                    color: #647686;
-                }
-            }
-        }
+    dd {
+      padding: 0 0 .5em 3%;
+      grid-column: 2;
     }
+
+    .journal-title {
+      font-style: italic;
+    }
+
+    .component-collection {
+      margin-bottom: 1.25em;
+    }
+  }
 
   .fa-external-link-alt {
     font-size: .8em;
@@ -164,42 +133,42 @@ $metadata-spacing: .25em;
 }
 
 .back-link, .back-link:active, .back-link:hover {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .public {
-    .pagination > li > a, .pagination > li > span {
-        border: none;
-        padding: 6px 8px;
-    }
+  .pagination > li > a, .pagination > li > span {
+    border: none;
+    padding: 6px 8px;
+  }
 
-    .list-group-item {
-        border: none;
-    }
+  .list-group-item {
+    border: none;
+  }
 
 }
 
 .browse-all-texts h2 {
-    font-size: 24px;
+  font-size: 24px;
 }
 
 .browse-all-texts h3 {
-    font-size: 20px;
-    font-weight: 600;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 .modal-dialog.modal-lg {
-    position: absolute;
-    right: 0;
-    width: 500px;
+  position: absolute;
+  right: 0;
+  width: 500px;
 }
 
 .public .modal-backdrop.in {
-    opacity: 0.25;
+  opacity: 0.25;
 }
 
 body.public.modal-open {
-    overflow: scroll;
+  overflow: scroll;
 }
 
 .add-item-button {
