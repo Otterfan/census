@@ -73,17 +73,6 @@
   <%= metadata_row 'Title of issue', @text.issue_title %>
 
   <% unless @text.urls.empty? %>
-    <dt>URL</dt>
-    <dd>
-      <a href="<%= @text.url %>" target="_blank" rel="noopener"><%= @text.url %>
-        <i class="fas fa-external-link-alt"></i></a>
-      <% if @text.accessed_on %>
-        <div class="last-accessed-note">Last accessed <%= @text.accessed_on.strftime('%B %d, %Y') %></div>
-      <% end %>
-    </dd>
-  <% end %>
-
-  <% unless @text.urls.empty? %>
     <dt><%= "URL".pluralize(@text.urls.count) %></dt>
     <% @text.urls.each do |url| %>
       <dd>
