@@ -37,6 +37,7 @@ Rails.application.routes.draw do
 
     get 'authors/letter(/:first_letter)', to: 'authors#letter'
     get 'journals/letter(/:first_letter)', to: 'journals#letter'
+    get 'volumes/letter(/:first_letter)', to: 'volumes#letter'
 
   end
 end

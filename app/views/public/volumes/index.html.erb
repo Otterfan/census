@@ -2,7 +2,7 @@
 <h3>Browse all Volumes</h3>
 
 <div class="row">
-  <div class="pagination-stuff col-md-10">
+  <div class="pagination-stuff col-md-12">
     <%= alphabetical_paginate @alpha_params %>
   </div>
 </div>
@@ -10,9 +10,9 @@
 <div class="row">
   <div id="pagination_table" class="col-md-12">
     <ul class="list-group">
-      <% @volumes.each do |vol| %>
+      <% @volumes.each do |volume| %>
         <li class="list-group-item">
-          <%= link_to (vol.title.blank? ? "[No title]" : vol.title), public_volume_path(vol) %>
+          <%= link_to (volume.title.blank? ? "[No title]" : volume.title), public_volume_path(volume) %>
         </li>
       <% end %>
     </ul>

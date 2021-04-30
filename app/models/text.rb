@@ -661,6 +661,9 @@ class Text < ApplicationRecord
   end
 
   def display_page_span
+    if page_span.include?('p.')
+      return page_span
+    end
     page_mark = page_span.include?('-') || page_span.include?(',') ? 'pp' : 'p'
     page_mark + '. ' + page_span
   end

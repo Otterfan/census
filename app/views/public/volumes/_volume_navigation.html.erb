@@ -1,0 +1,12 @@
+<div class="authors-nav">
+
+  <%# List each author and link. %>
+  <% @navigation_list.members.each do |volume| %>
+    <div class="authors-nav__author foo <%= 'authors-nav__author--selected' if volume.id == @volume.id %>">
+      <a href="<%= public_volume_path volume %>">
+        <div class="authors-nav__full_name"><%= volume.title %></div>
+      </a>
+    </div>
+  <% end %>
+
+</div>

@@ -1,74 +1,39 @@
 <% page_title @volume.title %>
 <div class="container">
+
+  <%# Letters at top of page for navigating %>
   <div class="row">
-    <div class="back-link"><%= link_to '◀ Browse all volumes', public_volumes_path %></div>
+    <div class="col-md-8">
+      <%= render 'volume_letter_list' %>
+    </div>
   </div>
   <div class="row">
-    <h3>
-      <% if @volume.title.present? %><cite><%= @volume.title %></cite>
-      <% else %>[No title]
-      <% end %></h3>
 
-    <div class="col-md-12">
+    <%# List of authors names in left navigation %>
+    <div class="col-md-3">
+<%# Left-hand navigation menu for authors page. %>
+      <%= render 'volume_navigation' %>
+    </div>
 
-      <div class="metadata">
-        <dl>
-          <% if @volume.author.present? %>
-            <dt class="field-label">Author:</dt>
-            <dd><%= @volume.author %></dd>
-          <% end %>
+    <%# Main content block %>
+    <div class="col-md-9">
 
-          <% if @volume.date.present? %>
-            <dt class="field-label">Date</dt>
-            <dd><%= @volume.date %></dd>
-          <% end %>
+      <div class="row">
+        <h1 class="col-md-12 author_heading">
+          <span class="author-heading__english-name"><%= @volume.title %></span>
+        </h1>
+      </div>
 
-          <% if @citations.present? %>
-            <dt>Contributors</dt>
-            <% @citations.each do |citation| %>
-              <% if citation.first_name.present? || citation.last_name.present? %>
-                <dd>
-                  <% if citation.first_name.present? %><%= citation.first_name %>
-                  <% end %>
-                  <% if citation.last_name.present? %><%= citation.last_name %>
-                  <% end %>
-                  <% if citation.role.present? %>(<%= citation.role %>)
-                  <% end %>
-                </dd>
-              <% end %>
+      <div class="row">
 
-              <% if citation.from_language_id_id.present? %>
-                <dt class="field-label">From language</dt>
-                <dd><%= get_lang_from_id(citation.from_language_id_id.to_i).name %></dd>
-              <% end %>
+        <div class="col-md-12">
 
-              <% if citation.to_language_id_id.present? %>
-                <dt class="field-label">To language</dt>
-                <dd><%= get_lang_from_id(citation.to_language_id_id.to_i).name %></dd>
-              <% end %>
-            <% end %>
-
-          <% end %>
-
-          <% if @referenced_texts.present? %>
-            <dt class="field-label">Appears in entries</dt>
-            <dd>
-              <ul class="list-group">
-                <% @referenced_texts.each do |text| %>
-                  <li class="list-group-item referenced-record">
-                    <span class="page-span"><%= text.display_page_span %></span> <%= link_to (text.title.blank? ? "[No title]" : convert_underscores(text.title)), public_text_path(text) %>
-                    <div>
-                      <% text.authors.each do |citation| %>
-                        <%= citation.name %>
-                      <% end %>
-                    </div>
-                  </li>
-                <% end %>
-              </ul>
-            </dd>
-          <% end %>
-        </dl>
+          <div class="col-md-8">
+            <%= render 'volume_metadata' %>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
 </div>

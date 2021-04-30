@@ -1,0 +1,58 @@
+<div class="metadata">
+  <dl>
+    <% if @volume.author.present? %>
+      <dt class="field-label">Author:</dt>
+      <dd><%= @volume.author %></dd>
+    <% end %>
+
+    <% if @volume.date.present? %>
+      <dt class="field-label">Date</dt>
+      <dd><%= @volume.date %></dd>
+    <% end %>
+
+    <% if @citations.present? %>
+      <dt>Contributors</dt>
+      <% @citations.each do |citation| %>
+        <% if citation.first_name.present? || citation.last_name.present? %>
+          <dd>
+            <% if citation.first_name.present? %><%= citation.first_name %>
+            <% end %>
+            <% if citation.last_name.present? %><%= citation.last_name %>
+            <% end %>
+            <% if citation.role.present? %>(<%= citation.role %>)
+            <% end %>
+          </dd>
+        <% end %>
+
+        <% if citation.from_language_id_id.present? %>
+          <dt class="field-label">From language</dt>
+          <dd><%= get_lang_from_id(citation.from_language_id_id.to_i).name %></dd>
+        <% end %>
+
+        <% if citation.to_language_id_id.present? %>
+          <dt class="field-label">To language</dt>
+          <dd><%= get_lang_from_id(citation.to_language_id_id.to_i).name %></dd>
+        <% end %>
+      <% end %>
+
+    <% end %>
+
+    <% if @referenced_texts.present? %>
+      <dt class="field-label">Appears in entries</dt>
+      <dd>
+        <ul class="list-group">
+          <% @referenced_texts.each do |text| %>
+            <li class="list-group-item referenced-record">
+              <span class="page-span"><%= text.display_page_span %></span> <%= link_to (text.title.blank? ? "[No title]" : convert_underscores(text.title)), public_text_path(text) %>
+              <div>
+                <% text.authors.each do |citation| %>
+                  <%= citation.name %>
+                <% end %>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </dd>
+    <% end %>
+  </dl>
+</div>

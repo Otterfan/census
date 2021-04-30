@@ -5,33 +5,33 @@ class Public::VolumesController < ApplicationController
 
   before_action :authenticate_user!
 
-  # GET /public/volumes
+  # GET /public/journals
   def index
-    default_letter = "A"
-    @letter = sanitize_letter(params[:letter], default_letter)
-
-    @alpha_params_options = {
-        bootstrap3: true,
-        include_all: false,
-        js: false
-    }
-
-    # @volumes = Volume.order(:title).page(params[:page])
-
-    # the alpha_paginate gem has a bug where it fail if the field contains an empty or blank value.
-    # be sure to filter out empty field values!
-    @volumes, @alpha_params = Volume
-                                  .where.not(title: [nil, ''])
-                                  .order(:title)
-                                  .alpha_paginate(@letter, @alpha_params_options){|volume| volume.sort_title.downcase}
+    redirect_to('/public/volumes/letter/A')
   end
 
   # GET /public/volumes/1
   # TODO don't use multiple controller actions across different Models
   def show
-    #redirect_to volumes_path(@volumes)
+    #redirect_to journals_path(@volume)
     @volume = Volume.find(params[:id])
-    @citations = VolumeCitation.where(:volume_id => @volume.id)
     @referenced_texts = Text.where(:volume_id => @volume.id).order(sort_page_span: :asc)
+
+    # First letter of author's last name
+    @first_letter = @volume.sort_title[0, 1]
+
+    @navigation_list = NavigationList.new(Volume, :title, @first_letter)
   end
+
+  # Go to the first author whose last name starts with
+  # first_letter
+  def letter
+    first_volume = Volume.where.not(title: [nil, '']) # filter out nils and blanks
+                        .where("sort_title LIKE ?", "#{params[:first_letter]}%")
+                        .order(:sort_title)
+                        .first
+
+    redirect_to(public_volume_path(first_volume))
+  end
+
 end
