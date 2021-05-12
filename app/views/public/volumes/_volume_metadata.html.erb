@@ -10,9 +10,9 @@
       <dd><%= @volume.date %></dd>
     <% end %>
 
-    <% if @citations.present? %>
+    <% if @volume.volume_citations.present? %>
       <dt>Contributors</dt>
-      <% @citations.each do |citation| %>
+      <% @volume.volume_citations.each do |citation| %>
         <% if citation.first_name.present? || citation.last_name.present? %>
           <dd>
             <% if citation.first_name.present? %><%= citation.first_name %>

@@ -661,6 +661,8 @@ class Text < ApplicationRecord
   end
 
   def display_page_span
+    return nil if page_span.empty?
+
     if page_span.include?('p.')
       return page_span
     end
