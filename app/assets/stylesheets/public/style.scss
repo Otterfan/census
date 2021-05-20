@@ -31,4 +31,20 @@ body.public {
   .navbar-default .navbar-nav > li > a {
     color: lighten($public-background, 66%)
   }
+
+  .volume-metadata__list, .journal-metadata__list {
+    grid-template-columns: 12em auto;
+  }
+
+  .volume-metadata__genre, .journal-metadata__genre {
+    color: #666666;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .volume-metadata__census-id, .journal-metadata__census-id {
+    font-size: 80%;
+    margin-right: .4em;
+    font-weight: 600;
+  }
 }

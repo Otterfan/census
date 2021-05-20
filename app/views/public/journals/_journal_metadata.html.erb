@@ -1,5 +1,5 @@
-<div class="metadata">
-  <dl>
+<div class="metadata journal-metadata">
+  <dl class="journal-metadata__list">
     <% if @journal.url.present? %>
       <dt class="field-label">URL</dt>
       <dd>
@@ -61,11 +61,13 @@
           <% @referenced_texts.each do |text| %>
             <li class="list-group-item referenced-record">
               <%= link_to (text.title.blank? ? "[No title]" : convert_underscores(text.title)), public_text_path(text) %>
+              <span class="journal-metadata__census-id"><%= text.census_id %></span>
               <% text.authors.each do |citation| %>
                 <div class="referenced-record-author">
                   <%= citation.name %>
                 </div>
               <% end %>
+              <div class="journal-metadata__genre"><%= text.genre %></div>
             </li>
           <% end %>
         </ul>

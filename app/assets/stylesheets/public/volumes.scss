@@ -2,7 +2,9 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-span.page-span {
+.public {
+  span.page-span {
     font-size: 14px;
     font-weight: bold;
+  }
 }

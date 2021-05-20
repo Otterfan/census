@@ -21,15 +21,21 @@ class Public::VolumesController < ApplicationController
     @first_letter = @volume.sort_title[0, 1]
 
     @navigation_list = NavigationList.new(Volume, :title, @first_letter)
+
+    @editors = @volume.volume_citations.select { |citation| citation.role == 'editor' }
+    @translators = @volume.volume_citations.select { |citation| citation.role == 'translator' }
+
+    @other_contributors = @volume.volume_citations.select { |citation| citation.role != 'editor' && citation.role != 'translator' }
+
   end
 
   # Go to the first author whose last name starts with
   # first_letter
   def letter
     first_volume = Volume.where.not(title: [nil, '']) # filter out nils and blanks
-                        .where("sort_title LIKE ?", "#{params[:first_letter]}%")
-                        .order(:sort_title)
-                        .first
+                       .where("sort_title LIKE ?", "#{params[:first_letter]}%")
+                       .order(:sort_title)
+                       .first
 
     redirect_to(public_volume_path(first_volume))
   end
