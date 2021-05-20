@@ -12,10 +12,13 @@
   }
 }
 
+.authors-nav__all-letters {
+  margin-bottom: 24px;
+}
+
 .authors-nav__letter-list {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1em;
   font-size: 24px;
   color: #555;
 }
