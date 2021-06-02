@@ -5,7 +5,7 @@ class NavigationList
   def initialize(relation, alphabetization_field, letter)
 
     # Get a list of everything in the relation.
-    @members = relation.order(:sort_title)
+    @members = relation.order(alphabetization_field)
 
     @letters = []
 
@@ -13,13 +13,13 @@ class NavigationList
     # letters, add it.
     last_letter = ''
     @members.each do |object|
-      if object.sort_title[0] != last_letter
-        last_letter = object.sort_title[0]
+      if object[alphabetization_field][0] != last_letter
+        last_letter = object[alphabetization_field][0]
         letters << last_letter
       end
     end
 
-    @members = @members.select {|object| object.sort_title[0] == letter}
+    @members = @members.select {|object| object[alphabetization_field][0] == letter}
 
   end
 

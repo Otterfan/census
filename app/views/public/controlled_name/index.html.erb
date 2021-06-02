@@ -1,17 +1,42 @@
 <% page_title('Browse people') %>
-<h3>Browse all people</h3>
-
+<h3 class="browse-people__header">Browse all people</h3>
 <div class="row">
-  <div class="pagination-stuff col-md-10">
-    <%= alphabetical_paginate @alpha_params %>
+  <div class="browse-people__description col-md-10">
+    Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+    Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Cum sociis natoque penatibus et magnis dis
+    parturient montes, nascetur ridiculus mus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
+    ridiculus mus.
   </div>
 </div>
 <div class="row">
+<%# Letters at top of page for navigating %>
+  <div class="col-md-8">
+    <%= render 'public/controlled_name/controlled_name_letter_list' %>
+  </div>
+
   <div class="col-md-12">
+    <div class="row">
+      <div class="browse-people__pagination--top pagination-stuff col-md-10">
+        <%= paginate @names %>
+      </div>
+    </div>
     <ul class="list-group">
       <% @names.each do |name| %>
-        <li class="list-group-item"><%= link_to name.controlled_name, public_controlled_name_path(name) %></li>
+        <li class="list-group-item browse-people__entry">
+          <div class="browse-people__linked-header">
+            <span class="browse-people__full_name"><%= link_to name.controlled_name, public_controlled_name_path(name) %></span>
+            <span class="browse-people__texts-count">(<%= person_text_count(name) %>)</span>
+          </div>
+          <div class="browse-people__roles">
+            <%= name.roles.sort!.join(', ') %>
+          </div>
+        </li>
       <% end %>
     </ul>
+    <div class="row">
+      <div class="browse-people__pagination--bottom pagination-stuff col-md-10">
+        <%= paginate @names %>
+      </div>
+    </div>
   </div>
 </div>

@@ -28,4 +28,21 @@ class ControlledName < ApplicationRecord
                     .where('volume_citations.role' => role)
     (texts + comp_texts + vol_texts).uniq
   end
+
+  def all_texts
+    texts = Text.includes(:text_citations)
+                .order(sort_census_id: :asc)
+                .where('text_citations.controlled_name' => self.controlled_name)
+    comp_texts = Text.joins(components: :component_citations)
+                     .order(sort_census_id: :asc)
+                     .where('component_citations.controlled_name' => self.controlled_name)
+    vol_texts = Text.joins(volume: :volume_citations)
+                    .order(sort_census_id: :asc)
+                    .where('volume_citations.controlled_name' => self.controlled_name)
+    (texts + comp_texts + vol_texts).uniq
+  end
+
+  def text_count
+    all_texts.count
+  end
 end

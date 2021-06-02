@@ -137,9 +137,16 @@ $metadata-spacing: 0;
 }
 
 .public {
+  .pagination {
+    display: flex;
+    justify-content: space-around;
+    width: 30em;
+  }
+
   .pagination > li > a, .pagination > li > span {
     border: none;
     padding: 6px 8px;
+    float: none;
   }
 
   .list-group-item {

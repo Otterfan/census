@@ -13,8 +13,11 @@ class Public::ControlledNameController < ApplicationController
         js: false
     }
 
-    @names, @alpha_params = ControlledName.where.not(controlled_name: [nil, ""]).order(:sort_name)
-                                .alpha_paginate(@letter, @alpha_params_options) {|name| name.sort_name.downcase}
+    @navigation_list = NavigationList.new(ControlledName, :sort_name, 'A')
+
+    @names = ControlledName.where("controlled_name LIKE :prefix", prefix: "#{@letter}%")
+                 .order(:sort_name)
+                 .page(params[:page])
   end
 
   def show

@@ -11,3 +11,28 @@
     font-weight: 600;
   }
 }
+
+
+.browse-people__description {
+  margin-bottom: 1em;
+}
+
+.browse-people__full_name {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.browse-people__texts-count {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.browse-people__roles {
+  font-size: 14px;
+}
+
+.browse-people__pagination--top, .browse-people__pagination--bottom {
+  .pagination {
+    margin: .5em 0 1em 0;
+  }
+}
