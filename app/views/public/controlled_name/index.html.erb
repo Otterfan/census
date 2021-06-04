@@ -27,6 +27,11 @@
             <span class="browse-people__full_name"><%= link_to name.controlled_name, public_controlled_name_path(name) %></span>
             <span class="browse-people__texts-count">(<%= person_text_count(name) %>)</span>
           </div>
+          <% if name.topic_flag %>
+            <div class="browse-people__link-to-topic-author">
+              <a href="/public/authors/<%= name.person_link %>">See also author record</a>
+            </div>
+          <% end %>
           <div class="browse-people__roles">
             <%= name.roles.sort!.join(', ') %>
           </div>

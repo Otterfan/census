@@ -23,5 +23,6 @@ class Public::ControlledNameController < ApplicationController
   def show
     @results_formatter = BriefResultFormatter.new([], [], [])
     @name = ControlledName.find_by('controlled_name' => params[:id])
+    @in_text = TextCitation.where(:controlled_name => params[:id]).pluck(:name)
   end
 end
