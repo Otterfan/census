@@ -5,9 +5,21 @@ class Public::JournalsController < ApplicationController
 
   before_action :authenticate_user!
 
-  # GET /public/journals
   def index
-    redirect_to('/public/journals/letter/A')
+    default_letter = "A"
+    @letter = sanitize_letter(params[:letter], default_letter)
+
+    @alpha_params_options = {
+        bootstrap3: true,
+        include_all: false,
+        js: false
+    }
+
+    @navigation_list = NavigationList.new(Journal, :sort_title, 'A')
+
+    @journals = Journal.where("sort_title LIKE :prefix", prefix: "#{@letter}%")
+                 .order(:sort_title)
+                 .page(params[:page])
   end
 
   # GET /public/journals/1
@@ -17,10 +29,6 @@ class Public::JournalsController < ApplicationController
     @journal = Journal.find(params[:id])
     @referenced_texts = Text.where(:journal_id => @journal.id).order(census_id: :desc)
 
-    # First letter of author's last name
-    @first_letter = @journal.sort_title[0, 1]
-
-    @navigation_list = NavigationList.new(Journal, :title, @first_letter)
   end
 
   # Go to the first author whose last name starts with

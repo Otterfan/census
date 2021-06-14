@@ -1,21 +1,38 @@
-<% page_title 'Browse journals' %>
-<h3>Browse all Journals</h3>
-
+<% page_title('Browse journals') %>
+<h3 class="browse-journals__header">Browse all journals</h3>
 <div class="row">
-  <div class="pagination-stuff col-md-12">
-    <%= alphabetical_paginate @alpha_params %>
+  <div class="browse-journals__description browse-page__description col-md-10">
+    Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+    Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Cum sociis natoque penatibus et magnis dis
+    parturient montes, nascetur ridiculus mus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
+    ridiculus mus.
   </div>
 </div>
-
 <div class="row">
-  <div id="pagination_table" class="col-md-12">
+<%# Letters at top of page for navigating %>
+  <div class="col-md-8">
+    <%= render 'public/journals/journal_letter_list' %>
+  </div>
+
+  <div class="col-md-12">
+    <div class="row">
+      <div class="browse-journals__pagination--top pagination-stuff col-md-10">
+        <%= paginate @journals %>
+      </div>
+    </div>
     <ul class="list-group">
       <% @journals.each do |journal| %>
-        <li class="list-group-item">
-          <%= link_to (journal.title.blank? ? "[No title]" : journal.title), public_journal_path(journal) %>
+        <li class="list-group-item browse-journals__entry">
+          <div class="browse-journals__linked-header">
+            <span class="browse-journals__full_name"><%= link_to journal.title, public_journal_path(journal.id) %></span>
+          </div>
         </li>
       <% end %>
     </ul>
-
+    <div class="row">
+      <div class="browse-journals__pagination--bottom pagination-stuff col-md-10">
+        <%= paginate @journals %>
+      </div>
+    </div>
   </div>
 </div>

@@ -1,36 +1,19 @@
 <% page_title @volume.title %>
-<div class="container">
 
-  <%# Letters at top of page for navigating %>
+<div class="container public-show-name">
+
+  <%# Main content block %>
+
   <div class="row">
-    <div class="col-md-8">
-      <%= render 'volume_letter_list' %>
-    </div>
-  </div>
-  <div class="row">
-
-    <%# List of authors names in left navigation %>
-    <div class="col-md-3">
-<%# Left-hand navigation menu for authors page. %>
-      <%= render 'volume_navigation' %>
-    </div>
-
-    <%# Main content block %>
-    <div class="col-md-9">
-
-      <div class="row">
-        <h1 class="col-md-12 author_heading">
-          <span class="author-heading__english-name"><%= @volume.title %></span>
-        </h1>
-      </div>
-
-      <div class="row">
-
-        <div class="col-md-12">
-          <%= render 'volume_metadata' %>
-        </div>
-      </div>
-    </div>
+    <h1 class="col-md-12 author_heading">
+      <span class="author-heading__english-name"><%= @volume.title %></span>
+    </h1>
   </div>
 
+  <div class="row">
+
+    <div class="col-md-12">
+      <%= render 'volume_metadata' %>
+    </div>
+  </div>
 </div>

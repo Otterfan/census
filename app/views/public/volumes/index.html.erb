@@ -1,10 +1,16 @@
 <% page_title 'Browse volumes' %>
-<h3>Browse all Volumes</h3>
-
+<h3 class="browse-journals__header">Browse all volumes</h3>
 <div class="row">
-  <div class="pagination-stuff col-md-12">
-    <%= alphabetical_paginate @alpha_params %>
+  <div class="browse-journals__description browse-page__description col-md-10">
+    Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+    Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Cum sociis natoque penatibus et magnis dis
+    parturient montes, nascetur ridiculus mus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
+    ridiculus mus.
   </div>
+</div>
+
+<div class="col-md-8">
+  <%= render 'public/volumes/volume_letter_list' %>
 </div>
 
 <div class="row">

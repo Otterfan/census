@@ -1,36 +1,17 @@
 <% page_title @journal.title %>
-<div class="container">
+<div class="container public-show-name">
 
-  <%# Letters at top of page for navigating %>
+  <%# Main content block %>
   <div class="row">
-    <div class="col-md-8">
-      <%= render 'journal_letter_list' %>
-    </div>
-  </div>
-  <div class="row">
-
-    <%# List of authors names in left navigation %>
-    <div class="col-md-3">
-<%# Left-hand navigation menu for authors page. %>
-      <%= render 'journal_navigation' %>
-    </div>
-
-    <%# Main content block %>
-    <div class="col-md-9">
-
-      <div class="row">
-        <h1 class="col-md-12 author_heading">
-          <span class="author-heading__english-name"><%= @journal.title %></span>
-        </h1>
-      </div>
-
-      <div class="row">
-
-        <div class="col-md-12">
-          <%= render 'journal_metadata' %>
-        </div>
-      </div>
-    </div>
+    <h1 class="col-md-12 author_heading">
+      <span class="author-heading__english-name"><%= @journal.title %></span>
+    </h1>
   </div>
 
+  <div class="row">
+
+    <div class="col-md-12">
+      <%= render 'journal_metadata' %>
+    </div>
+  </div>
 </div>

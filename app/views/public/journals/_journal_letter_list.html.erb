@@ -8,7 +8,7 @@
 
             <%# Only show links for letters that have content. Otherwise show normal text. %>
             <% if @navigation_list.letters.include?(letter) %>
-              <a href="/public/journals/letter/<%= letter %>"><%= letter %></a>
+              <a href="/public/journals?letter=<%= letter %>"><%= letter %></a>
             <% else %>
               <%= letter %>
             <% end %>
@@ -25,7 +25,7 @@
 
             <%# Only show links for letters that have content. Otherwise show normal text. %>
             <% if @navigation_list.letters.include?(letter) %>
-              <a href="/public/journals/letter/<%= letter %>"><%= letter %></a>
+              <a href="/public/journals?letter=<%= letter %>"><%= letter %></a>
             <% else %>
               <%= letter %>
             <% end %>
