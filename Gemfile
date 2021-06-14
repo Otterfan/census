@@ -79,3 +79,6 @@ gem 'htmlentities'
 gem 'faraday'
 gem 'blazer'
 gem 'select2-rails'
+
+# Maintain top-level domain name list
+gem 'public_suffix'

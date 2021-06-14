@@ -20,7 +20,7 @@
   </span>
 
   <% if !source.urls.empty? %>
-    <a class="available-online-notice" href="<%= source.urls[0].value %>" target="_blank" rel="noopener"><span class="badge badge-primary">read online</span>
+    <a class="available-online-notice" href="<%= source.urls[0].value %>" target="_blank" rel="noopener"><span class="badge badge-primary"><%= source.urls[0].top_level_domain %></span>
       <i class="fas fa-external-link-alt"></i></a>
   <% end %>
 

@@ -258,7 +258,8 @@ class Text < ApplicationRecord
                 except: [:created_at, :updated_at]
             },
             urls: {
-                except: [:created_at, :updated_at]
+                except: [:created_at, :updated_at],
+                methods: [:top_level_domain]
             },
             topic_author: {
                 except: [:created_at, :updated_at],

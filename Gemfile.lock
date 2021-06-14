@@ -315,6 +315,7 @@ DEPENDENCIES
   paper_trail
   pg (~> 0.18)
   pg_search
+  public_suffix
   puma (~> 3.7)
   rails (~> 5)
   redcarpet (~> 3.4.0)
