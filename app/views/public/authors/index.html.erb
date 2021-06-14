@@ -1,10 +1,17 @@
 <% page_title('Browse authors') %>
-<h3>Browse all Authors</h3>
-
+<h3 class="browse-authors__header">Browse all authors</h3>
 <div class="row">
-  <div class="pagination-stuff col-md-10">
-    <%= alphabetical_paginate @alpha_params %>
+  <div class="browse-authors__description browse-page__description col-md-10">
+    Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+    Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Cum sociis natoque penatibus et magnis dis
+    parturient montes, nascetur ridiculus mus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
+    ridiculus mus.
   </div>
+</div>
+
+<%# Letters at top of page for navigating %>
+<div class="col-md-8">
+  <%= render 'public/authors/authors_letter_list' %>
 </div>
 
 <div class="row">
@@ -13,13 +20,22 @@
       <% @authors.each do |author| %>
         <li class="list-group-item">
           <a href="<%= public_author_path(author) %>">
-            <span class="topic-author-english"><%= author.full_name %></span>
-            <% unless author.greek_full_name.blank? %>
-              / <span class="topic-author-greek"><%= author.greek_full_name %></span>
+
+            <% if @is_greek_letter %>
+              <span class="topic-author-english"><%= author.greek_full_name %></span></a> <%= display_dates author %>
+              <% unless author.full_name.blank? %>
+                <br>
+                <span class="topic-author-greek"><%= author.full_name %></span>
+              <% end %>
+            <% else %>
+              <span class="topic-author-english"><%= author.full_name %></span></a> <%= display_dates author %>
+              <% unless author.greek_full_name.blank? %>
+                <br>
+                <span class="topic-author-greek"><%= author.greek_full_name %></span>
+              <% end %>
             <% end %>
-            <%= display_dates author %>
-          </a>
-        </li>
+
+            </li>
       <% end %>
     </ul>
 

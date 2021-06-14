@@ -8,7 +8,32 @@ class Public::AuthorsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    redirect_to('/public/authors/letter/A')
+    default_letter = "A"
+    @letter = sanitize_letter(params[:letter], default_letter)
+    @is_greek_letter = ('Α'..'Ω').include?(@letter)
+
+    @alpha_params_options = {
+        bootstrap3: true,
+        include_all: false,
+        js: false
+    }
+
+    topic_authors = Person.where(topic_flag: true).where.not(full_name: [nil, ''])
+
+    @navigation_list = NavigationList.new(topic_authors, :full_name, 'A')
+
+    greek_topic_authors = Person.where(topic_flag: true).where.not(greek_full_name: [nil, ''])
+    @greek_navigation_list = NavigationList.new(greek_topic_authors, :greek_full_name, 'Α')
+
+    if @is_greek_letter
+      @authors = topic_authors.where("greek_full_name LIKE ?", "#{@letter}%")
+                     .order(:greek_full_name)
+      @is_greek_letter = true
+    else
+      @authors = topic_authors.where("full_name LIKE ?", "#{@letter}%")
+                     .order(:full_name)
+      @is_greek_letter = false
+    end
   end
 
   def show
@@ -43,19 +68,6 @@ class Public::AuthorsController < ApplicationController
     elsif !@studies_part.empty?
       @active_list = :studies_part
     end
-
-
-    # First letter of author's last name
-    @first_letter = @author.full_name[0, 1]
-
-    # List of authors with same first letter of last name
-    @nav_authors = Person.where(topic_flag: true)
-                       .where.not(full_name: [nil, '']) # filter out nils and blanks
-                       .where("full_name LIKE ?", "#{@first_letter}%")
-                       .order(:full_name)
-
-    # List of first letters of authors last names
-    @nav_letters = build_navigation_letter_list
 
   end
 
