@@ -10,4 +10,32 @@ class TextCitation < ApplicationRecord
   after_commit {
     puts "TextCitation record '#{self.id}' was updated. Will now update related Text record: [#{self.text.id}]"
   }
+
+  def name=(value)
+    value = prep_name(value)
+    super(value)
+  end
+
+  def first_name=(value)
+    value = prep_name(value)
+    super(value)
+  end
+
+  def last_name=(value)
+    value = prep_name(value)
+    super(value)
+  end
+
+  def controlled_name=(value)
+    value = prep_name(value)
+    super(value)
+  end
+
+  private
+  def prep_name(value)
+    if value
+      value.strip!
+    end
+    value
+  end
 end
