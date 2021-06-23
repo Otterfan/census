@@ -12,13 +12,13 @@
   </div>
   <% if text.volume %>
     <div>
-      In <cite><%= link_to_volume_from_search text.volume %></cite>  <%= formatted_journal_issue(text) %>
+      In <cite><%= link_to_volume_from_search text.volume %></cite>  <%= formatted_full_journal_issue_citation(text) %>
     </div>
   <% end %>
   <% if text.journal %>
     <div>
       In
-      <cite><%= link_to_journal_from_search text.journal %></cite> <%= formatted_journal_issue(text) %>
+      <cite><%= link_to_journal_from_search text.journal %></cite> <%= formatted_full_journal_issue_citation(text) %>
     </div>
   <% end %>
 </li>

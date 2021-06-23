@@ -18,8 +18,8 @@ class Public::JournalsController < ApplicationController
     @navigation_list = NavigationList.new(Journal, :sort_title, 'A')
 
     @journals = Journal.where("sort_title LIKE :prefix", prefix: "#{@letter}%")
-                 .order(:sort_title)
-                 .page(params[:page])
+                    .order(:sort_title)
+                    .page(params[:page])
   end
 
   # GET /public/journals/1
@@ -27,7 +27,7 @@ class Public::JournalsController < ApplicationController
   def show
     #redirect_to journals_path(@journals)
     @journal = Journal.find(params[:id])
-    @referenced_texts = Text.where(:journal_id => @journal.id).order(census_id: :desc)
+    @referenced_texts = Text.where(:journal_id => @journal.id).order(sort_date: :asc, issue_volume: :asc, issue_number: :asc, sort_page_span: :asc)
 
   end
 
@@ -35,9 +35,9 @@ class Public::JournalsController < ApplicationController
   # first_letter
   def letter
     first_journal = Journal.where.not(title: [nil, '']) # filter out nils and blanks
-                       .where("sort_title LIKE ?", "#{params[:first_letter]}%")
-                       .order(:sort_title)
-                       .first
+                        .where("sort_title LIKE ?", "#{params[:first_letter]}%")
+                        .order(:sort_title)
+                        .first
 
     redirect_to(public_journal_path(first_journal))
   end

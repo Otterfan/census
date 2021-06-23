@@ -690,6 +690,18 @@ class Text < ApplicationRecord
     end
   end
 
+  def issue_identifier
+    if issue_number && issue_season_month
+      return "#{issue_number} #{issue_season_month}"
+    elsif issue_number
+      return issue_number
+    elsif issue_season_month
+      return issue_season_month
+    end
+
+    nil
+  end
+
 end
 
 #Text.import(force: true) # for auto sync model with elastic search

@@ -55,10 +55,21 @@
 
 
     <% if @referenced_texts.present? %>
+
+      <% this_issue_volume = '' %>
+      <% this_issue_identifier = '' %>
       <dt class="field-label">Appears in entries</dt>
       <dd>
         <ul class="list-group">
           <% @referenced_texts.each do |text| %>
+
+            <% if this_issue_volume != text.issue_volume %>
+              <% this_issue_volume = text.issue_volume %>
+              <div class="journal-show__issue-separator">
+                <%= formatted_journal_issue(text) %>
+              </div>
+            <% end %>
+
             <li class="list-group-item referenced-record">
               <%= link_to (text.title.blank? ? "[No title]" : convert_underscores(text.title)), public_text_path(text) %>
               <span class="journal-metadata__census-id"><%= text.census_id %></span>

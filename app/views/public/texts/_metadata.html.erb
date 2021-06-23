@@ -53,7 +53,7 @@
         <span class="journal-title">
           <%= link_to (@text.journal.title.blank? ? "[No title]" : convert_underscores(@text.journal.title)), public_journal_path(@text.journal) %>
       </span>
-      <%= formatted_journal_issue @text %>
+      <%= formatted_full_journal_issue_citation @text %>
     </dd>
     <%= metadata_row 'Page span', @text.page_span.sub('pp. ', '') %>
   <% elsif @text.volume && @text.volume.title != '' %>
@@ -62,7 +62,7 @@
           <span class="journal-title">
           <%= link_to (@text.volume.title.blank? ? "[No title]" : convert_underscores(@text.volume.title)), public_volume_path(@text.volume) %>
         </span>
-      <%= formatted_journal_issue @text %>
+      <%= formatted_full_journal_issue_citation @text %>
     </dd>
     <%= metadata_row 'Page span', @text.page_span.sub('pp. ', '') %>
   <% else %>

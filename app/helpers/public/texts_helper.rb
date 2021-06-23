@@ -121,6 +121,16 @@ module Public::TextsHelper
   end
 
   # Formatted journal volume and issue
+  def formatted_full_journal_issue_citation(text)
+    retval = formatted_journal_issue(text)
+
+    unless text.page_span.blank?
+      retval = "#{retval}: #{text.page_span}"
+    end
+
+    retval
+  end
+
   def formatted_journal_issue(text)
     retval = ''
 
@@ -136,10 +146,6 @@ module Public::TextsHelper
       retval = "#{retval} (#{text.issue_season_month} #{text.date})"
     else
       retval = "#{retval} (#{text.date})"
-    end
-
-    if !text.page_span.blank?
-      retval = "#{retval}: #{text.page_span}"
     end
 
     retval

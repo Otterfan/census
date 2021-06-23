@@ -18,3 +18,21 @@
 .browse-journals__description {
   margin-bottom: 1em;
 }
+
+.journal-show__issue-separator {
+  color: #777;
+  font-weight: 600;
+  margin-bottom: .5em;
+  margin-top: 1em;
+}
+
+.journal-show__issue-separator {
+  color: #777;
+  font-weight: 600;
+  margin-bottom: .5em;
+  margin-top: 1em;
+}
+
+.journal-show__issue-separator:first-of-type {
+  margin-top: 0;
+}
