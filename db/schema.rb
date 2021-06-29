@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_02_173029) do
+ActiveRecord::Schema.define(version: 2021_06_29_211448) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -327,13 +327,17 @@ ActiveRecord::Schema.define(version: 2021_06_02_173029) do
     t.integer "sort_page_span"
     t.date "accessed_on"
     t.string "proquest_num"
+    t.text "sort_title"
+    t.text "sort_author"
     t.index ["country_id"], name: "index_texts_on_country_id"
     t.index ["journal_id"], name: "index_texts_on_journal_id"
     t.index ["language_id"], name: "index_texts_on_language_id"
     t.index ["original_greek_title"], name: "index_texts_on_original_greek_title"
     t.index ["section_id"], name: "index_texts_on_section_id"
+    t.index ["sort_author"], name: "index_texts_on_sort_author"
     t.index ["sort_id"], name: "index_texts_on_sort_id"
     t.index ["sort_page_span"], name: "index_texts_on_sort_page_span"
+    t.index ["sort_title"], name: "index_texts_on_sort_title"
     t.index ["status_id"], name: "index_texts_on_status_id"
     t.index ["topic_author_id"], name: "index_texts_on_topic_author_id"
     t.index ["volume_id"], name: "index_texts_on_volume_id"

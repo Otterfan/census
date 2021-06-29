@@ -42,11 +42,13 @@ class Public::AuthorsController < ApplicationController
     type = params[:genre] == 'studies' ? 'study' : 'translation'
     type = params[:medium] == 'articles' ? "#{type}_part" : "#{type}_book"
 
+    sort_field = params[:genre] == 'studies' ? :sort_author : :sort_title
+
     @results_formatter = BriefResultFormatter.new([], [], [])
     @author = Person.find(params[:id])
     @texts = @author.texts
                  .where('text_type = ?', type)
-                 .order(:sort_census_id)
+                 .order(sort_field)
     @current_page = type
 
     render 'public/authors/show'

@@ -36,6 +36,8 @@ class Text < ApplicationRecord
   before_save :calculate_sort_census_id
   before_save :calculate_sort_page_span
   before_save :calculate_sort_date
+  before_save :calculate_sort_title
+  before_save :calculate_sort_author
 
   after_touch {
     puts "Text record '#{self.id}' was touched."
@@ -198,11 +200,11 @@ class Text < ApplicationRecord
         except: [
             :language_id, :topic_author_id,
             :status_id, :section_id, :country_id,
-            :journal_id, :volume_id, :sort_id
+            :journal_id, :volume_id, :sort_id, :section_id,
+            :sort_page_span, :sort_census_id, :seen_in_person, :sort_author
         ],
         methods: [
             :authors_names,
-            :sort_title,
             :original_clean,
             :collection_clean,
             :editorial_annotation_clean,
@@ -230,7 +232,7 @@ class Text < ApplicationRecord
                 }
             },
             components: {
-                except: [:created_at, :updated_at],
+                except: [:created_at, :updated_at, :text_id, :pages, :ordinal],
                 methods: [:sort_title, :collection_clean],
                 include: {
                     component_citations: {
@@ -247,7 +249,7 @@ class Text < ApplicationRecord
                 }
             },
             publication_places: {
-                except: [:text_id],
+                except: [:text_id, :place_id, :primary],
                 include: {
                     place: {
                         except: [:id, :country_id, :created_at, :updated_at]
@@ -276,7 +278,7 @@ class Text < ApplicationRecord
             #    except: [:id, :created_at, :updated_at]
             #},
             journal: {
-                except: [:created_at, :updated_at],
+                except: [:created_at, :updated_at, :indexed_range],
                 include: {
                     place: {
                         except: [:created_at, :updated_at],
@@ -460,10 +462,6 @@ class Text < ApplicationRecord
     end
   end
 
-  def sort_title
-    title.gsub(/["'“”‘’«»:_.\[\]]/, '').sub(/^(An? )|(The )/, '').strip
-  end
-
   def original_clean
     if original
       # duplicate the original field for our transformations
@@ -610,6 +608,14 @@ class Text < ApplicationRecord
       sort_date = self.date[/\d\d\d\d/]
       self.sort_date = "#{sort_date}-01-01"
     end
+  end
+
+  def calculate_sort_title
+    self.sort_title = self.title.gsub(/["'“”‘’«»:_.\[\]]/, '').sub(/^(An? )|(The )/, '').strip
+  end
+
+  def calculate_sort_author
+    self.sort_author = authors_names
   end
 
   def original_greek_citation
