@@ -1,26 +1,28 @@
 <div class="row">
   <div class="col-md-12">
     <%= simple_form_for @person do |f| %>
-        <%= f.input :full_name, as: :string %>
-        <%= f.input :last_name, as: :string %>
-        <%= f.input :first_name, as: :string %>
+      <%= f.input :full_name, as: :string %>
+      <%= f.input :last_name, as: :string %>
+      <%= f.input :first_name, as: :string %>
 
-        <%= f.input :greek_full_name, as: :string %>
-        <%= f.input :greek_last_name, as: :string %>
-        <%= f.input :greek_first_name, as: :string %>
+      <%= f.input :greek_full_name, as: :string %>
+      <%= f.input :greek_last_name, as: :string %>
+      <%= f.input :greek_first_name, as: :string %>
 
-        <%= f.input :birth, as: :string %>
-        <%= f.input :death, as: :string %>
+      <%= f.input :birth, as: :string %>
+      <%= f.input :death, as: :string %>
 
-        <%= f.input :domicile, as: :string %>
+      <%= f.input :domicile, as: :string %>
 
-        <%= f.input :loc, label: 'Library of Congress URI' %>
-        <%= f.input :loc_name, label: 'Library of Congress Authority Name' %>
-        <%= f.input :greek_authority, label: 'Greek authority name' %>
-        <%= f.input :viaf, label: 'VIAF URI' %>
-        <%= f.input :alternate_name, as: :text %>
+      <%= f.input :loc, label: 'Library of Congress URI' %>
+      <%= f.input :loc_name, label: 'Library of Congress Authority Name' %>
+      <%= f.input :greek_authority, label: 'Greek authority name' %>
+      <%= f.input :viaf, label: 'VIAF URI' %>
+      <%= f.input :alternate_name, as: :text %>
 
-        <%= f.button :submit %>
+      <%= f.association :see_person, collection: Person.where(topic_flag: true).order(:full_name), :label_method => lambda { |person| "#{person.full_name}" } %>
+
+      <%= f.button :submit %>
     <% end %>
   </div>
 

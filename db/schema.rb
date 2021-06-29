@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_29_211448) do
+ActiveRecord::Schema.define(version: 2021_06_29_213118) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -188,6 +188,8 @@ ActiveRecord::Schema.define(version: 2021_06_29_211448) do
     t.string "loc"
     t.string "greek_authority"
     t.string "loc_name"
+    t.bigint "see_person_id"
+    t.index ["see_person_id"], name: "index_people_on_see_person_id"
     t.index ["topic_flag"], name: "index_people_on_topic_flag"
   end
 
@@ -422,6 +424,7 @@ ActiveRecord::Schema.define(version: 2021_06_29_211448) do
   add_foreign_key "component_citations", "languages", column: "to_language_id"
   add_foreign_key "components", "texts"
   add_foreign_key "cross_references", "texts"
+  add_foreign_key "people", "people", column: "see_person_id"
   add_foreign_key "places", "countries"
   add_foreign_key "standard_numbers", "texts"
   add_foreign_key "text_citations", "languages", column: "from_language_id"

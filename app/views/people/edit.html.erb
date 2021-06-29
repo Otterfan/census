@@ -3,10 +3,6 @@
     <%= render 'form', person: @person %>
   </div>
   <div class="col-md-5">
-    <h2>Appears in...</h2>
-    <% @texts.each do |text| %>
-        <li><%= link_to text.title, edit_text_path(text) %></li>
-    <% end %>
     <%= render partial: 'shared/changes', locals: {versions: @person.versions} %>
   </div>
 </div>

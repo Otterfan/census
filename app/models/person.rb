@@ -5,6 +5,8 @@ class Person < ApplicationRecord
 
   has_many :texts, foreign_key: 'topic_author_id'
 
+  belongs_to :see_person, :class_name => "Person", :foreign_key => "see_person_id", optional: true
+
   paginates_per 60
 
   has_paper_trail
