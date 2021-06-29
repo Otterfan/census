@@ -32,4 +32,8 @@ module Public::AuthorsHelper
   def alt_name_list(author)
     author.alternate_name.split("\n")
   end
+
+  def active_class_notice(target)
+    @current_page == target ? 'class=active' : ''
+  end
 end

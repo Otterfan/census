@@ -9,7 +9,7 @@ class Person < ApplicationRecord
 
   has_paper_trail
 
-  default_scope {order('last_name ASC, first_name ASC')}
+  default_scope { order('last_name ASC, first_name ASC') }
 
 =begin
   after_commit {
@@ -48,7 +48,7 @@ class Person < ApplicationRecord
 
   def get_texts_by_type
     @translations, @studies = [], []
-    texts.sort_by {|text| text.sort_title.downcase}.each do |text|
+    texts.sort_by { |text| text.sort_title.downcase }.each do |text|
       if !text.text_type
       elsif text.text_type.start_with? 'trans'
         @translations << text
@@ -61,7 +61,7 @@ class Person < ApplicationRecord
   def get_text_components_by_type
     @poems, @stories = [], []
     text_components = Component.joins(:text).where('texts.topic_author_id' => id)
-    text_components.sort_by {|component| component.sort_title}.each do |component|
+    text_components.sort_by { |component| component.sort_title }.each do |component|
       if !component.text_type
       elsif component.genre == 'Poetry'
         @poems << component.title
@@ -144,4 +144,10 @@ class Person < ApplicationRecord
     alt_names = alternate_name.split("\r\n").collect(&:strip)
     alt_names - names_in_source
   end
+
+  def has_texts_of_type?(type)
+    count = texts.where('text_type = ?', type).count
+    count > 0
+  end
+
 end

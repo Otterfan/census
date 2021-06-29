@@ -36,41 +36,55 @@ class Public::AuthorsController < ApplicationController
     end
   end
 
-  def show
+  def show_by_type
+
+    # Build text type, e.g. "study_book", "translation_article"
+    type = params[:genre] == 'studies' ? 'study' : 'translation'
+    type = params[:medium] == 'articles' ? "#{type}_part" : "#{type}_book"
+
     @results_formatter = BriefResultFormatter.new([], [], [])
     @author = Person.find(params[:id])
+    @texts = @author.texts
+                 .where('text_type = ?', type)
+                 .order(:sort_census_id)
+    @current_page = type
 
-    @translations_book = @author.texts
-                             .where('text_type = ?', 'translation_book')
-                             .order(:sort_census_id)
+    render 'public/authors/show'
+  end
 
-    @translations_part = @author.texts
-                             .where('text_type = ?', 'translation_part')
-                             .order(:sort_census_id)
+  def show
+    types = [
+        'translation_book',
+        'translation_part',
+        'study_book',
+        'study_part'
+    ]
 
-    @studies_book = @author.texts
-                        .where('text_type = ?', 'study_book')
-                        .order(:sort_census_id)
+    has_examples = false
+    idx = 0
+    type = ''
 
-    @studies_part = @author.texts
-                        .where('text_type = ?', 'study_part')
-                        .order(:sort_census_id)
+    author = Person.find(params[:id])
 
-
-    # Determine which list to show as active by deault.
-    @active_list = :profile
-    if !@translations_book.empty?
-      @active_list = :translations_book
-    elsif !@translations_part.empty?
-      @active_list = :translations_part
-    elsif !@studies_book.empty?
-      @active_list = :studies_book
-    elsif !@studies_part.empty?
-      @active_list = :studies_part
+    until has_examples
+      type = types[idx]
+      break unless type
+      has_examples = author.has_texts_of_type?(type)
+      idx = idx + 1
     end
+
+    genre = type.include?('study') ? 'studies' : 'translations'
+    medium = type.include?('book') ? 'books' : 'articles'
+
+    redirect_to "/public/authors/#{params[:id]}/#{genre}/#{medium}"
 
   end
 
+  def profile
+    @author = Person.find(params[:id])
+    @current_page = :profile
+    render 'public/authors/show'
+  end
 
   # Builds a list of letters usable in navigation
   #
