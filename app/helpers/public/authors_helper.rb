@@ -16,12 +16,10 @@ module Public::AuthorsHelper
     latest_year = author.translations_years.min.to_i
   end
 
-  def translation_dates_y_axis(author)
-
-  end
+  def translation_dates_y_axis(author) end
 
   def country_code_list(author)
-    codes = author.translation_countries.keys.map {|code| "\"#{code}\""}
+    codes = author.translation_countries.keys.map { |code| "\"#{code}\"" }
     codes.join(', ').html_safe
   end
 
@@ -35,5 +33,23 @@ module Public::AuthorsHelper
 
   def active_class_notice(target)
     @current_page == target ? 'class=active' : ''
+  end
+
+  def text_classifier(text)
+    if text.text_type.include? 'study'
+      text.material_type
+    elsif text.genre && text.genre.kind_of?(Array)
+      text.genre.join(', ')
+    elsif text.genre
+      text.genre
+    end
+  end
+
+  def page_count(text)
+    if text.text_type.include?('book') && text.page_count
+      text.page_count
+    else
+      nil
+    end
   end
 end

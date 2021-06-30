@@ -4,7 +4,71 @@
     <% texts.order(:sort_census_id).each do |text| %>
 
       <li class="list-group-item">
-        <%= render 'shared/text_tombstone', text: text %>
+        <% if text['_source']
+             source = text['_source']
+           else
+             source = text
+           end
+
+           is_search = is_search_result?(text)
+        %>
+
+        <div class="result-title">
+          <%= tombstone_title_link(text, @results_formatter, params[:keyword]) %>
+          <% if text.date && text.date != '' %>
+            <span class="title-date">(<%= text.date %>)</span>
+          <% end %>
+          <% if text.is_special_issue %>
+            <span class="special-issue">Special issue</span>
+          <% end %>
+          <span class="title-census-id">
+    <%= title_census_id text %>
+  </span>
+
+          <% if !source.urls.empty? %>
+            <a class="available-online-notice" href="<%= source.urls[0].value %>" target="_blank" rel="noopener"><span class="badge badge-primary"><%= source.urls[0].top_level_domain %></span>
+              <i class="fas fa-external-link-alt"></i></a>
+          <% end %>
+
+        </div>
+        <% if (defined? show_topic_author) && show_topic_author == true %>
+          <div class="topic-author">
+            Topic author: <%= render 'shared/topic_author', text: text %>
+          </div>
+        <% end %>
+        <div class="result-author">
+          <% editors = source.editors_names.empty? ? editors_from_search(source.text_citations) : source.editors_names %>
+          <% unless editors.empty? %>
+            <%= 'Editor'.pluralize(editors.length) %>: <%= editors.join('; ') %>
+          <% end %>
+        </div>
+        <div class="result-author">
+          <% translators = source.translators_names.empty? ? translators_from_search(source.text_citations) : source.translators_names %>
+          <% unless translators.empty? %>
+            <%= 'Translator'.pluralize(translators.length) %>: <%= translators.join('; ') %>
+          <% end %>
+        </div>
+        <% if source.volume %>
+          <div>
+            In
+            <cite><%= link_to_volume_from_search source.volume %></cite><%= formatted_full_journal_issue_citation(text) %>
+          </div>
+        <% end %>
+        <% if source.journal %>
+          <div>
+            In
+            <cite><%= link_to_journal_from_search source.journal %></cite> <%= formatted_full_journal_issue_citation(text) %>
+          </div>
+        <% end %>
+        <% count = page_count(text) %>
+        <div>
+          <span class="genre"><%= text_classifier(text) %></span><% if count %>;<% end %>
+          <% if count %>
+            <span class="author-text__page-count">
+              <%= count %>
+            </span>
+          <% end %>
+        </div>
       </li>
 
     <% end %>
