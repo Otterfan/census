@@ -616,6 +616,10 @@ class Text < ApplicationRecord
 
   def calculate_sort_author
     self.sort_author = authors_names
+
+    if self.sort_author == ''
+      self.sort_author = editors_names.join('; ')
+    end
   end
 
   def original_greek_citation
