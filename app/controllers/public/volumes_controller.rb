@@ -9,6 +9,7 @@ class Public::VolumesController < ApplicationController
   def index
     default_letter = "A"
     @letter = sanitize_letter(params[:letter], default_letter)
+    @is_greek_letter = ('Α'..'Ω').include?(@letter)
 
     @alpha_params_options = {
         bootstrap3: true,
@@ -18,9 +19,12 @@ class Public::VolumesController < ApplicationController
 
     @navigation_list = NavigationList.new(Volume, :sort_title, 'A')
 
+    order_field = @is_greek_letter ? 'sort_title COLLATE "el-GR-x-icu"' : :sort_title
+
     @volumes = Volume.where("sort_title LIKE :prefix", prefix: "#{@letter}%")
-                    .order(:sort_title)
-                    .page(params[:page])
+                   .unscope(:order)
+                   .order(order_field)
+                   .page(params[:page])
   end
 
   # GET /public/volumes/1

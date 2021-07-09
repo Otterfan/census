@@ -6,6 +6,7 @@ class Public::ControlledNameController < ApplicationController
   def index
     default_letter = "A"
     @letter = sanitize_letter(params[:letter], default_letter)
+    @is_greek_letter = ('Α'..'Ω').include?(@letter)
 
     @alpha_params_options = {
         bootstrap3: true,
@@ -15,8 +16,11 @@ class Public::ControlledNameController < ApplicationController
 
     @navigation_list = NavigationList.new(ControlledName, :sort_name, 'A')
 
+    order_field = @is_greek_letter ? 'sort_name COLLATE "el-GR-x-icu"' : :sort_name
+
     @names = ControlledName.where("controlled_name LIKE :prefix", prefix: "#{@letter}%")
-                 .order(:sort_name)
+                 .unscope(:order)
+                 .order(order_field)
                  .page(params[:page])
   end
 

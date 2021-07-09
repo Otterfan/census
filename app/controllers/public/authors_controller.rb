@@ -18,7 +18,7 @@ class Public::AuthorsController < ApplicationController
         js: false
     }
 
-    topic_authors = Person.where(topic_flag: true).where.not(full_name: [nil, ''])
+    topic_authors = Person.where(topic_flag: true).where.not(full_name: [nil, '']).order(:first_name)
 
     @navigation_list = NavigationList.new(topic_authors, :full_name, 'A')
 
@@ -26,11 +26,13 @@ class Public::AuthorsController < ApplicationController
     @greek_navigation_list = NavigationList.new(greek_topic_authors, :greek_full_name, 'Α')
 
     if @is_greek_letter
-      @authors = topic_authors.where("greek_full_name LIKE ?", "#{@letter}%")
+      @authors = Person.where(topic_flag: true).where.not(full_name: [nil, '']).where("greek_full_name LIKE ?", "#{@letter}%")
+                     .unscope(:order)
                      .order(:greek_full_name)
       @is_greek_letter = true
     else
       @authors = topic_authors.where("full_name LIKE ?", "#{@letter}%")
+                     .unscope(:order)
                      .order(:full_name)
       @is_greek_letter = false
     end

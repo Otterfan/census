@@ -8,6 +8,7 @@ class Public::JournalsController < ApplicationController
   def index
     default_letter = "A"
     @letter = sanitize_letter(params[:letter], default_letter)
+    @is_greek_letter = ('Α'..'Ω').include?(@letter)
 
     @alpha_params_options = {
         bootstrap3: true,
@@ -17,8 +18,11 @@ class Public::JournalsController < ApplicationController
 
     @navigation_list = NavigationList.new(Journal, :sort_title, 'A')
 
+    order_field = @is_greek_letter ? 'sort_title COLLATE "el-GR-x-icu"' : :sort_title
+
     @journals = Journal.where("sort_title LIKE :prefix", prefix: "#{@letter}%")
-                    .order(:sort_title)
+                    .unscope(:order)
+                    .order(order_field)
                     .page(params[:page])
   end
 
