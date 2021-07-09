@@ -16,6 +16,8 @@ class Person < ApplicationRecord
   auto_strip_attributes :last_name, :first_name, squish: true
   auto_strip_attributes :full_name, squish: true
   auto_strip_attributes :greek_full_name, squish: true
+  auto_strip_attributes :greek_last_name, squish: true
+  auto_strip_attributes :greek_first_name, squish: true
   auto_strip_attributes :controlled_name, squish: true
 
 
