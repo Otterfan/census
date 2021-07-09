@@ -19,7 +19,7 @@
       <% end %>
     <% end %>
   <% else %>
-    <% if @text.authors %>
+    <% if @text.authors && @text.authors.count > 1 %>
       <dt><%= "Author".pluralize(@text.authors.count) %></dt>
       <% @text.authors.each do |citation| %>
         <dd><%= citation.name %></dd>
