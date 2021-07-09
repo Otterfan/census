@@ -18,11 +18,59 @@ namespace :census do
       cite.save
     end
 
+    TextCitation.where("name LIKE :suffix", suffix: "% ")
+        .or(TextCitation.where("name LIKE :prefix", prefix: " %"))
+        .each do |cite|
+      puts "Stripping #{cite.name}"
+      cite.name = cite.name.strip
+      cite.save
+    end
+
+    TextCitation.where("first_name LIKE :suffix", suffix: "% ")
+        .or(TextCitation.where("first_name LIKE :prefix", prefix: " %"))
+        .each do |cite|
+      puts "Stripping #{cite.first_name}"
+      cite.first_name = cite.first_name.strip
+      cite.save
+    end
+
+    TextCitation.where("last_name LIKE :suffix", suffix: "% ")
+        .or(TextCitation.where("last_name LIKE :prefix", prefix: " %"))
+        .each do |cite|
+      puts "Stripping #{cite.last_name}"
+      cite.last_name = cite.last_name.strip
+      cite.save
+    end
+
     ComponentCitation.where("controlled_name LIKE :suffix", suffix: "% ")
         .or(ComponentCitation.where("controlled_name LIKE :prefix", prefix: " %"))
         .each do |cite|
       puts "Stripping #{cite.controlled_name}"
       cite.controlled_name = cite.controlled_name.strip
+      cite.save
+    end
+
+    ComponentCitation.where("name LIKE :suffix", suffix: "% ")
+        .or(ComponentCitation.where("name LIKE :prefix", prefix: " %"))
+        .each do |cite|
+      puts "Stripping #{cite.name}"
+      cite.name = cite.name.strip
+      cite.save
+    end
+
+    ComponentCitation.where("first_name LIKE :suffix", suffix: "% ")
+        .or(ComponentCitation.where("first_name LIKE :prefix", prefix: " %"))
+        .each do |cite|
+      puts "Stripping #{cite.first_name}"
+      cite.first_name = cite.first_name.strip
+      cite.save
+    end
+
+    ComponentCitation.where("last_name LIKE :suffix", suffix: "% ")
+        .or(ComponentCitation.where("last_name LIKE :prefix", prefix: " %"))
+        .each do |cite|
+      puts "Stripping #{cite.last_name}"
+      cite.last_name = cite.last_name.strip
       cite.save
     end
 
