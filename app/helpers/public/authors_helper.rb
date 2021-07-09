@@ -47,9 +47,13 @@ module Public::AuthorsHelper
 
   def page_count(text)
     if text.text_type.include?('book') && text.page_count
-      text.page_count
+      value = text.page_count.gsub(/.*,(.*)/, '\1')
+      if value == ''
+        value = nil
+      end
     else
-      nil
+      value = nil
     end
+    value
   end
 end
