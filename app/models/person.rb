@@ -13,6 +13,12 @@ class Person < ApplicationRecord
 
   default_scope { order('last_name ASC, first_name ASC') }
 
+  auto_strip_attributes :last_name, :first_name, squish: true
+  auto_strip_attributes :full_name, squish: true
+  auto_strip_attributes :greek_full_name, squish: true
+  auto_strip_attributes :controlled_name, squish: true
+
+
 =begin
   after_commit {
     puts "Person record '#{self.id}' was updated. Will now touch related Text record(s)"

@@ -82,3 +82,6 @@ gem 'select2-rails'
 
 # Maintain top-level domain name list
 gem 'public_suffix'
+
+# Strip extra whitespace from attributes
+gem "auto_strip_attributes", "~> 2.6"
