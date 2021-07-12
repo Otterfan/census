@@ -71,11 +71,10 @@
             <% end %>
 
             <li class="list-group-item referenced-record">
-              <%= link_to (text.title.blank? ? "[No title]" : convert_underscores(text.title)), public_text_path(text) %>
-              <span class="journal-metadata__census-id"><%= text.census_id %></span>
-              <% text.authors.each do |citation| %>
-                <div class="referenced-record-author">
-                  <%= citation.name %>
+              <%= tombstone_title_link(text, @results_formatter, params[:keyword]) %>
+              <% if text.text_type.include? 'study' %>
+                <div class="topic-author">
+                  Topic: <%= render 'shared/topic_author', text: text %>
                 </div>
               <% end %>
               <div class="journal-metadata__genre"><%= text.genre %></div>

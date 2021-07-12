@@ -106,13 +106,12 @@
         <ul class="list-group">
           <% @referenced_texts.each do |text| %>
             <li class="list-group-item referenced-record">
-              <span class="page-span"><%= text.display_page_span %></span> <%= link_to (text.title.blank? ? "[No title]" : convert_underscores(text.title)), public_text_path(text) %>
-              <span class="volume-metadata__census-id"><%= text.census_id %></span>
-              <div>
-                <% text.authors.each do |citation| %>
-                  <%= citation.name %>
-                <% end %>
-              </div>
+              <%= tombstone_title_link(text, @results_formatter, params[:keyword]) %>
+              <% if text.text_type.include? 'study' %>
+                <div class="topic-author">
+                  Topic: <%= render 'shared/topic_author', text: text %>
+                </div>
+              <% end %>
               <div class="volume-metadata__genre"><%= text.genre %></div>
             </li>
           <% end %>

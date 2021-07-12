@@ -25,9 +25,9 @@
   <% end %>
 
 </div>
-<% if (defined? show_topic_author) && show_topic_author == true %>
+<% if text.text_type.include? 'study' %>
   <div class="topic-author">
-    Topic author: <%= render 'shared/topic_author', text: text %>
+    Topic: <%= render 'shared/topic_author', text: text %>
   </div>
 <% end %>
 <div class="result-author">

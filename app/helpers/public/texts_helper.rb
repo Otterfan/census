@@ -2,7 +2,7 @@ require 'uri'
 
 module Public::TextsHelper
   def metadata_row(label, value)
-    if label=='Place of publication'
+    if label == 'Place of publication'
       puts "CHECKING"
       puts value
     end
@@ -11,7 +11,7 @@ module Public::TextsHelper
       return
     end
 
-    if label=='Place of publication'
+    if label == 'Place of publication'
       puts "MADE IT HERE"
     end
 
@@ -92,7 +92,7 @@ module Public::TextsHelper
 
     # TODO tighten up these regex commands - match string up through next '&' char or end of string
     new_path = path.gsub(/#{facet_name}=.*?(&|$)/, '')
-                 .gsub(/&$/, '')
+                   .gsub(/&$/, '')
 
     reset_page_number_in_path(new_path)
   end
@@ -196,15 +196,15 @@ module Public::TextsHelper
   def components_by_collection(components)
     collections = []
     collection = {
-      title: nil,
-      components: []
+        title: nil,
+        components: []
     }
     components.order(:ordinal, :pages, :id).each do |component|
       if component.collection != collection[:title] && collection[:components].count > 0
         collections << collection
         collection = {
-          title: component.collection,
-          components: [component]
+            title: component.collection,
+            components: [component]
         }
       else
         collection[:components] << component
@@ -214,7 +214,7 @@ module Public::TextsHelper
   end
 
   # Formatted link to title as used in tombstones
-  def tombstone_title_link(text, formatter, hilight)
+  def tombstone_title_link(text, formatter = nil, hilight = nil)
     if is_search_result? text
       text = Text.find(text.id)
     end
@@ -232,7 +232,16 @@ module Public::TextsHelper
 
 
     title_string = "#{authors_names}#{connector} #{title_string}"
-    link_to(formatter.format(title_string), title_path)
+
+    # If there is a formatter, use it. If not, we still need to convert
+    # title strings to italic.
+    if formatter
+      formatted_string = formatter.format(title_string)
+    else
+      formatted_string = Public::TextsController.helpers.convert_underscores(title_string)
+    end
+
+    link_to(formatted_string, title_path)
   end
 
   # Returns true if the text is from a search result.
