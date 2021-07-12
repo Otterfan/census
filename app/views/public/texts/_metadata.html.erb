@@ -24,6 +24,11 @@
       <% @text.authors.each do |citation| %>
         <dd><%= citation.name %></dd>
       <% end %>
+    <% elsif @text.authors && @text.authors.count == 1 %>
+      <dt>Author</dt>
+      <% @text.authors.each do |citation| %>
+        <dd><%= citation.name %></dd>
+      <% end %>
     <% end %>
   <% end %>
 
