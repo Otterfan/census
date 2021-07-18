@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_09_023819) do
+ActiveRecord::Schema.define(version: 2021_07_18_213150) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -151,7 +151,9 @@ ActiveRecord::Schema.define(version: 2021_07_09_023819) do
     t.string "url"
     t.string "first_published"
     t.text "notes"
+    t.bigint "see_journal_id"
     t.index ["place_id"], name: "index_journals_on_place_id"
+    t.index ["see_journal_id"], name: "index_journals_on_see_journal_id"
   end
 
   create_table "languages", force: :cascade do |t|
@@ -424,6 +426,7 @@ ActiveRecord::Schema.define(version: 2021_07_09_023819) do
   add_foreign_key "component_citations", "languages", column: "to_language_id"
   add_foreign_key "components", "texts"
   add_foreign_key "cross_references", "texts"
+  add_foreign_key "journals", "journals", column: "see_journal_id"
   add_foreign_key "people", "people", column: "see_person_id"
   add_foreign_key "places", "countries"
   add_foreign_key "standard_numbers", "texts"

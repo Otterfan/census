@@ -59,6 +59,8 @@
     <%= f.input :notes %>
   </div>
 
+  <%= f.association :see_journal, collection: Journal.order(:title), :label_method => lambda { |journal| "#{journal.title}" } %>
+
   <div class="form-actions">
     <%= f.button :submit %>
   </div>

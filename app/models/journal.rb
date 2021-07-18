@@ -1,5 +1,7 @@
 class Journal < ApplicationRecord
   belongs_to :place, optional: true
+  belongs_to :see_journal, :class_name => "Journal", :foreign_key => "see_journal_id", optional: true
+
   has_many :texts
   default_scope { order(sort_title: :asc) }
 

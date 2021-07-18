@@ -20,9 +20,22 @@
     <ul class="list-group">
       <% @journals.each do |journal| %>
         <li class="list-group-item browse-journals__entry">
+        <% if journal.see_journal %>
+
+            <span class="topic-author-english"><%= journal.title %></span>
+            see <span class="topic-author-see-person">
+              <a href="<%= public_journal_path(journal.see_journal) %>">
+                <%= journal.see_journal.title %>
+              </a>
+            </span>
+
+        <% else %>
           <div class="browse-journals__linked-header">
             <span class="browse-journals__full_name"><%= link_to journal.title, public_journal_path(journal.id) %></span>
           </div>
+        <% end %>
+
+
         </li>
       <% end %>
     </ul>
