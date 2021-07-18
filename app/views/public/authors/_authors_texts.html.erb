@@ -1,7 +1,7 @@
 <div class="authors-texts">
   <ul class="list-group" id="search-results">
 
-    <% texts.order(:sort_census_id).each do |text| %>
+    <% texts.each do |text| %>
 
       <li class="list-group-item">
         <% if text['_source']
