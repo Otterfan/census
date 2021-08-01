@@ -16,6 +16,11 @@
       <% @volumes.each do |volume| %>
         <li class="list-group-item">
           <%= link_to (volume.title.blank? ? "[No title]" : volume.title), public_volume_path(volume) %>
+          <% if volume.brief_result_note %>
+            <div class="browse-page__brief-result-note">
+              <%= volume.brief_result_note %>
+            </div>
+          <% end %>
         </li>
       <% end %>
     </ul>

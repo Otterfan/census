@@ -82,6 +82,6 @@ class JournalsController < ApplicationController
     params.require(:journal)
         .permit(:title, :sort_title, :place_id, :issn, :indexed_range,
                 :sponsoring_organization, :issn_1, :issn_2, :issn_3, :eissn,
-                :url, :first_published, :notes, :see_journal_id)
+                :url, :first_published, :notes, :brief_result_note, :see_journal_id)
   end
 end

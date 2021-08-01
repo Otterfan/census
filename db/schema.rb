@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_18_213150) do
+ActiveRecord::Schema.define(version: 2021_08_01_190928) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -152,6 +152,7 @@ ActiveRecord::Schema.define(version: 2021_07_18_213150) do
     t.string "first_published"
     t.text "notes"
     t.bigint "see_journal_id"
+    t.text "brief_result_note"
     t.index ["place_id"], name: "index_journals_on_place_id"
     t.index ["see_journal_id"], name: "index_journals_on_see_journal_id"
   end
@@ -417,6 +418,7 @@ ActiveRecord::Schema.define(version: 2021_07_18_213150) do
     t.string "conference_title"
     t.string "conference_place"
     t.string "conference_date"
+    t.text "brief_result_note"
   end
 
   add_foreign_key "comments", "texts"

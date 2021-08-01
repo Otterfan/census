@@ -75,10 +75,10 @@ main {
       line-height: 16px;
     }
 
-   .remove-button {
+    .remove-button {
       float: right;
-     border: 1px groove gray;
-     background: #fff;
+      border: 1px groove gray;
+      background: #fff;
       padding: .5em;
     }
 
@@ -396,4 +396,9 @@ a.skip:hover {
   border: 1px solid lightgray;
   background: #f6f3f6;
   padding: 1em 0;
+}
+
+.input-form__note {
+  position: relative;
+  top: -14px;
 }

@@ -57,6 +57,12 @@
 
   <div class="form-inputs">
     <%= f.input :notes %>
+    <span class="input-form__note">Displays in full record view.</span>
+  </div>
+
+  <div class="form-inputs">
+    <%= f.input :brief_result_note %>
+    <span class="input-form__note">Displays in record lists.</span>
   </div>
 
   <%= f.association :see_journal, collection: Journal.order(:title), :label_method => lambda { |journal| "#{journal.title}" } %>

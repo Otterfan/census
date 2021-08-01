@@ -28,11 +28,21 @@
                 <%= journal.see_journal.title %>
               </a>
             </span>
+            <% if journal.brief_result_note %>
+              <div class="browse-page__brief-result-note">
+                <%= journal.brief_result_note %>
+              </div>
+            <% end %>
 
         <% else %>
           <div class="browse-journals__linked-header">
             <span class="browse-journals__full_name"><%= link_to journal.title, public_journal_path(journal.id) %></span>
           </div>
+            <% if journal.brief_result_note %>
+              <div class="browse-page__brief-result-note">
+                <%= journal.brief_result_note %>
+              </div>
+            <% end %>
         <% end %>
 
 
