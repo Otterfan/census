@@ -73,6 +73,12 @@
             <li class="list-group-item referenced-record">
               <%= formatted_page_span(text) %>
               <%= tombstone_title_link(text, @results_formatter, params[:keyword]) %>
+
+              <% if !text.urls.empty? %>
+                <a class="available-online-notice" href="<%= text.urls[0].value %>" target="_blank" rel="noopener"><span class="badge badge-primary"><%= text.urls[0].top_level_domain %></span>
+                  <i class="fas fa-external-link-alt"></i></a>
+              <% end %>
+
               <% if text.text_type.include? 'study' %>
                 <div class="topic-author">
                   Topic: <%= render 'shared/topic_author', text: text %>
