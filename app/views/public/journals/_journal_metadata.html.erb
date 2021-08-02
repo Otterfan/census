@@ -71,6 +71,7 @@
             <% end %>
 
             <li class="list-group-item referenced-record">
+              <%= formatted_page_span(text) %>
               <%= tombstone_title_link(text, @results_formatter, params[:keyword]) %>
               <% if text.text_type.include? 'study' %>
                 <div class="topic-author">
