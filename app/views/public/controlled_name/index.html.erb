@@ -19,14 +19,19 @@
     </div>
     <ul class="list-group">
       <% @names.each do |name| %>
+        <% text_count =  person_text_count(name).to_i %>
         <li class="list-group-item browse-people__entry">
           <div class="browse-people__linked-header">
-            <span class="browse-people__full_name"><%= link_to name.controlled_name, public_controlled_name_path(name) %></span>
-            <span class="browse-people__texts-count">(<%= person_text_count(name) %>)</span>
+            <% if text_count > 0 %>
+            <span class="browse-people__full_name"><%= link_to name.controlled_name, "/public/people/#{name.linking_name}" %></span>
+              <span class="browse-people__texts-count">(<%= pluralize(text_count, 'text') %>)</span>
+          <% else %>
+              <span class="browse-people__full_name"><%= name.controlled_name %></span>
+          <% end %>
           </div>
           <% if name.topic_flag %>
             <div class="browse-people__link-to-topic-author">
-              <a href="/public/authors/<%= name.person_link %>">See also author record</a>
+              <a href="/public/authors/<%= name.person_link %>">See <% if text_count > 0 %>also<% end %> author record</a>
             </div>
           <% end %>
           <div class="browse-people__roles">
