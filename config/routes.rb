@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
+  namespace :public do
+    get 'pages/privacy'
+  end
   get 'robots/show'
   get 'texts/:census_id', to: 'texts#edit', constraints: { census_id: /\d\.\d+-?\d+/ }
   get 'texts/:census_id/edit', to: 'texts#edit', constraints: { census_id: /\d\.\d+-?\d+/ }
   get 'public/texts/:census_id', to: 'public/texts#show', constraints: { census_id: /\d\.\d+-?\d+/ }
+  get 'public/privacy', to: 'public/pages#privacy'
 
   resources :versions, :path => '/changes', :only => [:index, :show]
   resources :comments

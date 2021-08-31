@@ -402,3 +402,62 @@ a.skip:hover {
   position: relative;
   top: -14px;
 }
+
+// Cookie bar
+.cookies-bar {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+
+  padding: 20px;
+
+  border: 1px solid #9CA3AF;
+  border-bottom: none;
+  background-color: #2b4a89;
+  color: #ffffff;
+
+
+  @media (min-width: 768px) {
+    align-items: center;
+    margin: 0 auto;
+    padding-bottom: 0;
+
+    a, a:active, a:hover {
+      color: #dddddd;
+      text-decoration: underline;
+    }
+
+    .cookies-bar__text {
+      width: 65%;
+    }
+
+    .cookies-bar__button-row {
+      padding-bottom: 1em;
+    }
+
+    .cookie-bar__reject {
+      background: transparent;
+      border: 1px solid #9b9b9b;
+      color: #dddddd;
+    }
+
+    .cookie-bar__accept {
+      background: #e6d921;
+      color: #000000;
+    }
+
+    .cookie-bar__accept:hover, .cookie-bar__accept:active {
+      background: #c7bc1b;
+      color: #000000;
+    }
+
+    form {
+      display: inline-block;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      margin-left: 10px;
+    }
+  }
+}
