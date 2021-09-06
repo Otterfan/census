@@ -58,12 +58,7 @@ class Public::AuthorsController < ApplicationController
   end
 
   def show
-    types = [
-        'translation_book',
-        'translation_part',
-        'study_book',
-        'study_part'
-    ]
+    types = %w[translation_book translation_part study_book study_part]
 
     has_examples = false
     idx = 0

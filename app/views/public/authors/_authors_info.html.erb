@@ -17,7 +17,7 @@
       <% if @author.viaf %>
         <div class="auth-name row">
           <span class="auth-name__heading col-md-12">VIAF</span>
-          <span class="auth-name__value col-md-12"><a href="<%= @author.viaf %>"><%= @author.viaf %></span>
+          <span class="auth-name__value col-md-12"><a href="<%= @author.viaf %>"><%= @author.viaf %></a></span>
         </div>
       <% end %>
     </div>
@@ -34,6 +34,15 @@
   </div>
   <div class="places-map">
     <h3>Places of publication</h3>
+    <ul class="countries-of-publication-list">
+      <% @author.translation_countries.by_name.each do |country| %>
+        <li>
+          <a href="/public/search?type=adv&bq=(author_heading::<%= @author.full_name %>)--AND--(publication_countries::<%= country[1].name %>)">
+            <%= country[1].name %>
+          </a>
+        </li>
+      <% end %>
+    </ul>
     <div id="map-contents" style=""></div>
   </div>
   <% if @author.translations_years.length > 2 %>

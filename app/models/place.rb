@@ -16,4 +16,10 @@ class Place < ApplicationRecord
   }
 =end
 
+  def country_name
+    if country
+      country.name
+    end
+    nil
+  end
 end

@@ -103,24 +103,22 @@ class Person < ApplicationRecord
 
   def translation_countries
     unless @translation_countries
-      @translation_countries = get_text_countries translations
+      @translation_countries = get_text_countries texts
     end
     @translation_countries
   end
 
   def get_text_countries(texts)
-    countries = {}
+    countries = CountryList.new
+
     texts.each do |text|
       text.places.each do |place|
         if place.country
-          if countries[place.country.al3_code]
-            countries[place.country.al3_code] = countries[place.country.al3_code] + 1
-          else
-            countries[place.country.al3_code] = 1
-          end
+          countries.add_country(place.country)
         end
       end
     end
+
     countries
   end
 

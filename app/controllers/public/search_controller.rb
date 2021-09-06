@@ -29,6 +29,7 @@ class Public::SearchController < ApplicationController
       :collection_title,
       :original_greek_title,
       :publication_place,
+      :publication_countries,
       :publisher,
       :series,
       :sponsoring_organization,
@@ -730,6 +731,8 @@ class Public::SearchController < ApplicationController
                 add_field_adv_search(['original_greek_title', 'original_greek_title.el_folded'], clean_search_string, @current_bool_op)
               when "publication_place"
                 add_field_adv_search(PUBLICATION_PLACES, clean_search_string, @current_bool_op)
+              when "publication_countries"
+                add_field_adv_search(['publication_countries'], clean_search_string, @current_bool_op)
               when "publisher"
                 add_field_adv_search(['publisher', 'publisher.en_folded', 'publisher.el_folded'], clean_search_string, @current_bool_op)
               when "series"

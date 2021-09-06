@@ -217,7 +217,9 @@ class Text < ApplicationRecord
             :original_collections,
             :original_source,
             :translators_names,
-            :editors_names
+            :editors_names,
+            :is_translation,
+            :publication_countries
         ],
         include: {
             text_citations: {
@@ -691,6 +693,20 @@ class Text < ApplicationRecord
 
   def available_online
     urls.any? { |u| u.value.include?('http') } ? 'available online' : ''
+  end
+
+  def is_translation
+    text_type.respond_to?(:starts_with?) && text_type.starts_with?('translat')
+  end
+
+  def publication_countries
+    country_list = CountryList.new
+    places.each do |place|
+      if place.country
+        country_list.add_country(place.country)
+      end
+    end
+    country_list.names
   end
 
   # Returns a message if the Census ID is invalid

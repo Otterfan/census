@@ -52,8 +52,6 @@
 
 
 <script>
-    draw_map();
-
     <% if @author.translations_years.length > 2 %>
     draw_histogram();
     <% end %>
@@ -97,41 +95,4 @@
         Plotly.newPlot('histogram-contents', data, layout, {displayModeBar: false});
     }
 
-    function draw_map() {
-        var data = [{
-            type: 'choropleth',
-            locations: [<%= country_code_list(@author) %>],
-            z: <%= country_count_list(@author) %>,
-            text: [<%= country_code_list(@author) %>],
-            showscale: false,
-            colorscale: [
-                [0, 'rgb(242,240,247)'], [0.4, 'rgb(218,218,235)'],
-                [0.6, 'rgb(188,189,220)'], [0.8, 'rgb(158,154,200)'],
-                [0.8, 'rgb(117,107,177)'], [1, 'rgb(84,39,143)']
-            ]
-        }];
-
-        var layout = {
-            dragmode: false,
-            title: null,
-            showscale: false,
-            showlegend: false,
-            height: 200,
-            margin: {
-                l: 0,
-                r: 50,
-                b: 0,
-                t: 0,
-                pad: 4
-            },
-            geo: {
-                scope: 'world',
-                projection: {
-                    type: 'robinson'
-                },
-                showscale: false
-            }
-        };
-        Plotly.plot('map-contents', data, layout, {showLink: false, displayModeBar: false});
-    }
 </script>
