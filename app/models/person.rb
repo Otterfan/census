@@ -139,7 +139,7 @@ class Person < ApplicationRecord
       @names_in_source = []
       texts.each do |text|
         if text.authors_name_from_source && text.authors_name_from_source.count('a-zA-Z') > 0
-          @names_in_source << text.authors_name_from_source.strip
+          @names_in_source << normalize_name(text.authors_name_from_source)
         end
       end
       @names_in_source.sort!.uniq!
@@ -155,6 +155,26 @@ class Person < ApplicationRecord
   def has_texts_of_type?(type)
     count = texts.where('text_type = ?', type).count
     count > 0
+  end
+
+  def normalize_name(name)
+    # Remove extraneous whitespace.
+    name.strip!
+    name.gsub!(/  +/, ' ')
+
+    # Remove bracketed things like [sic]
+    anything_in_brackets = /\[[^\]]*]/
+    name.gsub!(anything_in_brackets, '')
+
+    # Make sure single letters have periods.
+    middle_initial_missing_a_period = /([ .][B-Z]) /
+    starting_initial_missing_a_period = /^([B-Z] )/
+    ending_initial_missing_a_period = /([B-Z])$/
+    name.gsub!(starting_initial_missing_a_period, '\1.')
+    name.gsub!(ending_initial_missing_a_period, '\1.')
+    name.gsub!(middle_initial_missing_a_period, '\1.')
+
+    name
   end
 
 end
