@@ -4,7 +4,7 @@
     <%# Display all letters in the navigation list %>
     <% all_letters = ('A'..'Z').to_a %>
     <% all_letters.each do |letter| %>
-          <span class="authors-nav__letter <%= 'authors-nav__letter--selected' if letter == @navigation_list.first_letter %>">
+          <span class="authors-nav__letter <%= 'authors-nav__letter--selected' if letter == @letter %>">
 
             <%# Only show links for letters that have content. Otherwise show normal text. %>
             <% if @navigation_list.letters.include?(letter) %>
@@ -21,7 +21,7 @@
     <%# Display all letters in the navigation list %>
     <% all_letters = ('Α'..'Ω').to_a %>
     <% all_letters.each do |letter| %>
-          <span class="authors-nav__letter <%= 'authors-nav__letter--selected' if letter == @navigation_list.first_letter %>">
+          <span class="authors-nav__letter <%= 'authors-nav__letter--selected' if letter == @letter %>">
 
             <%# Only show links for letters that have content. Otherwise show normal text. %>
             <% if @navigation_list.letters.include?(letter) %>
