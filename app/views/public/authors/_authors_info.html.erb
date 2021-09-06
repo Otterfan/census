@@ -1,4 +1,4 @@
-<div class="authors-info">
+<div class="authors-info col-md-8">
   <% if @author.loc_name || @author.greek_authority %>
     <h2>Authority names</h2>
     <div class="auth-names">
@@ -22,24 +22,6 @@
       <% end %>
     </div>
   <% end %>
-  <div class="authors-names-list">
-    <% if @author.alternate_name %>
-      <h3>Alternate names</h3>
-      <ul class="alternate-names">
-        <% @author.alternate_name_list.each do |name| %>
-          <li><%= name %></li>
-        <% end %>
-      </ul>
-    <% end %>
-    <h3>Appears in CENSUS as</h3>
-    <ul class="appears-as-list">
-      <% @author.names_in_source.each do |name| %>
-        <li>
-          <a href="/public/search?type=adv&bq=(authors_name_from_source::<%= name %>)"><%= name %></a>
-        </li>
-      <% end %>
-    </ul>
-  </div>
   <div class="places-map">
     <h3>Places of publication</h3>
     <ul class="countries-of-publication-list">
@@ -59,4 +41,24 @@
       <div id="histogram-contents" style=""></div>
     </div>
   <% end %>
+</div>
+<div class="authors-names-lists col-md-4">
+  <div class="authors-names-lists__info-box">
+    <% if @author.alternate_name %>
+      <h3>Alternate names</h3>
+      <ul class="alternate-names">
+        <% @author.alternate_name_list.each do |name| %>
+          <li><%= name %></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <h3>Appears in CENSUS as</h3>
+    <ul class="appears-as-list">
+      <% @author.names_in_source.each do |name| %>
+        <li>
+          <a href="/public/search?type=adv&bq=(authors_name_from_source::<%= name %>)"><%= name %></a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 </div>
