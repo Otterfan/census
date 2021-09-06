@@ -15,7 +15,11 @@
     <% elsif @text.authors && @text.authors.count == 1 %>
       <dt>Author</dt>
       <% @text.authors.each do |citation| %>
-        <dd><%= @text.authors_name_from_source %> (<%= citation.name %>)</dd>
+        <dd><%= @text.authors_name_from_source %>
+          <% if @text.authors_name_from_source != citation.name %>
+            (<%= citation.name %>)
+          <% end %>
+        </dd>
       <% end %>
     <% end %>
   <% else %>
