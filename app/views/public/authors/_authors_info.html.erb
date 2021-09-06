@@ -22,7 +22,15 @@
       <% end %>
     </div>
   <% end %>
-  <div class="authors-names">
+  <div class="authors-names-list">
+    <% if @author.alternate_name %>
+      <h3>Alternate names</h3>
+      <ul class="alternate-names">
+        <% @author.alternate_name_list.each do |name| %>
+          <li><%= name %></li>
+        <% end %>
+      </ul>
+    <% end %>
     <h3>Appears in CENSUS as</h3>
     <ul class="appears-as-list">
       <% @author.names_in_source.each do |name| %>

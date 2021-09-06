@@ -122,6 +122,10 @@ class Person < ApplicationRecord
     countries
   end
 
+  def alternate_name_list
+    alternate_name.split"\n"
+  end
+
   def alternate_name_clean
     if alternate_name
       # duplicate the original field for our transformations
