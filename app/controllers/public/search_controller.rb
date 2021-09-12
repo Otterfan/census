@@ -40,7 +40,8 @@ class Public::SearchController < ApplicationController
       :illustrations_noted,
       :is_special_issue,
       :is_collected_volume,
-      :authors_name_from_source
+      :authors_name_from_source,
+      :authors_name_from_source_exact
   ]
 
   SEARCH_PARAMS = KEYWORD_SEARCH_PARAMS + ADVANCED_SEARCH_PARAMS
@@ -175,6 +176,7 @@ class Public::SearchController < ApplicationController
     topic_author.alternate_name_clean.el_folded^10
 
     authors_name_from_source
+    authors_name_from_source.exact
     authors_name_from_source.el_folded
     authors_name_from_source.en_folded
 
@@ -375,7 +377,6 @@ class Public::SearchController < ApplicationController
     # complex associated models use dot notation, e.g., publication_places.place.name
     @kw_query_string_hash = {}
     if kw_param.present?
-      puts "in here"
       @kw_query_string_hash = {
           query_string: {
               fields: KEYWORD_FIELDS,
@@ -759,8 +760,8 @@ class Public::SearchController < ApplicationController
                 @illustrations_noted = true
               when "authors_name_from_source"
                 add_field_adv_search(['authors_name_from_source'], clean_search_string, @current_bool_op)
-              else
-
+              when "authors_name_from_source_exact"
+                add_field_adv_search(['authors_name_from_source.exact'], clean_search_string, @current_bool_op)
               end
             end
           else

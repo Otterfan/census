@@ -44,7 +44,18 @@
 </div>
 <div class="authors-names-lists col-md-4">
   <div class="authors-names-lists__info-box">
-    <% if @author.alternate_name %>
+
+    <h3>Appears in CENSUS as</h3>
+    <ul class="appears-as-list">
+      <% @author.names_in_source.each do |name| %>
+        <li>
+          <a href='/public/search?type=adv&bq=(authors_name_from_source_exact::"<%= name %>")'><%= name %></a>
+        </li>
+      <% end %>
+    </ul>
+
+    <% unless @author.alternate_name.empty? %>
+      "<%= @author.alternate_name %>"
       <h3>Alternate names</h3>
       <ul class="alternate-names">
         <% @author.alternate_name_list.each do |name| %>
@@ -52,13 +63,6 @@
         <% end %>
       </ul>
     <% end %>
-    <h3>Appears in CENSUS as</h3>
-    <ul class="appears-as-list">
-      <% @author.names_in_source.each do |name| %>
-        <li>
-          <a href="/public/search?type=adv&bq=(authors_name_from_source::<%= name %>)"><%= name %></a>
-        </li>
-      <% end %>
-    </ul>
+
   </div>
 </div>
