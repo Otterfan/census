@@ -1,8 +1,17 @@
 namespace :census do
-  desc "Touch all records"
+  desc "Touch all text records"
   task save_all_records: :environment do
     Text.find_each do |text|
       text.save
+      sleep(0.1)
+    end
+  end
+
+  desc "Touch all people records"
+  task save_all_people: :environment do
+    Person.find_each do |person|
+      puts "Saving #{person.id}..."
+      person.save
       sleep(0.1)
     end
   end

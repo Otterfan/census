@@ -1,5 +1,6 @@
 class Person < ApplicationRecord
   include SharedMethods
+  include PersonSortable
 
   has_many :components, through: :component_citations
 
@@ -167,7 +168,7 @@ class Person < ApplicationRecord
     name.gsub!(/  +/, ' ')
 
     # Remove bracketed things like [sic]
-    anything_in_brackets = /\[[^\]]*]/
+    anything_in_brackets = /\[[^\]]*\]/
     name.gsub!(anything_in_brackets, '')
 
     # Make sure single letters have periods.

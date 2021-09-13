@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_12_215458) do
+ActiveRecord::Schema.define(version: 2021_09_13_175152) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -192,6 +192,7 @@ ActiveRecord::Schema.define(version: 2021_09_12_215458) do
     t.string "greek_authority"
     t.string "loc_name"
     t.bigint "see_person_id"
+    t.text "sort_full_name"
     t.index ["see_person_id"], name: "index_people_on_see_person_id"
     t.index ["topic_flag"], name: "index_people_on_topic_flag"
   end

@@ -221,7 +221,7 @@ module Searchable
                   methods: [:top_level_domain]
               },
               topic_author: {
-                  except: [:created_at, :updated_at],
+                  except: [:created_at, :updated_at, :sort_full_name],
                   methods: [:alternate_name_clean],
               },
               status: {
