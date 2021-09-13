@@ -7,6 +7,9 @@ class Public::AuthorsController < ApplicationController
 
   before_action :authenticate_user!
 
+  STUDY_SORT_FIELDS = {sort_author: :asc, sort_title: :asc}
+  TRANSLATION_SORT_FIELDS = {sort_title: :asc, sort_translator: :asc}
+
   def index
     default_letter = "A"
     @letter = sanitize_letter(params[:letter], default_letter)
@@ -45,7 +48,7 @@ class Public::AuthorsController < ApplicationController
     type = params[:medium] == 'articles' ? "#{type}_part" : "#{type}_book"
 
     # Studies sort by author, translations by title.
-    sort_option = params[:genre] == 'studies' ? {sort_author: :asc, sort_title: :asc} : {sort_title: :asc}
+    sort_option = params[:genre] == 'studies' ? STUDY_SORT_FIELDS : TRANSLATION_SORT_FIELDS
 
     @results_formatter = BriefResultFormatter.new([], [], [])
     @author = Person.find(params[:id])

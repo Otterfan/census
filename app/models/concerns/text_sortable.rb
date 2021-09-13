@@ -1,4 +1,4 @@
-module TextSortBuilders
+module TextSortable
 
   extend ActiveSupport::Concern
 
@@ -8,6 +8,7 @@ module TextSortBuilders
     before_save :calculate_sort_page_span
     before_save :calculate_sort_date
     before_save :calculate_sort_author
+    before_save :calculate_sort_translator
   end
 
   def calculate_sort_title
@@ -67,6 +68,14 @@ module TextSortBuilders
     if self.sort_author == ''
       self.sort_author = editors_names.join('; ')
     end
+  end
+
+  def calculate_sort_translator
+    if self.translators_names.empty?
+      return ''
+    end
+
+    self.sort_translator = translators_names[0]
   end
 
 end
