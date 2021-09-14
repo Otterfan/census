@@ -1,6 +1,14 @@
 module Public::AuthorsHelper
-  def years_list(author)
-    author.translations_years.sort.join ', '
+  def years_list(years)
+    years.sort.join(', ')
+  end
+
+  def translations_years_list(author)
+    years_list(author.translations_years)
+  end
+
+  def studies_years_list(author)
+    years_list(author.studies_years)
   end
 
   def earliest_translation(author)

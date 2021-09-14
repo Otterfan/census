@@ -52,23 +52,65 @@
 
 
 <script>
-    <% if @author.translations_years.length > 2 %>
     draw_histogram();
-    <% end %>
 
     function draw_histogram() {
-        var x = [<%= years_list(@author) %>];
+        var translationsYears = [<%= translations_years_list(@author) %>];
+        var studiesYears = [<%= studies_years_list(@author) %>];
 
-        var bins = Math.max(...x) - Math.min(...x);
-        console.log('Will have ' + 20 + 'bins');
-        console.log(x);
+        var combinedYears = translationsYears.concat(studiesYears);
 
-        var trace = {
-            x: x,
+        var buckets = {};
+
+        combinedYears.forEach(year => {
+            if (buckets[year]) {
+                buckets[year]++;
+            } else {
+                buckets[year] = 1;
+            }
+        });
+
+        var biggestBucketSize = 0;
+        for (const [key, value] of Object.entries(buckets)) {
+            biggestBucketSize = biggestBucketSize < value ? value : biggestBucketSize;
+        }
+
+        console.log(buckets);
+
+        var minYear = Math.min(...combinedYears);
+        var maxYear = Math.max(...combinedYears);
+
+        var yearSpan = maxYear - minYear;
+        console.log('Will have ' + yearSpan + 'bins');
+
+        var binSize = 1;
+        if (yearSpan > 50) {
+            binSize = 5;
+        }
+
+        var minTick = minYear;
+        var maxTick = maxYear + 1;
+
+        if (yearSpan < 11) {
+            maxTick = minYear + 10;
+        }
+
+        // Add nulls to data to force trace to render even
+        // if empty.
+        if (studiesYears.length ===0) {
+            studiesYears.push(null);
+        }
+        if (translationsYears.length ===0) {
+            translationsYears.push(null);
+        }
+
+        var translationsTrace = {
+            x: translationsYears,
+            name: 'By <%= @author.full_name %>',
             xbins: {
-                start: 0,
-                end: 4000,
-                size: 1,
+                start: minYear - 1,
+                end: maxTick,
+                size: binSize
             },
             type: 'histogram',
             marker: {
@@ -79,8 +121,38 @@
                 },
             }
         };
-        var data = [trace];
+
+        var studiesTrace = {
+            x: studiesYears,
+            name: 'About <%= @author.full_name %>',
+            xbins: {
+                start: minTick,
+                end: maxTick,
+                size: binSize
+            },
+            type: 'histogram',
+            marker: {
+                dtick: 1,
+                color: "rgba(167, 177, 107, 0.7)",
+                line: {
+                    color: "rgba(255,189,220, .04)",
+                    width: 1
+                },
+            }
+        };
+
+        var data = [translationsTrace, studiesTrace];
         var layout = {
+            yaxis: {
+                autotick: (biggestBucketSize > 3),
+                dtick: 1
+            },
+            xaxis: {
+                autotick: (yearSpan > 5),
+                dtick: 1,
+                range: [minTick,maxTick]
+            },
+            barmode: 'stack',
             margin: {
                 l: 40,
                 r: 40,
@@ -93,6 +165,16 @@
             bargroupgap: .1
         };
         Plotly.newPlot('histogram-contents', data, layout, {displayModeBar: false});
+
+        var myPlot = document.getElementById('histogram-contents');
+        myPlot.on('plotly_click', function(data){
+            console.log(data);
+            var pts = '';
+            for(var i=0; i < data.points.length; i++){
+                pts = 'x = '+data.points[i].x +'\ny = '+
+                    data.points[i].y.toPrecision(4) + '\n\n';
+            }
+        });
     }
 
 </script>

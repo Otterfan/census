@@ -1,4 +1,4 @@
-class CookieBar {
+class CoookieBar {
     constructor() {
         this.cookiesBar = document.getElementById('cookies-bar');
     }
@@ -48,6 +48,6 @@ class CookieBar {
 }
 
 window.onload = function () {
-    const cookieBar = new CookieBar();
+    const cookieBar = new CoookieBar();
     cookieBar.init();
 }

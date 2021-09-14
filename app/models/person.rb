@@ -91,6 +91,13 @@ class Person < ApplicationRecord
     @translation_years
   end
 
+  def studies_years
+    unless @studies_years
+      @studies_years = get_text_years studies
+    end
+    @studies_years
+  end
+
   def get_text_years(texts)
     years = []
     texts.each do |text|
