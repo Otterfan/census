@@ -71,7 +71,7 @@
             <% end %>
 
             <li class="list-group-item referenced-record">
-              <%= formatted_page_span(text) %>
+              <span class="journal__item-page-span"><%= formatted_page_span(text) %></span>
               <%= tombstone_title_link(text, @results_formatter, params[:keyword]) %>
 
               <% if !text.urls.empty? %>
