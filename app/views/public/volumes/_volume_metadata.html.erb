@@ -10,10 +10,8 @@
       <% @editors.each do |citation| %>
         <% if citation.first_name.present? || citation.last_name.present? %>
           <dd>
-            <% if citation.first_name.present? %><%= citation.first_name %>
-            <% end %>
-            <% if citation.last_name.present? %><%= citation.last_name %>
-            <% end %>
+            <% if citation.last_name.present? %><%= citation.last_name %>,<% end %>
+            <% if citation.first_name.present? %><%= citation.first_name %><% end %>
           </dd>
         <% end %>
       <% end %>
