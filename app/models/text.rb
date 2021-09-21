@@ -318,11 +318,11 @@ class Text < ApplicationRecord
 
   def display_text_type
     if text_type === 'translation_part'
-      'Translation (part)'
+      'Translation (item)'
     elsif text_type === 'translation_book'
       'Translation (volume)'
     elsif text_type === 'study_part'
-      'Study (part)'
+      'Study (item)'
     else
       'Study (volume)'
     end

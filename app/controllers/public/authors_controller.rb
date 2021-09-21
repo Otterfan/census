@@ -42,9 +42,9 @@ class Public::AuthorsController < ApplicationController
 
   def show_by_type
 
-    # Build text type, e.g. "study_book", "translation_article"
+    # Build text type, e.g. "study_book", "translation_items"
     type = params[:genre] == 'studies' ? 'study' : 'translation'
-    type = params[:medium] == 'articles' ? "#{type}_part" : "#{type}_book"
+    type = params[:medium] == 'items' ? "#{type}_part" : "#{type}_book"
 
     # Studies sort by author, translations by title.
     sort_option = params[:genre] == 'studies' ? STUDY_SORT_FIELDS : TRANSLATION_SORT_FIELDS
@@ -76,7 +76,7 @@ class Public::AuthorsController < ApplicationController
     end
 
     genre = type.include?('study') ? 'studies' : 'translations'
-    medium = type.include?('book') ? 'books' : 'articles'
+    medium = type.include?('book') ? 'books' : 'items'
 
     redirect_to "/public/authors/#{params[:id]}/#{genre}/#{medium}"
 

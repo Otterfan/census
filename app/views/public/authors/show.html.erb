@@ -17,8 +17,8 @@
 
   <% if @author.has_texts_of_type?('translation_part') %>
     <li role="presentation" <%= active_class_notice('translation_part') %>>
-      <a href="/public/authors/<%= @author.id %>/translations/articles" aria-controls="texts" role="tab">Translations
-        (articles)</a>
+      <a href="/public/authors/<%= @author.id %>/translations/items" aria-controls="texts" role="tab">Translations
+        (items)</a>
     </li>
   <% end %>
 
@@ -30,8 +30,8 @@
 
   <% if @author.has_texts_of_type?('study_part') %>
     <li role="presentation" <%= active_class_notice('study_part') %>>
-      <a href="/public/authors/<%= @author.id %>/studies/articles" aria-controls="texts" role="tab">Studies
-        (articles)</a>
+      <a href="/public/authors/<%= @author.id %>/studies/items" aria-controls="texts" role="tab">Studies
+        (items)</a>
     </li>
   <% end %>
 

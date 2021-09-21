@@ -57,11 +57,11 @@ module Public::TextsHelper
     # https://github.com/BCDigSchol/census/issues/140
     case value.downcase
     when "study_part"
-      value = "Study (component)"
+      value = "Study (item)"
     when "study_book"
       value = "Study (volume)"
     when "translation_part"
-      value = "Translation (component)"
+      value = "Translation (item)"
     when "translation_book"
       value = "Translation (volume)"
     end
