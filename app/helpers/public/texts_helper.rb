@@ -33,17 +33,23 @@ module Public::TextsHelper
       return value
     end
 
-    retval = ""
-    start_tag = true
+    converted_string = ""
+    em_tag_is_open = false
 
-    value.each_char do |c|
-      if c == '_'
-        c = start_tag ? '<em>' : '</em>'
-        start_tag = !start_tag
+    value.each_char do |char|
+      if char == '_'
+        char = em_tag_is_open ? '</em>' : '<em>'
+        em_tag_is_open = !em_tag_is_open
       end
-      retval = retval << c
+      converted_string = converted_string << char
     end
-    retval.html_safe
+
+    # Close mistaken entries with an odd number of underscores.
+    if em_tag_is_open
+      converted_string = converted_string << '</em>'
+    end
+
+    converted_string.html_safe
   end
 
   def format_label(value)
