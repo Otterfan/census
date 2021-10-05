@@ -53,7 +53,7 @@
     <cite><%= link_to_journal_from_search source.journal %></cite> <%= formatted_full_journal_issue_citation(text) %>
   </div>
 <% end %>
-<div>
+<div class="text-tombstone__genre">
   <% if text.text_type.include? 'study' %>
     Study
   <% elsif text.genre && text.genre.kind_of?(Array) %>
