@@ -25,6 +25,7 @@ module TextSortable
     # Remove leading articles
     self.sort_title.sub!(/^(An? )|(The )/, '')
 
+    self.sort_title.downcase!
   end
 
   def calculate_sort_census_id
@@ -63,10 +64,10 @@ module TextSortable
   end
 
   def calculate_sort_author
-    self.sort_author = authors_names
+    self.sort_author = authors_names.downcase
 
     if self.sort_author == ''
-      self.sort_author = editors_names.join('; ')
+      self.sort_author = editors_names.join('; ').downcase
     end
   end
 
@@ -75,7 +76,7 @@ module TextSortable
       return ''
     end
 
-    self.sort_translator = translators_names[0]
+    self.sort_translator = translators_names.join(' ').downcase
   end
 
 end
