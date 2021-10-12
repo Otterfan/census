@@ -10,8 +10,11 @@
       <% @editors.each do |citation| %>
         <% if citation.first_name.present? || citation.last_name.present? %>
           <dd>
-            <% if citation.last_name.present? %><%= citation.last_name %>,<% end %>
-            <% if citation.first_name.present? %><%= citation.first_name %><% end %>
+            <% if citation.last_name.present? %>
+              <%= citation.last_name %><% if citation.first_name.present? %>,<% end %>
+            <% end %>
+            <% if citation.first_name.present? %><%= citation.first_name %>
+            <% end %>
           </dd>
         <% end %>
       <% end %>
@@ -22,9 +25,10 @@
       <% @translators.each do |citation| %>
         <% if citation.first_name.present? || citation.last_name.present? %>
           <dd>
-            <% if citation.first_name.present? %><%= citation.first_name %>
+            <% if citation.last_name.present? %>
+              <%= citation.last_name %><% if citation.first_name.present? %>,<% end %>
             <% end %>
-            <% if citation.last_name.present? %><%= citation.last_name %>
+            <% if citation.first_name.present? %><%= citation.first_name %>
             <% end %>
           </dd>
         <% end %>
