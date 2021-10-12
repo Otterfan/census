@@ -31,8 +31,7 @@ class Public::JournalsController < ApplicationController
   def show
     #redirect_to journals_path(@journals)
     @journal = Journal.find(params[:id])
-    @referenced_texts = Text.where(:journal_id => @journal.id).order(sort_date: :asc, issue_volume: :asc, issue_number: :asc, sort_page_span: :asc)
-
+    @referenced_texts = Text.where(:journal_id => @journal.id).order(sort_date: :asc, issue_volume: :asc, issue_number: :asc, sort_page_span: :asc, sort_author: :asc)
   end
 
   # Go to the first author whose last name starts with

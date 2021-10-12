@@ -141,6 +141,8 @@ module Public::TextsHelper
 
     if !text.issue_season_month.blank?
       retval = "#{retval} (#{text.issue_season_month} #{text.date})"
+    elsif retval.blank?
+      retval = text.date
     else
       retval = "#{retval} (#{text.date})"
     end

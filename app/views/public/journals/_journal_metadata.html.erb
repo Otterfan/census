@@ -62,11 +62,12 @@
       <dd>
         <ul class="list-group">
           <% @referenced_texts.each do |text| %>
+            <% formatted_issue_volume = formatted_journal_issue(text) %>
 
-            <% if this_issue_volume != text.issue_volume %>
-              <% this_issue_volume = text.issue_volume %>
+            <% if this_issue_volume != formatted_issue_volume %>
+              <% this_issue_volume = formatted_issue_volume %>
               <div class="journal-show__issue-separator">
-                <%= formatted_journal_issue(text) %>
+                <%= formatted_issue_volume %>
               </div>
             <% end %>
 
