@@ -128,6 +128,7 @@ module Public::TextsHelper
     retval
   end
 
+  # Format journal issue for display (e.g. "10.3 (Autumn 2009)")
   def formatted_journal_issue(text)
     retval = ''
 
