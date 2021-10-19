@@ -286,4 +286,15 @@ module Public::TextsHelper
 
     "<a href=\"/public/texts/#{census_id}\">#{census_id}</a>".html_safe
   end
+
+  # @param [TextCitation] citation
+  def controlled_name_link(citation)
+    "<a href=\"/public/people/#{citation.controlled_name}\">#{citation.name}</a>".html_safe
+  end
+
+  # @param [Array<ComponentCitation> citations
+  def controlled_name_link_list(citations)
+    all_links = citations.map { |citation| "<a href=\"/public/people/#{citation.controlled_name}\">#{citation.name}</a>" }
+    all_links.join ('; ')
+  end
 end

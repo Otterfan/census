@@ -8,15 +8,13 @@
   <% if component.authors && component.authors != [] %>
     <dt>Author(s)</dt>
     <dd>
-      <% author_names = component.authors.map(&:name).join ('; ') %>
-      <%= author_names %>
+      <%= controlled_name_link_list(component.authors).html_safe %>
     </dd>
   <% end %>
   <% if component.translators && component.translators != [] %>
     <dt>Translator(s)</dt>
     <dd>
-      <% translator_names = component.translators.map(&:name).join ('; ') %>
-      <%= translator_names %>
+      <%= controlled_name_link_list(component.translators).html_safe %>
     </dd>
   <% end %>
   <% if component.genre != '' %>

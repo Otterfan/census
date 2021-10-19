@@ -3,21 +3,22 @@
   <dd><%= convert_underscores(@text.title) %></dd>
 
   <% if @text.text_type == 'study_book' || @text.text_type == 'study_part' %>
-    <%= metadata_row 'Subject\'s name as appears in text', @text.authors_name_from_source %>
+    <dt>Subject's name as appears in text</dt>
+    <dd><%= @text.authors_name_from_source %></dd>
   <% end %>
 
   <% if @text.text_type == 'translation_book' || @text.text_type == 'translation_part' %>
     <% if @text.authors && @text.authors.count > 1 %>
       <dt><%= "Author".pluralize(@text.authors.count) %></dt>
       <% @text.authors.each do |citation| %>
-        <dd><%= citation.name %></dd>
+        <dd><%= controlled_name_link citation %></dd>
       <% end %>
     <% elsif @text.authors && @text.authors.count == 1 %>
       <dt>Author</dt>
       <% @text.authors.each do |citation| %>
         <dd><%= @text.authors_name_from_source %>
           <% if @text.authors_name_from_source != citation.name %>
-            (<%= citation.name %>)
+            (<%= controlled_name_link citation %>)
           <% end %>
         </dd>
       <% end %>
@@ -26,12 +27,12 @@
     <% if @text.authors && @text.authors.count > 1 %>
       <dt><%= "Author".pluralize(@text.authors.count) %></dt>
       <% @text.authors.each do |citation| %>
-        <dd><%= citation.name %></dd>
+        <dd><%= controlled_name_link citation %></dd>
       <% end %>
     <% elsif @text.authors && @text.authors.count == 1 %>
       <dt>Author</dt>
       <% @text.authors.each do |citation| %>
-        <dd><%= citation.name %></dd>
+        <dd><%= controlled_name_link citation %></dd>
       <% end %>
     <% end %>
   <% end %>
@@ -39,21 +40,21 @@
   <% if @text.translators && @text.translators.count > 0 %>
     <dt><%= "Translator".pluralize(@text.translators.count) %></dt>
     <% @text.translators.each do |citation| %>
-      <dd><%= citation.name %></dd>
+      <dd><%= controlled_name_link citation %></dd>
     <% end %>
   <% end %>
 
   <% if @text.editors && @text.editors.count > 0 %>
     <dt><%= "Editor".pluralize(@text.editors.count) %></dt>
     <% @text.editors.each do |citation| %>
-      <dd><%= citation.name %></dd>
+      <dd><%= controlled_name_link citation %></dd>
     <% end %>
   <% end %>
 
   <% if @text.other_contributors && @text.other_contributors.count > 0 %>
     <dt>Other <%= "contributor".pluralize(@text.other_contributors.count) %></dt>
     <% @text.other_contributors.each do |citation| %>
-      <dd><%= citation.name %> <span class="role">(<%= citation.role %>)</span></dd>
+      <dd><%= controlled_name_link citation %><span class="role">(<%= citation.role %>)</span></dd>
     <% end %>
   <% end %>
   <% if @text.journal && @text.journal.title != '' %>

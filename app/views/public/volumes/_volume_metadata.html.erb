@@ -10,11 +10,13 @@
       <% @editors.each do |citation| %>
         <% if citation.first_name.present? || citation.last_name.present? %>
           <dd>
-            <% if citation.last_name.present? %>
-              <%= citation.last_name %><% if citation.first_name.present? %>,<% end %>
-            <% end %>
-            <% if citation.first_name.present? %><%= citation.first_name %>
-            <% end %>
+              <a href="/public/people/<%= citation.controlled_name %>">
+              <% if citation.last_name.present? %>
+                <%= citation.last_name %><% if citation.first_name.present? %>,<% end %>
+              <% end %>
+              <% if citation.first_name.present? %><%= citation.first_name %>
+              <% end %>
+            </a>
           </dd>
         <% end %>
       <% end %>
@@ -25,11 +27,13 @@
       <% @translators.each do |citation| %>
         <% if citation.first_name.present? || citation.last_name.present? %>
           <dd>
-            <% if citation.last_name.present? %>
-              <%= citation.last_name %><% if citation.first_name.present? %>,<% end %>
-            <% end %>
-            <% if citation.first_name.present? %><%= citation.first_name %>
-            <% end %>
+            <a href="/public/people/<%= citation.controlled_name %>">
+              <% if citation.last_name.present? %>
+                <%= citation.last_name %><% if citation.first_name.present? %>,<% end %>
+              <% end %>
+              <% if citation.first_name.present? %><%= citation.first_name %>
+              <% end %>
+            </a>
           </dd>
         <% end %>
       <% end %>
@@ -79,12 +83,13 @@
       <% @other_contributors.each do |citation| %>
         <% if citation.first_name.present? || citation.last_name.present? %>
           <dd>
-            <% if citation.first_name.present? %><%= citation.first_name %>
-            <% end %>
-            <% if citation.last_name.present? %><%= citation.last_name %>
-            <% end %>
-            <% if citation.role.present? %>(<%= citation.role %>)
-            <% end %>
+            <a href="/public/people/<%= citation.controlled_name %>">
+              <% if citation.last_name.present? %>
+                <%= citation.last_name %><% if citation.first_name.present? %>,<% end %>
+              <% end %>
+              <% if citation.first_name.present? %><%= citation.first_name %>
+              <% end %>
+            </a>
           </dd>
         <% end %>
 
