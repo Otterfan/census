@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_13_175152) do
+ActiveRecord::Schema.define(version: 2021_11_02_023816) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,6 +112,8 @@ ActiveRecord::Schema.define(version: 2021_09_13_175152) do
     t.text "section"
     t.text "subsection"
     t.integer "sort_pages"
+    t.text "greek_source_title"
+    t.index ["greek_source_title"], name: "index_components_on_greek_source_title"
     t.index ["sort_pages"], name: "index_components_on_sort_pages"
     t.index ["text_id"], name: "index_components_on_text_id"
   end
@@ -336,7 +338,9 @@ ActiveRecord::Schema.define(version: 2021_09_13_175152) do
     t.text "sort_title"
     t.text "sort_author"
     t.string "sort_translator"
+    t.text "greek_source_title"
     t.index ["country_id"], name: "index_texts_on_country_id"
+    t.index ["greek_source_title"], name: "index_texts_on_greek_source_title"
     t.index ["journal_id"], name: "index_texts_on_journal_id"
     t.index ["language_id"], name: "index_texts_on_language_id"
     t.index ["original_greek_title"], name: "index_texts_on_original_greek_title"

@@ -139,7 +139,7 @@ class TextsController < ApplicationController
     params.require(:text).permit(:title, :source, :date, :publisher, :place_of_publication, :note, :original, :census_id,
                                  :parent_title, :issue_number,
                                  :issue_volume, :issue_season_month,
-                                 :original_greek_title, :original_greek_publisher, :original_greek_date,
+                                 :original_greek_title, :original_greek_publisher, :original_greek_date, :greek_source_title,
                                  :original_greek_edition, :original_greek_place_of_publication,
                                  :is_bilingual, :illustrations_noted, :format, :text_type, :material_type, :page_count,
                                  :series, :journal_title, :collection, :genre, :page_span,
@@ -155,13 +155,13 @@ class TextsController < ApplicationController
                                                              :to_language_id, :ordinal, :source_edition, :_destroy],
                                  standard_numbers_attributes: [:id, :value, :_destroy],
                                  components_attributes: [:id, :title, :pages, :note, :ordinal, :text_type,
-                                                         :genre, :is_bilingual, :collection, :_destroy,
+                                                         :greek_source_title, :genre, :is_bilingual, :collection, :_destroy,
                                                          component_citations_attributes: [:id, :name, :role, :first_name, :last_name, :controlled_name, :from_language_id, :to_language_id, :_destroy, :destroy]
                                  ],
                                  component_citations_attributes: [:id, :name, :role, :first_name, :last_name, :destroy, :controlled_name, :_destroy],
                                  other_text_languages_attributes: [:id, :language_id, :destroy],
                                  cross_references_attributes: [:id, :census_id, :destroy],
-                                 urls_attributes: [:id, :value, :accessed_on,:_destroy]
+                                 urls_attributes: [:id, :value, :accessed_on, :_destroy]
 
     )
   end

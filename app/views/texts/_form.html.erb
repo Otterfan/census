@@ -39,6 +39,12 @@
     <%= f.input :title, as: :string, required: true %>
   </div>
 
+  <% if @text.text_type == 'translation_part' %>
+    <div>
+      <%= f.input :greek_source_title, as: :string %>
+    </div>
+  <% end %>
+
   <div>
     <%= f.input :is_collected_volume, label: 'Collected volume?' %>
   </div>

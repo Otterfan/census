@@ -178,7 +178,7 @@ module Searchable
           ],
           include: {
               text_citations: {
-                  except: [:created_at, :updated_at, :from_language_id, :to_language_id],
+                  except: [:created_at, :updated_at, :ordinal, :from_language_id, :to_language_id, :text_id],
                   include: {
                       from_language: {
                           except: [:created_at, :updated_at]
@@ -209,7 +209,7 @@ module Searchable
                   except: [:text_id, :place_id, :primary],
                   include: {
                       place: {
-                          except: [:id, :country_id, :created_at, :updated_at]
+                          except: [:id, :country_id, :latitude, :longitude, :created_at, :updated_at]
                       }
                   }
               },
@@ -217,11 +217,11 @@ module Searchable
                   except: [:created_at, :updated_at]
               },
               urls: {
-                  except: [:created_at, :updated_at],
+                  except: [:created_at, :updated_at, :wayback],
                   methods: [:top_level_domain]
               },
               topic_author: {
-                  except: [:created_at, :updated_at, :sort_full_name],
+                  except: [:created_at, :updated_at, :sort_full_name, :see_person_id],
                   methods: [:alternate_name_clean],
               },
               status: {
@@ -231,13 +231,13 @@ module Searchable
                   except: [:created_at, :updated_at]
               },
               journal: {
-                  except: [:created_at, :updated_at, :indexed_range],
+                  except: [:created_at, :updated_at, :indexed_range, :see_journal_id],
                   include: {
                       place: {
-                          except: [:created_at, :updated_at],
+                          except: [:latitude, :longitude, :created_at, :updated_at],
                           include: {
                               country: {
-                                  except: [:created_at, :updated_at]
+                                  except: [:created_at, :updated_at, :al3_code, :num_code]
                               }
                           }
                       }
