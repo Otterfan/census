@@ -255,6 +255,7 @@ class Public::SearchController < ApplicationController
     components.note
     components.note.en_folded
     components.note.el_folded
+    components.greek_source_title^5
 
     genre.exact^5
     component.genre.exact^5
