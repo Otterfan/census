@@ -11,7 +11,7 @@
   <% if @author.has_texts_of_type?('translation_book') %>
     <li role="presentation" <%= active_class_notice('translation_book') %>>
       <a href="/public/authors/<%= @author.id %>/translations/books" aria-controls="texts" role="tab">Translations
-        (books)</a>
+        (volumes)</a>
     </li>
   <% end %>
 
@@ -24,7 +24,7 @@
 
   <% if @author.has_texts_of_type?('study_book') %>
     <li role="presentation" <%= active_class_notice('study_book') %>>
-      <a href="/public/authors/<%= @author.id %>/studies/books" aria-controls="texts" role="tab">Studies (books)</a>
+      <a href="/public/authors/<%= @author.id %>/studies/books" aria-controls="texts" role="tab">Studies (volumes)</a>
     </li>
   <% end %>
 
