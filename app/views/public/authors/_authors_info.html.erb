@@ -30,6 +30,7 @@
           <a href="/public/search?type=adv&bq=(author_heading::<%= @author.full_name %>)--AND--(publication_countries::<%= country[1].name %>)">
             <%= country[1].name %>
           </a>
+          <span class="places-map__count" >(<%= @author.translation_countries.count(country[1]) %>)</span>
         </li>
       <% end %>
     </ul>
