@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_02_023816) do
+ActiveRecord::Schema.define(version: 2021_11_16_152613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,6 +113,8 @@ ActiveRecord::Schema.define(version: 2021_11_02_023816) do
     t.text "subsection"
     t.integer "sort_pages"
     t.text "greek_source_title"
+    t.text "greek_collection_title"
+    t.index ["greek_collection_title"], name: "index_components_on_greek_collection_title"
     t.index ["greek_source_title"], name: "index_components_on_greek_source_title"
     t.index ["sort_pages"], name: "index_components_on_sort_pages"
     t.index ["text_id"], name: "index_components_on_text_id"

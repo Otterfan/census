@@ -155,7 +155,7 @@ class TextsController < ApplicationController
                                                              :to_language_id, :ordinal, :source_edition, :_destroy],
                                  standard_numbers_attributes: [:id, :value, :_destroy],
                                  components_attributes: [:id, :title, :pages, :note, :ordinal, :text_type,
-                                                         :greek_source_title, :genre, :is_bilingual, :collection, :_destroy,
+                                                         :greek_source_title, :greek_collection_title, :genre, :is_bilingual, :collection, :_destroy,
                                                          component_citations_attributes: [:id, :name, :role, :first_name, :last_name, :controlled_name, :from_language_id, :to_language_id, :_destroy, :destroy]
                                  ],
                                  component_citations_attributes: [:id, :name, :role, :first_name, :last_name, :destroy, :controlled_name, :_destroy],
