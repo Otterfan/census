@@ -1,7 +1,11 @@
 <% page_title("#{@text.title.gsub('_', '')} by #{@text.authors_names}") %>
 <div class="container public-show-text">
   <div class="row">
-    <a class="back-link" href="javascript:history.back();">◀ Result list</a>
+    <% if params[:from_search] == 'true' %>
+      <a class="back-link" href="javascript:history.back();">◀ Result list</a>
+    <% else %>
+    &nbsp;
+    <% end %>
   </div>
   <div class="row">
     <div class="text-heading">

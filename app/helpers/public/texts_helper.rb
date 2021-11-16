@@ -214,12 +214,12 @@ module Public::TextsHelper
   end
 
   # Formatted link to title as used in tombstones
-  def tombstone_title_link(text, formatter = nil, hilight = nil)
+  def tombstone_title_link(text, formatter = nil, hilight = nil, from_search = false)
     if is_search_result? text
       text = Text.find(text.id)
     end
 
-    title_path = public_text_path(text, hl: hilight)
+    title_path = public_text_path(text, hl: hilight, from_search: from_search)
     title_string = text.title.blank? ? "[No title]" : text.title
 
     if (text.text_type == 'translation_book' || text.text_type == 'translation_part')

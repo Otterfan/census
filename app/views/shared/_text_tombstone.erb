@@ -3,12 +3,10 @@
    else
      source = text
    end
-
-   is_search = is_search_result?(text)
 %>
 
 <div class="result-title">
-  <%= tombstone_title_link(text, @results_formatter, params[:keyword]) %>
+  <%= tombstone_title_link(text, @results_formatter, params[:keyword], true) %>
   <% if text.date && text.date != '' %>
     <span class="title-date">(<%= text.date %>)</span>
   <% end %>

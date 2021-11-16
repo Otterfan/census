@@ -16,7 +16,7 @@
   <ul class="list-group">
     <% @texts.each do |text| %>
       <li class="list-group-item">
-        <%= render 'shared/text_tombstone', text: text, show_topic_author: true %>
+        <%= render 'shared/text_tombstone', text: text, show_topic_author: true, from_search: true %>
       </li>
     <% end %>
   </ul>
