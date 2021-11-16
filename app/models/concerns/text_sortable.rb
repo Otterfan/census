@@ -19,11 +19,17 @@ module TextSortable
     self.sort_title.sub!(/^["'“‘«]?From: */, '')
     self.sort_title.sub!(/^["'“‘«]?From _ */,'')
 
+    # Remove '[sic]'
+    self.sort_title.sub!(/\[sic/, '')
+
     # Remove punctuation.
     self.sort_title.gsub!(/["'“”‘’«»:_.\[\]]/, '')
 
     # Remove leading articles
     self.sort_title.sub!(/^(An? )|(The )/, '')
+
+    # Remove leading non ASCII characters (removes leading Greek titles)
+    self.sort_title.sub!(/^[^A-Za-z]*/, '')
 
     self.sort_title.downcase!
   end
