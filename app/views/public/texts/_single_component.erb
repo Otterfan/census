@@ -17,11 +17,11 @@
       <%= controlled_name_link_list(component.translators).html_safe %>
     </dd>
   <% end %>
-  <% if component.genre != '' %>
+  <% if component.genre && component.genre != '' %>
     <dt>Genre</dt>
     <dd><%= component.genre %></dd>
   <% end %>
-  <% if component.note != '' %>
+  <% if component.note && component.note != '' %>
     <dt>Note</dt>
     <dd><%= convert_underscores component.note %></dd>
   <% end %>
