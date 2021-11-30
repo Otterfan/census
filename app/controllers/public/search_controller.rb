@@ -737,7 +737,7 @@ class Public::SearchController < ApplicationController
               when "authors_name_from_source"
                 add_field_adv_search(['authors_name_from_source'], clean_search_string, @current_bool_op)
               when "authors_name_from_source_exact"
-                add_field_adv_search(['authors_name_from_source.exact'], clean_search_string, @current_bool_op)
+                add_field_adv_search(['authors_name_from_source'], clean_search_string, @current_bool_op)
               end
             end
           else
