@@ -1,12 +1,15 @@
-<div id="cookies-bar" class="cookies-bar row">
-  <div class="cookies-bar__text col-md-8">
-    <p>
-      We use cookies to analyze how our site is used. If you reject cookies, data about you will not be included
-      when we analyze usage. To find out more, view our <%= link_to 'privacy policy', request.original_url %>.
-    </p>
-  </div>
-  <div class="cookies-bar__button-row col-md-4">
-    <%= button_tag 'Accept cookies', class: 'btn btn-md btn-success cookie-bar__accept', method: :get %>
-    <%= button_tag 'Reject cookies', class: 'btn btn-md btn-default cookie-bar__reject', method: :get %>
+<div id="cookies-modal">
+  <div id="cookies-bar" class="cookies-bar row">
+    <h2 class="col-md-12">The CENSUS of Modern Greek Literature respects your privacy</h2>
+    <div class="cookies-bar__text col-md-8">
+      <p>
+        We use cookies to analyze how our site is used. If you reject cookies, data about you will not be included
+        when we analyze usage. To find out more, view our <%= link_to 'privacy policy', request.original_url %>.
+      </p>
+    </div>
+    <div class="cookies-bar__button-row col-md-4">
+      <%= button_tag 'Accept cookies', class: 'btn btn-md btn-success cookie-bar__accept', method: :get %>
+      <%= button_tag 'Reject cookies', class: 'btn btn-md btn-default cookie-bar__reject', method: :get %>
+    </div>
   </div>
 </div>

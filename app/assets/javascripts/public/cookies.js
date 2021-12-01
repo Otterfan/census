@@ -1,6 +1,8 @@
 class CoookieBar {
     constructor() {
         this.cookiesBar = document.getElementById('cookies-bar');
+        this.modal = document.getElementById('cookies-modal');
+        this.initialized =false;
     }
 
     init() {
@@ -36,18 +38,21 @@ class CoookieBar {
     }
 
     allowCookies() {
-        Cookies.set('allow_cookies', 'yes', {});
+        Cookies.set('allow_cookies', 'yes', {expires: 365});
         this.appendGACode();
-        this.cookiesBar.classList.add('hidden');
+        this.modal.classList.add('hidden');
     }
 
     disallowCookies() {
-        Cookies.set('allow_cookies', 'no', {});
-        this.cookiesBar.classList.add('hidden');
+        Cookies.set('allow_cookies', 'no', {expires: 365});
+        this.modal.classList.add('hidden');
     }
 }
 
-window.onload = function () {
+// Loader
+function censusHasLoaded() {
     const cookieBar = new CoookieBar();
     cookieBar.init();
 }
+
+$(document).on('turbolinks:load', censusHasLoaded)
