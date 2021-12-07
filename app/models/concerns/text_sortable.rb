@@ -13,7 +13,7 @@ module TextSortable
 
   def calculate_sort_title
     self.sort_title = self.title
-    self.sort_title.strip!  # Strip leading and trailing white space.
+    self.sort_title.strip! # Strip leading and trailing white space.
 
     # Remove '[sic]'
     self.sort_title.sub!(/\[sic */, '')
@@ -23,7 +23,7 @@ module TextSortable
 
     # Remove 'From' from the start if it looks like it isn't part of the title.
     self.sort_title.sub!(/^["'“‘«]?From: */, '')
-    self.sort_title.sub!(/^["'“‘«]?From _ */,'')
+    self.sort_title.sub!(/^["'“‘«]?From _ */, '')
 
     # Remove punctuation.
     self.sort_title.gsub!(/["'“”‘’«»:_.\[\]]/, '')
@@ -63,10 +63,13 @@ module TextSortable
   end
 
   def calculate_sort_date
-    unless self.date.nil?
-      sort_date = self.date[/\d\d\d\d/]
-      self.sort_date = "#{sort_date}-01-01"
-    end
+    return nil if self.date.nil?
+
+    sort_year = self.date[/\d\d\d\d/]
+    sort_month = extract_sort_month(self.issue_season_month)
+    sort_day = extract_sort_day(self.issue_season_month)
+
+    self.sort_date = "#{sort_year}-#{sort_month}-#{sort_day}"
   end
 
   def calculate_sort_author
@@ -83,6 +86,59 @@ module TextSortable
     end
 
     self.sort_translator = translators_names.join(' ').downcase
+  end
+
+  def extract_sort_month(issue_season_month)
+    return '01' if issue_season_month.nil?
+
+    issue_season_month = issue_season_month.downcase
+    if issue_season_month.include? 'jan'
+      '01'
+    elsif issue_season_month.include? 'feb'
+      '02'
+    elsif issue_season_month.include? 'mar'
+      '03'
+    elsif issue_season_month.include? 'apr'
+      '04'
+    elsif issue_season_month.include? 'may'
+      '05'
+    elsif issue_season_month.include? 'jun'
+      '06'
+    elsif issue_season_month.include? 'jul'
+      '07'
+    elsif issue_season_month.include? 'aug'
+      '08'
+    elsif issue_season_month.include? 'sep'
+      '09'
+    elsif issue_season_month.include? 'oct'
+      '10'
+    elsif issue_season_month.include? 'nov'
+      '11'
+    elsif issue_season_month.include? 'dec'
+      '12'
+    elsif issue_season_month.include? 'spring'
+      '04'
+    elsif issue_season_month.include? 'summer'
+      '07'
+    elsif issue_season_month.include? 'autu'
+      '10'
+    elsif issue_season_month.include? 'fall'
+      '10'
+    elsif issue_season_month.include? 'wint'
+      '12'
+    else
+      '01'
+    end
+  end
+
+  def extract_sort_day(issue_season_month)
+    return '01' if issue_season_month.nil?
+
+    # Extract first number and assume it's a day
+    day = issue_season_month[/\d*/]
+    return '01' if day == ''
+
+    day.rjust(2, '0')
   end
 
 end
