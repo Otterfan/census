@@ -4,9 +4,14 @@
   <%= f.input :last_name, as: :string %>
   <%= f.input :first_name, as: :string %>
   <%= f.label :role %>
-  <%= f.select(:role, [['author', 'author'], ['translator', 'translator'],
-                       ['editor', 'editor'], ['illustrator', 'illustrator'],
-                       ['intro/front matter author', 'intro/front matter author'], ['back matter author', 'back matter author']],
+  <%= f.select(:role, [['author', 'author'],
+                       ['translator', 'translator'],
+                       ['editor', 'editor'],
+                       ['illustrator', 'illustrator'],
+                       ['intro/front matter author', 'intro/front matter author'],
+                       ['back matter author', 'back matter author'],
+                       ['performer', 'performer']
+  ],
                {}, :onChange => 'showForTranslator(this)') %>
   <%= link_to_remove_association "Delete", f, {:class => 'remove-button'} %>
 </div>
