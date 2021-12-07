@@ -212,14 +212,14 @@ class Public::SearchController < ApplicationController
     text_citations.controlled_name.en_folded^10
     text_citations.controlled_name.el_folded^10
     text_citations.role.exact^5
-    volume.title^5
+    volume.title
     volume.title.en
     volume.title.el
-    volume.title.en_folded^5
-    volume.title.el_folded^5
-    volume.sort_title^5
-    volume.sort_title.en_folded^5
-    volume.sort_title.el_folded^5
+    volume.title.en_folded
+    volume.title.el_folded
+    volume.sort_title
+    volume.sort_title.en_folded
+    volume.sort_title.el_folded
     series
     series.en
     series.el
