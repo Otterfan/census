@@ -204,6 +204,7 @@ module Public::TextsHelper
         collections << collection
         collection = {
             title: component.collection,
+            greek_title: component.greek_collection_title,
             components: [component]
         }
       else

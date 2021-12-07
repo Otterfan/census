@@ -4,11 +4,16 @@
     <h4>Items</h4>
     <% components_by_collection(@text.components).each do |collection| %>
       <div class="component-collection">
-        <% if collection[:title] && !collection[:title].blank? %>
-          <div class="component-collection-title">From <cite><%= collection[:title].gsub('_', ' ') %></cite></div>
+        <% if collection[:greek_title] && !collection[:greek_title].blank? %>
+          <div class="component-collection-title">
+            From <cite><%= collection[:title].gsub('_', ' ') %></cite>
+            <% if collection[:title] && !collection[:title].blank? %>
+             / <cite><%= collection[:greek_title].gsub('_', ' ') %></cite>
+            <% end %>
+          </div>
         <% end %>
         <% collection[:components].each do |component| %>
-          <%= render 'single_component', component: component, current_collection: current_collection %>
+          <%= render 'single_component', component: component %>
         <% end %>
       </div>
     <% end %>

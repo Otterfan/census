@@ -16,18 +16,23 @@
     <%= f.input :last_name, as: :string %>
     <%= f.input :first_name, as: :string %>
     <%= f.label :role %>
-    <%= f.select(:role, [['author', 'author'], ['translator', 'translator'],
-                         ['editor', 'editor'], ['illustrator', 'illustrator'],
-                         ['intro/front matter author', 'intro/front matter author'], ['back matter author', 'back matter author']],
+    <%= f.select(:role, [['author', 'author'],
+                         ['translator', 'translator'],
+                         ['editor', 'editor'],
+                         ['illustrator', 'illustrator'],
+                         ['intro/front matter author', 'intro/front matter author'],
+                         ['back matter author', 'back matter author'],
+                         ['performer', 'performer']
+    ],
                  {}, :onChange => 'showForTranslator(this)') %>
     <div class="translator-only" style="margin-top: 1em;display: <%= f.object.role === 'translator' ? 'block' : 'none' %>">
       <div class="form-group">
         <%= f.label :from %>
-        <%= f.select :from_language_id, Language.all.collect {|l| [l.name, l.id]}, :include_blank => true %>
+        <%= f.select :from_language_id, Language.all.collect { |l| [l.name, l.id] }, :include_blank => true %>
       </div>
       <div class="form-group" ?>
         <%= f.label :to %>
-        <%= f.select :to_language_id, Language.all.collect {|l| [l.name, l.id]}, :include_blank => true %>
+        <%= f.select :to_language_id, Language.all.collect { |l| [l.name, l.id] }, :include_blank => true %>
       </div>
       <%= f.input :source_edition, as: :string %>
     </div>
