@@ -1,8 +1,13 @@
 class TextsController < ApplicationController
   before_action :set_text, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action :restrict_access
 
   skip_before_action :verify_authenticity_token
+
+  def restrict_access
+    redirect_to "/public" unless current_user && current_user.user_type != 'viewer'
+  end
 
   # GET /texts
   # GET /texts.json
@@ -25,7 +30,7 @@ class TextsController < ApplicationController
 
     @user = current_user
 
-    if current_user.user_type != 'viewer'
+    if current_user.user_type != :editor
       @texts = Text.order(sort_order).page(params[:page])
     else
       @texts = Text.where.not('is_hidden').order(sort_order).page(params[:page])
