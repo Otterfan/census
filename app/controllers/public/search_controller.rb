@@ -67,6 +67,8 @@ class Public::SearchController < ApplicationController
       components.sort_title
       components.sort_title.en_folded
       components.sort_title.el_folded
+      components.greek_collection_title.el
+      components.greek_collection_title.el_folded
       journal.title
       journal.title.en
       journal.title.el
@@ -175,6 +177,9 @@ class Public::SearchController < ApplicationController
     topic_author.alternate_name_clean.en_folded^10
     topic_author.alternate_name_clean.el_folded^10
 
+    topic_author.greek_full_name.el_folded^10
+    topic_author.greek_full_name.el^10
+
     authors_name_from_source
     authors_name_from_source.exact
     authors_name_from_source.el_folded
@@ -200,6 +205,8 @@ class Public::SearchController < ApplicationController
     sort_title.en_folded^10
     sort_title.el_folded^10
     greek_source_title^10
+    greek_source_title.el^10
+    greek_source_title.el_folded^10
 
     text_citations.name^10
     text_citations.name.en^10
@@ -256,7 +263,11 @@ class Public::SearchController < ApplicationController
     components.note.en_folded
     components.note.el_folded
     components.greek_source_title^5
+    components.greek_source_title.el^5
+    components.greek_source_title.el_folded^5
     components.greek_collection_title^5
+    components.greek_collection_title.el^5
+    components.greek_collection_title.el_folded^5
 
     genre.exact^5
     component.genre.exact^5
@@ -314,12 +325,16 @@ class Public::SearchController < ApplicationController
     source.en_folded
     source.el_folded
     original_greek_title^10
+    original_greek_title.el^10
     original_greek_title.el_folded^10
     original_greek_collection
+    original_greek_collection.el
     original_greek_collection.el_folded
     original_greek_place_of_publication
+    original_greek_place_of_publication.el
     original_greek_place_of_publication.el_folded
     original_greek_publisher
+    original_greek_publisher.el
     original_greek_publisher.el_folded
     original_greek_date^5
 
