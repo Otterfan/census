@@ -200,8 +200,12 @@ module Public::TextsHelper
         components: []
     }
     components.order(:ordinal, :pages, :id).each do |component|
-      if component.collection != collection[:title] && collection[:components].count > 0
-        collections << collection
+      if component.collection != collection[:title]
+
+        if collection[:components].count > 0
+          collections << collection
+        end
+
         collection = {
             title: component.collection,
             greek_title: component.greek_collection_title,
