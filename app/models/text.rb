@@ -395,6 +395,14 @@ class Text < ApplicationRecord
     nil
   end
 
+  def has_greek_publication_info
+    if original_greek_publisher || original_greek_place_of_publication || original_greek_date || original_greek_citation || original_greek_collection
+      return true
+    end
+
+    false
+  end
+
 end
 
 #Text.import(force: true) # for auto sync model with elastic search

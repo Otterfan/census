@@ -88,8 +88,8 @@ $metadata-spacing: 0;
   h4 {
     font-size: 24px;
     font-weight: 600;
-    margin-top: 2em;
     margin-bottom: 1em;
+    margin-left: 1em;
   }
 
 
@@ -156,6 +156,16 @@ $metadata-spacing: 0;
 
   .text-tombstone__genre {
     font-weight: 600;
+  }
+
+  .components, .original-greek-text-metadata {
+    margin-top: 2em;
+  }
+
+  .original-greek-text-metadata {
+    background-color: #f7f7f9;
+    padding: 1em 1em 1em 0;
+    border: 1px dotted #d3d5d4;
   }
 }
 

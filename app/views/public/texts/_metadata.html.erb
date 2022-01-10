@@ -114,17 +114,11 @@
     <dd><%= @text.journal.place.name %></dd>
   <% end %>
 
-  <%= metadata_row 'Place of publication', @text.place_of_publication %>
-
-  <%= metadata_row 'Place of publication of Greek original', @text.original_greek_place_of_publication %>
+  <%= metadata_row 'Date of publication', @text.date %>
 
   <%= metadata_row 'Publisher', @text.publisher %>
 
-  <%= metadata_row 'Original Greek publisher', @text.original_greek_publisher %>
-
-  <%= metadata_row 'Date of publication', @text.date %>
-
-  <%= metadata_row 'Original Greek date of publication', @text.original_greek_date %>
+  <%= metadata_row 'Place of publication', @text.place_of_publication %>
 
   <%= metadata_row 'Editorial note', convert_underscores(@text.editorial_annotation) %>
 
@@ -149,11 +143,7 @@
     <% end %>
   <% end %>
 
-  <%= metadata_row 'Original Greek text', @text.original_greek_citation %>
-
-  <%= metadata_row 'Original Greek collection', @text.original_greek_collection %>
-
-  <% if @text.census_id %>
+  <% unless @text.census_id.empty? %>
     <dt>Entry Number</dt>
     <dd><%= @text.census_id %></dd>
   <% end %>
@@ -165,3 +155,7 @@
     <% end %>
   <% end %>
 </dl>
+
+<% if @text.has_greek_publication_info %>
+  <%= render 'greek_publication_information' %>
+<% end %>
