@@ -126,9 +126,9 @@
 
   <%= metadata_row 'Other note', @text.note %>
 
-  <% if @text.is_bilingual %>
+  <% if @text.is_bilingual_display %>
     <dt>Text is bilingual?</dt>
-    <dd>Yes</dd>
+    <dd><%= @text.is_bilingual_display %></dd>
   <% end %>
 
   <% if @text.illustrations_noted %>

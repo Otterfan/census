@@ -381,6 +381,18 @@ class Text < ApplicationRecord
     text_type.respond_to?(:starts_with?) && text_type.starts_with?('translat')
   end
 
+  def is_bilingual_display
+    if is_bilingual
+      return "Yes"
+    end
+
+    components.each do |component|
+      return "Contains bilingual items" if component.is_bilingual
+    end
+
+    false
+  end
+
   def publication_countries
     country_list = CountryList.new
     places.each do |place|
@@ -412,10 +424,10 @@ class Text < ApplicationRecord
 
   def has_greek_publication_info
     if original_greek_publisher.blank? &&
-        original_greek_place_of_publication.blank? &&
-        original_greek_date.blank? &&
-        original_greek_title.blank? &&
-        original_greek_collection.blank?
+      original_greek_place_of_publication.blank? &&
+      original_greek_date.blank? &&
+      original_greek_title.blank? &&
+      original_greek_collection.blank?
       return false
     end
 
