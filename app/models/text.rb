@@ -69,9 +69,11 @@ class Text < ApplicationRecord
       get_contributors
     end
 
+    # Add a citation for the topic author if this is a translation.
     if text_type.respond_to?(:starts_with?) && text_type.starts_with?('translat')
       author_citation = TextCitation.new
       author_citation.name = topic_author.full_name
+      author_citation.controlled_name = topic_author.full_name
       @authors = [author_citation]
     end
 
