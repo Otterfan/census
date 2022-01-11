@@ -113,6 +113,17 @@ class Text < ApplicationRecord
     self.editors.map { |person| person.name.strip }
   end
 
+  def performers
+    unless @performers
+      get_contributors
+    end
+    @performers
+  end
+
+  def performers_names
+    self.performers.map { |person| person.name.strip }
+  end
+
   def other_contributors
     unless @other_contributors
       get_contributors
@@ -121,7 +132,7 @@ class Text < ApplicationRecord
   end
 
   def get_contributors
-    @authors, @translators, @editors, @other_contributors = [], [], [], []
+    @authors, @translators, @editors, @performers, @other_contributors = [], [], [], [], []
     text_citations.each do |citation|
       if citation.role == 'translator'
         @translators << citation
@@ -129,6 +140,8 @@ class Text < ApplicationRecord
         @authors << citation
       elsif citation.role == 'editor'
         @editors << citation
+      elsif citation.role == 'performer'
+        @performers << citation
       else
         @other_contributors << citation
       end

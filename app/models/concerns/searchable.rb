@@ -173,12 +173,13 @@ module Searchable
               :original_source,
               :translators_names,
               :editors_names,
+              :performers_names,
               :is_translation,
               :publication_countries
           ],
           include: {
               text_citations: {
-                  except: [:created_at, :updated_at, :ordinal, :from_language_id, :to_language_id, :text_id],
+                  except: [:id, :created_at, :updated_at, :ordinal, :from_language_id, :to_language_id, :text_id],
                   include: {
                       from_language: {
                           except: [:created_at, :updated_at]
@@ -189,7 +190,7 @@ module Searchable
                   }
               },
               components: {
-                  except: [:created_at, :updated_at, :text_id, :pages, :ordinal],
+                  except: [:id, :created_at, :updated_at, :text_id, :pages, :ordinal, :sort_pages],
                   methods: [:sort_title, :collection_clean],
                   include: {
                       component_citations: {
@@ -228,10 +229,10 @@ module Searchable
                   except: [:created_at, :updated_at, :ordinal, :code, :id, :display]
               },
               section: {
-                  except: [:created_at, :updated_at]
+                  except: [:id, :created_at, :updated_at]
               },
               journal: {
-                  except: [:created_at, :updated_at, :indexed_range, :see_journal_id],
+                  except: [:created_at, :updated_at, :indexed_range, :see_journal_id, :place_id],
                   include: {
                       place: {
                           except: [:latitude, :longitude, :created_at, :updated_at],
@@ -260,7 +261,7 @@ module Searchable
                   }
               },
               standard_numbers: {
-                  except: [:text_id, :created_at, :updated_at]
+                  except: [:id, :text_id, :created_at, :updated_at]
               },
               other_text_languages: {
                   except: [],

@@ -28,18 +28,28 @@
     Topic: <%= render 'shared/topic_author', text: text %>
   </div>
 <% end %>
+
 <div class="result-author">
   <% editors = source.editors_names.empty? ? editors_from_search(source.text_citations) : source.editors_names %>
   <% unless editors.empty? %>
     <%= 'Editor'.pluralize(editors.length) %>: <%= editors.join('; ') %>
   <% end %>
 </div>
+
+<div class="result-author">
+  <% performers = source.performers_names.empty? ? performers_from_search(source.text_citations) : source.performers_names %>
+  <% unless performers.empty? %>
+    <%= 'Performer'.pluralize(performers.length) %>: <%= performers.join('; ') %>
+  <% end %>
+</div>
+
 <div class="result-author">
   <% translators = source.translators_names.empty? ? translators_from_search(source.text_citations) : source.translators_names %>
   <% unless translators.empty? %>
     <%= 'Translator'.pluralize(translators.length) %>: <%= translators.join('; ') %>
   <% end %>
 </div>
+
 <% if source.volume %>
   <div>
     In <cite><%= link_to_volume_from_search source.volume %></cite><%= formatted_full_journal_issue_citation(text) %>
