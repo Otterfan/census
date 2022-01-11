@@ -399,7 +399,7 @@ class Text < ApplicationRecord
     if original_greek_publisher.blank? &&
         original_greek_place_of_publication.blank? &&
         original_greek_date.blank? &&
-        original_greek_citation.blank? &&
+        original_greek_title.blank? &&
         original_greek_collection.blank?
       return false
     end

@@ -1,14 +1,14 @@
 <div class="metadata original-greek-text-metadata">
   <h4>Original Greek text</h4>
   <dl>
-    <%= metadata_row 'Title', @text.original_greek_citation %>
+    <%= metadata_row 'Title', @text.original_greek_title %>
 
     <%= metadata_row 'Collection', @text.original_greek_collection %>
-
-    <%= metadata_row 'Date of publication', @text.original_greek_date %>
 
     <%= metadata_row 'Publisher', @text.original_greek_publisher %>
 
     <%= metadata_row 'Place of publication', @text.original_greek_place_of_publication %>
+
+    <%= metadata_row 'Date of publication', @text.original_greek_date %>
   </dl>
 </div>
