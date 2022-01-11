@@ -396,11 +396,15 @@ class Text < ApplicationRecord
   end
 
   def has_greek_publication_info
-    if original_greek_publisher || original_greek_place_of_publication || original_greek_date || original_greek_citation || original_greek_collection
-      return true
+    if original_greek_publisher.blank? &&
+        original_greek_place_of_publication.blank? &&
+        original_greek_date.blank? &&
+        original_greek_citation.blank? &&
+        original_greek_collection.blank?
+      return false
     end
 
-    false
+    true
   end
 
 end
