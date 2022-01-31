@@ -3,8 +3,7 @@
   <dd><%= convert_underscores(@text.title) %></dd>
 
   <% if @text.text_type == 'study_book' || @text.text_type == 'study_part' %>
-    <dt>Subject's name as appears in text</dt>
-    <dd><%= @text.authors_name_from_source %></dd>
+    <%= metadata_row "Subject's name as appears in text", @text.authors_name_from_source %>
   <% end %>
 
   <% if @text.text_type == 'translation_book' || @text.text_type == 'translation_part' %>
@@ -37,26 +36,19 @@
     <% end %>
   <% end %>
 
-  <% if @text.translators && @text.translators.count > 0 %>
-    <dt><%= "Translator".pluralize(@text.translators.count) %></dt>
-    <% @text.translators.each do |citation| %>
-      <dd><%= controlled_name_link citation %></dd>
-    <% end %>
-  <% end %>
+  <%= metadata_row "Translator".pluralize(@text.translators.count),
+                   @text.translators,
+                   value_prep_function: :controlled_name_link %>
 
-  <% if @text.editors && @text.editors.count > 0 %>
-    <dt><%= "Editor".pluralize(@text.editors.count) %></dt>
-    <% @text.editors.each do |citation| %>
-      <dd><%= controlled_name_link citation %></dd>
-    <% end %>
-  <% end %>
+  <%= metadata_row "Editor".pluralize(@text.editors.count),
+                   @text.editors,
+                   value_prep_function: :controlled_name_link %>
 
-  <% if @text.other_contributors && @text.other_contributors.count > 0 %>
-    <dt>Other <%= "contributor".pluralize(@text.other_contributors.count) %></dt>
-    <% @text.other_contributors.each do |citation| %>
-      <dd><%= controlled_name_link citation %><span class="role"> (<%= citation.role %>)</span></dd>
-    <% end %>
-  <% end %>
+  <%= metadata_row "Other contributor".pluralize(@text.other_contributors.count),
+                   @text.other_contributors,
+                   value_prep_function: :controlled_name_link %>
+
+
   <% if @text.journal && @text.journal.title != '' %>
     <dt>In</dt>
     <dd>
@@ -106,8 +98,6 @@
 
   <%= metadata_row 'Publisher', @text.publisher %>
 
-  <%= metadata_row 'Place of publication', @text.place_of_publication %>
-
   <% if @text.publication_places && @text.publication_places.count > 0 %>
     <dt><%= "Place".pluralize(@text.publication_places.count) %>  of publication</dt>
     <% @text.publication_places.each do |pub_place| %>
@@ -126,27 +116,13 @@
 
   <%= metadata_row 'Other note', @text.note %>
 
-  <% if @text.is_bilingual_display %>
-    <dt>Text is bilingual?</dt>
-    <dd><%= @text.is_bilingual_display %></dd>
-  <% end %>
+  <%= metadata_row 'Text is bilingual?', @text.is_bilingual_display %>
 
-  <% if @text.illustrations_noted %>
-    <dt>Illustrations noted?</dt>
-    <dd>Yes</dd>
-  <% end %>
+  <%= metadata_row 'Illustrations noted?', 'Yes', boolean_filter: @text.illustrations_noted %>
 
-  <% if @text.isbns && @text.isbns.count > 0 %>
-    <dt><%= "ISBN".pluralize(@text.isbns.count) %></dt>
-    <% @text.isbns.each do |isbn| %>
-      <dd><%= isbn.value %></dd>
-    <% end %>
-  <% end %>
+  <%= metadata_row 'ISBN'.pluralize(@text.isbns.count), @text.isbns, value_attribute: :value %>
 
-  <% unless @text.census_id.empty? %>
-    <dt>Entry Number</dt>
-    <dd><%= @text.census_id %></dd>
-  <% end %>
+  <%= metadata_row 'Entry Number', @text.census_id %>
 
   <% unless @text.cross_references.empty? %>
     <dt>References entries</dt>
