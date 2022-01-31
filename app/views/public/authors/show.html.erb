@@ -43,7 +43,7 @@
 
 <% if @texts.blank? %>
   <div role="tabpanel" class="tab-pane" id="profile">
-    <%= render 'authors_info' %>
+    <%= render 'profile' %>
   </div>
 <% else %>
   <%= render partial: 'authors_texts', locals: {texts: @texts} %>
