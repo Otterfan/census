@@ -44,6 +44,10 @@
                    @text.editors,
                    value_prep_function: :controlled_name_link %>
 
+  <%= metadata_row "Performer".pluralize(@text.performers.count),
+                   @text.performers,
+                   value_prep_function: :controlled_name_link %>
+
   <%= metadata_row "Other contributor".pluralize(@text.other_contributors.count),
                    @text.other_contributors,
                    value_prep_function: :controlled_name_link %>
