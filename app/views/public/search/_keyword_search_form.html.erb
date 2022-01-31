@@ -12,7 +12,7 @@
     <div class="col-lg-8 col-md-9 col-sm-12">
       <%= label_tag(:keyword, "Keyword") %>
       <div class="input-group">
-        <%= text_field_tag :keyword, params[:keyword], :class => 'form-control input-lg' %>
+        <%= text_field_tag :keyword, params[:keyword], :class => 'form-control input-lg', autocomplete: "off" %>
         <% if params[:sort] %>
           <%= hidden_field_tag 'sort', params[:sort] %>
         <% end %>

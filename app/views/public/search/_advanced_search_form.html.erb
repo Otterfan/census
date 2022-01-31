@@ -2,7 +2,7 @@
 <div class="search-chooser">Try the <%= link_to 'Keyword search', public_search_index_path(:type => "kw") %></div>
 <div class="search-history"><%= link_to 'Search history', public_recent_searches_path %></div>
 <!--pre><%= @all_search.to_json %></pre-->
-<%= form_tag(public_search_index_path, method: :get, id: "search_form") do %>
+<%= form_tag(public_search_index_path, method: :get, id: "search_form", autocomplete: 'off') do %>
   <div class="">
     <div class="">
       <div class="adv-search-fields row">
