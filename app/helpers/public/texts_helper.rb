@@ -209,8 +209,8 @@ module Public::TextsHelper
   def components_by_collection(components)
     collections = []
     collection = {
-        title: nil,
-        components: []
+      title: nil,
+      components: []
     }
     components.order(:ordinal, :pages, :id).each do |component|
       if component.collection != collection[:title]
@@ -220,9 +220,9 @@ module Public::TextsHelper
         end
 
         collection = {
-            title: component.collection,
-            greek_title: component.greek_collection_title,
-            components: [component]
+          title: component.collection,
+          greek_title: component.greek_collection_title,
+          components: [component]
         }
       else
         collection[:components] << component
@@ -247,7 +247,6 @@ module Public::TextsHelper
     end
 
     connector = authors_names != '' ? '.' : ''
-
 
     title_string = "#{authors_names}#{connector} #{title_string}"
 
@@ -314,5 +313,11 @@ module Public::TextsHelper
   def controlled_name_link_list(citations)
     all_links = citations.map { |citation| "<a href=\"/public/people/#{citation.controlled_name}\">#{citation.name}</a>" }
     all_links.join ('; ')
+  end
+
+  # @param [String] url
+  def extract_youtube_id(url)
+    query = Rack::Utils.parse_query URI(url).query
+    query['v']
   end
 end

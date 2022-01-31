@@ -86,6 +86,9 @@
         <% if url.accessed_on %>
           <div class="last-accessed-note">Last accessed <%= url.accessed_on.strftime('%B %d, %Y') %></div>
         <% end %>
+        <% if url.value.include? 'youtube' %>
+          <%= render 'youtube_embed', url: url %>
+        <% end %>
       </dd>
     <% end %>
   <% end %>
