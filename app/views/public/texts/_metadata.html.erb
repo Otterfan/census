@@ -103,8 +103,6 @@
 
   <%= metadata_row 'Material type', @text.material_type %>
 
-  <%= metadata_row 'Publisher', @text.publisher %>
-
   <% if @text.publication_places && @text.publication_places.count > 0 %>
     <dt><%= "Place".pluralize(@text.publication_places.count) %>  of publication</dt>
     <% @text.publication_places.each do |pub_place| %>
@@ -114,6 +112,8 @@
     <dt>Place of publication</dt>
     <dd><%= @text.journal.place.name %></dd>
   <% end %>
+
+  <%= metadata_row 'Publisher', @text.publisher %>
 
   <%= metadata_row 'Date of publication', @text.date %>
 
