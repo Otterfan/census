@@ -156,7 +156,8 @@ module Searchable
               :status_id, :section_id, :country_id,
               :journal_id, :volume_id, :sort_id, :section_id,
               :sort_page_span, :sort_census_id, :seen_in_person, :sort_author,
-              :sort_translator
+              :sort_translator,
+              :original_greek_title, :original_greek_collection, :greek_source_title
           ],
           methods: [
               :authors_names,
@@ -175,7 +176,10 @@ module Searchable
               :editors_names,
               :performers_names,
               :is_translation,
-              :publication_countries
+              :publication_countries,
+              :original_greek_title_clean,
+              :original_greek_collection_clean,
+              :greek_source_title_clean
           ],
           include: {
               text_citations: {
@@ -190,8 +194,9 @@ module Searchable
                   }
               },
               components: {
-                  except: [:id, :created_at, :updated_at, :text_id, :pages, :ordinal, :sort_pages],
-                  methods: [:sort_title, :collection_clean],
+                  except: [:id, :created_at, :updated_at, :text_id, :pages, :ordinal, :sort_pages,
+                           :greek_source_title, :greek_collection_title],
+                  methods: [:sort_title, :collection_clean, :greek_source_title_clean, :greek_collection_title_clean],
                   include: {
                       component_citations: {
                           except: [:id, :component_id, :from_language_id, :to_language_id, :created_at, :updated_at],

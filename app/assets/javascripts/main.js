@@ -7,7 +7,7 @@ function ready() {
 
 
 
-    var comment_form = $('#new-comment-form');
+    const comment_form = $('#new-comment-form');
     comment_form.submit(function (event) {
         event.preventDefault();
         BCComments.add();
@@ -19,9 +19,9 @@ function ready() {
     });
 
 
-    function upload_orginal() {
-        var pathArray = window.location.pathname.split('/');
-        var original_text = tinymce.activeEditor.getContent(),
+    function upload_original() {
+        const pathArray = window.location.pathname.split('/');
+        const original_text = tinymce.activeEditor.getContent(),
             post_address = '/texts/' + pathArray[2] + '/original';
         $.post(post_address, {original: original_text}, function (data) {
             console.log('success!!');
@@ -29,9 +29,9 @@ function ready() {
     }
 
     if (typeof tinyMCE != 'undefined') {
-        var content_style = '.small-text {font-size: small}';
+        const content_style = '.small-text {font-size: small}';
 
-        var opts = {
+        const opts = {
             selector: '.original-box textarea',
             menubar: false,
             plugins: 'save paste',
@@ -67,7 +67,7 @@ function ready() {
             extended_valid_elements : "p[style]",
             inline_styles : true,
             verify_html : false,
-            save_onsavecallback: upload_orginal,
+            save_onsavecallback: upload_original,
             style_formats: [
                 {title: 'Small', inline: 'span', classes: 'small-text'},
                 {title: 'Superscript', inline: 'sup'}

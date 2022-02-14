@@ -1,4 +1,6 @@
 class Component < ApplicationRecord
+  include SharedMethods
+
   belongs_to :text
   has_many :component_citations
   accepts_nested_attributes_for :component_citations, reject_if: :all_blank, :allow_destroy => true
@@ -52,6 +54,14 @@ class Component < ApplicationRecord
       return ''
     end
     collection.gsub(/["'“”‘’«»:_.\[\]\*]/, "").sub(/^(An? )|(The )/, '').strip
+  end
+
+  def greek_source_title_clean
+    greek_source_title ? clean_field(greek_source_title) : nil
+  end
+
+  def greek_collection_title_clean
+    greek_collection_title ? clean_field(greek_collection_title) : nil
   end
 
   default_scope {order("ordinal ASC")}

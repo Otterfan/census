@@ -5,6 +5,7 @@ class Text < ApplicationRecord
   include SharedMethods
   include TextSortable
   include Searchable
+  include SharedMethods
 
   belongs_to :language, optional: true
   belongs_to :topic_author, class_name: 'Person', optional: true
@@ -432,6 +433,18 @@ class Text < ApplicationRecord
     end
 
     true
+  end
+
+  def original_greek_title_clean
+    original_greek_title ? clean_field(original_greek_title) : nil
+  end
+
+  def original_greek_collection_clean
+    original_greek_collection ? clean_field(original_greek_collection) : nil
+  end
+
+  def greek_source_title_clean
+    greek_source_title ? clean_field(greek_source_title) : nil
   end
 
 end
