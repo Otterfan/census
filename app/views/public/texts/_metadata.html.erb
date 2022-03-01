@@ -117,6 +117,10 @@
 
   <%= metadata_row 'Date of publication', @text.date %>
 
+  <%= metadata_row 'Series', @text.series %>
+
+  <%= metadata_row 'Sponsoring organiztion', @text.series %>
+
   <%= metadata_row 'Editorial note', convert_underscores(@text.editorial_annotation) %>
 
   <%= metadata_row 'Physical description', convert_underscores(@text.physical_description) %>
