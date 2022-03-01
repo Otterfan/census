@@ -67,8 +67,12 @@ class Public::SearchController < ApplicationController
       components.sort_title
       components.sort_title.en_folded
       components.sort_title.el_folded
-      components.greek_collection_title.el
-      components.greek_collection_title.el_folded
+      components.greek_collection_title_clean
+      components.greek_collection_title_clean.el
+      components.greek_collection_title_clean.el_folded
+      components.greek_source_title_clean
+      components.greek_source_title_clean.el
+      components.greek_source_title_clean.el_folded
       journal.title
       journal.title.en
       journal.title.el
@@ -83,8 +87,10 @@ class Public::SearchController < ApplicationController
       volume.sort_title
       volume.sort_title.en_folded
       volume.sort_title.el_folded
-      original_greek_title
-      original_greek_title.el_folded
+      original_greek_title_clean
+      original_greek_title_clean.el_folded
+      original_greek_collection_clean
+      original_greek_collection_clean.el_folded
       issue_title
       issue_title.el_folded
       issue_title.en_folded
@@ -752,7 +758,7 @@ class Public::SearchController < ApplicationController
               when "authors_name_from_source"
                 add_field_adv_search(['authors_name_from_source'], clean_search_string, @current_bool_op)
               when "authors_name_from_source_exact"
-                add_field_adv_search(['authors_name_from_source'], clean_search_string, @current_bool_op)
+                add_field_adv_search(['authors_name_from_source.exact'], clean_search_string, @current_bool_op)
               end
             end
           else

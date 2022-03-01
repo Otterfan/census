@@ -1,46 +1,22 @@
 <dl class="component">
 
-  <dt>Title</dt>
-  <dd><%= convert_underscores component.title %></dd>
+  <%= metadata_row 'Title', convert_underscores(component.title) %>
 
-  <% if component.greek_source_title != '' %>
-    <dt>Greek source title</dt>
-    <dd><%= component.greek_source_title %></dd>
-  <% end %>
+  <%= metadata_row 'Greek source title', convert_underscores(component.greek_source_title) %>
 
-  <% if component.pages %>
-    <dt>Pages</dt>
-    <dd><%= component.pages %></dd>
-  <% end %>
+  <%= metadata_row 'Pages', component.pages %>
 
-  <% if component.authors && component.authors != [] %>
-    <dt>Author(s)</dt>
-    <dd>
-      <%= controlled_name_link_list(component.authors).html_safe %>
-    </dd>
-  <% end %>
+  <%= metadata_row 'Author'.pluralize(component.authors.length),
+                   controlled_name_link_list(component.authors).html_safe %>
 
-  <% if component.translators && component.translators != [] %>
-    <dt>Translator(s)</dt>
-    <dd>
-      <%= controlled_name_link_list(component.translators).html_safe %>
-    </dd>
-  <% end %>
+  <%= metadata_row 'Translator'.pluralize(component.translators.length),
+                   controlled_name_link_list(component.translators).html_safe %>
 
-  <% if component.genre && component.genre != '' %>
-    <dt>Genre</dt>
-    <dd><%= component.genre %></dd>
-  <% end %>
+  <%= metadata_row 'Genre', component.genre %>
 
-  <% if component.note && component.note != '' %>
-    <dt>Note</dt>
-    <dd><%= convert_underscores component.note %></dd>
-  <% end %>
+  <%= metadata_row 'Note', convert_underscores(component.note) %>
 
-  <% if component.is_bilingual %>
-    <dt>Is bilingual?</dt>
-    <dd>Yes</dd>
-  <% end %>
+  <%= metadata_row 'Note', 'Yes', boolean_filter: component.is_bilingual? %>
 
   <div style="clear: both;"></div>
 </dl>

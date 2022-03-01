@@ -8,6 +8,11 @@ Rails.application.routes.draw do
   get 'public/texts/:census_id', to: 'public/texts#show', constraints: { census_id: /\d\.\d+-?\d+/ }
   get 'public/privacy', to: 'public/pages#privacy'
 
+  # Error routes
+  get '/404', to: 'public/errors#not_found'
+  get '/422', to: 'public/errors#unacceptable'
+  get '/500', to: 'public/errors#internal_error'
+
   resources :versions, :path => '/changes', :only => [:index, :show]
   resources :comments
   resources :volumes

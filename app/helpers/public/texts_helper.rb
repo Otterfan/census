@@ -1,21 +1,34 @@
 require 'uri'
 
 module Public::TextsHelper
-  def metadata_row(label, value)
-    unless value && value != ''
-      return
-    end
+  def metadata_row(label, value, boolean_filter: nil, value_attribute: nil, value_prep_function: nil)
+
+    # Remove trailing whitespace if it's a string.
+    value.strip! if value.respond_to?(:strip)
+
+    # Don't display empty values.
+    return unless value && value != '' && value != []
+
+    # Don't display if a boolean filter is applied and it is not true.
+    return unless boolean_filter.nil? || boolean_filter == true
 
     dt = "<dt>#{label}</dt>"
     dd = ""
-    Array(value).each do |val|
+
+    formatted_list_items = Array(value).map do |val|
+      # If the value is an object, get the correct display value.
+      val = val.send(value_attribute) if value_attribute
+
+      # Convert underscores to italics
+      val = method(value_prep_function).call(val) if value_prep_function
+
       converted = convert_underscores(val)
       linked = link_records(converted)
-      dd = dd + "<dd>#{linked}</dd>"
+
+      "<dd>#{linked}</dd>"
     end
 
-    full = dt + dd
-    full.html_safe
+    "<dt>#{label}</dt>#{formatted_list_items.join}".html_safe
   end
 
   # Convert words wrapped in underscores to <em>
@@ -196,8 +209,8 @@ module Public::TextsHelper
   def components_by_collection(components)
     collections = []
     collection = {
-        title: nil,
-        components: []
+      title: nil,
+      components: []
     }
     components.order(:ordinal, :pages, :id).each do |component|
       if component.collection != collection[:title]
@@ -207,9 +220,9 @@ module Public::TextsHelper
         end
 
         collection = {
-            title: component.collection,
-            greek_title: component.greek_collection_title,
-            components: [component]
+          title: component.collection,
+          greek_title: component.greek_collection_title,
+          components: [component]
         }
       else
         collection[:components] << component
@@ -234,7 +247,6 @@ module Public::TextsHelper
     end
 
     connector = authors_names != '' ? '.' : ''
-
 
     title_string = "#{authors_names}#{connector} #{title_string}"
 
@@ -301,5 +313,11 @@ module Public::TextsHelper
   def controlled_name_link_list(citations)
     all_links = citations.map { |citation| "<a href=\"/public/people/#{citation.controlled_name}\">#{citation.name}</a>" }
     all_links.join ('; ')
+  end
+
+  # @param [String] url
+  def extract_youtube_id(url)
+    query = Rack::Utils.parse_query URI(url).query
+    query['v']
   end
 end
