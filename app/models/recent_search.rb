@@ -33,7 +33,9 @@ class RecentSearch < ApplicationRecord
   end
 
   def display
-    parameters.gsub('--', ' ')
+    if parameters
+      parameters.gsub('--', ' ')
+    end
   end
 
   def query_string
