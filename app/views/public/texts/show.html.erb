@@ -4,7 +4,7 @@
     <% if params[:from_search] == 'true' %>
       <a class="back-link" href="javascript:history.back();">◀ Result list</a>
     <% else %>
-    &nbsp;
+      &nbsp;
     <% end %>
   </div>
   <div class="row">
@@ -14,7 +14,11 @@
           <a href="/public/authors/<%= @text.topic_author.id %>"><%= render "shared/topic_author", text: @text %></a>
         </h2>
       <% end %>
-      <h3><span class="census-id"><%= @text.census_id %></span> <%= convert_underscores @text.title %></h3>
+      <h3>
+        <% unless @text.census_id.blank? %>
+          <span class="census-id"><%= @text.census_id %></span>
+        <% end %>
+        <%= convert_underscores @text.title %></h3>
       <div class="text-type"><%= @text.display_text_type %></div>
     </div>
   </div>
