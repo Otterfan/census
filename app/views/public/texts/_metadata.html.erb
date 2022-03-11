@@ -95,12 +95,6 @@
 
   <%= metadata_row 'Genre', @text.genre %>
 
-  <% if @text.text_type.include? "study" %>
-    <%= metadata_row 'Type', 'Study' %>
-  <% else %>
-    <%= metadata_row 'Type', 'Translation' %>
-  <% end %>
-
   <%= metadata_row 'Material type', @text.material_type %>
 
   <% if @text.publication_places && @text.publication_places.count > 0 %>
