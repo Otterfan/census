@@ -11,6 +11,10 @@
       <%= render 'appears_as', role: 'intro/front matter author', name: @name %>
     <% end %>
 
+    <% if @name.roles.include? 'back matter author' %>
+      <%= render 'appears_as', role: 'back matter author', name: @name %>
+    <% end %>
+
     <% if @name.roles.include? 'translator' %>
       <%= render 'appears_as', role: 'translator', name: @name %>
     <% end %>
