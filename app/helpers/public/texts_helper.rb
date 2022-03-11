@@ -143,25 +143,24 @@ module Public::TextsHelper
 
   # Format journal issue for display (e.g. "10.3 (Autumn 2009)")
   def formatted_journal_issue(text)
-    retval = ''
+    formatted_issue = ''
 
     if !text.issue_volume.blank? && !text.issue_number.blank?
-      retval = "#{text.issue_volume}.#{text.issue_number}"
+      formatted_issue = "#{text.issue_volume}.#{text.issue_number}"
     elsif text.issue_volume
-      retval = "#{text.issue_volume}"
+      formatted_issue = "#{text.issue_volume}"
     elsif text.issue_number
-      retval = "#{text.issue_number}"
+      formatted_issue = "#{text.issue_number}"
     end
 
-    if !text.issue_season_month.blank?
-      retval = "#{retval} (#{text.issue_season_month} #{text.date})"
-    elsif retval.blank?
-      retval = text.date
+    date_part = text.issue_season_month.blank? ? text.date : "#{text.issue_season_month} #{text.date}"
+
+    if formatted_issue.blank?
+      date_part
     else
-      retval = "#{retval} (#{text.date})"
+      "#{formatted_issue} (#{date_part})"
     end
 
-    retval
   end
 
   # add in ellipses for record search results highlighting
@@ -209,8 +208,8 @@ module Public::TextsHelper
   def components_by_collection(components)
     collections = []
     collection = {
-      title: nil,
-      components: []
+        title: nil,
+        components: []
     }
     components.order(:ordinal, :pages, :id).each do |component|
       if component.collection != collection[:title]
@@ -220,9 +219,9 @@ module Public::TextsHelper
         end
 
         collection = {
-          title: component.collection,
-          greek_title: component.greek_collection_title,
-          components: [component]
+            title: component.collection,
+            greek_title: component.greek_collection_title,
+            components: [component]
         }
       else
         collection[:components] << component
