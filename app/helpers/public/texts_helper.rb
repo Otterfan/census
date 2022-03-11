@@ -129,13 +129,7 @@ module Public::TextsHelper
 
   # Formatted journal volume and issue
   def formatted_full_journal_issue_citation(text)
-    retval = formatted_journal_issue(text)
-
-    unless text.page_span.blank?
-      retval = "#{retval}: #{text.page_span}"
-    end
-
-    retval
+    formatted_journal_issue(text)
   end
 
   # Format journal issue for display (e.g. "10.3 (Autumn 2009)")
