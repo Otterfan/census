@@ -1,8 +1,15 @@
 <% if @facets.present? %>
   <% @facets.each do |k, v| %>
+    <% formatted_key = format_label(k) %>
+    <% formatted_value = format_label(v) %>
     <div class="btn-group" role="group" aria-label="facets">
-      <button type="button" class="btn btn-default disabled" disabled="disabled"><%= format_label(k) %> <i class="fas fa-angle-right"></i> <%= format_label(v) %></button>
-      <%= link_to '<i class="fas fa-times"></i>'.html_safe, reset_facet_path(request.fullpath, k), :class =>"btn btn-default facet-control facet-remove", "data-control" => k %>
+      <% if formatted_key == formatted_value %>
+        <button type="button" class="btn btn-default disabled" disabled="disabled"><%= formatted_key %></button>
+      <% else %>
+        <button type="button" class="btn btn-default disabled" disabled="disabled"><%= formatted_key %>
+          <i class="fas fa-angle-right"></i> <%= formatted_value %></button>
+      <% end %>
+      <%= link_to '<i class="fas fa-times"></i>'.html_safe, reset_facet_path(request.fullpath, k), :class => "btn btn-default facet-control facet-remove", "data-control" => k %>
     </div>
   <% end %>
 <% end %>

@@ -12,9 +12,6 @@ module Public::TextsHelper
     # Don't display if a boolean filter is applied and it is not true.
     return unless boolean_filter.nil? || boolean_filter == true
 
-    dt = "<dt>#{label}</dt>"
-    dd = ""
-
     formatted_list_items = Array(value).map do |val|
       # If the value is an object, get the correct display value.
       val = val.send(value_attribute) if value_attribute
@@ -310,7 +307,13 @@ module Public::TextsHelper
 
   # @param [Array<ComponentCitation> citations
   def controlled_name_link_list(citations)
-    all_links = citations.map { |citation| "<a href=\"/public/people/#{citation.controlled_name}\">#{citation.name}</a>" }
+    all_links = citations.map do |citation|
+      if citation.controlled_name
+        "<a href=\"/public/people/#{citation.controlled_name}\">#{citation.name}</a>"
+      else
+        ""
+      end
+    end
     all_links.join ('; ')
   end
 
