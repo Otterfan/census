@@ -14,4 +14,12 @@ class Url < ApplicationRecord
     PublicSuffix.domain(parsed_uri.hostname)
   end
 
+  def url_with_protocol
+    if value.include?('http')
+      value
+    else
+      "http://#{value}"
+    end
+  end
+
 end

@@ -81,7 +81,7 @@
     <dt><%= "URL".pluralize(@text.urls.count) %></dt>
     <% @text.urls.each do |url| %>
       <dd>
-        <a href="<%= url.value %>" target="_blank" rel="noopener" class="url-link"><%= url.value %>
+        <a href="<%= url.url_with_protocol %>" target="_blank" rel="noopener" class="url-link"><%= url.value %>
           <i class="fas fa-external-link-alt"></i></a>
         <% if url.accessed_on %>
           <div class="last-accessed-note">Last accessed <%= url.accessed_on.strftime('%B %d, %Y') %></div>
