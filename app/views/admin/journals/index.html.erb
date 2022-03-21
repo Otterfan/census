@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="pagination-stuff col-md-10">
+    <%= paginate @journals %>
+  </div>
+  <div class="new-thing col-md-2">
+    <%= link_to '<button class="btn btn-defaul btn-success">+ Add a new journal</button>'.html_safe, new_admin_journal_path %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <ul class="list-group">
+      <% @journals.each do |journal| %>
+        <li class="list-group-item">
+          <%= link_to journal.title, edit_admin_journal_path(journal) %>
+          <%= link_to admin_journal_path(journal), method: :delete, data: {confirm: 'Are you sure?'} do %>
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+    <%= paginate @journals %>
+  </div>
+</div>
+

@@ -1,0 +1,13 @@
+<h1>Editing Volume</h1>
+
+<div class="col-md-7">
+  <%= render 'form', volume: @volume %>
+</div>
+
+<div class="col-md-5">
+  <h2>Appears in...</h2>
+  <% @texts.each do |text| %>
+      <li><%= link_to text.title, edit_admin_text_path(text) %></li>
+  <% end %>
+  <%= render partial: 'shared/changes', locals: {versions: @volume.versions} %>
+</div>

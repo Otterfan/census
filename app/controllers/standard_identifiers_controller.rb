@@ -1,2 +1,0 @@
-class StandardIdentifiersController < ApplicationController
-end

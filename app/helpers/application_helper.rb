@@ -59,15 +59,15 @@ module ApplicationHelper
 
   def changed_item_url(item)
     if item.is_a?(Text)
-      edit_text_path(item)
+      edit_admin_text_path(item)
     elsif item.is_a?(Volume)
-      edit_volume_path(item)
+      edit_admin_volume_path(item)
     elsif item.is_a?(Person)
-      edit_person_path(item)
+      edit_admin_person_path(item)
     elsif item.is_a?(Journal)
-      edit_journal_path(item)
+      edit_admin_journal_path(item)
     elsif item.is_a?(Place)
-      edit_place_path(item)
+      edit_admin_place_path(item)
     else
       ''
     end

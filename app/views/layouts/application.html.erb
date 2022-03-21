@@ -27,19 +27,19 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="<%= 'active' if in_current_path? 'text' %>">
-          <a href="/texts">Texts <span class="sr-only">(current)</span></a></li>
+          <a href="<%= admin_texts_path %>">Texts <span class="sr-only">(current)</span></a></li>
         <li class="<%= 'active' if in_current_path? 'author' %>">
-          <a href="/authors">Authors <span class="sr-only">(current)</span></a></li>
+          <a href="<%= admin_people_path %>">Authors <span class="sr-only">(current)</span></a></li>
         <li class="<%= 'active' if in_current_path? 'place' %>">
-          <a href="/places">Places <span class="sr-only">(current)</span></a></li>
+          <a href="<%= admin_places_path %>">Places <span class="sr-only">(current)</span></a></li>
         <li class="<%= 'active' if in_current_path? 'volume' %>">
-          <a href="/volumes">Volumes<span class="sr-only">(current)</span></a></li>
+          <a href="<%= admin_volumes_path %>">Volumes<span class="sr-only">(current)</span></a></li>
         <li class="<%= 'active' if in_current_path? 'journal' %>">
-          <a href="/journals">Journals<span class="sr-only">(current)</span></a></li>
+          <a href="<%= admin_journals_path %>">Journals<span class="sr-only">(current)</span></a></li>
         <li class="<%= 'active' if in_current_path? 'changes' %>">
-          <a href="/changes">All edits<span class="sr-only">(current)</span></a></li>
+          <a href="<%= admin_versions_path %>">All edits<span class="sr-only">(current)</span></a></li>
         <li class="<%= 'active' if in_current_path? 'comments' %>">
-          <a href="/comments">All comments<span class="sr-only">(current)</span></a></li>
+          <a href="<%= admin_comments_path %>">All comments<span class="sr-only">(current)</span></a></li>
         <li class="<%= 'active' if in_current_path? 'reports' %>">
           <a href="/reports" target="_blank">Reports<span class="sr-only">(current)</span></a></li>
       </ul>

@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="pagination-stuff col-md-12">
+    <%= paginate @comments %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <ul class="list-group text-comments">
+      <% @comments.each do |comment| %>
+          <li class="comment list-group-item">
+            <div class="the-title"><strong><%= comment.text.census_id %></strong> <%= link_to comment.text.title, edit_admin_text_path(comment.text) %></div>
+            <div class="the-text"><%= comment.value %></div>
+            <div class="comment-metadata">
+              <span class="the-user"><%= comment.user.email %></span>
+              <span class="the-date"><%= comment.created_at %></span>
+            </div>
+          </li>
+      <% end %>
+    </ul>
+    <%= paginate @comments %>
+  </div>
+</div>
+

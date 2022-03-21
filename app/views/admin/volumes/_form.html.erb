@@ -1,0 +1,39 @@
+<%= simple_form_for [:admin, @volume] do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :title, as: :string %>
+
+    <% if @volume.new_record? %>
+      <%= f.input :sort_title, as: :string, label: "Title used for sorting (Available to edit after this record has been created)", :disabled => true %>
+    <% else %>
+      <%= f.input :sort_title, as: :string, label: "Title used for sorting (required)", :disabled => false %>
+    <% end %>
+
+    <%= f.input :author, as: :string %>
+    <%= f.input :date %>
+
+    <div class="form-inputs">
+      <%= f.input :brief_result_note %>
+      <span class="input-form__note">Displays in record lists.</span>
+    </div>
+
+    <div>
+      <h2>Citations</h2>
+    </div>
+    <div>
+      <div id='citations'>
+        <%= f.simple_fields_for :volume_citations do |citation| %>
+          <%= render 'volume_citation_fields', :f => citation %>
+        <% end %>
+        <div class='links'>
+          <%= link_to_add_association 'add citation', f, :volume_citations %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

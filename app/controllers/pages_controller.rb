@@ -6,8 +6,4 @@ class PagesController < ApplicationController
     redirect_to "/public" unless current_user && current_user.user_type != 'viewer'
   end
 
-  def index
-    @comments = Comment.order(updated_at: :desc).limit(10)
-    @changed_texts = PaperTrail::Version.where("item_type = 'Text'").order(:created_at => :desc).limit(10).includes(:item)
-  end
 end
