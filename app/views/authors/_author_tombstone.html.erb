@@ -1,0 +1,15 @@
+<a href="<%= author_path(author) %>">
+
+  <% if @is_greek_letter %>
+    <span class="topic-author-english"><%= author.greek_full_name %></span></a> <%= display_dates author %>
+    <% unless author.full_name.blank? %>
+      <br>
+      <span class="topic-author-greek"><%= author.full_name %></span>
+    <% end %>
+  <% else %>
+    <span class="topic-author-english"><%= author.full_name %></span></a> <%= display_dates author %>
+    <% unless author.greek_full_name.blank? %>
+      <br>
+      <span class="topic-author-greek"><%= author.greek_full_name %></span>
+    <% end %>
+  <% end %>

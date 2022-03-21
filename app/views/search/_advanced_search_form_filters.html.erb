@@ -1,0 +1,75 @@
+<div class="col-lg-12 col-md-12 col-sm-12 adv-search-filter-row">
+
+  <div class="row adv-search-date-row">
+    <div class="col-md-12">
+      <span class="date-row-meta-label">Publication year</span>
+
+      <label for="pub-date-from">from</label>
+      <%= text_field_tag 'pub-date-from' %>
+
+      <label for="pub-date-to">to</label>
+      <%= text_field_tag 'pub-date-to' %>
+    </div>
+  </div>
+
+  <div class="adv-search-select-row row">
+    <div class="adv-search-filter col-md-4 col-sm-6" id="panel-text_type">
+      <%= label_tag 'text-type-select', 'Text Type' %>
+      <%= select_tag(:text_type, options_for_select(@unique_values["text_type"], @selected_text_types), {class: 'form-control select_text_type select_field', "data-count": "1", multiple: true, id: 'text-type-select'}) %>
+    </div>
+
+    <div class="adv-search-filter col-md-4 col-sm-6" id="panel-material_type">
+      <%= label_tag 'material-type-select', 'Material Type' %>
+      <%= select_tag(:text_type, options_for_select(@unique_values["material_type"], @selected_material_types), {class: 'form-control select_text_type select_field', "data-count": "1", multiple: true, id: 'material_type-select'}) %>
+    </div>
+
+    <div class="adv-search-filter col-md-4 col-sm-6" id="panel-genre">
+      <%= label_tag 'genre-select', 'Genre' %>
+      <%= select_tag(:text_type, options_for_select(@unique_values["genre"], @selected_genres), { class: 'form-control select_text_type select_field', "data-count": "1", multiple: true, id: 'genre-select'}) %>
+    </div>
+
+  </div>
+
+  <div class="row adv-search-boolean-row">
+
+    <div>
+      <%= render partial: "search/filter_checkbox",
+                 locals: {field_label: 'Show only bilingual records',
+                          field_name: 'is_bilingual',
+                          checked: @is_bilingual} %>
+
+      <%= render partial: "search/filter_checkbox",
+                 locals: {field_label: 'Show only records with noted illustrations',
+                          field_name: 'illustrations_noted',
+                          checked: @illustrations_noted} %>
+
+      <%= render partial: "search/filter_checkbox",
+                 locals: {field_label: 'Show only special issues of journals',
+                          field_name: 'is_special_issue',
+                          checked: @is_special_issue} %>
+
+      <%= render partial: "search/filter_checkbox",
+                 locals: {field_label: 'Show only collected volumes',
+                          field_name: 'is_collected_volume',
+                          checked: @is_collected_volume} %>
+
+    </div>
+  </div>
+
+
+
+  <%= render 'advanced_search_form_submit' %>
+  <script>
+      $( "#text-type-select" ).select2({
+          placeholder: "Select text types"
+      });
+
+      $( "#material_type-select" ).select2({
+          placeholder: "Select material types"
+      });
+
+      $( "#genre-select" ).select2({
+          placeholder: "Select genres"
+      });
+  </script>
+</div>

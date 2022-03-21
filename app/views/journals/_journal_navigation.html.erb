@@ -1,0 +1,12 @@
+<div class="authors-nav">
+
+  <%# List each author and link. %>
+  <% @navigation_list.members.each do |journal| %>
+    <div class="authors-nav__author foo <%= 'authors-nav__author--selected' if journal.id == @journal.id %>">
+      <a href="<%= journal_path journal %>">
+        <div class="authors-nav__full_name"><%= journal.title %></div>
+      </a>
+    </div>
+  <% end %>
+
+</div>

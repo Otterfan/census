@@ -1,0 +1,58 @@
+<% page_title('Browse journals') %>
+<h3 class="browse-journals__header">Browse all journals</h3>
+<div class="row">
+  <div class="browse-journals__description browse-page__description col-md-10">
+    All journal titles in which CENSUS entries have been identified. For each journal, only the issues with CENSUS-related contents are listed, in chronological order.
+  </div>
+</div>
+<div class="row">
+<%# Letters at top of page for navigating %>
+  <div class="col-md-8">
+    <%= render 'journals/journal_letter_list' %>
+  </div>
+
+  <div class="col-md-12">
+    <div class="row">
+      <div class="browse-journals__pagination--top pagination-stuff col-md-10">
+        <%= paginate @journals %>
+      </div>
+    </div>
+    <ul class="list-group">
+      <% @journals.each do |journal| %>
+        <li class="list-group-item browse-journals__entry">
+        <% if journal.see_journal %>
+
+            <span class="topic-author-english"><%= journal.title %></span>
+            see <span class="topic-author-see-person">
+              <a href="<%= journal_path(journal.see_journal) %>">
+                <%= journal.see_journal.title %>
+              </a>
+            </span>
+            <% if journal.brief_result_note %>
+              <div class="browse-page__brief-result-note">
+                <%= journal.brief_result_note %>
+              </div>
+            <% end %>
+
+        <% else %>
+          <div class="browse-journals__linked-header">
+            <span class="browse-journals__full_name"><%= link_to journal.title, journal_path(journal.id) %></span>
+          </div>
+            <% if journal.brief_result_note %>
+              <div class="browse-page__brief-result-note">
+                <%= journal.brief_result_note %>
+              </div>
+            <% end %>
+        <% end %>
+
+
+        </li>
+      <% end %>
+    </ul>
+    <div class="row">
+      <div class="browse-journals__pagination--bottom pagination-stuff col-md-10">
+        <%= paginate @journals %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -27,16 +27,16 @@
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
       </button>
-      <%= link_to 'Home', public_search_index_path, :class => "navbar-brand" %>
+      <%= link_to 'Home', search_index_path, :class => "navbar-brand" %>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="<%= 'active' if in_current_path? 'public/texts' %>"><%= link_to 'Texts', public_texts_path %></li>
-        <li class="<%= 'active' if in_current_path? 'public/authors' %>"><%= link_to 'Authors', public_authors_path %></li>
-        <li class="<%= 'active' if in_current_path? 'public/people' %>"><%= link_to 'People', public_controlled_name_index_path %></li>
-        <li class="<%= 'active' if in_current_path? 'public/volumes' %>"><%= link_to 'Volumes', public_volumes_path %></li>
-        <li class="<%= 'active' if in_current_path? 'public/journals' %>"><%= link_to 'Journals', public_journals_path %></li>
-        <li class="<%= 'active' if in_current_path? 'public/search' %>"><%= link_to 'Search', public_search_index_path %></li>
+        <li class="<%= 'active' if in_current_path? 'texts' %>"><%= link_to 'Texts', texts_path %></li>
+        <li class="<%= 'active' if in_current_path? 'authors' %>"><%= link_to 'Authors', authors_path %></li>
+        <li class="<%= 'active' if in_current_path? 'people' %>"><%= link_to 'People', controlled_name_index_path %></li>
+        <li class="<%= 'active' if in_current_path? 'volumes' %>"><%= link_to 'Volumes', volumes_path %></li>
+        <li class="<%= 'active' if in_current_path? 'journals' %>"><%= link_to 'Journals', journals_path %></li>
+        <li class="<%= 'active' if in_current_path? 'search' %>"><%= link_to 'Search', search_index_path %></li>
       </ul>
     </div>
   </div>

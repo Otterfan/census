@@ -1,0 +1,606 @@
+<h2>Advanced Search</h2>
+<div class="search-chooser">Try the <%= link_to 'Keyword search', search_index_path(:type => "kw") %></div>
+<div class="search-history"><%= link_to 'Search history', recent_searches_path %></div>
+<!--pre><%= @all_search.to_json %></pre-->
+<%= form_tag(search_index_path, method: :get, id: "search_form", autocomplete: 'off') do %>
+  <div class="">
+    <div class="">
+      <div class="adv-search-fields row">
+        <%= hidden_field_tag :type, @search_type %>
+
+        <!-- first search field group -->
+        <div class="row" id="new-form" aria-label="Search row 1">
+          <div class="col-lg-10 col-md-10 col-sm-8">
+            <%= render partial: 'advanced_search_form_group', locals: {num: 1} %>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-4"></div>
+        </div>
+
+        <!-- second search field group -->
+        <div class="row" id="new-form" aria-label="Search row 2">
+          <div class="col-lg-10 col-md-10 col-sm-8">
+            <%= render partial: 'advanced_search_form_group', locals: {num: 2} %>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-4"></div>
+        </div>
+
+        <!-- third search field group -->
+        <div class="row search-row" id="search-row-group-3" aria-label="Search row 3">
+          <div class="col-lg-10 col-md-10 col-sm-8">
+            <%= render partial: 'advanced_search_form_group', locals: {num: 3} %>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-4 add-buttons">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <a href="#"
+                 aria-label="Expand search row 4"
+                 class="add"
+                 data-next="#search-row-group-4"
+                 role="button"
+                 aria-expanded="false"
+                 aria-controls="search-row-group-4"
+              ><i class="fas fa-fw fa-plus-circle"></i></a>
+              <i class="fas fa-fw fa-minus-circle disabled"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- fourth search field group -->
+        <div class="row search-row" id="search-row-group-4" aria-label="Search row 4" style="display:none;">
+          <div class="col-lg-10 col-md-10 col-sm-8">
+            <%= render partial: 'advanced_search_form_group', locals: {num: 4} %>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-4 add-buttons">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <a href="#"
+                 aria-label="Expand search row 5"
+                 class="add"
+                 data-next="#search-row-group-5"
+                 role="button"
+                 aria-expanded="false"
+                 aria-controls="search-row-group-5"
+              ><i class="fas fa-fw fa-plus-circle"></i></a>
+              <a href="#"
+                 aria-label="Collapse search row 4"
+                 class="remove"
+                 data-previous="#search-row-group-3"
+                 role="button"
+                 aria-expanded="false"
+                 aria-controls="search-row-group-4"
+              ><i class="fas fa-fw fa-minus-circle"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- fifth search field group -->
+        <div class="row search-row" id="search-row-group-5" aria-label="Search row 5" style="display:none;">
+          <div class="col-lg-10 col-md-10 col-sm-8">
+            <%= render partial: 'advanced_search_form_group', locals: {num: 5} %>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-4 add-buttons">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <a href="#"
+                 aria-label="Expand search row 6"
+                 class="add"
+                 data-next="#search-row-group-6"
+                 role="button"
+                 aria-expanded="false"
+                 aria-controls="search-row-group-6"
+              ><i class="fas fa-fw fa-plus-circle"></i></a>
+              <a href="#"
+                 aria-label="Collapse search row 5"
+                 class="remove"
+                 data-previous="#search-row-group-4"
+                 role="button"
+                 aria-expanded="false"
+                 aria-controls="search-row-group-5"
+              ><i class="fas fa-fw fa-minus-circle"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- sixth search field group -->
+        <div class="row search-row" id="search-row-group-6" aria-label="Search row 6" style="display:none;">
+          <div class="col-lg-10 col-md-10 col-sm-8">
+            <%= render partial: 'advanced_search_form_group', locals: {num: 6} %>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-4 add-buttons">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <i class="fas fa-fw fa-plus-circle disabled"></i>
+              <a href="#"
+                 aria-label="Collapse search row 6"
+                 class="remove"
+                 data-previous="#search-row-group-5"
+                 role="button"
+                 aria-expanded="false"
+                 aria-controls="search-row-group-6"
+              ><i class="fas fa-fw fa-minus-circle"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%= render 'advanced_search_form_filters' %>
+  </div>
+<% end %>
+<script>
+    $(document).ready(function() {
+        // list of filter fields
+        var FILTER_FIELDS = [
+            "text_type",
+            "material_type",
+            "genre",
+            "is_bilingual",
+            "illustrations_noted",
+            "is_special_issue",
+            "is_collected_volume"
+        ];
+
+        // https://stackoverflow.com/a/21903119
+        function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
+                }
+            }
+        }
+
+        // pull out advanced search params from URL and fit them back into the search fields
+        function load_field_vals(){
+            // look for date input
+            var date_range = getUrlParameter("publication_date_range");
+
+            if (date_range) {
+                var date_parts = date_range.split("-");
+                if (date_parts[0] > 1000) {
+                    $('#pub-date-from').val(date_parts[0]);
+                }
+                if (date_parts[1] < 9999) {
+                    $('#pub-date-to').val(date_parts[1]);
+                }
+            }
+
+
+            // get the query param
+            var bq = getUrlParameter("bq");
+
+            if (bq === undefined){
+                console.log("could not find bq param!");
+                return;
+            }
+
+            console.log("bq: " + bq);
+
+            // example bool query
+            // (title::cats)--AND--(genre::poetry::essay)
+
+            var split_tokens = bq.split("--");
+
+            console.log(split_tokens);
+
+            // tokens should now be in the pattern:
+            //  [0] (field_name::search_string)
+            //  [1] BOOLEAN
+            //  [2] (field_name::search_string)
+            //  [3] BOOLEAN
+            //  ...
+
+            var row_num = 1;
+            var this_row = "";
+            var target_row = "";
+            $.each(split_tokens, function(idx,tok){
+                console.log("looking at token: " + tok);
+                // determine the field ids
+                var my_search_row = $("#search-row-" + row_num);
+                console.log("  row: " + row_num);
+
+                if (idx % 2 === 0) { // get even tokens
+                    // (field_name::search_string)
+
+                    // skip if empty value
+                    if (tok === ""){
+                        console.log("  token is empty, skipping to next token");
+                        return true;
+                    }
+
+                    // clean and split our token
+                    var clean_tok = tok.replace(/^\(/g, "").replace(/\)$/g, "").replace("+", " ");
+                    var split_toks = clean_tok.split("::");
+
+                    console.log("  split tokens: ");
+                    for (var i = 0; i < split_toks.length; i++) {
+                        console.log("    " + split_toks[i]);
+                    }
+
+                    // check if we have two tokens
+                    // need to be careful for search terms that contain a "::"
+                    if (split_toks && split_toks.length < 2){
+                        console.log("  split token has an unexpected number of components! expecting at least 2, found " + split_toks.length);
+                        return true;
+                    }
+
+                    var field_name = split_toks[0];
+                    var search_string = "";
+
+                    console.log("  field_name: " + field_name);
+
+                    // check if this file_name is a filter
+                    if ($.inArray(field_name, FILTER_FIELDS) >= 0) {
+                        console.log("  this field is a filter: " + field_name);
+
+                        var my_filter_panel = $(".facets-container #panel-" + field_name);
+                        var my_filter_panel_input = my_filter_panel.find(":input").filter(':visible:first');
+                        search_string = "";
+
+                        // process possible multiple filter terms
+                        for (var j = 1; j < split_toks.length; j++) {
+                            search_string = split_toks[j].trim();
+                            console.log("  looking at token: " + search_string);
+
+                            // handle different types of input fields: checkbox, select, input
+                            if (my_filter_panel_input.is(":checkbox")){
+                                console.log("  this is a checkbox field");
+                                my_filter_panel.find("input[data-field='" + search_string + "']").prop('checked', true);
+                            } else if (my_filter_panel_input.is("select")) {
+                                console.log("  this is a select field");
+                                my_filter_panel.find("[value="+ search_string+"]").val(search_string).attr('selected','selected');
+                            } else {
+                                // regular input field
+                                console.log("  this is a text input field");
+                                my_filter_panel.find("input[data-count='" + i + "']").val(search_string);
+                            }
+                        }
+                    } else { // regular search field
+                        // the next split_tok is our search_string
+                        search_string = split_toks[1].trim();
+
+                        // add a new search row
+                        this_row = "#search-row-group-" + (row_num - 1);
+                        target_row = "#search-row-group-" + row_num;
+                        add_search_row(this_row, target_row);
+                        row_num = parseInt(idx / 2) + 2;
+
+                        // update the search field name drop down
+                        var my_field_name_list = my_search_row.find(".field_name ul li a");
+                        my_field_name_list.each(function () {
+                            var $this_item = $(this);
+                            var $this_data_name = $this_item.attr("data-name");
+                            if ($this_data_name === field_name) {
+                                $this_item.click();
+
+                                // update the search field value
+                                var my_field_val = my_search_row.find(".selected");
+                                my_field_val.val(search_string);
+
+                                return false;
+                            }
+                        });
+                    }
+                } else { // odd token
+                    // BOOLEAN
+
+                    console.log("  bool: " + tok);
+
+                    // update the boolean drop down
+                    var my_field_bool_list = my_search_row.find(".boolean ul li a");
+                    my_field_bool_list.each(function () {
+                        var $this_item = $(this);
+                        var $this_data_name = $this_item.attr("data-name");
+                        if ($this_data_name === tok) {
+                            $this_item.click();
+                        }
+                    });
+                }
+            });
+
+        }
+
+        // function that changes the text of the drop down buttons to match the selected field name
+        function change_labels(elem){
+            // change label on field drop down button to the name of the selected field
+            elem.parents(".input-group-btn").find('.btn').html(elem.text() + ' <span class="caret"></span>');
+            elem.parents(".input-group-btn").find('.btn').val(elem.data('value'));
+            elem.parents("ul").find("li").each(function () {
+                $(this).removeClass("selected");
+            });
+            elem.parents("li").addClass("selected");
+        }
+
+        // trigger on bool field drop down selection
+        $(".boolean .dropdown-menu li a").click(function (e) {
+            e.preventDefault();
+            var $this = $(this);
+
+            // change label on field drop down button to the name of the selected field
+            change_labels($this);
+        });
+
+        // trigger on field name drop down selection
+        $(".fields_dropdown .dropdown-menu li a").click(function (e) {
+            e.preventDefault();
+            var $this = $(this);
+
+            // change label on field drop down button to the name of the selected field
+            change_labels($this);
+
+            // manage how controlled vocabulary fields toggle from input to select field
+            var is_controlled_vocab = $this.hasClass("controlled");
+            console.log("is controlled: " + is_controlled_vocab);
+            var selected_data_name = $this.attr("data-name");
+            var adv_search_row = $this.parents(".adv-search-row");
+            var select_fields = adv_search_row.find(".select_field");
+
+            if (selected_data_name && is_controlled_vocab) {
+                var select_class = ".select_" + selected_data_name;
+                if ($this.parents(".adv-search-row").find(select_class).length){
+                    console.log("selected text_type: " + select_class);
+                    adv_search_row.find("input").addClass("hidden").removeClass("selected");
+                    adv_search_row.find(".select_field").addClass("hidden").removeClass("selected");
+                    adv_search_row.find(select_class).addClass("selected").removeClass("hidden");
+                }
+            } else {
+                adv_search_row.find("input").addClass("selected").removeClass("hidden");
+                select_fields.addClass("hidden").removeClass("selected");
+            }
+        });
+
+        // trigger on form submission
+        $(".adv-search-submit").click(function(e){
+            e.preventDefault();
+
+            //
+            // First, get every field value and append to query_str string
+            //
+            var query_str = "";
+            $('.adv-search-row').each(function(){
+                var $this = $(this);
+
+                // get boolean value
+                var boolean_val = "";
+                var boolean = $this.find(".boolean ul li.selected a");
+                if (boolean && boolean.length) {
+                    boolean_val = boolean.attr("data-name");
+                    //console.log("my_bool: " + boolean_val);
+                }
+
+                // get field name
+                var field_name = "";
+                var my_field_name = $this.find(".field_name ul li.selected a");
+                if (my_field_name && my_field_name.length) {
+                    field_name = my_field_name.attr("data-name");
+                    //console.log("my_field_name: " + field_name);
+
+                    if (field_name && field_name.length){
+                        // get field value
+                        var field_val = "";
+                        var my_form_field;
+
+                        // first, check if a drop down is selected
+                        // else, check the input field
+                        var my_form_field_selects = $this.find("select.selected");
+                        if (my_form_field_selects && my_form_field_selects.length) {
+                            my_form_field = my_form_field_selects;
+                        } else {
+                            my_form_field = $this.find("input");
+                        }
+
+                        if (my_form_field && my_form_field.length) {
+                            field_val = my_form_field.val().trim();
+                            //console.log("my_form_field: " + field_val);
+                            if (field_val && field_val.length) {
+                                // only add in the boolean string if we first have
+                                // a field name and search term added
+                                if (boolean_val && query_str.length) {
+                                    query_str += "--" + boolean_val + "--";
+                                }
+                                query_str += "(" + field_name + "::" + field_val + ")"
+                            }
+                        }
+                    }
+                }
+            });
+            console.log("query_str: " + query_str);
+
+            //
+            // Second, check on filters that append to query_str.
+            // We allow for empty search queries that have filters
+            //
+            $.each(FILTER_FIELDS, function(k,filter_name){
+                var output = parse_filter_panel(filter_name);
+                var this_filter_string = "";
+
+                if (output && output.length > 0) {
+                    this_filter_string = "(" + filter_name + output + ")";
+
+                    // If query_str has a value then append AND bool operator to string
+                    if (query_str && query_str.length) {
+                        query_str += "--AND--"
+                    }
+                    query_str += this_filter_string;
+                }
+
+                console.log("this_filter_string: " + this_filter_string);
+            });
+
+            // Parse dates
+
+
+            console.log("query_str: " + query_str);
+
+            //
+            // Third, update the URL parameters
+            //
+            var query_url_param = "?type=adv";
+            if (query_str && query_str.length) {
+                query_url_param += "&bq=" + query_str;
+            }
+
+            //
+            // Fourth, check on the date range slider filter
+            //
+            // check if the date range values have changed
+            var data_has_changed = $("#publication_dates_data").attr("data-has-changed");
+
+            // get the faceted years from attribute
+            var date_range_earliest_from_facet = $("#publication_dates_data").attr("data-publication-date-earliest");
+            var date_range_latest_from_facet = $("#publication_dates_data").attr("data-publication-date-latest");
+
+            // console.log("date_range_earliest_from_facet: " + date_range_earliest_from_facet);
+            // console.log("date_range_latest_from_facet: " + date_range_latest_from_facet);
+
+            // only apply date range filter if date range has changed or if there are saved date range values from the app
+            if (data_has_changed === "true" || date_range_earliest_from_facet || date_range_latest_from_facet) {
+                // get the value from the date range sliders
+                var date_range_earliest = $("input#publication-date-earliest-value").val();
+                var date_range_latest = $("input#publication-date-latest-value").val();
+
+                // console.log("date_range_earliest: " + date_range_earliest);
+                // console.log("date_range_latest: " + date_range_latest);
+
+                if (date_range_earliest || date_range_latest) {
+                    var publication_date_range_param = "";
+                    var earliest_val = date_range_earliest || date_range_latest;
+                    var latest_val = date_range_latest || date_range_earliest;
+
+                    console.log("date range: " + earliest_val + " - " + latest_val);
+
+                    publication_date_range_param = "&publication_date_range=" + earliest_val + "-" + latest_val;
+                    query_url_param += publication_date_range_param;
+                }
+            }
+
+            query_url_param += build_date_input();
+
+            //
+            // Last, load the page with the updated search params
+            //
+            if (query_url_param && query_url_param.length){
+                console.log("final query_url_param: " + query_url_param);
+                window.location = query_url_param;
+            }
+        });
+
+        function build_date_input() {
+            var from_value = $('#pub-date-from').val();
+            var to_value = $('#pub-date-to').val();
+
+            if (! from_value && ! to_value) {
+                return '';
+            }
+            from_value = from_value ? from_value : 1000;
+            to_value = to_value ? to_value : 9999;
+            return '&publication_date_range=' + from_value + '-' + to_value;
+        }
+
+        // function to parse filter input fields
+        function parse_filter_panel(id){
+            var output = "";
+
+            // parse call input fields
+            $("#panel-" + id).find(":input").each(function(){
+                var $this = $(this);
+                var field_name = "";
+                var field_val = "";
+
+                if ($this.is(":checkbox")) {
+                    var field_checked = $this.prop('checked');
+
+                    // if value is checked then add to output
+                    if (field_checked) {
+                        var my_label = $this.attr("data-field");
+                        output += "::" + my_label;
+                    }
+                } else if ($this.is("select")) {
+                    field_val = $this.val();
+                    if (field_val && field_val.length > 0) {
+                        field_name = $this.attr("id");
+                        console.log("found in select: " + field_name + ": " + field_val);
+                        output += "::" + field_val.toString().split(',').join('::');
+                    }
+                } else {
+                    field_val = $this.val();
+                    if (field_val && field_val.length > 0) {
+                        field_name = $this.attr("id");
+                        console.log("found in else: " + field_name + ": " + field_val);
+                        output += "::" + field_val;
+                    }
+                }
+            });
+
+            return output;
+        }
+
+        // function to add a new search row
+        function add_search_row(this_row, target_row){
+            // show the next row of fields
+            $(target_row).show();
+
+            // set the focus on the target_row's input field
+            $(target_row).find("input.input-field").focus();
+
+            // set target_row's remove button to aria-expanded=true
+            $(target_row).find(".add-buttons a.remove").attr("aria-expanded", "true");
+
+            // set this_row's add button to aria-expanded=true
+            $(this_row).find(".add-buttons a.add").attr("aria-expanded", "true");
+
+            // hide this set of add/remove buttons
+            $(this_row).find(".add-buttons").hide();
+        }
+
+        // function to remove a search row
+        function remove_search_row(this_row, target_row){
+            // clear out all field vals
+            $(this_row).find("input").val("");
+            $(this_row).find(".adv-search-row ul.dropdown-menu").each(function () {
+                var $this_select = $(this).find("li:first a");
+                console.log($this_select.text());
+                $this_select.click();
+            });
+            $(this_row).find(".adv-search-row select").each(function () {
+                $(this).get(0).selectedIndex = 0;
+            });
+
+            // hide this row of fields
+            $(this_row).hide();
+
+            // set this_row's remove button to aria-expanded=false
+            $(this_row).find(".add-buttons a.remove").attr("aria-expanded", "false");
+
+            // show the previous row of add/remove buttons
+            $(target_row).find(".add-buttons").show();
+
+            // set target_row's add button to aria-expanded=false
+            $(target_row).find(".add-buttons a.add").attr("aria-expanded", "false");
+
+            // set the focus on the target_row's input field
+            $(target_row).find("input.input-field").focus();
+        }
+
+        // trigger when add/remove buttons are clicked
+        $(".add-buttons a").click(function(e){
+            e.preventDefault();
+
+            var $this = $(this);
+            var this_row_id = "#" + $this.parents(".search-row").attr("id");
+
+            if ($this.hasClass("add")){
+                var target = $this.attr("data-next");
+                add_search_row(this_row_id, target);
+            } else if ($this.hasClass("remove")) {
+                var target = $this.attr("data-previous");
+                remove_search_row(this_row_id, target);
+            }
+        });
+
+        // add values to adv search form fields
+        load_field_vals();
+    });
+</script>

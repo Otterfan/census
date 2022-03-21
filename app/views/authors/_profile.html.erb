@@ -1,0 +1,66 @@
+<div class="authors-info col-md-8">
+  <% if @author.loc_name || @author.greek_authority %>
+    <h2>Authority names</h2>
+    <div class="auth-names">
+      <% if @author.loc_name %>
+        <div class="auth-name row">
+          <div class="auth-name__heading col-md-12">Library of Congress</div>
+          <div class="auth-name__value col-md-12"><%= link_to @author.loc_name, @author.loc %></div>
+        </div>
+      <% end %>
+      <% if @author.greek_authority %>
+        <div class="auth-name row">
+          <span class="auth-name__heading col-md-12">National Library of Greece</span>
+          <span class="auth-name__value col-md-12"><%= @author.greek_authority %></span>
+        </div>
+      <% end %>
+      <% if @author.viaf %>
+        <div class="auth-name row">
+          <span class="auth-name__heading col-md-12">VIAF</span>
+          <span class="auth-name__value col-md-12"><a href="<%= @author.viaf %>"><%= @author.viaf %></a></span>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="places-map">
+    <h3>Places of publication</h3>
+    <ul class="countries-of-publication-list">
+      <% @author.translation_countries.by_name.each do |country| %>
+        <li>
+          <a href="/search?type=adv&bq=(author_heading::<%= @author.full_name %>)--AND--(publication_countries::<%= country[1].name %>)">
+            <%= country[1].name %>
+          </a>
+          <span class="places-map__count" >(<%= @author.translation_countries.count(country[1]) %>)</span>
+        </li>
+      <% end %>
+    </ul>
+    <div id="map-contents" style=""></div>
+  </div>
+  <div class="dates-histogram">
+    <h3>Dates of publication</h3>
+    <div id="histogram-contents" style=""></div>
+  </div>
+</div>
+<div class="authors-names-lists col-md-4">
+  <div class="authors-names-lists__info-box">
+
+    <h3>Appears in CENSUS as</h3>
+    <ul class="appears-as-list">
+      <% @author.names_in_source.each do |name| %>
+        <li>
+          <a href='/search?type=adv&bq=(authors_name_from_source_exact::"<%= name %>")'><%= name %></a>
+        </li>
+      <% end %>
+    </ul>
+
+    <% unless @author.alternate_name.empty? %>
+      <h3>Alternate names</h3>
+      <ul class="alternate-names">
+        <% @author.alternate_name_list.each do |name| %>
+          <li><%= name %></li>
+        <% end %>
+      </ul>
+    <% end %>
+
+  </div>
+</div>

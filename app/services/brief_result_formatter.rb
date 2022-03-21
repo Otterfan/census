@@ -1,4 +1,6 @@
 class BriefResultFormatter
+  include TextsHelper
+
   def initialize(used_params, fields_in_view, query_params)
     @used_params = used_params
     @fields_in_view = fields_in_view
@@ -7,7 +9,7 @@ class BriefResultFormatter
   end
 
   def format(value)
-    value = Public::TextsController.helpers.convert_underscores(value)
+    value = convert_underscores(value)
     singularized_terms = @search_terms.map {|x| ActiveSupport::Inflector.singularize(x)}
     unless @search_terms.empty?
       value = highlight_search_results(singularized_terms, value)

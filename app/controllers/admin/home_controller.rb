@@ -3,7 +3,7 @@ class Admin::HomeController < ApplicationController
   before_action :restrict_access
 
   def restrict_access
-    redirect_to "/public" unless current_user && current_user.user_type != 'viewer'
+    redirect_to "/" unless current_user && current_user.user_type != 'viewer'
   end
 
   def index

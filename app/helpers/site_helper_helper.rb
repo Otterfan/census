@@ -4,10 +4,10 @@ module SiteHelperHelper
   end
 
   def body_class
-    if request.path.start_with?("/public") || controller_name == 'errors'
-      'public'
-    else
+    if request.path.start_with?("/admin")
       'admin'
+    else
+      'public'
     end
   end
 

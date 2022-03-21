@@ -1,0 +1,5 @@
+<!-- form submit and clear -->
+<div class="adv-search-row-buttons">
+  <%= submit_tag 'Search', name: nil, :class => 'btn btn-lg btn-success adv-search-submit', :id => 'adv-search-submit' %>
+  <%= link_to 'Clear', search_index_path(type: @search_type), :class => 'btn btn-lg btn-success' %>
+</div>
