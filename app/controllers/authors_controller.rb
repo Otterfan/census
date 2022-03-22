@@ -56,7 +56,7 @@ class AuthorsController < ApplicationController
                  .order(**sort_option)
     @current_page = type
 
-    render 'public/authors/show'
+    render 'authors/show'
   end
 
   def show
@@ -78,14 +78,14 @@ class AuthorsController < ApplicationController
     genre = type.include?('study') ? 'studies' : 'translations'
     medium = type.include?('book') ? 'books' : 'items'
 
-    redirect_to "//authors/#{params[:id]}/#{genre}/#{medium}"
+    redirect_to "/authors/#{params[:id]}/#{genre}/#{medium}"
 
   end
 
   def profile
     @author = Person.find(params[:id])
     @current_page = :profile
-    render 'public/authors/show'
+    render 'authors/show'
   end
 
   # Builds a list of letters usable in navigation

@@ -17,9 +17,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js"></script>
   <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+  <%= favicon_link_tag asset_path('census-favicon.png') %>
 </head>
 
-<body class="<%= body_class() %>">
+<body class="<%= body_class() %> <%= controller_name %> <%= action_name %>">
 <a class="skip" href="#main" data-turbolinks="false">Skip to main content</a>
 <nav class="navbar navbar-default">
   <div class="container">
@@ -27,7 +28,7 @@
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
       </button>
-      <%= link_to 'Home', search_index_path, :class => "navbar-brand" %>
+      <%= link_to image_tag('census-logo.png'), root_path, class: 'navbar-brand' %>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
@@ -36,7 +37,15 @@
         <li class="<%= 'active' if in_current_path? 'people' %>"><%= link_to 'People', controlled_name_index_path %></li>
         <li class="<%= 'active' if in_current_path? 'volumes' %>"><%= link_to 'Volumes', volumes_path %></li>
         <li class="<%= 'active' if in_current_path? 'journals' %>"><%= link_to 'Journals', journals_path %></li>
-        <li class="<%= 'active' if in_current_path? 'search' %>"><%= link_to 'Search', search_index_path %></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About</a>
+          <ul class="dropdown-menu">
+            <li><a href="#">About the CENSUS</a></li>
+            <li><a href="#">Credits</a></li>
+            <li><a href="#">Links</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </li>
       </ul>
     </div>
   </div>
@@ -47,9 +56,22 @@
 <% if alert %>
   <p class="alert alert-danger"><%= alert %></p>
 <% end %>
+
+<div id="jumbotron"><%= yield(:jumbotron) %></div>
+
 <main class="container" id="main">
   <%= yield %>
 </main>
+
+<footer class="container">
+  <div class="copyright-notice">
+    <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"/></a>
+    <div class="cc-license-text">This work is licensed under a
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons
+        Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+    </div>
+  </div>
+</footer>
 
 <% if cookies[:allow_cookies].blank? %>
   <%= render 'shared/cookie_bar' %>

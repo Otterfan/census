@@ -1,16 +1,9 @@
-<h2>Keyword Search</h2>
-<div class="search-chooser">
-  <div class="search-chooser">Try the <%= link_to 'Advanced search', search_index_path(:type => "adv") %></div>
-  <div class="search-history"><%= link_to 'Search history', recent_searches_path %></div>
-</div>
-
-<!--pre><%= @all_search.to_json %></pre-->
 <%= form_tag(search_index_path, method: :get, id: "search_form") do %>
   <%= hidden_field_tag :type, @search_type %>
 
   <div class="row">
     <div class="col-lg-8 col-md-9 col-sm-12">
-      <%= label_tag(:keyword, "Keyword") %>
+      <%= label_tag(:keyword, "Keyword", class: 'sr-only') %>
       <div class="input-group">
         <%= text_field_tag :keyword, params[:keyword], :class => 'form-control input-lg', autocomplete: "off" %>
         <% if params[:sort] %>
@@ -19,6 +12,10 @@
         <span class="input-group-btn">
           <%= submit_tag 'Search', name: nil, :class => 'btn btn-success btn-lg' %>
         </span>
+      </div>
+      <div class="search-chooser">
+        <div class="search-chooser"><%= link_to 'Advanced search', search_index_path(:type => "adv") %></div>
+        <div class="search-history"><%= link_to 'Search history', recent_searches_path %></div>
       </div>
     </div>
 

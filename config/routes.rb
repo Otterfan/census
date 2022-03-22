@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'pages/help'
+  get 'page/index'
   get 'robots/show'
 
   devise_for :users
@@ -36,7 +38,7 @@ Rails.application.routes.draw do
 
   get 'pages/privacy'
 
-  root :to => "search#search"
+  root :to => "pages#index"
   resources :search, :only => [:index], to: "search#search"
   # get "search", to: "search#search"
   get 'recent-searches', to: "recent_search#index"

@@ -2,7 +2,7 @@ class ErrorsController < ApplicationController
 
   layout 'public'
 
-  include Public::ControllersHelper
+  include ControllersHelper
 
   def not_found
     respond_to do |format|

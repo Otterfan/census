@@ -1,5 +1,5 @@
 class VolumesController < ApplicationController
-  include Public::ControllersHelper
+  include ControllersHelper
 
   layout "public"
 

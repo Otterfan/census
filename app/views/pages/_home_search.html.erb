@@ -1,0 +1,32 @@
+<%= form_tag(search_index_path, method: :get, id: "search_form") do %>
+  <%= hidden_field_tag :type, @search_type %>
+
+  <div class="row">
+    <div class="col-md-offset-2 col-md-8 col-sm-12 search-container">
+      <div class="row">
+        <h1 class="col-md-12">Greek Authors of the 19th-21st centuries</h1>
+        <p class=" col-md-12 homepage-description">
+          Part of ‘The CENSUS of Modern Greek Literature’: A bibliography of modern Greek literature for speakers of
+          English
+        </p>
+      </div>
+
+      <div class="search-input">
+        <%= label_tag(:keyword, "Search the CENSUS", class: 'home-search-label') %>
+        <div class="input-group">
+          <%= text_field_tag :keyword, params[:keyword], :class => 'form-control input-lg', autocomplete: "off", placeholder: "Search..." %>
+          <% if params[:sort] %>
+            <%= hidden_field_tag 'sort', params[:sort] %>
+          <% end %>
+          <span class="input-group-btn">
+          <%= submit_tag 'Search', name: nil, :class => 'btn btn-success btn-lg' %>
+        </span>
+        </div>
+        <div class="search-chooser col-md-12">
+          <%= link_to 'Advanced search', search_index_path(:type => "adv") %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% end %>

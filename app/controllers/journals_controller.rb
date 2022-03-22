@@ -1,5 +1,5 @@
 class JournalsController < ApplicationController
-  include Public::ControllersHelper
+  include ControllersHelper
 
   layout "public"
 
