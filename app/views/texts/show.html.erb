@@ -40,7 +40,7 @@
             <li>Export</li>
             <li>Cite</li>
             <% if user_signed_in? && current_user.user_type != 'viewer' %>
-              <%= link_to 'Edit', "/texts/#{@text.id}" %>
+              <%= link_to 'Edit', "/admin/texts/#{@text.id}" %>
             <% end %>
           </ul>
         </div>
