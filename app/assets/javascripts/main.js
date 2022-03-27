@@ -22,7 +22,7 @@ function ready() {
     function upload_original() {
         const pathArray = window.location.pathname.split('/');
         const original_text = tinymce.activeEditor.getContent(),
-            post_address = '/texts/' + pathArray[2] + '/original';
+            post_address = '/admin/texts/' + pathArray[3] + '/original';
         $.post(post_address, {original: original_text}, function (data) {
             console.log('success!!');
         });
