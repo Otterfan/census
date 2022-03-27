@@ -165,8 +165,12 @@ class Person < ApplicationRecord
   end
 
   def has_texts_of_type?(type)
-    count = texts.where('text_type = ?', type).count
+    count = count_texts_of_type(type)
     count > 0
+  end
+
+  def count_texts_of_type(type)
+    texts.where('text_type = ?', type).count
   end
 
   def normalize_name(name)

@@ -8,32 +8,33 @@
 <%# Tab navigation %>
 <ul class="nav nav-tabs" role="tablist">
 
-  <% if @author.has_texts_of_type?('translation_book') %>
-    <li role="presentation" <%= active_class_notice('translation_book') %>>
-      <a href="/authors/<%= @author.id %>/translations/books" aria-controls="texts" role="tab">Translations
-        (volumes)</a>
-    </li>
-  <% end %>
+  <%= render 'text_type_tab',
+             author: @author,
+             type: 'translation_book',
+             url: 'translations/books',
+             tab_label: 'Translations (volumes)'
+  %>
 
-  <% if @author.has_texts_of_type?('translation_part') %>
-    <li role="presentation" <%= active_class_notice('translation_part') %>>
-      <a href="/authors/<%= @author.id %>/translations/items" aria-controls="texts" role="tab">Translations
-        (items)</a>
-    </li>
-  <% end %>
+  <%= render 'text_type_tab',
+             author: @author,
+             type: 'translation_part',
+             url: 'translations/items',
+             tab_label: 'Translations (items)'
+  %>
 
-  <% if @author.has_texts_of_type?('study_book') %>
-    <li role="presentation" <%= active_class_notice('study_book') %>>
-      <a href="/authors/<%= @author.id %>/studies/books" aria-controls="texts" role="tab">Studies (volumes)</a>
-    </li>
-  <% end %>
+  <%= render 'text_type_tab',
+             author: @author,
+             type: 'study_book',
+             url: 'studies/books',
+             tab_label: 'Studies (volumes)'
+  %>
 
-  <% if @author.has_texts_of_type?('study_part') %>
-    <li role="presentation" <%= active_class_notice('study_part') %>>
-      <a href="/authors/<%= @author.id %>/studies/items" aria-controls="texts" role="tab">Studies
-        (items)</a>
-    </li>
-  <% end %>
+  <%= render 'text_type_tab',
+             author: @author,
+             type: 'study_part',
+             url: 'studies/items',
+             tab_label: 'Studies (items)'
+  %>
 
   <li role="presentation" <%= active_class_notice(:profile) %>>
     <a href="/authors/<%= @author.id %>/profile" aria-controls="profile" role="tab">Profile</a>
@@ -97,10 +98,10 @@
 
         // Add nulls to data to force trace to render even
         // if empty.
-        if (studiesYears.length ===0) {
+        if (studiesYears.length === 0) {
             studiesYears.push(null);
         }
-        if (translationsYears.length ===0) {
+        if (translationsYears.length === 0) {
             translationsYears.push(null);
         }
 
@@ -150,7 +151,7 @@
             xaxis: {
                 autotick: (yearSpan > 5),
                 dtick: 1,
-                range: [minTick,maxTick]
+                range: [minTick, maxTick]
             },
             barmode: 'stack',
             margin: {
@@ -167,11 +168,11 @@
         Plotly.newPlot('histogram-contents', data, layout, {displayModeBar: false});
 
         var myPlot = document.getElementById('histogram-contents');
-        myPlot.on('plotly_click', function(data){
+        myPlot.on('plotly_click', function (data) {
             console.log(data);
             var pts = '';
-            for(var i=0; i < data.points.length; i++){
-                pts = 'x = '+data.points[i].x +'\ny = '+
+            for (var i = 0; i < data.points.length; i++) {
+                pts = 'x = ' + data.points[i].x + '\ny = ' +
                     data.points[i].y.toPrecision(4) + '\n\n';
             }
         });
