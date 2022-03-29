@@ -38,12 +38,25 @@
         <li class="<%= 'active' if in_current_path? 'volumes' %>"><%= link_to 'Volumes', volumes_path %></li>
         <li class="<%= 'active' if in_current_path? 'journals' %>"><%= link_to 'Journals', journals_path %></li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About</a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            About
+            <span class="caret"/>
+          </a>
           <ul class="dropdown-menu">
-            <li><a href="#">About the CENSUS</a></li>
-            <li><a href="#">Credits</a></li>
-            <li><a href="#">Links</a></li>
-            <li><a href="#">Contact Us</a></li>
+            <li><a href="/about">About the CENSUS</a></li>
+            <li><a href="/project-team">Project Team</a></li>
+            <li><a href="/links">Links</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            Help
+            <span class="caret"/>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="/help/browsing-and-searching">Browsing and searching</a></li>
+            <li><a href="/help/transliteration">Transliteration</a></li>
           </ul>
         </li>
       </ul>

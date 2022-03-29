@@ -2,6 +2,12 @@ Rails.application.routes.draw do
   get 'pages/help'
   get 'page/index'
   get 'robots/show'
+  get 'about', to: 'pages#about'
+  get 'project-team', to: 'pages#project_team'
+  get 'links', to: 'pages#links'
+  get 'contact', to: 'pages#contact'
+  get '/help/transliteration', to: 'pages#transliteration'
+  get '/help/browsing-and-searching', to: 'pages#browsing_and_searching'
 
   devise_for :users
 

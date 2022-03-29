@@ -1,0 +1,35 @@
+.collaborators-list {
+  padding-left: 0;
+
+  li {
+    list-style: none;
+    margin-left: 0;
+    margin-bottom: .75em;
+
+    .collaborators-list__name {
+      font-weight: 600;
+      color: darken(#185fad, 15);
+    }
+  }
+}
+
+.help__transliteration-list {
+  li {
+    list-style: none;
+  }
+}
+
+.instructions__example-list {
+  li {
+    margin-bottom: .75em;
+  }
+}
+
+.instructions__search-string {
+  background-color: #fbf6ee;
+  padding: .2em;
+  border: 1px solid #cccccc;
+  border-radius: 2px;
+  margin-bottom: 0;
+  font-family: "Courier New", Courier, monospace;
+}

@@ -1,6 +1,10 @@
 class PagesController < ApplicationController
   before_action :authenticate_user!
 
-  layout'home', only: [:index]
+  layout'public'
+
+  def index
+    render layout: 'home'
+  end
 
 end
