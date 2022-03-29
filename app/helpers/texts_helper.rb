@@ -332,7 +332,7 @@ module TextsHelper
 
     to_match.each do |found_id|
       to_replace = '{' + found_id + '}'
-      replacement = "<a href=\"//texts/#{found_id}\">{#{found_id}}</a>"
+      replacement = "<a href=\"/texts/#{found_id}\">{#{found_id}}</a>"
       string_value.gsub!(to_replace, replacement)
     end
 
@@ -345,19 +345,19 @@ module TextsHelper
       return census_id
     end
 
-    "<a href=\"//texts/#{census_id}\">#{census_id}</a>".html_safe
+    "<a href=\"/texts/#{census_id}\">#{census_id}</a>".html_safe
   end
 
   # @param [TextCitation] citation
   def controlled_name_link(citation)
-    "<a href=\"//people/#{citation.controlled_name}\">#{citation.name}</a>".html_safe
+    "<a href=\"/people/#{citation.controlled_name}\">#{citation.name}</a>".html_safe
   end
 
   # @param [Array<ComponentCitation> citations
   def controlled_name_link_list(citations)
     all_links = citations.map do |citation|
       if citation.controlled_name
-        "<a href=\"//people/#{citation.controlled_name}\">#{citation.name}</a>"
+        "<a href=\"/people/#{citation.controlled_name}\">#{citation.name}</a>"
       else
         ""
       end
