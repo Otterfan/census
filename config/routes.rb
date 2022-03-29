@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'contact', to: 'pages#contact'
   get '/help/transliteration', to: 'pages#transliteration'
   get '/help/browsing-and-searching', to: 'pages#browsing_and_searching'
+  get '/help/legend', to: 'pages#legend'
 
   devise_for :users
 
