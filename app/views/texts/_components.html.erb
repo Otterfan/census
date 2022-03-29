@@ -1,21 +1,29 @@
-<% current_collection = '' %>
 <% if @text.components && text.components.count > 0 %>
   <div class="components">
     <h4>Items</h4>
+
     <% components_by_collection(@text.components).each do |collection| %>
-      <div class="component-collection">
-        <% if collection[:greek_title] && !collection[:greek_title].blank? %>
+      <% if collection[:greek_title].blank? %>
+        <div class="component-collection--no-collection">
+
+          <% collection[:components].each do |component| %>
+            <%= render 'single_component', component: component %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="component-collection">
           <div class="component-collection-title">
             From <cite><%= collection[:title].gsub('_', ' ') %></cite>
             <% if collection[:title] && !collection[:title].blank? %>
-             / <cite><%= collection[:greek_title].gsub('_', ' ') %></cite>
+              / <cite><%= collection[:greek_title].gsub('_', ' ') %></cite>
             <% end %>
           </div>
-        <% end %>
-        <% collection[:components].each do |component| %>
-          <%= render 'single_component', component: component %>
-        <% end %>
-      </div>
+          <% collection[:components].each do |component| %>
+            <%= render 'single_component', component: component %>
+          <% end %>
+        </div>
+      <% end %>
+
     <% end %>
   </div>
 <% end %>

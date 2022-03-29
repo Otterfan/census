@@ -72,9 +72,22 @@ $metadata-spacing: 0;
     line-height: 1.4;
   }
 
+  .component-collection {
+    background-color: #fafbf9;
+    border-radius: 10px;
+    border: 1px dashed #d9dad8;
+    margin-bottom: 1em;
+
+    hr:last-of-type {
+      display: none;
+    }
+  }
+
   .component-collection-title {
     font-weight: 600;
-    margin-bottom: .5em;
+    margin-bottom: 1em;
+    margin-left: 1em;
+    padding-top: .5em;
   }
 
   hr {
