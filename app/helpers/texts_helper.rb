@@ -198,7 +198,7 @@ module TextsHelper
       formatted_issue = "#{text.issue_number}"
     end
 
-    date_part = text.issue_season_month.blank? ? text.date : "#{text.issue_season_month} #{text.date}"
+    date_part = text.issue_season_month.blank? ? " #{text.date}" : "#{text.issue_season_month} #{text.date}"
 
     if formatted_issue.blank?
       date_part
