@@ -19,7 +19,7 @@
     <ul class="list-group">
       <% @journals.each do |journal| %>
         <li class="list-group-item browse-journals__entry">
-        <% if journal.see_journal %>
+          <% if journal.see_journal %>
 
             <span class="topic-author-english"><%= journal.title %></span>
             see <span class="topic-author-see-person">
@@ -33,16 +33,16 @@
               </div>
             <% end %>
 
-        <% else %>
-          <div class="browse-journals__linked-header">
-            <span class="browse-journals__full_name"><%= link_to journal.title, journal_path(journal.id) %></span>
-          </div>
+          <% else %>
+            <div class="browse-journals__linked-header">
+              <span class="browse-journals__full_name"><%= link_to journal.title, journal_path(journal.id) %></span>
+            </div>
             <% if journal.brief_result_note %>
               <div class="browse-page__brief-result-note">
                 <%= journal.brief_result_note %>
               </div>
             <% end %>
-        <% end %>
+          <% end %>
 
 
         </li>
