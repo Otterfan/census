@@ -32,6 +32,7 @@
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
+        <li class="<%= 'active' if in_current_path? '/search' %>"><%= link_to 'Search', '/search' %></li>
         <li class="<%= 'active' if in_current_path? 'texts' %>"><%= link_to 'Texts', texts_path %></li>
         <li class="<%= 'active' if in_current_path? 'authors' %>"><%= link_to 'Authors', authors_path %></li>
         <li class="<%= 'active' if in_current_path? 'people' %>"><%= link_to 'People', controlled_name_index_path %></li>
