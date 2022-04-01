@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get '/help/transliteration', to: 'pages#transliteration'
   get '/help/browsing-and-searching', to: 'pages#browsing_and_searching'
   get '/help/legend', to: 'pages#legend'
+  get '/help/helpful-pointers', to: 'pages#helpful_pointers'
 
   devise_for :users
 
