@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'project-team', to: 'pages#project_team'
   get 'links', to: 'pages#links'
   get 'contact', to: 'pages#contact'
+  get 'sponsors', to: 'pages#sponsors'
   get '/help/transliteration', to: 'pages#transliteration'
   get '/help/browsing-and-searching', to: 'pages#browsing_and_searching'
   get '/help/legend', to: 'pages#legend'
