@@ -1,7 +1,7 @@
 <% if author.has_texts_of_type?(type) %>
   <li role="presentation" <%= active_class_notice(type) %>>
     <a href="/authors/<%= author.id %>/<%= url %>" aria-controls="texts" role="tab"><%= tab_label %>
-      <span class="author-text-count"><%= author.count_texts_of_type(type) %> records</span>
+      <span class="author-text-count"><%= pluralize author.count_texts_of_type(type), 'record' %></span>
     </a>
   </li>
 <% end %>
