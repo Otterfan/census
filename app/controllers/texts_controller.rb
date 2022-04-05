@@ -18,7 +18,7 @@ class TextsController < ApplicationController
   # GET /texts/1 or
   # GET /texts/4.1234
   def show
-    if params[:census_id]
+    if params[:census_id] || params[:id].include?("4.")
       @text = Text.find_by_census_id(params[:census_id])
     else
       @text = Text.find(params[:id])

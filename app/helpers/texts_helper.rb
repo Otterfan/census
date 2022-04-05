@@ -325,14 +325,15 @@ module TextsHelper
 
     referenced_census_ids.each do |id|
       id_without_braces = id[1...-1]
-      if Text.find_by_census_id(id[1...-1])
-        to_match.push(id_without_braces)
+      referenced_text = Text.find_by_census_id(id[1...-1])
+      if referenced_text
+        to_match.push(referenced_text)
       end
     end
 
-    to_match.each do |found_id|
-      to_replace = '{' + found_id + '}'
-      replacement = "<a href=\"/texts/#{found_id}\">{#{found_id}}</a>"
+    to_match.each do |found_text|
+      to_replace = '{' + found_text.census_id + '}'
+      replacement = "<a href=\"/texts/#{found_text.id}\">{#{found_text.census_id}}</a>"
       string_value.gsub!(to_replace, replacement)
     end
 
@@ -341,11 +342,13 @@ module TextsHelper
 
   def crossreference_link(census_id)
 
-    unless Text.find_by_census_id(census_id)
+    referenced_text = Text.find_by_census_id(census_id)
+
+    unless referenced_text
       return census_id
     end
 
-    "<a href=\"/texts/#{census_id}\">#{census_id}</a>".html_safe
+    "<a href=\"/texts/#{referenced_text.id}\">#{census_id}</a>".html_safe
   end
 
   # @param [TextCitation] citation
