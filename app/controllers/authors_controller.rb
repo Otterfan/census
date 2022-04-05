@@ -5,8 +5,6 @@ class AuthorsController < ApplicationController
 
   layout "public"
 
-  before_action :authenticate_user!
-
   STUDY_SORT_FIELDS = {sort_author: :asc, sort_title: :asc, sort_date: :asc}
   TRANSLATION_SORT_FIELDS = {sort_title: :asc, sort_translator: :asc, sort_date: :asc}
 

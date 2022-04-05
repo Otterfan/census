@@ -2,8 +2,6 @@ class SearchController < ApplicationController
   layout "public"
   include TextsHelper
 
-  before_action :authenticate_user!
-
   KEYWORD_SEARCH_PARAMS = [
       :keyword,
       :genre,

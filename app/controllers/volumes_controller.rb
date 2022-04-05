@@ -3,8 +3,6 @@ class VolumesController < ApplicationController
 
   layout "public"
 
-  before_action :authenticate_user!
-
   # GET /public/journals
   def index
     default_letter = "A"

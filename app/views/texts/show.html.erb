@@ -34,11 +34,9 @@
           <ul>
             <li>
               <span class="original-launcher" type="button" data-toggle="modal" data-target="#myModal">
-                Original
+                Original record
               </span>
             </li>
-            <li>Export</li>
-            <li>Cite</li>
             <% if user_signed_in? && current_user.user_type != 'viewer' %>
               <%= link_to 'Edit', "/admin/texts/#{@text.id}" %>
             <% end %>

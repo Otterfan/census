@@ -3,8 +3,6 @@ class JournalsController < ApplicationController
 
   layout "public"
 
-  before_action :authenticate_user!
-
   def index
     default_letter = "A"
     @letter = sanitize_letter(params[:letter], default_letter)

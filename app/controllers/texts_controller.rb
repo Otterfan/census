@@ -1,8 +1,6 @@
 class TextsController < ApplicationController
   layout "public"
 
-  before_action :authenticate_user!\
-
   include TextsHelper
 
   # GET /public/texts
