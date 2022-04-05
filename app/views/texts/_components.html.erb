@@ -17,7 +17,7 @@
           <div class="component-collection-title">
             From
             <% unless collection[:title].blank? %>
-              <cite><%= collection[:title].gsub('_', ' ') %></cite>
+              <cite><%= collection[:title].gsub('_', '') %></cite>
             <% end %>
             <% unless collection[:title].blank? || collection[:greek_title].blank? %>
               /
