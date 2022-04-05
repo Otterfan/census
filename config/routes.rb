@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'links', to: 'pages#links'
   get 'contact', to: 'pages#contact'
   get 'sponsors', to: 'pages#sponsors'
+  get 'future-outlook', to: 'pages#future_outlook'
   get '/help/transliteration', to: 'pages#transliteration'
   get '/help/browsing-and-searching', to: 'pages#browsing_and_searching'
   get '/help/legend', to: 'pages#legend'
