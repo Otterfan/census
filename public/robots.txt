@@ -1,2 +1,5 @@
+# robots.txt
+# Load the sitemap if it is present
 User-agent: *
-Disallow: /
+Disallow: /search? # blocks search results pages
+Disallow: /search.html? # sometimes they use .html to get searches, Sneaky Google!
