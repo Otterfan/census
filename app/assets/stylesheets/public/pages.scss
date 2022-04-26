@@ -33,3 +33,16 @@
   margin-bottom: 0;
   font-family: "Courier New", Courier, monospace;
 }
+
+body.public.pages p.sponsors-page__list-description {
+  margin-bottom: .25em;
+}
+
+ul.sponsors-page__sponsors-list {
+  padding-left: 0;
+  margin-bottom: 1.5em;
+
+  li {
+    list-style: none;
+  }
+}
