@@ -21,7 +21,7 @@ BCComments = (function () {
             "authenticity_token": auth_token
         };
 
-        $.post('/comments', data, show_result);
+        $.post('/admin/comments', data, show_result);
     }
 
     return {
