@@ -127,7 +127,7 @@
 
   <%= metadata_row 'ISBN'.pluralize(@text.isbns.count), @text.isbns, value_attribute: :value %>
 
-  <%= metadata_row 'Special source of information', @text.special_source_of_info %>
+  <%= metadata_row 'Source', @text.special_source_of_info %>
 
   <%= metadata_row 'Entry Number', @text.census_id %>
 
