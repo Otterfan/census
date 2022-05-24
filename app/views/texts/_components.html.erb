@@ -24,12 +24,12 @@
             <% end %>
             <% unless collection[:greek_title].blank? %>
               <cite><%= collection[:greek_title].gsub('_', ' ') %></cite>
-            <% end %>
-
-            <% collection[:components].each do |component| %>
-              <%= render 'single_component', component: component %>
-            <% end %>
+            <% end %>=
           </div>
+
+          <% collection[:components].each do |component| %>
+            <%= render 'single_component', component: component %>
+          <% end %>
         </div>
       <% end %>
     <% end %>
