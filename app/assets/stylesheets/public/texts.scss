@@ -198,6 +198,15 @@ $metadata-spacing: 0;
   opacity: 0.25;
 }
 
+.modal-content {
+  height: 90vh;
+  overflow: auto;
+
+  .original-entry {
+    overflow: hidden;
+  }
+}
+
 body.public.modal-open {
   overflow: scroll;
 }
