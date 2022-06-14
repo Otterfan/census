@@ -153,6 +153,18 @@ body.public {
     }
   }
 
+  @media (max-width: 1060px) {
+    .dropdown-menu {
+        left: -2em;
+    }
+  }
+
+  @media (max-width: 800px) {
+    .dropdown-menu {
+      left: -3em;
+    }
+  }
+
   dl.legend-of-terms {
     grid-template-columns: 15% 60%;
     margin-top: 2em;
