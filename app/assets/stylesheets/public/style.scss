@@ -3,6 +3,7 @@ $public-background: #185fad;
 body.public {
   font-family: "Source Sans Pro", sans-serif;
   font-size: 16px;
+  overflow-x: hidden;
 
   &.pages {
     h1 {
