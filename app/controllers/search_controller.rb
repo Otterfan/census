@@ -255,6 +255,11 @@ class SearchController < ApplicationController
 
     sort_date
 
+    components.title
+    components.title.en
+    components.title.el
+    components.title.en_folded
+    components.title.el_folded
     components.sort_title^5
     components.sort_title.en_folded^5
     components.sort_title.el_folded^5
