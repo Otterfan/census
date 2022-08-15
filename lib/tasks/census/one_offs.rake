@@ -43,6 +43,17 @@ namespace :census do
 
     puts "All done now!"
   end
+
+  desc "Set all is hidden fields to false"
+  task set_is_hidden_to_false: :environment do
+    Text.where.not(is_hidden: false).each do |text|
+      text.is_hidden = false
+      text.save
+      sleep(0.1)
+    end
+
+    puts "All done now!"
+  end
 end
 
 def extract_sort_page(page_span)
