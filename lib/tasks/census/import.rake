@@ -13,25 +13,14 @@ def import_new_records
 
   topic_author_full = ''
 
-  topic_author = nil
+  topic_author = Person.new
+  topic_author_full = topic_author_full
 
   needs_review_status = Status.find(1)
 
   section = Section.find(1)
 
   entries.each do |entry|
-    if entry['topic_author']['full_name'] != topic_author_full
-      topic_author_full = entry['topic_author']['full_name']
-      #topic_author = add_topic_author(entry, topic_author_full)
-
-      topic_author_just_name = topic_author_full[/[^(]+/].strip
-
-      topic_author = Person.find_by(topic_flag: true, full_name: topic_author_just_name)
-      unless topic_author
-        topic_author = Person.new
-        topic_author_full = topic_author_just_name
-      end
-    end
 
     text = add_text(entry, needs_review_status)
     text.topic_author = topic_author || nil
@@ -102,7 +91,7 @@ def add_text(entry, needs_review_status)
   text.title = entry['title'] || ''
   text.original = entry['full_text'] || ''
   text.date = entry['date'] || ''
-  text.text_type = entry['entry_type']
+  text.text_type = entry['entry_type'] || ''
 
   puts "\tAdding text type..."
 
