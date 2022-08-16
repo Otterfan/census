@@ -90,7 +90,7 @@ def add_text(entry, needs_review_status)
 
   text = Text.new
 
-  text.is_hidden = false
+  text.is_hidden = true
 
   text.status = needs_review_status
 
