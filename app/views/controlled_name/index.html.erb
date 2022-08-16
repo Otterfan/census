@@ -19,25 +19,29 @@
     </div>
     <ul class="list-group">
       <% @names.each do |name| %>
-        <% text_count =  person_text_count(name).to_i %>
-        <li class="list-group-item browse-people__entry">
-          <div class="browse-people__linked-header">
-            <% if text_count > 0 %>
-            <span class="browse-people__full_name"><%= link_to name.controlled_name, "/people/#{name.linking_name}" %></span>
-              <span class="browse-people__texts-count">(<%= pluralize(text_count, 'text') %>)</span>
-          <% else %>
-              <span class="browse-people__full_name"><%= name.controlled_name %></span>
-          <% end %>
-          </div>
-          <% if name.topic_flag %>
-            <div class="browse-people__link-to-topic-author">
-              <a href="/authors/<%= name.person_link %>">See <% if text_count > 0 %>also<% end %> author record</a>
+        <% text_count = person_text_count(name).to_i %>
+        <% if text_count > 0 %>
+          <li class="list-group-item browse-people__entry">
+            <div class="browse-people__linked-header">
+              <% if text_count > 0 %>
+                <span class="browse-people__full_name"><%= link_to name.controlled_name, "/people/#{name.linking_name}" %></span>
+                <span class="browse-people__texts-count">(<%= pluralize(text_count, 'text') %>)</span>
+              <% else %>
+                <span class="browse-people__full_name"><%= name.controlled_name %></span>
+              <% end %>
             </div>
-          <% end %>
-          <div class="browse-people__roles">
-            <%= name.roles.sort!.join(', ') %>
-          </div>
-        </li>
+            <% if name.topic_flag %>
+              <div class="browse-people__link-to-topic-author">
+                <a href="/authors/<%= name.person_link %>">See
+                  <% if text_count > 0 %>also
+                  <% end %> author record</a>
+              </div>
+            <% end %>
+            <div class="browse-people__roles">
+              <%= name.roles.sort!.join(', ') %>
+            </div>
+          </li>
+        <% end %>
       <% end %>
     </ul>
     <div class="row">
