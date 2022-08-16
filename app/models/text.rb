@@ -35,14 +35,11 @@ class Text < ApplicationRecord
 
   before_save :default_values
 
-  after_touch {
-    puts "Text record '#{self.id}' was touched."
-    #__elasticsearch__.index_document
-  }
-
   after_commit {
-    puts "Text record '#{self.id}' was updated. Will now reindex."
-    __elasticsearch__.index_document
+    unless self.is_hidden
+      puts "Text record '#{self.id}' was updated. Will now reindex."
+      __elasticsearch__.index_document
+    end
   }
 
   paginates_per 60
@@ -425,10 +422,10 @@ class Text < ApplicationRecord
 
   def has_greek_publication_info
     if original_greek_publisher.blank? &&
-      original_greek_place_of_publication.blank? &&
-      original_greek_date.blank? &&
-      original_greek_title.blank? &&
-      original_greek_collection.blank?
+        original_greek_place_of_publication.blank? &&
+        original_greek_date.blank? &&
+        original_greek_title.blank? &&
+        original_greek_collection.blank?
       return false
     end
 
@@ -448,5 +445,3 @@ class Text < ApplicationRecord
   end
 
 end
-
-#Text.import(force: true) # for auto sync model with elastic search

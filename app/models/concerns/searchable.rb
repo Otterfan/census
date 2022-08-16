@@ -5,7 +5,6 @@ module Searchable
   included do
 
     include Elasticsearch::Model
-    include Elasticsearch::Model::Callbacks
 
     # these settings will create several dynamic mappings for each string-type field:
     #    keyword          : non-indexed, used for keyword searching and aggregations
