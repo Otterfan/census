@@ -85,3 +85,6 @@ gem 'public_suffix'
 
 # Strip extra whitespace from attributes
 gem "auto_strip_attributes", "~> 2.6"
+
+gem "bcrypt_pbkdf", require: false
+gem "ed25519", require: false
