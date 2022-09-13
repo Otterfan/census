@@ -54,6 +54,19 @@ namespace :census do
 
     puts "All done now!"
   end
+
+  desc "Set empty C or D genres to study"
+  task set_no_genre_study: :environment do
+    Text.where(genre: [nil, '']).where("text_type LIKE '%study%' AND (genre IS NULL OR genre ='')").each do |text|
+      if text.text_type.include?('study')
+        text.genre = "Study"
+      end
+      text.save
+      sleep(0.1)
+    end
+
+    puts "All done now!"
+  end
 end
 
 def extract_sort_page(page_span)
