@@ -129,7 +129,10 @@
 
   <%= metadata_row 'Source', @text.special_source_of_info %>
 
-  <%= metadata_row 'Entry Number', @text.census_id %>
+  <%= metadata_row 'Entry number', @text.census_id %>
+
+  <dt>Last updated</dt>
+  <dd><%= @text.updated_at.to_date %></dd>
 
   <% unless @text.cross_references.empty? %>
     <dt>References entries</dt>
