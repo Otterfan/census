@@ -11,11 +11,6 @@
   </div>
 
   <div class="col-md-12">
-    <div class="row">
-      <div class="browse-journals__pagination--top pagination-stuff col-md-10">
-        <%= paginate @journals %>
-      </div>
-    </div>
     <ul class="list-group">
       <% @journals.each do |journal| %>
         <li class="list-group-item browse-journals__entry">
@@ -48,10 +43,5 @@
         </li>
       <% end %>
     </ul>
-    <div class="row">
-      <div class="browse-journals__pagination--bottom pagination-stuff col-md-10">
-        <%= paginate @journals %>
-      </div>
-    </div>
   </div>
 </div>

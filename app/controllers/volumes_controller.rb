@@ -22,7 +22,6 @@ class VolumesController < ApplicationController
     @volumes = Volume.where("sort_title LIKE :prefix", prefix: "#{@letter}%")
                    .unscope(:order)
                    .order(order_field)
-                   .page(params[:page])
   end
 
   # GET /public/volumes/1

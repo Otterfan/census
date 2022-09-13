@@ -21,7 +21,6 @@ class JournalsController < ApplicationController
     @journals = Journal.where("sort_title LIKE :prefix", prefix: "#{@letter}%")
                     .unscope(:order)
                     .order(order_field)
-                    .page(params[:page])
   end
 
   # GET /public/journals/1
