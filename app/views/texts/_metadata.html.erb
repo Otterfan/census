@@ -72,7 +72,7 @@
     </dd>
     <%= metadata_row 'Page span', @text.page_span.sub('pp. ', '') %>
   <% else %>
-    <%= metadata_row 'Page count', @text.page_span.sub('pp. ', '') %>
+    <%= metadata_row 'Page count', @text.page_count.sub('pp. ', '') %>
   <% end %>
 
   <%= metadata_row 'Title of issue', @text.issue_title %>
