@@ -84,9 +84,40 @@ namespace :census do
 
   desc "Replace space-comma with comma-space in original"
   task fix_yellow_box_commas: :environment do
-    Text.where('original LIKE ?' ,'% ,%').each do |text|
+    Text.where('original LIKE ?', '% ,%').each do |text|
       text.original.gsub!(' ,', ', ')
       puts "Fixed #{text.census_id}"
+      sleep(0.1)
+      text.save
+    end
+
+    puts "All done now!"
+  end
+
+  desc "Fix genre issues"
+  task fix_genre_issues: :environment do
+
+    puts "Fixing leading whitespace"
+    Text.where('genre LIKE ?', ' %').each do |text|
+      orig_genre = text.genre
+      text.genre.strip!
+      puts "#{text.census_id}: #{orig_genre} => #{text.genre}"
+      sleep(0.1)
+      text.save
+    end
+
+    Text.where('genre LIKE ?', 'Graphic Novel').each do |text|
+      orig_genre = text.genre
+      text.genre = "Graphic novel"
+      puts "#{text.census_id}: #{orig_genre} => #{text.genre}"
+      sleep(0.1)
+      text.save
+    end
+
+    Text.where('genre LIKE ?', 'literary history').each do |text|
+      orig_genre = text.genre
+      text.genre = "Literary history"
+      puts "#{text.census_id}: #{orig_genre} => #{text.genre}"
       sleep(0.1)
       text.save
     end
