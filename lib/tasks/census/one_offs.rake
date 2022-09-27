@@ -67,6 +67,19 @@ namespace :census do
 
     puts "All done now!"
   end
+
+  desc "Set all 3.xxx texts to Literary History"
+  task set_literary_history: :environment do
+    section = Section.find_by(name: "Literary History")
+    Text.where("section_id = 1 AND census_id LIKE '3.%'").each do |text|
+      text.section = section
+      puts "#{text.census_id} : #{text.section.name}"
+      sleep(0.1)
+      text.save
+    end
+
+    puts "All done now!"
+  end
 end
 
 def extract_sort_page(page_span)
