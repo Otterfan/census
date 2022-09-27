@@ -71,6 +71,8 @@
       <%= formatted_full_journal_issue_citation @text %>
     </dd>
     <%= metadata_row 'Page span', @text.page_span.sub('pp. ', '') %>
+  <% elsif @text.page_span && @text.page_span != '' %>
+    <%= metadata_row 'Page span', @text.page_span.sub('pp. ', '') %>
   <% else %>
     <%= metadata_row 'Page count', @text.page_count.sub('pp. ', '') %>
   <% end %>
