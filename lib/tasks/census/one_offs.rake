@@ -70,10 +70,11 @@ namespace :census do
 
   desc "Set all 3.xxx texts to Literary History"
   task set_literary_history: :environment do
-    section = Section.find_by(name: "Literary History")
-    Text.where("section_id = 1 AND census_id LIKE '3.%'").each do |text|
-      text.section = section
-      puts "#{text.census_id} : #{text.section.name}"
+    lit_hist_section = Section.find_by(name: "Literary History")
+    Text.where("section_id != #{lit_hist_section.id} AND census_id LIKE '3.%'").each do |text|
+      orig_section = text.section
+      text.section = lit_hist_section
+      puts "#{text.census_id} : #{orig_section.name} => #{text.section.name}"
       sleep(0.1)
       text.save
     end
