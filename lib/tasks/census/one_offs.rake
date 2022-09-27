@@ -81,6 +81,18 @@ namespace :census do
 
     puts "All done now!"
   end
+
+  desc "Replace space-comma with comma-space in original"
+  task fix_yellow_box_commas: :environment do
+    Text.where('original LIKE ?' ,'% ,%').each do |text|
+      text.original.gsub!(' ,', ', ')
+      puts "Fixed #{text.census_id}"
+      sleep(0.1)
+      text.save
+    end
+
+    puts "All done now!"
+  end
 end
 
 def extract_sort_page(page_span)
