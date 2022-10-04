@@ -19,9 +19,12 @@ class VolumesController < ApplicationController
 
     order_field = @is_greek_letter ? 'sort_title COLLATE "el-GR-x-icu"' : :sort_title
 
-    @volumes = Volume.where("sort_title LIKE :prefix", prefix: "#{@letter}%")
-                   .unscope(:order)
-                   .order(order_field)
+    @volumes = Volume.joins(:texts)
+                     .where(texts: { is_hidden: false })
+                     .where("volumes.sort_title LIKE :prefix", prefix: "#{@letter}%")
+                     .unscope(:order)
+                     .order(order_field)
+                     .distinct
   end
 
   # GET /public/volumes/1
@@ -29,7 +32,7 @@ class VolumesController < ApplicationController
   def show
     #redirect_to journals_path(@volume)
     @volume = Volume.find(params[:id])
-    @referenced_texts = Text.where(:volume_id => @volume.id).order(sort_page_span: :asc)
+    @referenced_texts = Text.where(:volume_id => @volume.id).where(:is_hidden => false).order(sort_page_span: :asc)
 
     @editors = @volume.volume_citations.select { |citation| citation.role == 'editor' }
     @translators = @volume.volume_citations.select { |citation| citation.role == 'translator' }

@@ -18,9 +18,12 @@ class JournalsController < ApplicationController
 
     order_field = @is_greek_letter ? 'sort_title COLLATE "el-GR-x-icu"' : :sort_title
 
-    @journals = Journal.where("sort_title LIKE :prefix", prefix: "#{@letter}%")
-                    .unscope(:order)
-                    .order(order_field)
+    @journals = Journal.joins(:texts)
+                       .where(texts: { is_hidden: false })
+                       .where("journals.sort_title LIKE :prefix", prefix: "#{@letter}%")
+                       .unscope(:order)
+                       .order(order_field)
+                       .distinct
   end
 
   # GET /public/journals/1
