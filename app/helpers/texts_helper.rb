@@ -257,7 +257,7 @@ module TextsHelper
       components: []
     }
     components.order(:ordinal, :pages, :id).each do |component|
-      if component.collection != collection[:title]
+      if component.collection != collection[:title] || component.greek_collection_title != collection[:greek_title]
 
         if collection[:components].count > 0
           collections << collection
