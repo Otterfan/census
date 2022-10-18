@@ -136,6 +136,15 @@ class SearchController < ApplicationController
       issue_editor.el_folded
   }
 
+  TOPIC_AUTHOR_FIELDS = %w{
+      topic_author.full_name
+      topic_author.full_name.en_folded
+      topic_author.full_name.el_folded
+      topic_author.greek_full_name
+      topic_author.greek_full_name.en_folded,
+      topic_author.greek_full_name.el_folded
+  }
+
   PUBLICATION_PLACES = %w{
       publication_places.place.name
       publication_places.place.name.en_folded
@@ -708,7 +717,7 @@ class SearchController < ApplicationController
               when "title"
                 add_field_adv_search(UNIFIED_TITLE_FIELDS, clean_search_string, @current_bool_op)
               when "author_heading"
-                add_field_adv_search(['topic_author.full_name', 'topic_author.full_name.en_folded', 'topic_author.full_name.el_folded'], clean_search_string, @current_bool_op)
+                add_field_adv_search(TOPIC_AUTHOR_FIELDS, clean_search_string, @current_bool_op)
               when "persons_cited"
                 add_field_adv_search(UNIFIED_PERSONS_CITED_FIELDS, clean_search_string, @current_bool_op)
               when "entry_number"
