@@ -1039,8 +1039,8 @@ class SearchController < ApplicationController
           range_hash = {
               range: {
                   "sort_date": {
-                      gte: @publication_date_range_earliest,
-                      lte: @publication_date_range_latest,
+                      gte: @publication_date_range_earliest + "-01-01",
+                      lte: @publication_date_range_latest + "-12-31",
                       format: "yyyy"
                   }
               }
