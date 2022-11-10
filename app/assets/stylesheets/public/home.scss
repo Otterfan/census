@@ -3,6 +3,24 @@
     margin-bottom: 0;
   }
 
+  .new-notice {
+    margin-bottom: 3em;
+
+    .new-notice__heading {
+      font-weight: 600;
+    }
+  }
+
+  .new-notice .announcement {
+    padding: 1em 0;
+    background: #fbf6ee;
+    border-bottom: 1px solid #CCCCCC66;
+
+    a {
+      font-weight: 600;
+    }
+  }
+
   .container.home-description {
     margin-bottom: 1em;
     margin-top: 1em;
@@ -83,6 +101,7 @@
         padding: 1em;
       }
     }
+
     img {
       max-width: 100%;
     }
