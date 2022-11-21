@@ -13,4 +13,8 @@ class Volume < ApplicationRecord
     self.texts.each(&:touch)
   }
 
+  def has_visible_text
+    texts.any?{|text| text.is_hidden == false }
+  end
+
 end

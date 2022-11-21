@@ -10,21 +10,20 @@ class VolumesController < ApplicationController
     @is_greek_letter = ('Α'..'Ω').include?(@letter)
 
     @alpha_params_options = {
-        bootstrap3: true,
-        include_all: false,
-        js: false
+      bootstrap3: true,
+      include_all: false,
+      js: false
     }
 
     @navigation_list = NavigationList.new(Volume, :sort_title, 'A')
 
-    order_field = @is_greek_letter ? 'sort_title COLLATE "el-GR-x-icu"' : :sort_title
+    order_field = @is_greek_letter ? 'volumes.sort_title COLLATE "el-GR-x-icu"' : :sort_title
 
-    @volumes = Volume.joins(:texts)
-                     .where(texts: { is_hidden: false })
-                     .where("volumes.sort_title LIKE :prefix", prefix: "#{@letter}%")
+    @volumes = Volume.where("volumes.sort_title LIKE :prefix", prefix: "#{@letter}%")
                      .unscope(:order)
                      .order(order_field)
-                     .distinct
+
+    @volumes = @volumes.select { |vol| vol.has_visible_text }
   end
 
   # GET /public/volumes/1
@@ -45,9 +44,9 @@ class VolumesController < ApplicationController
   # first_letter
   def letter
     first_volume = Volume.where.not(title: [nil, '']) # filter out nils and blanks
-                       .where("sort_title LIKE ?", "#{params[:first_letter]}%")
-                       .order(:sort_title)
-                       .first
+                         .where("sort_title LIKE ?", "#{params[:first_letter]}%")
+                         .order(:sort_title)
+                         .first
 
     redirect_to(volume_path(first_volume))
   end

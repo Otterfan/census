@@ -9,21 +9,20 @@ class JournalsController < ApplicationController
     @is_greek_letter = ('Α'..'Ω').include?(@letter)
 
     @alpha_params_options = {
-        bootstrap3: true,
-        include_all: false,
-        js: false
+      bootstrap3: true,
+      include_all: false,
+      js: false
     }
 
     @navigation_list = NavigationList.new(Journal, :sort_title, 'A')
 
     order_field = @is_greek_letter ? 'sort_title COLLATE "el-GR-x-icu"' : :sort_title
 
-    @journals = Journal.joins(:texts)
-                       .where(texts: { is_hidden: false })
-                       .where("journals.sort_title LIKE :prefix", prefix: "#{@letter}%")
+    @journals = Journal.where("journals.sort_title LIKE :prefix", prefix: "#{@letter}%")
                        .unscope(:order)
                        .order(order_field)
-                       .distinct
+
+    @journals = @journals.select { |journal| journal.has_visible_text }
   end
 
   # GET /public/journals/1
@@ -38,9 +37,9 @@ class JournalsController < ApplicationController
   # first_letter
   def letter
     first_journal = Journal.where.not(title: [nil, '']) # filter out nils and blanks
-                        .where("sort_title LIKE ?", "#{params[:first_letter]}%")
-                        .order(:sort_title)
-                        .first
+                           .where("sort_title LIKE ?", "#{params[:first_letter]}%")
+                           .order(:sort_title)
+                           .first
 
     redirect_to(journal_path(first_journal))
   end
