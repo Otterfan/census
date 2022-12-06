@@ -155,6 +155,7 @@ class Admin::TextsController < ApplicationController
                                  :special_location_of_item, :special_source_of_info,
                                  :section_id, :status_id, :topic_author_id, :original,
                                  :publication_places_id, :journal_id, :volume_id,
+                                 :being_edited,
                                  publication_places_attributes: [:id, :place_id, :primary, :_destroy],
                                  text_citations_attributes: [:id, :role, :name, :first_name, :last_name, :controlled_name, :from_language_id,
                                                              :to_language_id, :ordinal, :source_edition, :_destroy],

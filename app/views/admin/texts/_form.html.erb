@@ -298,6 +298,10 @@
     <%= f.association :status %>
   </div>
 
+  <div>
+    <%= f.input :being_edited, label: "Record is being actively revised" %>
+  </div>
+
   <%= f.button :submit %>
 
   <script>
