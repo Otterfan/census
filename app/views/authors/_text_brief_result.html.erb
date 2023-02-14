@@ -4,8 +4,10 @@
     <span class="title-date">(<%= text.date %>)</span>
   </div>
   <div class="result-author">
-    Topic author: <span class="topic-author-english"><%= text.topic_author.full_name %></span>
-    <span class="topic-author-greek"><%= text.topic_author.greek_full_name %></span>
+    <% if text.topic_author %>
+      Topic author: <span class="topic-author-english"><%= text.topic_author.full_name %></span>
+      <span class="topic-author-greek"><%= text.topic_author.greek_full_name %></span>
+    <% end %>
   </div>
   <div class="result-author">
     <%= text.authors_names %>
