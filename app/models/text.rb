@@ -444,4 +444,8 @@ class Text < ApplicationRecord
     greek_source_title ? clean_field(greek_source_title) : nil
   end
 
+  def delete_elasticsearch_record
+    __elasticsearch__.delete_document
+  end
+
 end

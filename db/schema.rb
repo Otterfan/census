@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_06_145632) do
+ActiveRecord::Schema.define(version: 2023_02_28_153321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "admin_news", force: :cascade do |t|
+    t.text "brief_content"
+    t.text "content"
+    t.text "note"
+    t.date "posted_on"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "blazer_audits", force: :cascade do |t|
     t.bigint "user_id"
