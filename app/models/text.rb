@@ -70,8 +70,15 @@ class Text < ApplicationRecord
     # Add a citation for the topic author if this is a translation.
     if text_type.respond_to?(:starts_with?) && text_type.starts_with?('translat')
       author_citation = TextCitation.new
-      author_citation.name = topic_author.full_name
-      author_citation.controlled_name = topic_author.full_name
+
+      if (topic_author)
+        author_citation.name = topic_author.full_name
+        author_citation.controlled_name = topic_author.full_name
+      else
+        author_citation.name = ''
+        author_citation.controlled_name = ''
+      end
+
       @authors = [author_citation]
     end
 
@@ -422,10 +429,10 @@ class Text < ApplicationRecord
 
   def has_greek_publication_info
     if original_greek_publisher.blank? &&
-        original_greek_place_of_publication.blank? &&
-        original_greek_date.blank? &&
-        original_greek_title.blank? &&
-        original_greek_collection.blank?
+      original_greek_place_of_publication.blank? &&
+      original_greek_date.blank? &&
+      original_greek_title.blank? &&
+      original_greek_collection.blank?
       return false
     end
 
