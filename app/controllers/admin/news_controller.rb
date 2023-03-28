@@ -1,5 +1,13 @@
 class Admin::NewsController < ApplicationController
   before_action :set_admin_news, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :restrict_access
+
+  skip_before_action :verify_authenticity_token
+
+  def restrict_access
+    redirect_to "/" unless current_user && current_user.user_type != 'viewer'
+  end
 
   # GET /admin/news
   # GET /admin/news.json

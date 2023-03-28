@@ -1,5 +1,3 @@
-<h1>New Admin News</h1>
-
-<%= render 'form', admin_news: @admin_news %>
+<%= render 'admin/news/input_with_help', admin_news: @admin_news, title: "New news item" %>
 
 <%= link_to 'Back', admin_news_index_path %>

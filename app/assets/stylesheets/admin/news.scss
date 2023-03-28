@@ -1,3 +1,29 @@
 // Place all the styles related to the Admin::News controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.col-md-5.markdown-help {
+  padding-left: 4em;
+
+  a {
+    text-decoration: underline;
+    color: #337ab7;
+  }
+}
+
+table.markdown-help__table {
+  tr {
+    td, th {
+      font-size: 14px;
+      padding: .5em
+    }
+  }
+  margin-bottom: 2em;
+}
+
+.markdown-help code {
+  background-color: white;
+}
+
+.markdown-help__sample {
+  background-color: #DFE9FC;
+}

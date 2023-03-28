@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="col-md-7">
+    <h1><%= title %></h1>
+    <%= render 'form', admin_news: @admin_news %>
+  </div>
+  <div class="col-md-5 markdown-help">
+    <h3>Markdown syntax</h3>
+    <table class="markdown-help__table">
+      <tr>
+        <th>Element</th>
+        <th>Syntax</th>
+      </tr>
+      <tr>
+        <td class="markdown-help__sample"><em>italicized text</em></td>
+        <td><code>*italicized text*</code></td>
+      </tr>
+      <tr>
+        <td class="markdown-help__sample"><strong>bold text</strong></td>
+        <td><code>**bold text**</code></td>
+      </tr>
+      <tr>
+        <td class="markdown-help__sample"><a href="https://example.com" style="color: #337ab7">linked text</a></td>
+        <td><code>(linked text)[https://example.com]</code></td>
+      </tr>
+    </table>
+    <h4>Example</h4>
+    <p class="markdown-help__example">
+      The <em>CENSUS of Modern Greek Literature</em> website is <strong>open</strong>—<a href="https://example.com/video">video</a>
+    </p>
+    <div>
+      <code>The *CENSUS of Modern Greek Literature* website is **open**—[video](https://example.com/video)</code>
+    </div>
+  </div>
+</div>
