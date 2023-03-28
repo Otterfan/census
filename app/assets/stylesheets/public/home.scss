@@ -3,22 +3,58 @@
     margin-bottom: 0;
   }
 
-  .new-notice {
-    margin-bottom: 3em;
+  .news {
+    margin-bottom: 2em;
 
     .new-notice__heading {
       font-weight: 600;
     }
   }
 
-  .new-notice .announcement {
-    padding: 1em 0;
-    font-size: 1.25em;
+  h3 {
+    margin-bottom: 1em;
+  }
+
+  .updated-records-list {
+    ul {
+      padding: 0;
+
+      li {
+        list-style: none;
+        margin-bottom: 1em;
+        font-size: 14px;
+
+        .result-title {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+
+  .news__announcement {
+    display: grid;
+    grid-template-columns: 100px 1000px;
+
     background: #fbf6ee;
     border-bottom: 1px solid #CCCCCC66;
 
-    a {
-      font-weight: 600;
+    h3 {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .news__announcement-date {
+      grid-column: 1;
+      grid-row: 2;
+      font-weight: bold;
+      font-size: 16px;
+      padding-top: 0.2em;
+    }
+
+    .news__brief-content {
+      grid-column: 2;
+      grid-row: 2;
+      font-size: 18px;
     }
   }
 

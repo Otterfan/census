@@ -1,52 +1,56 @@
-<div class="new-notice row">
-  <div class="col-md-12 announcement">
+<div class="row news">
+  <div class="col-md-12 news__announcement">
+    <h3>Announcements</h3>
+    <% @news.each do |story| %>
+      <div class="news__announcement-date">
+        <%= story.posted_on %>
+      </div>
+      <div class="news__brief-content">
+        <%= markdown story.brief_content %>
+      </div>
+    <% end %>
+  </div>
 
-    <div class="col-md-11">
-      <strong>News:</strong>
-      The CENSUS website is open—<a href="/pdf/census-website-announcement-2022-10.pdf">press release</a> and <a href="https://www.youtube.com/watch?v=5kS_MDTI-j0">video</a>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <h3>Sponsors</h3>
+    Major sponsoring institutions of the CENSUS (1998-present) include:
+  </div>
+</div>
+<div class="row sponsors">
+  <div class="sponsors col-md-4">
+    <div class="col-md-12 sponsors__sponsor-card">
+      <a href="https://www.culture.gov.gr/en/SitePages/default.aspx">
+        <%= image_tag 'yppoa_logo.png', class: 'image-holder__img' %>
+      </a>
     </div>
+  </div>
+  <div class="col-md-4 sponsors__sponsor-card">
+    <a href="https://www.onassis.org/foundation/public-benefit-foundation">
+      <%= image_tag 'onassis-foundation.png', class: 'image-holder__img' %>
+    </a>
+  </div>
+  <div class="col-md-4 sponsors__sponsor-card">
+    <a href="http://www.laskaridisfoundation.org/en/">
+      <%= image_tag 'laskaridis-logo.png', class: 'image-holder__img' %>
+    </a>
   </div>
 </div>
 
-<div class="sponsors">
-  <div class="row">
-    <div class="col-md-12 sponsors">
-      <p>Major sponsoring institutions of the CENSUS (1998-present) include:</p>
-      <div class="col-md-4 sponsors__sponsor-card">
-        <a href="https://www.culture.gov.gr/en/SitePages/default.aspx">
-          <%= image_tag 'yppoa_logo.png', class: 'image-holder__img' %>
-        </a>
-      </div>
-      <div class="col-md-4 sponsors__sponsor-card">
-        <a href="https://www.onassis.org/foundation/public-benefit-foundation">
-          <%= image_tag 'onassis-foundation.png', class: 'image-holder__img' %>
-        </a>
-      </div>
-      <div class="col-md-4 sponsors__sponsor-card">
-        <a href="http://www.laskaridisfoundation.org/en/">
-          <%= image_tag 'laskaridis-logo.png', class: 'image-holder__img' %>
-        </a>
-      </div>
-    </div>
+<div class="row sponsors">
+  <div class="col-md-4 sponsors__sponsor-card">
+    <a href="http://www.idrimaurani.gr/">
+      <%= image_tag 'ouranis-logo.jpg', class: 'image-holder__img', style: 'padding-top: 1em' %>
+    </a>
   </div>
-
-  <div class="row">
-    <div class="col-md-12 sponsors">
-
-      <div class="col-md-4 sponsors__sponsor-card">
-        <a href="http://www.idrimaurani.gr/">
-          <%= image_tag 'ouranis-logo.jpg', class: 'image-holder__img', style: 'padding-top: 1em' %>
-        </a>
-      </div>
-      <div class="col-md-4 sponsors__sponsor-card">
-        <a href="http://www.idrimaurani.gr/">
-          <p class="sponsors__sponsor-title">Petros Charis Foundation of the Academy of Athens</p>
-        </a>
-      </div>
-      <div class="col-md-4 sponsors__sponsor-card">
-        <p class="sponsors__sponsor-title">The Costas and Mary Maliotis Charitable Foundation</p>
-      </div>
-    </div>
+  <div class="col-md-4 sponsors__sponsor-card">
+    <a href="http://www.idrimaurani.gr/">
+      <p class="sponsors__sponsor-title">Petros Charis Foundation of the Academy of Athens</p>
+    </a>
   </div>
-</div>
+  <div class="col-4 sponsors__sponsor-card">
+    <p class="sponsors__sponsor-title">The Costas and Mary Maliotis Charitable Foundation</p>
+  </div>
 </div>
