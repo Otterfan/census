@@ -1,14 +1,23 @@
+<div class="open-announcement">
+  <div class="news__brief-content">
+    <p>The CENSUS website is
+      open—<a href="https://moderngreekliterature.org/pdf/census-website-announcement-2022-10.pdf" rel="nofollow" target="_blank">press
+      release</a> and <a href="https://www.youtube.com/watch?v=5kS_MDTI-j0" rel="nofollow" target="_blank">video</a></p>
+  </div>
+</div>
 <div class="row news">
-  <div class="col-md-12 news__announcement">
-    <h3>Announcements</h3>
-    <% @news.reverse.each do |story| %>
-      <div class="news__announcement-date">
-        <%= story.posted_on %>
-      </div>
-      <div class="news__brief-content">
-        <%= markdown story.brief_content %>
-      </div>
-    <% end %>
+  <% if @news.length > 0 %>
+    <div class="col-md-12 news__announcement">
+      <h3>Announcements</h3>
+      <% @news.reverse.each do |story| %>
+        <div class="news__announcement-date">
+          <%= story.posted_on %>
+        </div>
+        <div class="news__brief-content">
+          <%= markdown story.brief_content %>
+        </div>
+      <% end %>
+  <% end %>
   </div>
 
 </div>
