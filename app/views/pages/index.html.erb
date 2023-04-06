@@ -1,7 +1,7 @@
 <div class="row news">
   <div class="col-md-12 news__announcement">
     <h3>Announcements</h3>
-    <% @news.each do |story| %>
+    <% @news.reverse.each do |story| %>
       <div class="news__announcement-date">
         <%= story.posted_on %>
       </div>

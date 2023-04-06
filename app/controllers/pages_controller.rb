@@ -9,7 +9,7 @@ class PagesController < ApplicationController
   end
 
   def news
-    @news = Admin::News.order(:posted_on, :id)
+    @news = Admin::News.order(:posted_on, :id).limit(2)
     render layout: 'home'
   end
 
