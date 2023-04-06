@@ -8,7 +8,7 @@
 <div class="row news">
   <% if @news.length > 0 %>
     <div class="col-md-12 news__announcement">
-      <h3>Announcements</h3>
+      <h3>News</h3>
       <% @news.reverse.each do |story| %>
         <div class="news__announcement-date">
           <%= story.posted_on %>
@@ -17,7 +17,7 @@
           <%= markdown story.brief_content %>
         </div>
         <div class="news__more-link">
-          <a href="/news">More announcements...</a></div>
+          <a href="/news">More news...</a></div>
       <% end %>
   <% end %>
   </div>
