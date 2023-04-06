@@ -9,6 +9,11 @@
     .new-notice__heading {
       font-weight: 600;
     }
+
+    .news__more-link {
+      grid-column: 1 / span 2;
+      margin-bottom: 1em;
+    }
   }
 
   .open-announcement {
