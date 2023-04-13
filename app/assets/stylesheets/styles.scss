@@ -39,6 +39,14 @@ main {
     margin-top: 1em;
   }
 
+  .public-view-button {
+    margin-bottom: 1em
+  }
+
+  a.public-view-button:hover {
+    background-color: #286090;
+  }
+
   .edit-form, .edit_volume {
 
     .checkbox label {

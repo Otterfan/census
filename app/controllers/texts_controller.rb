@@ -23,5 +23,11 @@ class TextsController < ApplicationController
     else
       @text = Text.find(params[:id])
     end
+
+    if @text.is_hidden
+      unless user_signed_in? && current_user.user_type != 'viewer'
+        raise ActionController::RoutingError.new('Not Found')
+      end
+    end
   end
 end

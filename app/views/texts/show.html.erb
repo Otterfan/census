@@ -9,6 +9,13 @@
       &nbsp;
     <% end %>
   </div>
+
+  <% if @text.is_hidden %>
+    <div class="row">
+      <div class="text-being-edited-notice alert alert-danger" role="alert"><strong>Note:</strong> This record is hidden from the public.</div>
+    </div>
+  <% end %>
+
   <% if @text.being_edited %>
     <div class="row">
       <div class="text-being-edited-notice alert alert-warning" role="alert"><strong>Note:</strong> This record is in process of revision.</div>
