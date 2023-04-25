@@ -77,6 +77,6 @@ class Admin::NewsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def admin_news_params
-      params.require(:admin_news).permit(:brief_content, :content, :note, :posted_on)
+      params.require(:admin_news).permit(:brief_content, :content, :note, :posted_on, :expires_on, :published)
     end
 end

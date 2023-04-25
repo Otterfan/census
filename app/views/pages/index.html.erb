@@ -9,16 +9,19 @@
   <% if @news.length > 0 %>
     <div class="col-md-12 news__announcement">
       <h3>News</h3>
-      <% @news.reverse.each do |story| %>
-        <div class="news__announcement-date">
-          <%= story.posted_on %>
-        </div>
-        <div class="news__brief-content">
-          <%= markdown story.brief_content %>
-        </div>
+      <div class="news__grid">
+        <% @news.reverse.each do |story| %>
+          <div class="news__announcement-date">
+            <%= story.posted_on %>
+          </div>
+          <div class="news__brief-content">
+            <%= markdown story.brief_content %>
+          </div>
+        <% end %>
         <div class="news__more-link">
-          <a href="/news">More news...</a></div>
-      <% end %>
+          <a href="/news">More news...</a>
+        </div>
+      </div>
   <% end %>
   </div>
 
