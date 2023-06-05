@@ -601,6 +601,9 @@ class SearchController < ApplicationController
       if @query_array.any?
         @all_search[:query][:bool] = {}
         @all_search[:query][:bool][:must] = @query_array
+        unless user_signed_in? && current_user.user_type != 'viewer'
+          @all_search[:query][:bool][:filter] = [{'term' => {'is_hidden' => false}}]
+        end
       else
         @all_search[:query] = {
             "match_all": {}

@@ -36,10 +36,8 @@ class Text < ApplicationRecord
   before_save :default_values
 
   after_commit {
-    unless self.is_hidden
-      puts "Text record '#{self.id}' was updated. Will now reindex."
-      __elasticsearch__.index_document
-    end
+    puts "Text record '#{self.id}' was updated. Will now reindex."
+    __elasticsearch__.index_document
   }
 
   paginates_per 60
