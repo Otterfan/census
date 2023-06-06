@@ -1,4 +1,4 @@
-<% if text.topic_author %>
+<% if text.respond_to?(:topic_author) && text.topic_author %>
   <span class="topic-author-english"><%= text.topic_author.full_name %></span>
   <% unless text.topic_author.greek_full_name.blank? %>
     / <span class="topic-author-greek"><%= text.topic_author.greek_full_name %></span>
