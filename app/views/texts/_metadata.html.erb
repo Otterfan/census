@@ -73,7 +73,7 @@
     <%= metadata_row 'Page span', @text.page_span.sub('pp. ', '') %>
   <% elsif @text.page_span && @text.page_span != '' %>
     <%= metadata_row 'Page span', @text.page_span.sub('pp. ', '') %>
-  <% else %>
+  <% elsif @text.page_count && @text.page_count != '' %>
     <%= metadata_row 'Page count', @text.page_count.sub('pp. ', '') %>
   <% end %>
 
