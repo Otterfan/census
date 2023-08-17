@@ -46,8 +46,6 @@
 
     .news__grid {
       display: grid;
-      grid-template-columns: 100px 1000px;
-      grid-template-columns: repeat(1, 100px 1000px);
     }
 
     h3 {
@@ -58,6 +56,7 @@
       font-weight: bold;
       font-size: 16px;
       padding-top: 0.2em;
+      margin-right: 2em;
     }
 
     .news__brief-content {
