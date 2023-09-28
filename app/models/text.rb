@@ -201,6 +201,12 @@ class Text < ApplicationRecord
       # duplicate the original field for our transformations
       @cleaned_original = original.dup
 
+      # Add "asterisk" if the text has not been seen. For Dia to lookup
+      # such texts.
+      unless seen_in_person
+        @cleaned_original = @cleaned_original + ' asterisk'
+      end
+
       # apply clean_field method
       clean_field @cleaned_original
     else
