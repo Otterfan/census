@@ -156,6 +156,7 @@ class SearchController < ApplicationController
       publication_places.place.country.name.en_folded
       publication_places.place.country.name.el_folded
       publication_places.place.country.al3_code.exact
+      publication_countries
   }
 
   CONTROLLED_VOCAB_SEARCH_FIELDS = [
