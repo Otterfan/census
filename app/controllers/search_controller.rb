@@ -3,50 +3,50 @@ class SearchController < ApplicationController
   include TextsHelper
 
   KEYWORD_SEARCH_PARAMS = [
-      :keyword,
-      :genre,
-      :material_type,
-      :text_type,
-      :topic_author,
-      :publication_places,
-      :publication_date_range
+    :keyword,
+    :genre,
+    :material_type,
+    :text_type,
+    :topic_author,
+    :publication_places,
+    :publication_date_range
   ]
 
   ADVANCED_SEARCH_PARAMS = [
-      :keyword,
-      :bq,
-      :title,
-      :author_heading,
-      :persons_cited,
-      :entry_number,
-      :text_type,
-      :material_type,
-      :genre,
-      :journal_title,
-      :volume_title,
-      :collection_title,
-      :original_greek_title,
-      :publication_place,
-      :publication_countries,
-      :publisher,
-      :series,
-      :sponsoring_organization,
-      :isbn,
-      :issn,
-      :dai,
-      :is_bilingual,
-      :illustrations_noted,
-      :is_special_issue,
-      :is_collected_volume,
-      :authors_name_from_source,
-      :authors_name_from_source_exact
+    :keyword,
+    :bq,
+    :title,
+    :author_heading,
+    :persons_cited,
+    :entry_number,
+    :text_type,
+    :material_type,
+    :genre,
+    :journal_title,
+    :volume_title,
+    :collection_title,
+    :original_greek_title,
+    :publication_place,
+    :publication_countries,
+    :publisher,
+    :series,
+    :sponsoring_organization,
+    :isbn,
+    :issn,
+    :dai,
+    :is_bilingual,
+    :illustrations_noted,
+    :is_special_issue,
+    :is_collected_volume,
+    :authors_name_from_source,
+    :authors_name_from_source_exact
   ]
 
   SEARCH_PARAMS = KEYWORD_SEARCH_PARAMS + ADVANCED_SEARCH_PARAMS
 
   DEFAULT_VIEW_PARAMS = [
-      :title,
-      :topic_author
+    :title,
+    :topic_author
   ]
 
   UNIFIED_TITLE_FIELDS = %w{
@@ -138,11 +138,9 @@ class SearchController < ApplicationController
 
   TOPIC_AUTHOR_FIELDS = %w{
       topic_author.full_name
-      topic_author.full_name.en_folded
-      topic_author.full_name.el_folded
       topic_author.greek_full_name
-      topic_author.greek_full_name.en_folded,
       topic_author.greek_full_name.el_folded
+      topic_author.alternate_name
   }
 
   PUBLICATION_PLACES = %w{
@@ -160,15 +158,15 @@ class SearchController < ApplicationController
   }
 
   CONTROLLED_VOCAB_SEARCH_FIELDS = [
-      :text_type,
-      :material_type,
-      :genre
+    :text_type,
+    :material_type,
+    :genre
   ]
 
   BOOLEAN_OPERATORS = [
-      :and,
-      :or,
-      :not
+    :and,
+    :or,
+    :not
   ]
 
   BOOL_AND = "AND"
@@ -387,7 +385,7 @@ class SearchController < ApplicationController
 
     # AND, OR and NOT are used by lucene as logical operators. We need
     # to escape them
-    ['AND', 'OR', 'NOT'].each do |word|
+    %w[AND OR NOT].each do |word|
       escaped_word = word.split('').map { |char| "\\#{char}" }.join('')
       str = str.gsub(/\s*\b(#{word.upcase})\b\s*/, " #{escaped_word} ")
     end
@@ -415,13 +413,13 @@ class SearchController < ApplicationController
     @kw_query_string_hash = {}
     if kw_param.present?
       @kw_query_string_hash = {
-          query_string: {
-              fields: KEYWORD_FIELDS,
-              lenient: true,
-              type: "most_fields",
-              default_operator: "and",
-              query: sanitize_query(kw_param)
-          }
+        query_string: {
+          fields: KEYWORD_FIELDS,
+          lenient: true,
+          type: "cross_fields",
+          default_operator: "and",
+          query: sanitize_query(kw_param)
+        }
       }
 
       puts "  keyword search hash  : #{@kw_query_string_hash}"
@@ -536,66 +534,66 @@ class SearchController < ApplicationController
       # create Elasticsearch search query using the @query_array list we've been constructing.
       # add in aggregated fields (facets), highlighting and sort configuration here
       @all_search = {
-          query: {},
-          sort: query_sort(params[:sort]),
-          aggs: {
-              available_online: {
-                  terms: {
-                      field: "available_online.keyword",
-                      size: FACET_HITS_SIZE
-                  }
-              },
-              genre: {
-                  terms: {
-                      field: "genre.keyword",
-                      size: FACET_HITS_SIZE
-                  }
-              },
-              "material_type": {
-                  terms: {
-                      field: "material_type.keyword",
-                      size: FACET_HITS_SIZE
-                  }
-              },
-              "text_type": {
-                  terms: {
-                      field: "text_type.keyword",
-                      size: FACET_HITS_SIZE
-                  }
-              },
-              "topic_author": {
-                  terms: {
-                      field: "topic_author.full_name.keyword",
-                      size: FACET_HITS_SIZE
-                  }
-              },
-              "translators": {
-                  terms: {
-                      field: "translators_names.keyword",
-                      size: FACET_HITS_SIZE
-                  }
-              },
-              "publication_places": {
-                  terms: {
-                      field: "publication_places.place.name.keyword",
-                      size: FACET_HITS_SIZE
-                  }
-              },
-              "other_text_languages": {
-                  terms: {
-                      field: "other_text_languages.language.name.keyword",
-                      size: FACET_HITS_SIZE
-                  }
-              },
-              "publication_dates": {
-                  date_histogram: {
-                      field: "sort_date",
-                      interval: "year",
-                      format: "yyyy",
-                      # missing: "1900"
-                  }
-              }
+        query: {},
+        sort: query_sort(params[:sort]),
+        aggs: {
+          available_online: {
+            terms: {
+              field: "available_online.keyword",
+              size: FACET_HITS_SIZE
+            }
+          },
+          genre: {
+            terms: {
+              field: "genre.keyword",
+              size: FACET_HITS_SIZE
+            }
+          },
+          "material_type": {
+            terms: {
+              field: "material_type.keyword",
+              size: FACET_HITS_SIZE
+            }
+          },
+          "text_type": {
+            terms: {
+              field: "text_type.keyword",
+              size: FACET_HITS_SIZE
+            }
+          },
+          "topic_author": {
+            terms: {
+              field: "topic_author.full_name.keyword",
+              size: FACET_HITS_SIZE
+            }
+          },
+          "translators": {
+            terms: {
+              field: "translators_names.keyword",
+              size: FACET_HITS_SIZE
+            }
+          },
+          "publication_places": {
+            terms: {
+              field: "publication_places.place.name.keyword",
+              size: FACET_HITS_SIZE
+            }
+          },
+          "other_text_languages": {
+            terms: {
+              field: "other_text_languages.language.name.keyword",
+              size: FACET_HITS_SIZE
+            }
+          },
+          "publication_dates": {
+            date_histogram: {
+              field: "sort_date",
+              interval: "year",
+              format: "yyyy",
+              # missing: "1900"
+            }
           }
+        }
       }
 
       # add in the @query_array array elements to the "must" query block
@@ -607,7 +605,7 @@ class SearchController < ApplicationController
         end
       else
         @all_search[:query] = {
-            "match_all": {}
+          "match_all": {}
         }
       end
 
@@ -623,11 +621,11 @@ class SearchController < ApplicationController
       @texts = []
     end
     @sort_options = [
-        ['Relevance', 'score'],
-        ['Title', 'sort-title'],
-        ['Author', 'author'],
-        ['Date (oldest first)', 'date-oldest-first'],
-        ['Date (newest first)', 'date-newest-first']
+      ['Relevance', 'score'],
+      ['Title', 'sort-title'],
+      ['Author', 'author'],
+      ['Date (oldest first)', 'date-oldest-first'],
+      ['Date (newest first)', 'date-newest-first']
     ]
     @page_title = page_title
   end
@@ -814,6 +812,7 @@ class SearchController < ApplicationController
     # our @combined_query_string is inserted into an @combined_query_hash "query" key hash
     if @combined_query_string.length > 0
       @combined_query_hash[:query_string][:default_operator] = "and"
+      @combined_query_hash[:query_string][:type] = "cross_fields"
       @combined_query_hash[:query_string][:query] = @combined_query_string
 
       # add @combined_query_hash to our @adv_search_array array of search objects
@@ -886,10 +885,10 @@ class SearchController < ApplicationController
         @facets[param] = params[param]
       end
       @query_string_array << {
-          query_string: {
-              fields: fields,
-              query: wrap_in_quotes(sanitize_query(params[param]))
-          }
+        query_string: {
+          fields: fields,
+          query: wrap_in_quotes(sanitize_query(params[param]))
+        }
       }
     end
   end
@@ -977,7 +976,7 @@ class SearchController < ApplicationController
     # add query_string params unique to keyword search
     @combined_query_hash[:query_string][:fields] = keyword_fields
     @combined_query_hash[:query_string][:lenient] = true
-    @combined_query_hash[:query_string][:type] = "most_fields"
+    @combined_query_hash[:query_string][:type] = "cross_fields"
     @combined_query_hash[:query_string][:default_operator] = "and"
 
     # Finally, return the @combined_query_string using field_val and bool_op
@@ -1041,13 +1040,13 @@ class SearchController < ApplicationController
           @publication_date_range_latest = dates[1]
 
           range_hash = {
-              range: {
-                  "sort_date": {
-                      gte: @publication_date_range_earliest + "-01-01",
-                      lte: @publication_date_range_latest + "-12-31",
-                      format: "yyyy-MM-dd"
-                  }
+            range: {
+              "sort_date": {
+                gte: @publication_date_range_earliest + "-01-01",
+                lte: @publication_date_range_latest + "-12-31",
+                format: "yyyy-MM-dd"
               }
+            }
           }
 
           if as_adv_filter
@@ -1099,7 +1098,6 @@ class SearchController < ApplicationController
     if !params[:bq].present?
       params[:bq] = ""
     end
-
 
   end
 end
