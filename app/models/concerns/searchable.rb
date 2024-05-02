@@ -155,8 +155,10 @@ module Searchable
               :status_id, :section_id, :country_id,
               :journal_id, :volume_id, :sort_id, :section_id,
               :sort_page_span, :sort_census_id, :seen_in_person, :sort_author,
-              :sort_translator,
-              :original_greek_title, :original_greek_collection, :greek_source_title
+              :sort_translator, :dai, :accessed_on, :page_count,
+              # Fields below are present in the index as *_clean fields
+              :physical_description, :editorial_annotation, :original, :collection, :abstract, :note,
+              :original_greek_title, :original_greek_collection, :greek_source_title,
           ],
           methods: [
               :authors_names,
@@ -194,7 +196,7 @@ module Searchable
               },
               components: {
                   except: [:id, :created_at, :updated_at, :text_id, :pages, :ordinal, :sort_pages,
-                           :greek_source_title, :greek_collection_title],
+                           :collection, :greek_source_title, :greek_collection_title],
                   methods: [:sort_title, :collection_clean, :greek_source_title_clean, :greek_collection_title_clean],
                   include: {
                       component_citations: {
@@ -226,7 +228,7 @@ module Searchable
                   methods: [:top_level_domain]
               },
               topic_author: {
-                  except: [:created_at, :updated_at, :sort_full_name, :see_person_id],
+                  except: [:created_at, :updated_at, :sort_full_name, :see_person_id, :alternate_name],
                   methods: [:alternate_name_clean],
               },
               status: {

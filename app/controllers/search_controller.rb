@@ -33,7 +33,6 @@ class SearchController < ApplicationController
     :sponsoring_organization,
     :isbn,
     :issn,
-    :dai,
     :is_bilingual,
     :illustrations_noted,
     :is_special_issue,
@@ -104,9 +103,6 @@ class SearchController < ApplicationController
       topic_author.full_name
       topic_author.full_name.en_folded
       topic_author.full_name.el_folded
-      topic_author.alternate_name
-      topic_author.alternate_name.en_folded
-      topic_author.alternate_name.el_folded
       topic_author.alternate_name_clean
       topic_author.alternate_name_clean.en_folded
       topic_author.alternate_name_clean.el_folded
@@ -140,7 +136,7 @@ class SearchController < ApplicationController
       topic_author.full_name
       topic_author.greek_full_name
       topic_author.greek_full_name.el_folded
-      topic_author.alternate_name
+      topic_author.alternate_name_clean
   }
 
   PUBLICATION_PLACES = %w{
@@ -182,9 +178,6 @@ class SearchController < ApplicationController
     topic_author.full_name^10
     topic_author.full_name.en_folded^10
     topic_author.full_name.el_folded^10
-    topic_author.alternate_name^10
-    topic_author.alternate_name.en_folded^10
-    topic_author.alternate_name.el_folded^10
     topic_author.alternate_name_clean^10
     topic_author.alternate_name_clean.en_folded^10
     topic_author.alternate_name_clean.el_folded^10
@@ -310,7 +303,6 @@ class SearchController < ApplicationController
 
     standard_numbers.value
     journal.issn
-    dai
 
     components.component_citations.name^10
     components.component_citations.name.en_folded^10
@@ -341,9 +333,9 @@ class SearchController < ApplicationController
     source
     source.en_folded
     source.el_folded
-    original_greek_title^10
-    original_greek_title.el^10
-    original_greek_title.el_folded^10
+    original_greek_title_clean^10
+    original_greek_title_clean.el^10
+    original_greek_title_clean.el_folded^10
     original_greek_collection
     original_greek_collection.el
     original_greek_collection.el_folded
@@ -367,7 +359,6 @@ class SearchController < ApplicationController
 
     cross_references.census_id.exact
 
-    original
     original_clean.en
     original_clean.el
     original_clean.el_folded
@@ -740,7 +731,7 @@ class SearchController < ApplicationController
               when "collection_title"
                 add_field_adv_search(['original_greek_collection', 'original_source'], clean_search_string, @current_bool_op)
               when "original_greek_title"
-                add_field_adv_search(['original_greek_title', 'original_greek_title.el_folded'], clean_search_string, @current_bool_op)
+                add_field_adv_search(['original_greek_title_clean', 'original_greek_title_clean.el_folded'], clean_search_string, @current_bool_op)
               when "publication_place"
                 add_field_adv_search(PUBLICATION_PLACES, clean_search_string, @current_bool_op)
               when "publication_countries"
@@ -755,8 +746,6 @@ class SearchController < ApplicationController
                 add_field_adv_search(['journal.issn'], clean_search_string, @current_bool_op)
               when "isbn"
                 add_field_adv_search(['standard_numbers.value'], clean_search_string, @current_bool_op)
-              when "dai"
-                add_field_adv_search(['dai'], clean_search_string, @current_bool_op)
               when "is_bilingual"
                 add_field_adv_search(['is_bilingual', 'components.is_bilingual'], clean_search_string, @current_bool_op)
                 @is_bilingual = true
