@@ -21,8 +21,7 @@ require 'capistrano/rvm'
 require 'capistrano/puma'
 
 install_plugin Capistrano::Puma  # Default puma tasks
-install_plugin Capistrano::Puma::Daemon
-
+install_plugin Capistrano::Puma::Systemd
 
 # Include tasks from other gems included in your Gemfile
 #
