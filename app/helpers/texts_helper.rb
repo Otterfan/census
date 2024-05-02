@@ -164,7 +164,7 @@ module TextsHelper
       return path
     end
 
-    url_encoded_facet_value = URI.encode(facet_value)
+    url_encoded_facet_value = URI::Parser.new.escape(facet_value)
 
     new_path = "#{path}&#{facet_name}=#{url_encoded_facet_value}"
 
