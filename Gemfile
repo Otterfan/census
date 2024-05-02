@@ -73,12 +73,14 @@ gem 'paper_trail'
 gem 'pg_search'
 gem 'elasticsearch-model', '~> 5.0'
 gem 'elasticsearch-rails', '~> 5.0'
-#gem 'alphabetical_paginate'
-gem 'alphabetical_paginate', :git => 'https://github.com/BCDigSchol/alphabetical_paginate'
+gem 'alphabetical_paginate', :git => 'https://github.com/BCDigSchol/jesuit-bibliography-alphabetical-paginate'
 gem 'htmlentities'
 gem 'faraday'
 gem 'blazer'
 gem 'select2-rails'
+gem 'loofah', '~>2.19.1'
+
+
 
 # Maintain top-level domain name list
 gem 'public_suffix'
