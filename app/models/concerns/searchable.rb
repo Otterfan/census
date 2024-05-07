@@ -149,7 +149,6 @@ module Searchable
 
     def as_indexed_json(options = {})
       json_to_index = as_json(
-          #only: [:title, :original, :journal_title, :publisher, :place_of_publication, :authors_name_from_source, :census_id],
           except: [
               :language_id, :topic_author_id,
               :status_id, :section_id, :country_id,
@@ -216,7 +215,7 @@ module Searchable
                   except: [:text_id, :place_id, :primary],
                   include: {
                       place: {
-                          except: [:id, :country_id, :latitude, :longitude, :created_at, :updated_at]
+                          except: [:id, :country_id, :created_at, :updated_at]
                       }
                   }
               },
