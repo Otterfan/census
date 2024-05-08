@@ -22,6 +22,19 @@ module Public::SearchHelper
     filter_search_citations_by_role(text_citations, 'editor')
   end
 
+  def texts_to_mappable(texts)
+    rows = []
+    texts.each do |text|
+      text.publication_places.each do |place|
+        next if place.place.latitude == ''
+        escaped_title = text.title.gsub('"', '\"')
+        new_row = "[#{place.place.latitude},#{place.place.longitude},\"#{escaped_title}\"]"
+        rows.append(new_row)
+      end
+    end
+    rows
+  end
+
   def additional_responsibilities_from_search(text_citations)
     editors = []
     translators = []

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get 'pages/help'
   get 'page/index'
+  get 'search/map', to: 'search#map'
   get 'robots/show'
   get 'about', to: 'pages#about'
   get 'project-team', to: 'pages#project_team'

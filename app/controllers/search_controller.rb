@@ -419,11 +419,15 @@ class SearchController < ApplicationController
     end
   end
 
-  # GET /public/search
-  def search
+  def map
     # set the number of results per page for this specific search controller.
     # this overrides the paginates_per variable in the Text model
-    @pagination_page_size = 10
+    @pagination_page_size = 10000
+    search
+  end
+
+  # GET /public/search
+  def search
 
     if params[:type] == "adv"
       @search_type = "adv"
