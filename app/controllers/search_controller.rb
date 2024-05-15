@@ -181,6 +181,7 @@ class SearchController < ApplicationController
     topic_author.alternate_name_clean^10
     topic_author.alternate_name_clean.en_folded^10
     topic_author.alternate_name_clean.el_folded^10
+    topic_author.domicile
 
     topic_author.greek_full_name.el_folded^10
     topic_author.greek_full_name.el^10
