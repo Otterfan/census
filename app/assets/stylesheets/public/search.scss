@@ -274,3 +274,9 @@ ul.facet-list-group li.facet-list-group-item button {
   background-color: #76A6FC;
   border-radius: 4px;
 }
+
+.results-count-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}

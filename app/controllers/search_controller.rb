@@ -424,11 +424,18 @@ class SearchController < ApplicationController
     # set the number of results per page for this specific search controller.
     # this overrides the paginates_per variable in the Text model
     @pagination_page_size = 10000
-    search
+    @search_path = search_map_path
+    perform_search
+  end
+
+  def search
+    @search_path = search_index_path
+    perform_search
   end
 
   # GET /public/search
-  def search
+  # @todo Move to a separate service
+  def perform_search
 
     if params[:type] == "adv"
       @search_type = "adv"
@@ -597,7 +604,7 @@ class SearchController < ApplicationController
         @all_search[:query][:bool] = {}
         @all_search[:query][:bool][:must] = @query_array
         unless user_signed_in? && current_user.user_type != 'viewer'
-          @all_search[:query][:bool][:filter] = [{'term' => {'is_hidden' => false}}]
+          @all_search[:query][:bool][:filter] = [{ 'term' => { 'is_hidden' => false } }]
         end
       else
         @all_search[:query] = {
@@ -827,7 +834,7 @@ class SearchController < ApplicationController
       dates.each do |date|
         # puts date.key_as_string
         if date.doc_count > 0
-          dates_json << {"value": date.key_as_string.to_i, "count": date.doc_count}
+          dates_json << { "value": date.key_as_string.to_i, "count": date.doc_count }
         end
       end
 
@@ -1065,13 +1072,13 @@ class SearchController < ApplicationController
   def query_sort(sort_type)
     case sort_type
     when 'date-oldest-first'
-      [{sort_date: {order: 'asc'}}, '_score']
+      [{ sort_date: { order: 'asc' } }, '_score']
     when 'date-newest-first'
-      [{sort_date: {order: 'desc'}}, '_score']
+      [{ sort_date: { order: 'desc' } }, '_score']
     when 'sort-title'
-      [{'sort_title.keyword' => {order: 'asc'}}, '_score']
+      [{ 'sort_title.keyword' => { order: 'asc' } }, '_score']
     when 'author'
-      [{'authors_names.keyword' => {order: 'asc'}}, '_score']
+      [{ 'authors_names.keyword' => { order: 'asc' } }, '_score']
     else
       ['_score']
     end

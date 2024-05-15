@@ -1,35 +1,108 @@
 <% page_title(@page_title) %>
-<div id="map"></div>
-<span>Mouse over a cluster to see the bounds of its children and click a cluster to zoom to those bounds</span>
-<script type="text/javascript">
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <% if @search_type == "adv" %>
+        <%# advanced search form template %>
+        <%= render 'advanced_search_form' %>
+      <% else %>
+        <%# keyword search form template %>
+        <%= render 'keyword_search_form' %>
 
-    const addressPoints = [<%= texts_to_mappable(@texts).join(',').html_safe %>];
+        <!-- facets constraints container -->
+        <div class="row">
+          <div class="keyword-search-submit col-lg-12 col-md-12 col-sm-12">
+            <div class="constraints-container">
+              <%= render 'search/facet_constraints' %>
+            </div>
+          </div>
+        </div>
 
-    //An extract of address points from the LINZ bulk extract: http://www.linz.govt.nz/survey-titles/landonline-data/landonline-bde
-    //Should be this data set: http://data.linz.govt.nz/#/layer/779-nz-street-address-electoral/
+      <% end %>
+    </div>
+  </div>
+  <div class="results-list">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="results-count-line">
+          <h3></h3>
+          <p><%= link_to 'Show search results', search_index_path(
+            :type => params[:type],
+            :bq => params[:bq],
+            :keyword => params[:keyword],
+            :available_online => params[:available_online],
+            :genre => params[:genre],
+            :material_type => params[:material_type],
+            :text_type => params[:text_type],
+            :topic_author => params[:topic_author],
+            :translators => params[:translators],
+            :publication_places => params[:publication_places],
+            :other_text_languages => params[:other_text_languages],
+            :publication_date_range => params[:publication_date_range]
+          ) %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="map"></div>
+  <span>Mouse over a cluster to see the bounds of its children and click a cluster to zoom to those bounds</span>
+  <script type="text/javascript">
 
-    console.log('does this happen?');
+      const addressPoints = [<%= texts_to_mappable(@texts).join(',').html_safe %>];
 
-    var tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 18,
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Points &copy 2012 LINZ'
-        }),
-        latlng = L.latLng(-0, 0);
+      //An extract of address points from the LINZ bulk extract: http://www.linz.govt.nz/survey-titles/landonline-data/landonline-bde
+      //Should be this data set: http://data.linz.govt.nz/#/layer/779-nz-street-address-electoral/
 
-    var map = L.map('map', {center: latlng, zoom: 2, layers: [tiles]});
-    console.log(map)
+      console.log('does this happen?');
 
-    var markers = L.markerClusterGroup();
+      var tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              maxZoom: 18,
+              attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Points &copy 2012 LINZ'
+          }),
+          latlng = L.latLng(-0, 0);
 
-    for (var i = 0; i < addressPoints.length; i++) {
-        console.log(i);
-        var a = addressPoints[i];
-        var title = a[2];
-        var marker = L.marker(new L.LatLng(a[0], a[1]), {title: title});
-        marker.bindPopup(title);
-        markers.addLayer(marker);
-    }
+      var map = L.map('map', {center: latlng, zoom: 2, layers: [tiles]});
+      console.log(map)
 
-    map.addLayer(markers);
+      var markers = L.markerClusterGroup();
 
-</script>
+      for (var i = 0; i < addressPoints.length; i++) {
+          console.log(i);
+          var a = addressPoints[i];
+          var title = a[2];
+          var marker = L.marker(new L.LatLng(a[0], a[1]), {title: title});
+          marker.bindPopup(title);
+          markers.addLayer(marker);
+      }
+
+      map.addLayer(markers);
+
+  </script>
+
+  <% page_title(@page_title) %>
+
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <% if @search_type == "adv" %>
+          <%# advanced search form template %>
+          <%= render 'advanced_search_form' %>
+        <% else %>
+          <%# keyword search form template %>
+          <%= render 'keyword_search_form' %>
+
+          <!-- facets constraints container -->
+          <div class="row">
+            <div class="keyword-search-submit col-lg-12 col-md-12 col-sm-12">
+              <div class="constraints-container">
+                <%= render 'search/facet_constraints' %>
+              </div>
+            </div>
+          </div>
+
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
