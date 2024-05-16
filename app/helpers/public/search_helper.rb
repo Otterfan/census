@@ -27,8 +27,10 @@ module Public::SearchHelper
     texts.each do |text|
       text.publication_places.each do |place|
         next if place.place.latitude == ''
-        escaped_title = text.title.gsub('"', '\"')
-        new_row = "[#{place.place.latitude},#{place.place.longitude},\"#{escaped_title}\"]"
+        display_text = render partial: 'shared/map_tombstone', locals: { text: text }
+        display_text.gsub!("\n", "")
+        display_text.gsub!('"', '&quot;')
+        new_row = "[#{place.place.latitude},#{place.place.longitude},\"#{display_text}\"]"
         rows.append(new_row)
       end
     end

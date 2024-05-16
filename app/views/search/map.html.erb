@@ -83,27 +83,4 @@
 
   <% page_title(@page_title) %>
 
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        <% if @search_type == "adv" %>
-          <%# advanced search form template %>
-          <%= render 'advanced_search_form' %>
-        <% else %>
-          <%# keyword search form template %>
-          <%= render 'keyword_search_form' %>
-
-          <!-- facets constraints container -->
-          <div class="row">
-            <div class="keyword-search-submit col-lg-12 col-md-12 col-sm-12">
-              <div class="constraints-container">
-                <%= render 'search/facet_constraints' %>
-              </div>
-            </div>
-          </div>
-
-        <% end %>
-      </div>
-    </div>
-  </div>
 </div>

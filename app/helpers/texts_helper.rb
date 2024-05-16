@@ -8,8 +8,8 @@ module TextsHelper
 
     authors = []
     author_group = {
-        :author => heading,
-        :texts => []
+      :author => heading,
+      :texts => []
     }
 
     texts.each do |text|
@@ -19,8 +19,8 @@ module TextsHelper
         puts text.topic_author
         authors.push(author_group)
         author_group = {
-            :author => heading,
-            :texts => []
+          :author => heading,
+          :texts => []
         }
       end
       author_group[:texts].push(text)
@@ -53,7 +53,6 @@ module TextsHelper
       nil
     end
   end
-
 
   def metadata_row(label, value, boolean_filter: nil, value_attribute: nil, value_prep_function: nil)
 
@@ -273,6 +272,26 @@ module TextsHelper
       end
     end
     collections << collection
+  end
+
+  def map_title_link(text, formatter = nil, hilight = nil, from_search = false)
+
+    title_path = "/texts/#{text.id}"
+    title_string = text.title.blank? ? "[No title]" : text.title
+
+    connector = text.authors_names != '' ? '.' : ''
+
+    title_string = "#{text.authors_names}#{connector} #{title_string}"
+
+    # If there is a formatter, use it. If not, we still need to convert
+    # title strings to italic.
+    if formatter
+      formatted_string = formatter.format(title_string)
+    else
+      formatted_string = convert_underscores(title_string)
+    end
+
+    "<a href=#{title_path}>#{title_string}</a>".html_safe
   end
 
   # Formatted link to title as used in tombstones
