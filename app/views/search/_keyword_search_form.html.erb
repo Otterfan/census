@@ -1,3 +1,4 @@
+<% @search_path = @search_path ? @search_path : search_index_path %>
 <%= form_tag(@search_path, method: :get, id: "search_form") do %>
   <%= hidden_field_tag :type, @search_type %>
 
