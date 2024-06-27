@@ -26,5 +26,9 @@
     <% if @name.roles.include? 'editor' %>
       <%= render 'appears_as', role: 'editor', name: @name %>
     <% end %>
+
+    <% if @name.roles.include? 'performer' %>
+      <%= render 'appears_as', role: 'performer', name: @name %>
+    <% end %>
   </div>
 </div>
