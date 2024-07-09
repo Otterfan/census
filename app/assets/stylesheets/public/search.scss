@@ -88,7 +88,7 @@ ul.facet-list-group li.facet-list-group-item button {
 }
 
 .adv-search-row-buttons {
-  margin: 3rem 0 1rem 0;
+  margin: 1rem 0 1rem 0;
 }
 
 .add-buttons {
@@ -223,10 +223,11 @@ ul.facet-list-group li.facet-list-group-item button {
 }
 
 .adv-search-boolean-row {
-  margin-top: 2em;
+  margin-top: 1em;
 
   .adv-search-filter {
     display: flex;
+    align-items: flex-start;
 
     label {
       margin-left: .5em;

@@ -12,7 +12,7 @@
         <!-- first search field group -->
         <div class="row" id="new-form" aria-label="Search row 1">
           <div class="col-lg-10 col-md-10 col-sm-8">
-            <%= render partial: 'advanced_search_form_group', locals: {num: 1} %>
+            <%= render partial: 'advanced_search_form_group', locals: { num: 1 } %>
           </div>
           <div class="col-lg-2 col-md-2 col-sm-4"></div>
         </div>
@@ -20,15 +20,27 @@
         <!-- second search field group -->
         <div class="row" id="new-form" aria-label="Search row 2">
           <div class="col-lg-10 col-md-10 col-sm-8">
-            <%= render partial: 'advanced_search_form_group', locals: {num: 2} %>
+            <%= render partial: 'advanced_search_form_group', locals: { num: 2 } %>
           </div>
-          <div class="col-lg-2 col-md-2 col-sm-4"></div>
+          <div class="col-lg-2 col-md-2 col-sm-4 add-buttons">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <a href="#"
+                 aria-label="Expand search row 3"
+                 class="add"
+                 data-next="#search-row-group-3"
+                 role="button"
+                 aria-expanded="false"
+                 aria-controls="search-row-group-3"
+              ><i class="fas fa-fw fa-plus-circle"></i></a>
+              <i class="fas fa-fw fa-minus-circle disabled"></i>
+            </div>
+          </div>
         </div>
 
         <!-- third search field group -->
-        <div class="row search-row" id="search-row-group-3" aria-label="Search row 3">
+        <div class="row search-row" id="search-row-group-3" aria-label="Search row 3" style="display:none;">
           <div class="col-lg-10 col-md-10 col-sm-8">
-            <%= render partial: 'advanced_search_form_group', locals: {num: 3} %>
+            <%= render partial: 'advanced_search_form_group', locals: { num: 3 } %>
           </div>
           <div class="col-lg-2 col-md-2 col-sm-4 add-buttons">
             <div class="col-lg-12 col-md-12 col-sm-12">
@@ -40,7 +52,14 @@
                  aria-expanded="false"
                  aria-controls="search-row-group-4"
               ><i class="fas fa-fw fa-plus-circle"></i></a>
-              <i class="fas fa-fw fa-minus-circle disabled"></i>
+              <a href="#"
+                 aria-label="Collapse search row 3"
+                 class="remove"
+                 data-previous="#search-row-group-2"
+                 role="button"
+                 aria-expanded="false"
+                 aria-controls="search-row-group-3"
+              ><i class="fas fa-fw fa-minus-circle"></i></a>
             </div>
           </div>
         </div>
@@ -48,7 +67,7 @@
         <!-- fourth search field group -->
         <div class="row search-row" id="search-row-group-4" aria-label="Search row 4" style="display:none;">
           <div class="col-lg-10 col-md-10 col-sm-8">
-            <%= render partial: 'advanced_search_form_group', locals: {num: 4} %>
+            <%= render partial: 'advanced_search_form_group', locals: { num: 4 } %>
           </div>
           <div class="col-lg-2 col-md-2 col-sm-4 add-buttons">
             <div class="col-lg-12 col-md-12 col-sm-12">
@@ -75,7 +94,7 @@
         <!-- fifth search field group -->
         <div class="row search-row" id="search-row-group-5" aria-label="Search row 5" style="display:none;">
           <div class="col-lg-10 col-md-10 col-sm-8">
-            <%= render partial: 'advanced_search_form_group', locals: {num: 5} %>
+            <%= render partial: 'advanced_search_form_group', locals: { num: 5 } %>
           </div>
           <div class="col-lg-2 col-md-2 col-sm-4 add-buttons">
             <div class="col-lg-12 col-md-12 col-sm-12">
@@ -102,7 +121,7 @@
         <!-- sixth search field group -->
         <div class="row search-row" id="search-row-group-6" aria-label="Search row 6" style="display:none;">
           <div class="col-lg-10 col-md-10 col-sm-8">
-            <%= render partial: 'advanced_search_form_group', locals: {num: 6} %>
+            <%= render partial: 'advanced_search_form_group', locals: { num: 6 } %>
           </div>
           <div class="col-lg-2 col-md-2 col-sm-4 add-buttons">
             <div class="col-lg-12 col-md-12 col-sm-12">
@@ -125,7 +144,7 @@
   </div>
 <% end %>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         // list of filter fields
         var FILTER_FIELDS = [
             "text_type",
@@ -154,7 +173,7 @@
         }
 
         // pull out advanced search params from URL and fit them back into the search fields
-        function load_field_vals(){
+        function load_field_vals() {
             // look for date input
             var date_range = getUrlParameter("publication_date_range");
 
@@ -172,7 +191,7 @@
             // get the query param
             var bq = getUrlParameter("bq");
 
-            if (bq === undefined){
+            if (bq === undefined) {
                 console.log("could not find bq param!");
                 return;
             }
@@ -196,7 +215,7 @@
             var row_num = 1;
             var this_row = "";
             var target_row = "";
-            $.each(split_tokens, function(idx,tok){
+            $.each(split_tokens, function (idx, tok) {
                 console.log("looking at token: " + tok);
                 // determine the field ids
                 var my_search_row = $("#search-row-" + row_num);
@@ -206,7 +225,7 @@
                     // (field_name::search_string)
 
                     // skip if empty value
-                    if (tok === ""){
+                    if (tok === "") {
                         console.log("  token is empty, skipping to next token");
                         return true;
                     }
@@ -222,7 +241,7 @@
 
                     // check if we have two tokens
                     // need to be careful for search terms that contain a "::"
-                    if (split_toks && split_toks.length < 2){
+                    if (split_toks && split_toks.length < 2) {
                         console.log("  split token has an unexpected number of components! expecting at least 2, found " + split_toks.length);
                         return true;
                     }
@@ -246,12 +265,12 @@
                             console.log("  looking at token: " + search_string);
 
                             // handle different types of input fields: checkbox, select, input
-                            if (my_filter_panel_input.is(":checkbox")){
+                            if (my_filter_panel_input.is(":checkbox")) {
                                 console.log("  this is a checkbox field");
                                 my_filter_panel.find("input[data-field='" + search_string + "']").prop('checked', true);
                             } else if (my_filter_panel_input.is("select")) {
                                 console.log("  this is a select field");
-                                my_filter_panel.find("[value="+ search_string+"]").val(search_string).attr('selected','selected');
+                                my_filter_panel.find("[value=" + search_string + "]").val(search_string).attr('selected', 'selected');
                             } else {
                                 // regular input field
                                 console.log("  this is a text input field");
@@ -304,7 +323,7 @@
         }
 
         // function that changes the text of the drop down buttons to match the selected field name
-        function change_labels(elem){
+        function change_labels(elem) {
             // change label on field drop down button to the name of the selected field
             elem.parents(".input-group-btn").find('.btn').html(elem.text() + ' <span class="caret"></span>');
             elem.parents(".input-group-btn").find('.btn').val(elem.data('value'));
@@ -340,7 +359,7 @@
 
             if (selected_data_name && is_controlled_vocab) {
                 var select_class = ".select_" + selected_data_name;
-                if ($this.parents(".adv-search-row").find(select_class).length){
+                if ($this.parents(".adv-search-row").find(select_class).length) {
                     console.log("selected text_type: " + select_class);
                     adv_search_row.find("input").addClass("hidden").removeClass("selected");
                     adv_search_row.find(".select_field").addClass("hidden").removeClass("selected");
@@ -353,14 +372,14 @@
         });
 
         // trigger on form submission
-        $(".adv-search-submit").click(function(e){
+        $(".adv-search-submit").click(function (e) {
             e.preventDefault();
 
             //
             // First, get every field value and append to query_str string
             //
             var query_str = "";
-            $('.adv-search-row').each(function(){
+            $('.adv-search-row').each(function () {
                 var $this = $(this);
 
                 // get boolean value
@@ -378,7 +397,7 @@
                     field_name = my_field_name.attr("data-name");
                     //console.log("my_field_name: " + field_name);
 
-                    if (field_name && field_name.length){
+                    if (field_name && field_name.length) {
                         // get field value
                         var field_val = "";
                         var my_form_field;
@@ -413,7 +432,7 @@
             // Second, check on filters that append to query_str.
             // We allow for empty search queries that have filters
             //
-            $.each(FILTER_FIELDS, function(k,filter_name){
+            $.each(FILTER_FIELDS, function (k, filter_name) {
                 var output = parse_filter_panel(filter_name);
                 var this_filter_string = "";
 
@@ -482,7 +501,7 @@
             //
             // Last, load the page with the updated search params
             //
-            if (query_url_param && query_url_param.length){
+            if (query_url_param && query_url_param.length) {
                 console.log("final query_url_param: " + query_url_param);
                 window.location = query_url_param;
             }
@@ -492,7 +511,7 @@
             var from_value = $('#pub-date-from').val();
             var to_value = $('#pub-date-to').val();
 
-            if (! from_value && ! to_value) {
+            if (!from_value && !to_value) {
                 return '';
             }
             from_value = from_value ? from_value : 1000;
@@ -501,11 +520,11 @@
         }
 
         // function to parse filter input fields
-        function parse_filter_panel(id){
+        function parse_filter_panel(id) {
             var output = "";
 
             // parse call input fields
-            $("#panel-" + id).find(":input").each(function(){
+            $("#panel-" + id).find(":input").each(function () {
                 var $this = $(this);
                 var field_name = "";
                 var field_val = "";
@@ -539,7 +558,7 @@
         }
 
         // function to add a new search row
-        function add_search_row(this_row, target_row){
+        function add_search_row(this_row, target_row) {
             // show the next row of fields
             $(target_row).show();
 
@@ -557,7 +576,7 @@
         }
 
         // function to remove a search row
-        function remove_search_row(this_row, target_row){
+        function remove_search_row(this_row, target_row) {
             // clear out all field vals
             $(this_row).find("input").val("");
             $(this_row).find(".adv-search-row ul.dropdown-menu").each(function () {
@@ -586,13 +605,13 @@
         }
 
         // trigger when add/remove buttons are clicked
-        $(".add-buttons a").click(function(e){
+        $(".add-buttons a").click(function (e) {
             e.preventDefault();
 
             var $this = $(this);
             var this_row_id = "#" + $this.parents(".search-row").attr("id");
 
-            if ($this.hasClass("add")){
+            if ($this.hasClass("add")) {
                 var target = $this.attr("data-next");
                 add_search_row(this_row_id, target);
             } else if ($this.hasClass("remove")) {
