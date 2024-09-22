@@ -16,7 +16,7 @@ class ControlledNameController < ApplicationController
 
     @navigation_list = NavigationList.new(ControlledName, :sort_name, 'A')
 
-    order_field = @is_greek_letter ? 'sort_name COLLATE "el-GR-x-icu"' : :sort_name
+    order_field = @is_greek_letter ? Arel.sql('sort_name COLLATE "el-GR-x-icu"') : :sort_name
 
     @names = ControlledName.where("controlled_name LIKE :prefix", prefix: "#{@letter}%")
                  .unscope(:order)

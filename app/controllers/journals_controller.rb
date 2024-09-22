@@ -16,7 +16,7 @@ class JournalsController < ApplicationController
 
     @navigation_list = NavigationList.new(Journal, :sort_title, 'A')
 
-    order_field = @is_greek_letter ? 'sort_title COLLATE "el-GR-x-icu"' : :sort_title
+    order_field = @is_greek_letter ? Arel.sql('sort_title COLLATE "el-GR-x-icu"') : :sort_title
 
     @journals = Journal.where("journals.sort_title LIKE :prefix", prefix: "#{@letter}%")
                        .unscope(:order)

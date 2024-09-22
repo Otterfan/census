@@ -17,7 +17,7 @@ class VolumesController < ApplicationController
 
     @navigation_list = NavigationList.new(Volume, :sort_title, 'A')
 
-    order_field = @is_greek_letter ? 'volumes.sort_title COLLATE "el-GR-x-icu"' : :sort_title
+    order_field = @is_greek_letter ? Arel.sql('volumes.sort_title COLLATE "el-GR-x-icu"') : :sort_title
 
     @volumes = Volume.where("volumes.sort_title LIKE :prefix", prefix: "#{@letter}%")
                      .unscope(:order)
