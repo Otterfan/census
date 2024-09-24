@@ -18,6 +18,10 @@ ul.facet-list-group li.facet-list-group-item button {
 }
 
 @media (min-width: 768px) {
+  .filter-toggle {
+    display: none;
+  }
+
   .facets-container.collapse {
     display: block !important;
     height: auto !important;
