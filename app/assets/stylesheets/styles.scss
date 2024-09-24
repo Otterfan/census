@@ -437,7 +437,11 @@ a.skip:hover {
   background-color: #2b4a89;
   color: #ffffff;
 
-  h2 {
+  @media (max-width: 767px) {
+    width: 95%;
+  }
+
+    h2 {
     margin-bottom: 1em;
   }
 
