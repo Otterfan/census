@@ -1,4 +1,14 @@
-<div class="facets-container">
+<% if @aggregations.present? %>
+  <div class="row">
+    <div class="col-md-5">
+      <button type="button" class="filter-toggle collapsed" data-toggle="collapse" data-target="#facets-container" aria-expanded="false">
+        Show/hide filters
+      </button>
+    </div>
+  </div>
+<% end %>
+
+<div class="facets-container collapse" id="facets-container">
   <% if @aggregations.present? %>
     <h3>Limit your search</h3>
 

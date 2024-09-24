@@ -17,6 +17,15 @@ ul.facet-list-group li.facet-list-group-item button {
   margin-top: 1rem;
 }
 
+@media (min-width: 768px) {
+  .facets-container.collapse {
+    display: block !important;
+    height: auto !important;
+    padding-bottom: 0;
+    overflow: visible !important;
+  }
+}
+
 .facet-label,
 .facet-value {
   overflow-wrap: break-word;
