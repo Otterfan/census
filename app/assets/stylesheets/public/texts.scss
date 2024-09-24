@@ -39,7 +39,11 @@ $metadata-spacing: 0;
   @extend .col-sm-2;
   margin-bottom: 1em;
 
-  .panel {
+  @media (max-width: 767px) {
+    display: none;
+  }
+
+    .panel {
     background-color: hsl(36, 63%, 96%);
     border-radius: 2px;
     font-weight: 600;
