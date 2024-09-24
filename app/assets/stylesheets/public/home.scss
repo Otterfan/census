@@ -89,7 +89,11 @@
       background-color: #185fad;
       position: relative;
 
-      color: #fff;
+      @media (max-width: 767px) {
+        margin: 0 2em;
+      }
+
+        color: #fff;
 
       h1 {
         font-size: 28px;
