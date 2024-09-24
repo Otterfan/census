@@ -5,8 +5,8 @@ class AuthorsController < ApplicationController
 
   layout "public"
 
-  STUDY_SORT_FIELDS = {sort_author: :asc, sort_title: :asc, sort_date: :asc}
-  TRANSLATION_SORT_FIELDS = {sort_title: :asc, sort_translator: :asc, sort_date: :asc}
+  STUDY_SORT_FIELDS = { sort_author: :asc, sort_title: :asc, sort_date: :asc }
+  TRANSLATION_SORT_FIELDS = { sort_title: :asc, sort_translator: :asc, sort_date: :asc }
 
   def index
     default_letter = "A"
@@ -14,9 +14,9 @@ class AuthorsController < ApplicationController
     @is_greek_letter = ('Α'..'Ω').include?(@letter)
 
     @alpha_params_options = {
-        bootstrap3: true,
-        include_all: false,
-        js: false
+      bootstrap3: true,
+      include_all: false,
+      js: false
     }
 
     topic_authors = Person.where(topic_flag: true).where.not(full_name: [nil, '']).order(:first_name)
@@ -27,13 +27,13 @@ class AuthorsController < ApplicationController
 
     if @is_greek_letter
       @authors = Person.where(topic_flag: true).where.not(full_name: [nil, '']).where("greek_full_name LIKE ?", "#{@letter}%")
-                     .unscope(:order)
-                     .order(:greek_full_name)
+                       .unscope(:order)
+                       .order(:greek_full_name)
       @is_greek_letter = true
     else
       @authors = topic_authors.where("full_name LIKE ?", "#{@letter}%")
-                     .unscope(:order)
-                     .order(:sort_full_name)
+                              .unscope(:order)
+                              .order(:sort_full_name)
       @is_greek_letter = false
     end
   end
@@ -50,8 +50,8 @@ class AuthorsController < ApplicationController
     @results_formatter = BriefResultFormatter.new([], [], [])
     @author = Person.find(params[:id])
     @texts = @author.texts
-                 .where('text_type = ?', type)
-                 .order(**sort_option)
+                    .where('text_type = ?', type)
+                    .order(**sort_option)
     @current_page = type
 
     render 'authors/show'
@@ -73,8 +73,13 @@ class AuthorsController < ApplicationController
       idx = idx + 1
     end
 
-    genre = type.include?('study') ? 'studies' : 'translations'
-    medium = type.include?('book') ? 'books' : 'items'
+    unless type.nil?
+      genre = type.include?('study') ? 'studies' : 'translations'
+      medium = type.include?('book') ? 'books' : 'items'
+    else
+      type = 'studies'
+      medium = 'books'
+    end
 
     redirect_to "/authors/#{params[:id]}/#{genre}/#{medium}"
 
@@ -93,11 +98,11 @@ class AuthorsController < ApplicationController
 
     # Get a list of all topic authors
     authors = Person
-                  .where(topic_flag: true)
-                  .where.not(full_name: [nil, '']) # filter out nils and blanks
-                  .joins(:texts) # only show authors with texts
-                  .group('people.id')
-                  .order(:full_name)
+                .where(topic_flag: true)
+                .where.not(full_name: [nil, '']) # filter out nils and blanks
+                .joins(:texts) # only show authors with texts
+                .group('people.id')
+                .order(:full_name)
 
     nav_letters = []
     last_letter = ''
@@ -119,10 +124,10 @@ class AuthorsController < ApplicationController
   # first_letter
   def letter
     first_author = Person.where(topic_flag: true)
-                       .where.not(full_name: [nil, '']) # filter out nils and blanks
-                       .where("full_name LIKE ?", "#{params[:first_letter]}%")
-                       .order(:full_name)
-                       .first
+                         .where.not(full_name: [nil, '']) # filter out nils and blanks
+                         .where("full_name LIKE ?", "#{params[:first_letter]}%")
+                         .order(:full_name)
+                         .first
 
     redirect_to(author_path(first_author))
   end
