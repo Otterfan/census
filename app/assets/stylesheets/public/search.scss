@@ -104,6 +104,12 @@ ul.facet-list-group li.facet-list-group-item button {
   margin: 1rem 0 1rem 0;
 }
 
+
+
+.pub-date-from-line {
+  display: block;
+}
+
 .add-buttons {
   margin-top: 1.5rem;
 }
@@ -293,4 +299,33 @@ ul.facet-list-group li.facet-list-group-item button {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+}
+
+@media (max-width: 768px) {
+  .pub-date-from-line label {
+    width: 3em;
+  }
+
+  .adv-search-filter.col-md-4 {
+    padding-left: 0;
+    margin-bottom: 1em;
+  }
+
+  .pub-date-to-line label {
+    width: 3em;
+  }
+
+  .adv-search-select-row label {
+    display: block;
+  }
+
+  .adv-search-filter-row .row div {
+    padding-left: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .pub-date-from-line {
+    display: inline;
+  }
 }
