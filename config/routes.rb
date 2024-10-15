@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'project-team', to: 'pages#project_team'
   get 'links', to: 'pages#links'
   get 'contact', to: 'pages#contact'
+  get 'suggest', to: 'pages#suggestion'
   get 'sponsors', to: 'pages#sponsors'
   get 'future-outlook', to: 'pages#future_outlook'
   get 'in-the-media', to: 'pages#in_the_media'

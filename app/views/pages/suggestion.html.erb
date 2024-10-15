@@ -1,0 +1,88 @@
+<h1>Suggest a new entry</h1>
+
+
+<% if request['submitted'] %>
+  <div class="row">
+    <div class="col-md-7">
+      <div class="panel panel-success">
+        <div class="panel-body">
+          Thank you for your suggestion.
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<p>The editors of the CENSUS of Modern Greek Literature welcome suggestions for new content.</p>
+
+
+<form class="suggest-form" action="https://api.web3forms.com/submit" method="POST">
+
+  <!-- Replace with your Access Key -->
+  <input type="hidden" name="access_key" value="2e937b39-9a3f-4caa-86d3-445db50f1d26">
+
+  <!-- Form Inputs. Each input must have a name="" attribute -->
+  <div class="form-group">
+    <label for="suggest-form--name">Your name</label>
+    <input type="text" name="name" id="suggest-form--name" required>
+  </div>
+
+  <div class="form-group">
+    <label for="suggest-form--email">Your email</label>
+    <input type="email" name="email" id="suggest-form--email" required>
+  </div>
+
+  <div class="form-group">
+    <label for="title">Title of work</label>
+    <input type="text" name="suggest_form--title" required>
+  </div>
+
+  <div class="form-group">
+    <label for="suggest-form--author">Author(s)</label>
+    <input type="text" name="author" id="suggest-form--author" required>
+  </div>
+
+  <div class="form-group">
+    <label for="suggest-form--translator">Translator(s) <span class="suggest-form--if-applicable">(if applicable)</span></label>
+    <input type="text" name="translator" id="suggest-form--translator">
+  </div>
+
+  <div class="form-group">
+    <label for="suggest-form--date">Date</label>
+    <input type="text" name="date" id="suggest-form--date">
+  </div>
+
+  <div class="form-group">
+    <label for="suggest-form--larger">Title of journal or edited volume <span class="suggest-form--if-applicable">(if applicable)</span></label>
+    <input type="text" name="larger" id="suggest-form--larger">
+  </div>
+
+  <div class="form-group">
+    <label for="suggest-form--issue">Journal issue <span class="suggest-form--if-applicable">(if applicable)</span></label>
+    <input type="text" name="issue" id="suggest-form--issue">
+  </div>
+
+  <div class="form-group">
+    <label for="suggest-form--number">ISBN or DOI <span class="suggest-form--if-applicable">(if applicable)</span></label>
+    <input type="text" name="number" id="suggest-form--number">
+  </div>
+
+
+  <div class="form-group">
+    <label for="suggest-form--url">URL for work <span class="suggest-form--if-applicable">(if applicable)</span></label>
+    <input type="url" name="url" id="suggest-form--url">
+  </div>
+
+  <div class="form-group">
+    <label for="suggest-form--description">Additional description</label>
+    <textarea name="description" id="suggest-form--description" rows="8"></textarea>
+  </div>
+
+  <!-- Honeypot Spam Protection -->
+  <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+  <input type="hidden" name="redirect" value="https://moderngreekliterature.org/suggest?submitted=true">
+
+  <button type="submit">Submit Form</button>
+
+</form>

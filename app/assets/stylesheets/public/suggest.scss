@@ -1,0 +1,16 @@
+.suggest-form {
+  label {
+    display: block;
+  }
+  input, textarea {
+    width: 60%;
+  }
+
+  textarea {
+    height: auto;
+  }
+
+  .suggest-form--if-applicable {
+    font-size: 80%;
+  }
+}
