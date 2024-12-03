@@ -27,14 +27,15 @@ class CoookieBar {
     }
 
     appendGACode() {
-        const googleAnalyticsID = '';
-        const script = document.createElement("script");
-        script.innerHTML = "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){" +
-            "(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o)," +
-            "m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)" +
-            "})(window,document,'script','//www.google-analytics.com/analytics.js','ga');" +
-            "ga('create', '" + googleAnalyticsID + "', 'auto');" + "ga('send', 'pageview');";
-        document.head.appendChild(script);
+        const ga4Html = '<script async src="https://www.googletagmanager.com/gtag/js?id=G-5ZT2TXDZRY"></script>\n' +
+            '<script>' +
+            '  window.dataLayer = window.dataLayer || [];\n' +
+            '  function gtag(){dataLayer.push(arguments);}\n' +
+            '  gtag(\'js\', new Date());\n' +
+            '\n' +
+            '  gtag(\'config\', \'G-5ZT2TXDZRY\');\n' +
+            '</script>';
+        document.head.insertAdjacentHTML('beforeend', ga4Html);
     }
 
     allowCookies() {
