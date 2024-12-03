@@ -2,7 +2,7 @@ class CoookieBar {
     constructor() {
         this.cookiesBar = document.getElementById('cookies-bar');
         this.modal = document.getElementById('cookies-modal');
-        this.initialized =false;
+        this.initialized = false;
     }
 
     init() {
@@ -27,15 +27,19 @@ class CoookieBar {
     }
 
     appendGACode() {
-        const ga4Html = '<script async src="https://www.googletagmanager.com/gtag/js?id=G-5ZT2TXDZRY"></script>\n' +
-            '<script>' +
-            '  window.dataLayer = window.dataLayer || [];\n' +
+        const loadTagManagerScript = document.createElement('script');
+        loadTagManagerScript.setAttribute('async', '');
+        loadTagManagerScript.setAttribute('src', 'https://www.googletagmanager.com/gtag/js?id=G-5ZT2TXDZRY');
+
+        const tagScript = document.createElement('script');
+        tagScript.innerHTML = '  window.dataLayer = window.dataLayer || [];\n' +
             '  function gtag(){dataLayer.push(arguments);}\n' +
             '  gtag(\'js\', new Date());\n' +
             '\n' +
-            '  gtag(\'config\', \'G-5ZT2TXDZRY\');\n' +
-            '</script>';
-        document.head.insertAdjacentHTML('beforeend', ga4Html);
+            '  gtag(\'config\', \'G-5ZT2TXDZRY\');\n';
+
+        document.head.append(loadTagManagerScript);
+        document.head.append(tagScript);
     }
 
     allowCookies() {
