@@ -494,6 +494,7 @@ class SearchController < ApplicationController
           # the add_facet_search method will add in a query_string hash to the @query_string_array array
           add_facet_search(['available_online'], :available_online)
           add_facet_search(['genre'], :genre)
+          add_facet_search(['section.name'], :section)
           add_facet_search(['material_type'], :material_type)
           add_facet_search(['text_type'], :text_type)
           add_facet_search(['topic_author.full_name'], :topic_author)
@@ -523,6 +524,7 @@ class SearchController < ApplicationController
         # the add_facet_search method will add in a query_string hash to the @query_string_array array
         add_facet_search(['available_online'], :available_online)
         add_facet_search(['genre'], :genre)
+        add_facet_search(['section.name'], :section)
         add_facet_search(['material_type'], :material_type)
         add_facet_search(['text_type'], :text_type)
         add_facet_search(['topic_author.full_name'], :topic_author)
@@ -543,6 +545,12 @@ class SearchController < ApplicationController
           available_online: {
             terms: {
               field: "available_online.keyword",
+              size: FACET_HITS_SIZE
+            }
+          },
+          section: {
+            terms: {
+              field: "section.name.keyword",
               size: FACET_HITS_SIZE
             }
           },

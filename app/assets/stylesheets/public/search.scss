@@ -71,6 +71,19 @@ ul.facet-list-group li.facet-list-group-item button {
   margin: .5rem;
 }
 
+.public {
+  .facets-container {
+    .panel-heading {
+      padding: .5em;
+      h4 {
+        font-size: 18px;
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
+}
+
 .adv-search-fields input {
   /*margin-bottom: 1.25rem;*/
 }

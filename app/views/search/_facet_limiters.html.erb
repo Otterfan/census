@@ -20,6 +20,10 @@
       <% end %>
     <% end %>
 
+    <% if @aggregations.section.buckets.present? %>
+      <%= render 'facet_container', facet_name: "section" %>
+    <% end %>
+
     <% if @aggregations.genre.buckets.present? %>
       <%= render 'facet_container', facet_name: "genre" %>
     <% end %>
