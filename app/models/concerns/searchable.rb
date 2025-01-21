@@ -62,7 +62,8 @@ module Searchable
                         :lowercase,
                         :english_possessive_stemmer,
                         :english_stop,
-                        :asciifolding
+                        :asciifolding,
+                        :synonym
                     ]
                 },
                 greek_folding: {
