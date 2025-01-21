@@ -49,6 +49,10 @@ module Searchable
                 greek_stemmer: {
                     type: :stemmer,
                     language: :greek
+                },
+                synonym: {
+                  type: :synonym,
+                  synonyms_path: "synonyms.txt"
                 }
             },
             analyzer: {
