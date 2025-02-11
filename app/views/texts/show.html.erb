@@ -23,11 +23,14 @@
   <% end %>
   <div class="row">
     <div class="text-heading">
+      <h2 class="section-name">
+        <%= @text.section.display %>
+      </h2>
       <% if @text.topic_author %>
         <h2>
           <a href="/authors/<%= @text.topic_author.id %>"><%= render "shared/topic_author", text: @text %></a>
         </h2>
-      <% end %>
+        <% end %>
       <h3>
         <% unless @text.census_id.blank? %>
           <span class="census-id"><%= @text.census_id %></span>
