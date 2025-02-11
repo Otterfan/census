@@ -50,7 +50,7 @@ module Searchable
                     type: :stemmer,
                     language: :greek
                 },
-                synonym: {
+                synonym_file: {
                   type: :synonym,
                   synonyms_path: "synonyms.txt"
                 }
@@ -60,10 +60,10 @@ module Searchable
                     tokenizer: :standard,
                     filter: [
                         :lowercase,
+                        :synonym_file,
                         :english_possessive_stemmer,
                         :english_stop,
-                        :asciifolding,
-                        :synonym
+                        :asciifolding
                     ]
                 },
                 greek_folding: {
