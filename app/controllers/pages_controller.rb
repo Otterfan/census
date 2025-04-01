@@ -9,7 +9,7 @@ class PagesController < ApplicationController
   end
 
   def news
-    @news = Admin::News.order(:posted_on, :id).reverse
+    @news = Admin::News.where('published = true AND posted_on <= ?', Date.today).order(:posted_on, :id)
   end
 
 end
