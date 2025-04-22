@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_02_11_133601) do
+ActiveRecord::Schema.define(version: 2025_04_22_030937) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -207,6 +207,7 @@ ActiveRecord::Schema.define(version: 2025_02_11_133601) do
     t.string "loc_name"
     t.bigint "see_person_id"
     t.text "sort_full_name"
+    t.boolean "published", default: true
     t.index ["see_person_id"], name: "index_people_on_see_person_id"
     t.index ["topic_flag"], name: "index_people_on_topic_flag"
   end

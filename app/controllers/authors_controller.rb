@@ -99,6 +99,7 @@ class AuthorsController < ApplicationController
     # Get a list of all topic authors
     authors = Person
                 .where(topic_flag: true)
+                .and(published: true)
                 .where.not(full_name: [nil, '']) # filter out nils and blanks
                 .joins(:texts) # only show authors with texts
                 .group('people.id')

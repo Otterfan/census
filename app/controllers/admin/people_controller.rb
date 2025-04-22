@@ -84,6 +84,6 @@ class Admin::PeopleController < ApplicationController
   def person_params
     params.require(:person).permit(:full_name, :greek_full_name, :first_name, :last_name, :birth, :death,
                                    :greek_first_name, :greek_last_name, :alternate_name, :domicile,
-                                   :viaf, :loc, :greek_authority, :loc_name, :see_person_id)
+                                   :viaf, :loc, :greek_authority, :loc_name, :see_person_id, :published)
   end
 end

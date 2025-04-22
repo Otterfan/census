@@ -22,6 +22,10 @@
 
       <%= f.association :see_person, collection: Person.where(topic_flag: true).order(:full_name), :label_method => lambda { |person| "#{person.full_name}" } %>
 
+      <div>
+        <%= f.input :published, label: "Published?" %>
+      </div>
+
       <%= f.button :submit %>
     <% end %>
   </div>
