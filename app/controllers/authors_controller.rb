@@ -19,7 +19,7 @@ class AuthorsController < ApplicationController
       js: false
     }
 
-    topic_authors = Person.where(topic_flag: true).where.not(full_name: [nil, '']).order(:first_name)
+    topic_authors = Person.where(topic_flag: true).where(published: true).where.not(full_name: [nil, '']).order(:first_name)
     @navigation_list = NavigationList.new(topic_authors, :full_name, 'A')
 
     greek_topic_authors = Person.where(topic_flag: true).where.not(greek_full_name: [nil, ''])
@@ -99,7 +99,7 @@ class AuthorsController < ApplicationController
     # Get a list of all topic authors
     authors = Person
                 .where(topic_flag: true)
-                .and(published: true)
+                .where(published: true)
                 .where.not(full_name: [nil, '']) # filter out nils and blanks
                 .joins(:texts) # only show authors with texts
                 .group('people.id')
@@ -127,6 +127,7 @@ class AuthorsController < ApplicationController
     first_author = Person.where(topic_flag: true)
                          .where.not(full_name: [nil, '']) # filter out nils and blanks
                          .where("full_name LIKE ?", "#{params[:first_letter]}%")
+                         .where(published: true)
                          .order(:full_name)
                          .first
 
