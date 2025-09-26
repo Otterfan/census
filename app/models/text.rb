@@ -40,7 +40,7 @@ class Text < ApplicationRecord
 
   after_commit {
     puts "Text record '#{self.id}' (#{self.census_id}) was updated. Will now reindex."
-    #__elasticsearch__.index_document
+    __elasticsearch__.index_document
   }
 
   paginates_per 60
