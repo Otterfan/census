@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_06_17_020447) do
+ActiveRecord::Schema.define(version: 2025_06_24_124035) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -270,6 +270,21 @@ ActiveRecord::Schema.define(version: 2025_06_17_020447) do
     t.string "display"
   end
 
+  create_table "taggings", force: :cascade do |t|
+    t.bigint "text_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+    t.index ["text_id"], name: "index_taggings_on_text_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "text_citations", force: :cascade do |t|
     t.bigint "text_id"
     t.text "name"
@@ -454,6 +469,8 @@ ActiveRecord::Schema.define(version: 2025_06_17_020447) do
   add_foreign_key "people", "people", column: "see_person_id"
   add_foreign_key "places", "countries"
   add_foreign_key "standard_numbers", "texts"
+  add_foreign_key "taggings", "tags"
+  add_foreign_key "taggings", "texts"
   add_foreign_key "text_citations", "languages", column: "from_language_id"
   add_foreign_key "text_citations", "languages", column: "to_language_id"
   add_foreign_key "text_citations", "texts"

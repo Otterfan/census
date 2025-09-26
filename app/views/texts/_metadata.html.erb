@@ -123,6 +123,13 @@
 
   <%= metadata_row 'Other note', @text.note %>
 
+  <% if @text.tags && @text.tags.count > 0 %>
+    <dt>Tags</dt>
+    <% @text.tags.each do |tag| %>
+      <dd><%= tag.value %></dd>
+    <% end %>
+  <% end %>
+
   <%= metadata_row 'Text is bilingual?', @text.is_bilingual_display %>
 
   <%= metadata_row 'Illustrations noted?', 'Yes', boolean_filter: @text.illustrations_noted %>

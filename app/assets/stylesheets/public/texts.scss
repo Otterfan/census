@@ -49,10 +49,6 @@ $metadata-spacing: 0;
   @extend .col-sm-2;
   margin-bottom: 1em;
 
-  @media (max-width: 767px) {
-    display: none;
-  }
-
   .panel {
     background-color: hsl(36, 63%, 96%);
     border-radius: 2px;
@@ -238,7 +234,7 @@ $metadata-spacing: 0;
 }
 
 .modal-dialog.modal-lg {
-  width: 500px;
+  max-width: 500px;
 }
 
 .public .modal-backdrop.in {

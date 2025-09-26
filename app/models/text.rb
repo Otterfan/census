@@ -27,6 +27,9 @@ class Text < ApplicationRecord
 
   has_many :urls, inverse_of: :text, :dependent => :delete_all
 
+  has_many :taggings
+  has_many :tags, through: :taggings
+
   accepts_nested_attributes_for :text_citations, :standard_numbers, :components, :urls, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :other_text_languages, reject_if: :all_blank, :allow_destroy => true
   accepts_nested_attributes_for :publication_places, reject_if: :all_blank, :allow_destroy => true
@@ -36,8 +39,8 @@ class Text < ApplicationRecord
   before_save :default_values
 
   after_commit {
-    puts "Text record '#{self.id}' was updated. Will now reindex."
-    __elasticsearch__.index_document
+    puts "Text record '#{self.id}' (#{self.census_id}) was updated. Will now reindex."
+    #__elasticsearch__.index_document
   }
 
   paginates_per 60
