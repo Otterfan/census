@@ -364,6 +364,9 @@ class SearchController < ApplicationController
     original_clean.el
     original_clean.el_folded
     original_clean.en_folded
+
+    tags.value
+    note_clean.en_folded
   }
 
   FACET_HITS_SIZE = 100
